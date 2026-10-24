@@ -1,0 +1,3145 @@
+{
+  "reference": "Datas de nascimento verificadas por identificador; Wikidata CC0 e perfis oficiais da MLS.",
+  "retrievedOn": "2026-10-24",
+  "players": {
+    "ss-2191860": {
+      "birthDate": "2007-12-17",
+      "source": "https://www.wikidata.org/entity/Q131693296",
+      "identity": {
+        "property": "P12302",
+        "value": "2191860"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1656036": {
+      "birthDate": "2005-01-16",
+      "source": "https://www.wikidata.org/entity/Q131910304",
+      "identity": {
+        "property": "P12302",
+        "value": "1656036"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-2039241": {
+      "birthDate": "2007-10-12",
+      "source": "https://www.wikidata.org/entity/Q131935711",
+      "identity": {
+        "property": "P12302",
+        "value": "2039241"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1485284": {
+      "birthDate": "2006-06-07",
+      "source": "https://www.wikidata.org/entity/Q132173087",
+      "identity": {
+        "property": "P12302",
+        "value": "1485284"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1835889": {
+      "birthDate": "2004-04-19",
+      "source": "https://www.wikidata.org/entity/Q132307478",
+      "identity": {
+        "property": "P12302",
+        "value": "1835889"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-2050427": {
+      "birthDate": "2008-06-09",
+      "source": "https://www.wikidata.org/entity/Q133862843",
+      "identity": {
+        "property": "P12302",
+        "value": "2050427"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-2010540": {
+      "birthDate": "2008-02-02",
+      "source": "https://www.wikidata.org/entity/Q133878975",
+      "identity": {
+        "property": "P12302",
+        "value": "2010540"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1887796": {
+      "birthDate": "2008-08-12",
+      "source": "https://www.wikidata.org/entity/Q134086937",
+      "identity": {
+        "property": "P12302",
+        "value": "1887796"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1884646": {
+      "birthDate": "2008-02-02",
+      "source": "https://www.wikidata.org/entity/Q134396480",
+      "identity": {
+        "property": "P12302",
+        "value": "1884646"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-2082091": {
+      "birthDate": "2008-02-07",
+      "source": "https://www.wikidata.org/entity/Q134428434",
+      "identity": {
+        "property": "P12302",
+        "value": "2082091"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1888163": {
+      "birthDate": "2008-07-13",
+      "source": "https://www.wikidata.org/entity/Q134606218",
+      "identity": {
+        "property": "P12302",
+        "value": "1888163"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-2057367": {
+      "birthDate": "2006-09-29",
+      "source": "https://www.wikidata.org/entity/Q136310743",
+      "identity": {
+        "property": "P12302",
+        "value": "2057367"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1647612": {
+      "birthDate": "2006-06-20",
+      "source": "https://www.wikidata.org/entity/Q136393833",
+      "identity": {
+        "property": "P12302",
+        "value": "1647612"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1020375": {
+      "birthDate": "2001-10-22",
+      "source": "https://www.wikidata.org/entity/Q85872828",
+      "identity": {
+        "property": "P12302",
+        "value": "1020375"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Japan",
+        "Peru"
+      ]
+    },
+    "ss-77726": {
+      "birthDate": "1990-09-17",
+      "source": "https://www.wikidata.org/entity/Q2645254",
+      "identity": {
+        "property": "P12302",
+        "value": "77726"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Portugal"
+      ]
+    },
+    "ss-869726": {
+      "birthDate": "1997-09-27",
+      "source": "https://www.wikidata.org/entity/Q21515175",
+      "identity": {
+        "property": "P12302",
+        "value": "869726"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Uruguay"
+      ]
+    },
+    "ss-1086482": {
+      "birthDate": "2000-06-22",
+      "source": "https://www.wikidata.org/entity/Q100587683",
+      "identity": {
+        "property": "P12302",
+        "value": "1086482"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Uruguay"
+      ]
+    },
+    "ss-1089140": {
+      "birthDate": "2000-04-02",
+      "source": "https://www.wikidata.org/entity/Q105823263",
+      "identity": {
+        "property": "P12302",
+        "value": "1089140"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Uruguay"
+      ]
+    },
+    "ss-1112896": {
+      "birthDate": "2003-08-31",
+      "source": "https://www.wikidata.org/entity/Q109224572",
+      "identity": {
+        "property": "P12302",
+        "value": "1112896"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Uruguay"
+      ]
+    },
+    "ss-1112908": {
+      "birthDate": "2002-04-06",
+      "source": "https://www.wikidata.org/entity/Q120434440",
+      "identity": {
+        "property": "P12302",
+        "value": "1112908"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Uruguay"
+      ]
+    },
+    "ss-29735": {
+      "birthDate": "1987-07-23",
+      "source": "https://www.wikidata.org/entity/Q329451",
+      "identity": {
+        "property": "P12302",
+        "value": "29735"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-243155": {
+      "birthDate": "1994-11-08",
+      "source": "https://www.wikidata.org/entity/Q3386174",
+      "identity": {
+        "property": "P12302",
+        "value": "243155"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-243651": {
+      "birthDate": "1993-08-30",
+      "source": "https://www.wikidata.org/entity/Q3806090",
+      "identity": {
+        "property": "P12302",
+        "value": "243651"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-798127": {
+      "birthDate": "1990-05-29",
+      "source": "https://www.wikidata.org/entity/Q3869209",
+      "identity": {
+        "property": "P12302",
+        "value": "798127"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-291723": {
+      "birthDate": "1993-06-25",
+      "source": "https://www.wikidata.org/entity/Q4727251",
+      "identity": {
+        "property": "P12302",
+        "value": "291723"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-76507": {
+      "birthDate": "1989-10-17",
+      "source": "https://www.wikidata.org/entity/Q5042026",
+      "identity": {
+        "property": "P12302",
+        "value": "76507"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-850475": {
+      "birthDate": "1992-02-15",
+      "source": "https://www.wikidata.org/entity/Q6170371",
+      "identity": {
+        "property": "P12302",
+        "value": "850475"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-243529": {
+      "birthDate": "1987-12-13",
+      "source": "https://www.wikidata.org/entity/Q8040741",
+      "identity": {
+        "property": "P12302",
+        "value": "243529"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-358554": {
+      "birthDate": "1996-08-30",
+      "source": "https://www.wikidata.org/entity/Q13646572",
+      "identity": {
+        "property": "P12302",
+        "value": "358554"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-386212": {
+      "birthDate": "1991-07-05",
+      "source": "https://www.wikidata.org/entity/Q17379892",
+      "identity": {
+        "property": "P12302",
+        "value": "386212"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-330057": {
+      "birthDate": "1993-09-01",
+      "source": "https://www.wikidata.org/entity/Q18218092",
+      "identity": {
+        "property": "P12302",
+        "value": "330057"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-611876": {
+      "birthDate": "1997-05-20",
+      "source": "https://www.wikidata.org/entity/Q18617137",
+      "identity": {
+        "property": "P12302",
+        "value": "611876"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-604274": {
+      "birthDate": "1995-04-03",
+      "source": "https://www.wikidata.org/entity/Q20048445",
+      "identity": {
+        "property": "P12302",
+        "value": "604274"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-794930": {
+      "birthDate": "1994-10-01",
+      "source": "https://www.wikidata.org/entity/Q20828260",
+      "identity": {
+        "property": "P12302",
+        "value": "794930"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-828839": {
+      "birthDate": "1997-03-03",
+      "source": "https://www.wikidata.org/entity/Q20916833",
+      "identity": {
+        "property": "P12302",
+        "value": "828839"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-378590": {
+      "birthDate": "1989-09-05",
+      "source": "https://www.wikidata.org/entity/Q21030271",
+      "identity": {
+        "property": "P12302",
+        "value": "378590"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-795268": {
+      "birthDate": "1998-02-25",
+      "source": "https://www.wikidata.org/entity/Q21064573",
+      "identity": {
+        "property": "P12302",
+        "value": "795268"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-799947": {
+      "birthDate": "1995-02-01",
+      "source": "https://www.wikidata.org/entity/Q21621619",
+      "identity": {
+        "property": "P12302",
+        "value": "799947"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-831778": {
+      "birthDate": "1997-07-15",
+      "source": "https://www.wikidata.org/entity/Q22958501",
+      "identity": {
+        "property": "P12302",
+        "value": "831778"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-360940": {
+      "birthDate": "1996-03-06",
+      "source": "https://www.wikidata.org/entity/Q23008026",
+      "identity": {
+        "property": "P12302",
+        "value": "360940"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-841128": {
+      "birthDate": "1998-02-15",
+      "source": "https://www.wikidata.org/entity/Q28665426",
+      "identity": {
+        "property": "P12302",
+        "value": "841128"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-870329": {
+      "birthDate": "1995-06-08",
+      "source": "https://www.wikidata.org/entity/Q28939711",
+      "identity": {
+        "property": "P12302",
+        "value": "870329"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-884980": {
+      "birthDate": "2000-01-16",
+      "source": "https://www.wikidata.org/entity/Q34567761",
+      "identity": {
+        "property": "P12302",
+        "value": "884980"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-922575": {
+      "birthDate": "1998-10-10",
+      "source": "https://www.wikidata.org/entity/Q47537608",
+      "identity": {
+        "property": "P12302",
+        "value": "922575"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-817650": {
+      "birthDate": "1997-03-07",
+      "source": "https://www.wikidata.org/entity/Q48851846",
+      "identity": {
+        "property": "P12302",
+        "value": "817650"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-923948": {
+      "birthDate": "2000-01-12",
+      "source": "https://www.wikidata.org/entity/Q55081204",
+      "identity": {
+        "property": "P12302",
+        "value": "923948"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-869644": {
+      "birthDate": "1997-03-23",
+      "source": "https://www.wikidata.org/entity/Q55281318",
+      "identity": {
+        "property": "P12302",
+        "value": "869644"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-356514": {
+      "birthDate": "1994-11-04",
+      "source": "https://www.wikidata.org/entity/Q55364035",
+      "identity": {
+        "property": "P12302",
+        "value": "356514"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-922559": {
+      "birthDate": "1994-10-11",
+      "source": "https://www.wikidata.org/entity/Q56065071",
+      "identity": {
+        "property": "P12302",
+        "value": "922559"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-954888": {
+      "birthDate": "2002-01-24",
+      "source": "https://www.wikidata.org/entity/Q56876908",
+      "identity": {
+        "property": "P12302",
+        "value": "954888"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-929200": {
+      "birthDate": "1999-04-25",
+      "source": "https://www.wikidata.org/entity/Q59205578",
+      "identity": {
+        "property": "P12302",
+        "value": "929200"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-876625": {
+      "birthDate": "2000-02-02",
+      "source": "https://www.wikidata.org/entity/Q60841629",
+      "identity": {
+        "property": "P12302",
+        "value": "876625"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-980327": {
+      "birthDate": "2000-02-15",
+      "source": "https://www.wikidata.org/entity/Q60842153",
+      "identity": {
+        "property": "P12302",
+        "value": "980327"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-943044": {
+      "birthDate": "1999-02-03",
+      "source": "https://www.wikidata.org/entity/Q63191716",
+      "identity": {
+        "property": "P12302",
+        "value": "943044"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-973845": {
+      "birthDate": "1994-06-23",
+      "source": "https://www.wikidata.org/entity/Q63431838",
+      "identity": {
+        "property": "P12302",
+        "value": "973845"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-867907": {
+      "birthDate": "1996-02-02",
+      "source": "https://www.wikidata.org/entity/Q64009394",
+      "identity": {
+        "property": "P12302",
+        "value": "867907"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-980421": {
+      "birthDate": "1999-08-27",
+      "source": "https://www.wikidata.org/entity/Q64031791",
+      "identity": {
+        "property": "P12302",
+        "value": "980421"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-809536": {
+      "birthDate": "1994-04-20",
+      "source": "https://www.wikidata.org/entity/Q65346215",
+      "identity": {
+        "property": "P12302",
+        "value": "809536"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-981019": {
+      "birthDate": "1998-03-09",
+      "source": "https://www.wikidata.org/entity/Q65666360",
+      "identity": {
+        "property": "P12302",
+        "value": "981019"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-942061": {
+      "birthDate": "1998-03-05",
+      "source": "https://www.wikidata.org/entity/Q65718450",
+      "identity": {
+        "property": "P12302",
+        "value": "942061"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-866847": {
+      "birthDate": "1995-05-05",
+      "source": "https://www.wikidata.org/entity/Q76760801",
+      "identity": {
+        "property": "P12302",
+        "value": "866847"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-975319": {
+      "birthDate": "1999-02-23",
+      "source": "https://www.wikidata.org/entity/Q83880808",
+      "identity": {
+        "property": "P12302",
+        "value": "975319"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil",
+        "Kingdom of the Netherlands"
+      ]
+    },
+    "ss-1546647": {
+      "birthDate": "1997-12-05",
+      "source": "https://www.wikidata.org/entity/Q89411903",
+      "identity": {
+        "property": "P12302",
+        "value": "1546647"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-995294": {
+      "birthDate": "1999-11-18",
+      "source": "https://www.wikidata.org/entity/Q96377583",
+      "identity": {
+        "property": "P12302",
+        "value": "995294"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1046501": {
+      "birthDate": "1996-09-02",
+      "source": "https://www.wikidata.org/entity/Q98492414",
+      "identity": {
+        "property": "P12302",
+        "value": "1046501"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1069328": {
+      "birthDate": "2002-01-09",
+      "source": "https://www.wikidata.org/entity/Q99317815",
+      "identity": {
+        "property": "P12302",
+        "value": "1069328"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1064039": {
+      "birthDate": "2001-04-29",
+      "source": "https://www.wikidata.org/entity/Q99557093",
+      "identity": {
+        "property": "P12302",
+        "value": "1064039"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-937552": {
+      "birthDate": "1996-01-24",
+      "source": "https://www.wikidata.org/entity/Q101230488",
+      "identity": {
+        "property": "P12302",
+        "value": "937552"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1105835": {
+      "birthDate": "2001-05-24",
+      "source": "https://www.wikidata.org/entity/Q110882015",
+      "identity": {
+        "property": "P12302",
+        "value": "1105835"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1150391": {
+      "birthDate": "2005-02-28",
+      "source": "https://www.wikidata.org/entity/Q111016177",
+      "identity": {
+        "property": "P12302",
+        "value": "1150391"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1104068": {
+      "birthDate": "2000-10-20",
+      "source": "https://www.wikidata.org/entity/Q111948991",
+      "identity": {
+        "property": "P12302",
+        "value": "1104068"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1170954": {
+      "birthDate": "2004-05-11",
+      "source": "https://www.wikidata.org/entity/Q111983266",
+      "identity": {
+        "property": "P12302",
+        "value": "1170954"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1200730": {
+      "birthDate": "2004-03-16",
+      "source": "https://www.wikidata.org/entity/Q112998957",
+      "identity": {
+        "property": "P12302",
+        "value": "1200730"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1175760": {
+      "birthDate": "2001-03-23",
+      "source": "https://www.wikidata.org/entity/Q113588365",
+      "identity": {
+        "property": "P12302",
+        "value": "1175760"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1107069": {
+      "birthDate": "1998-10-07",
+      "source": "https://www.wikidata.org/entity/Q115688449",
+      "identity": {
+        "property": "P12302",
+        "value": "1107069"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1112484": {
+      "birthDate": "2003-03-08",
+      "source": "https://www.wikidata.org/entity/Q115937785",
+      "identity": {
+        "property": "P12302",
+        "value": "1112484"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-922601": {
+      "birthDate": "1997-09-23",
+      "source": "https://www.wikidata.org/entity/Q116780488",
+      "identity": {
+        "property": "P12302",
+        "value": "922601"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1396009": {
+      "birthDate": "2004-02-15",
+      "source": "https://www.wikidata.org/entity/Q116783462",
+      "identity": {
+        "property": "P12302",
+        "value": "1396009"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1464519": {
+      "birthDate": "2004-04-24",
+      "source": "https://www.wikidata.org/entity/Q117209932",
+      "identity": {
+        "property": "P12302",
+        "value": "1464519"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1482354": {
+      "birthDate": "2006-01-01",
+      "source": "https://www.wikidata.org/entity/Q117840813",
+      "identity": {
+        "property": "P12302",
+        "value": "1482354"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-942054": {
+      "birthDate": "1997-03-26",
+      "source": "https://www.wikidata.org/entity/Q118219957",
+      "identity": {
+        "property": "P12302",
+        "value": "942054"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1485294": {
+      "birthDate": "2006-09-15",
+      "source": "https://www.wikidata.org/entity/Q119152074",
+      "identity": {
+        "property": "P12302",
+        "value": "1485294"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1107060": {
+      "birthDate": "2001-10-18",
+      "source": "https://www.wikidata.org/entity/Q120913867",
+      "identity": {
+        "property": "P12302",
+        "value": "1107060"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1597267": {
+      "birthDate": "2006-04-30",
+      "source": "https://www.wikidata.org/entity/Q123440263",
+      "identity": {
+        "property": "P12302",
+        "value": "1597267"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1117597": {
+      "birthDate": "1999-11-06",
+      "source": "https://www.wikidata.org/entity/Q124436403",
+      "identity": {
+        "property": "P12302",
+        "value": "1117597"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1482361": {
+      "birthDate": "2006-01-18",
+      "source": "https://www.wikidata.org/entity/Q124802312",
+      "identity": {
+        "property": "P12302",
+        "value": "1482361"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1411150": {
+      "birthDate": "2003-12-31",
+      "source": "https://www.wikidata.org/entity/Q126710363",
+      "identity": {
+        "property": "P12302",
+        "value": "1411150"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1411152": {
+      "birthDate": "2004-04-28",
+      "source": "https://www.wikidata.org/entity/Q126936258",
+      "identity": {
+        "property": "P12302",
+        "value": "1411152"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1884803": {
+      "birthDate": "2007-03-13",
+      "source": "https://www.wikidata.org/entity/Q130536535",
+      "identity": {
+        "property": "P12302",
+        "value": "1884803"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-1647579": {
+      "birthDate": "2006-01-30",
+      "source": "https://www.wikidata.org/entity/Q131300410",
+      "identity": {
+        "property": "P12302",
+        "value": "1647579"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ]
+    },
+    "ss-2282985": {
+      "birthDate": "2007-06-18",
+      "source": "https://www.wikidata.org/entity/Q136496970",
+      "identity": {
+        "property": "P12302",
+        "value": "2282985"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Panama"
+      ]
+    },
+    "ss-962187": {
+      "birthDate": "2000-01-11",
+      "source": "https://www.wikidata.org/entity/Q61745498",
+      "identity": {
+        "property": "P12302",
+        "value": "962187"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina"
+      ]
+    },
+    "ss-2024892": {
+      "birthDate": "1999-12-08",
+      "source": "https://www.wikidata.org/entity/Q63340631",
+      "identity": {
+        "property": "P12302",
+        "value": "2024892"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina"
+      ]
+    },
+    "ss-989862": {
+      "birthDate": "2002-07-14",
+      "source": "https://www.wikidata.org/entity/Q66929490",
+      "identity": {
+        "property": "P12302",
+        "value": "989862"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina"
+      ]
+    },
+    "ss-1003010": {
+      "birthDate": "2002-06-01",
+      "source": "https://www.wikidata.org/entity/Q85713528",
+      "identity": {
+        "property": "P12302",
+        "value": "1003010"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina"
+      ]
+    },
+    "ss-1106603": {
+      "birthDate": "2004-01-16",
+      "source": "https://www.wikidata.org/entity/Q112854266",
+      "identity": {
+        "property": "P12302",
+        "value": "1106603"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina"
+      ]
+    },
+    "ss-1179171": {
+      "birthDate": "2003-02-22",
+      "source": "https://www.wikidata.org/entity/Q114773479",
+      "identity": {
+        "property": "P12302",
+        "value": "1179171"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina"
+      ]
+    },
+    "ss-1650770": {
+      "birthDate": "2007-04-17",
+      "source": "https://www.wikidata.org/entity/Q117451132",
+      "identity": {
+        "property": "P12302",
+        "value": "1650770"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina"
+      ]
+    },
+    "ss-1182504": {
+      "birthDate": "1999-02-26",
+      "source": "https://www.wikidata.org/entity/Q120334605",
+      "identity": {
+        "property": "P12302",
+        "value": "1182504"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina"
+      ]
+    },
+    "ss-1807816": {
+      "birthDate": "2004-07-14",
+      "source": "https://www.wikidata.org/entity/Q130452980",
+      "identity": {
+        "property": "P12302",
+        "value": "1807816"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina"
+      ]
+    },
+    "ss-1482431": {
+      "birthDate": "2006-02-14",
+      "source": "https://www.wikidata.org/entity/Q123488359",
+      "identity": {
+        "property": "P12302",
+        "value": "1482431"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Ecuador"
+      ]
+    },
+    "ss-974558": {
+      "birthDate": "1999-01-13",
+      "source": "https://www.wikidata.org/entity/Q60841935",
+      "identity": {
+        "property": "P12302",
+        "value": "974558"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Colombia"
+      ]
+    },
+    "ss-972587": {
+      "birthDate": "2002-07-08",
+      "source": "https://www.wikidata.org/entity/Q106766381",
+      "identity": {
+        "property": "P12302",
+        "value": "972587"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Colombia"
+      ]
+    },
+    "ss-1160386": {
+      "birthDate": "2002-09-12",
+      "source": "https://www.wikidata.org/entity/Q116215934",
+      "identity": {
+        "property": "P12302",
+        "value": "1160386"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Colombia"
+      ]
+    },
+    "ss-1173373": {
+      "birthDate": "2002-09-20",
+      "source": "https://www.wikidata.org/entity/Q123406992",
+      "identity": {
+        "property": "P12302",
+        "value": "1173373"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Colombia"
+      ]
+    },
+    "ss-1482359": {
+      "birthDate": "2006-02-20",
+      "source": "https://www.wikidata.org/entity/Q123631428",
+      "identity": {
+        "property": "P12302",
+        "value": "1482359"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Colombia"
+      ]
+    },
+    "ss-1539599": {
+      "birthDate": "2005-04-24",
+      "source": "https://www.wikidata.org/entity/Q131110894",
+      "identity": {
+        "property": "P12302",
+        "value": "1539599"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Colombia"
+      ]
+    },
+    "ss-985809": {
+      "birthDate": "2002-03-24",
+      "source": "https://www.wikidata.org/entity/Q86588880",
+      "identity": {
+        "property": "P12302",
+        "value": "985809"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": []
+    },
+    "ss-1122737": {
+      "birthDate": "2005-02-03",
+      "source": "https://www.wikidata.org/entity/Q108294169",
+      "identity": {
+        "property": "P12302",
+        "value": "1122737"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": []
+    },
+    "ss-1159656": {
+      "birthDate": "2004-04-25",
+      "source": "https://www.wikidata.org/entity/Q113662045",
+      "identity": {
+        "property": "P12302",
+        "value": "1159656"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": []
+    },
+    "ss-1899902": {
+      "birthDate": "2006-04-11",
+      "source": "https://www.wikidata.org/entity/Q117381832",
+      "identity": {
+        "property": "P12302",
+        "value": "1899902"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": []
+    },
+    "ss-1124220": {
+      "birthDate": "1999-06-05",
+      "source": "https://www.wikidata.org/entity/Q117422068",
+      "identity": {
+        "property": "P12302",
+        "value": "1124220"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": []
+    },
+    "ss-1188028": {
+      "birthDate": "2000-05-02",
+      "source": "https://www.wikidata.org/entity/Q125747190",
+      "identity": {
+        "property": "P12302",
+        "value": "1188028"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": []
+    },
+    "ss-1650040": {
+      "birthDate": "2003-04-26",
+      "source": "https://www.wikidata.org/entity/Q126357718",
+      "identity": {
+        "property": "P12302",
+        "value": "1650040"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": []
+    },
+    "ss-1471214": {
+      "birthDate": "2004-08-09",
+      "source": "https://www.wikidata.org/entity/Q132172615",
+      "identity": {
+        "property": "P12302",
+        "value": "1471214"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": []
+    },
+    "mls-MLS-OBJ-000396": {
+      "birthDate": "1987-06-24",
+      "source": "https://www.mlssoccer.com/players/lionel-messi/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000396"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina",
+        "Italy",
+        "Spain"
+      ],
+      "nationalityBasis": "MLS National Team",
+      "foot": "left",
+      "nationalitySource": "https://www.wikidata.org/entity/Q615"
+    },
+    "mls-MLS-OBJ-00024D": {
+      "birthDate": "2006-02-21",
+      "source": "https://www.mlssoccer.com/players/cesar-abadia-reda/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00024D"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina",
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q138678585"
+    },
+    "mls-MLS-OBJ-000BVR": {
+      "birthDate": "2008-04-03",
+      "source": "https://www.mlssoccer.com/players/alexander-shaw/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000BVR"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-0006M2": {
+      "birthDate": "2007-06-06",
+      "source": "https://www.mlssoccer.com/players/daniel-pinter/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0006M2"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Hungary",
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q136276663"
+    },
+    "mls-MLS-OBJ-000826": {
+      "birthDate": "2003-12-26",
+      "source": "https://www.mlssoccer.com/players/lucas-sanabria/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000826"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Uruguay"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q124633047"
+    },
+    "mls-MLS-OBJ-00077Y": {
+      "birthDate": "2001-10-11",
+      "source": "https://www.mlssoccer.com/players/emiro-garces/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00077Y"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Colombia"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q116539321"
+    },
+    "mls-MLS-OBJ-0005KT": {
+      "birthDate": "2008-10-08",
+      "source": "https://www.mlssoccer.com/players/jude-terry/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0005KT"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q136521960"
+    },
+    "mls-MLS-OBJ-000C5Q": {
+      "birthDate": "1992-07-08",
+      "source": "https://www.mlssoccer.com/players/son-heung-min/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000C5Q"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "South Korea"
+      ],
+      "nationalityBasis": "MLS National Team",
+      "nationalitySource": "https://www.wikidata.org/entity/Q439722"
+    },
+    "mls-MLS-OBJ-00057R": {
+      "birthDate": "2004-04-20",
+      "source": "https://www.mlssoccer.com/players/tomas-jacob/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00057R"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q109718626"
+    },
+    "mls-MLS-OBJ-000089": {
+      "birthDate": "1994-09-04",
+      "source": "https://www.mlssoccer.com/players/sergio-santos/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000089"
+      },
+      "retrievedOn": "2026-10-24",
+      "foot": "right",
+      "nationalities": [
+        "Brazil"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q19844277"
+    },
+    "mls-MLS-OBJ-000CLL": {
+      "birthDate": "2006-01-03",
+      "source": "https://www.mlssoccer.com/players/adrian-gill/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CLL"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q115109863"
+    },
+    "mls-MLS-OBJ-00081D": {
+      "birthDate": "2004-12-21",
+      "source": "https://www.mlssoccer.com/players/nicolas-dubersarsky/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00081D"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q126308870"
+    },
+    "mls-MLS-OBJ-00081I": {
+      "birthDate": "2002-03-15",
+      "source": "https://www.mlssoccer.com/players/riley-thomas/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00081I"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000BXJ": {
+      "birthDate": "2003-01-17",
+      "source": "https://www.mlssoccer.com/players/mateja-djordjevic/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000BXJ"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Serbia"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q121362296"
+    },
+    "mls-MLS-OBJ-000C5O": {
+      "birthDate": "2004-12-21",
+      "source": "https://www.mlssoccer.com/players/morrison-agyemang/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000C5O"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Ghana"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q135189834"
+    },
+    "mls-MLS-OBJ-000CSO": {
+      "birthDate": "2003-02-17",
+      "source": "https://www.mlssoccer.com/players/will-cleary/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CSO"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q139823608"
+    },
+    "mls-MLS-OBJ-00024N": {
+      "birthDate": "2006-04-03",
+      "source": "https://www.mlssoccer.com/players/aron-john/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00024N"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q138607920"
+    },
+    "mls-MLS-OBJ-000CSN": {
+      "birthDate": "2006-12-26",
+      "source": "https://www.mlssoccer.com/players/rodolfo-aloko/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CSN"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Benin"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q136108709"
+    },
+    "mls-MLS-OBJ-000CGL": {
+      "birthDate": "2005-09-19",
+      "source": "https://www.mlssoccer.com/players/mbekezeli-mbokazi/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CGL"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "South Africa"
+      ],
+      "nationalityBasis": "MLS National Team"
+    },
+    "mls-MLS-OBJ-000CHZ": {
+      "birthDate": "2004-07-24",
+      "source": "https://www.mlssoccer.com/players/puso-dithejane/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CHZ"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "South Africa"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q136988503"
+    },
+    "mls-MLS-OBJ-0001IO": {
+      "birthDate": "1993-04-06",
+      "source": "https://www.mlssoccer.com/players/jeffrey-gal/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0001IO"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q106221571"
+    },
+    "mls-MLS-OBJ-0005HQ": {
+      "birthDate": "2002-09-30",
+      "source": "https://www.mlssoccer.com/players/jason-shokalook/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0005HQ"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q134738029"
+    },
+    "mls-MLS-OBJ-000901": {
+      "birthDate": "2003-05-05",
+      "source": "https://www.mlssoccer.com/players/dje-d-avilla/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000901"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Ivory Coast"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q133869020"
+    },
+    "mls-MLS-OBJ-000D28": {
+      "birthDate": "2004-07-10",
+      "source": "https://www.mlssoccer.com/players/ayoub-lajhar/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000D28"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000CCM": {
+      "birthDate": "2000-08-11",
+      "source": "https://www.mlssoccer.com/players/bryan-ramirez/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CCM"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Ecuador"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q116004047"
+    },
+    "mls-MLS-OBJ-000C6F": {
+      "birthDate": "2007-09-05",
+      "source": "https://www.mlssoccer.com/players/lucas-herrington/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000C6F"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Australia"
+      ],
+      "nationalityBasis": "MLS National Team",
+      "nationalitySource": "https://www.wikidata.org/entity/Q133105064"
+    },
+    "mls-MLS-OBJ-000076": {
+      "birthDate": "2002-01-28",
+      "source": "https://www.mlssoccer.com/players/ted-ku-dipietro/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000076"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-00084N": {
+      "birthDate": "2006-09-14",
+      "source": "https://www.mlssoccer.com/players/mamadou-diop/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00084N"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000CPM": {
+      "birthDate": "2005-03-22",
+      "source": "https://www.mlssoccer.com/players/jabari-de-coteau/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CPM"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-0001DY": {
+      "birthDate": "2001-04-19",
+      "source": "https://www.mlssoccer.com/players/maximilian-arfsten/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0001DY"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalityBasis": "MLS National Team",
+      "nationalitySource": "https://www.wikidata.org/entity/Q117309867"
+    },
+    "mls-MLS-OBJ-000BW4": {
+      "birthDate": "2003-05-09",
+      "source": "https://www.mlssoccer.com/players/hugo-picard/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000BW4"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "France"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q117353207"
+    },
+    "mls-MLS-OBJ-0001B9": {
+      "birthDate": "2006-02-05",
+      "source": "https://www.mlssoccer.com/players/taha-habroune/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0001B9"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Morocco",
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q123483330"
+    },
+    "mls-MLS-OBJ-000CHF": {
+      "birthDate": "2002-04-05",
+      "source": "https://www.mlssoccer.com/players/sekou-bangoura/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CHF"
+      },
+      "retrievedOn": "2026-10-24",
+      "foot": "right",
+      "nationalities": [
+        "Guinea"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q123182431"
+    },
+    "mls-MLS-OBJ-0005LK": {
+      "birthDate": "2008-04-17",
+      "source": "https://www.mlssoccer.com/players/chase-mesner-adams/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0005LK"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q132291859"
+    },
+    "mls-MLS-OBJ-0003FW": {
+      "birthDate": "2007-10-17",
+      "source": "https://www.mlssoccer.com/players/tristan-brown/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0003FW"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q133471143"
+    },
+    "mls-MLS-OBJ-0007SL": {
+      "birthDate": "1998-11-03",
+      "source": "https://www.mlssoccer.com/players/andres-herrera/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0007SL"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q59366697"
+    },
+    "mls-MLS-OBJ-0002OA": {
+      "birthDate": "1998-01-23",
+      "source": "https://www.mlssoccer.com/players/yevhen-cheberko/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0002OA"
+      },
+      "retrievedOn": "2026-10-24",
+      "foot": "left",
+      "nationalities": [
+        "Ukraine"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q26132244"
+    },
+    "mls-MLS-OBJ-000CTR": {
+      "birthDate": "2004-04-23",
+      "source": "https://www.mlssoccer.com/players/nariman-akhundzada/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CTR"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Azerbaijan"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q123528361"
+    },
+    "mls-MLS-OBJ-00084X": {
+      "birthDate": "2001-07-13",
+      "source": "https://www.mlssoccer.com/players/cesar-ruvalcaba/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00084X"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q133471517"
+    },
+    "mls-MLS-OBJ-0002F7": {
+      "birthDate": "2006-02-21",
+      "source": "https://www.mlssoccer.com/players/owen-presthus/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0002F7"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q139789952"
+    },
+    "mls-MLS-OBJ-000CX5": {
+      "birthDate": "1993-07-30",
+      "source": "https://www.mlssoccer.com/players/andre-gomes/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CX5"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Portugal"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q519008"
+    },
+    "mls-MLS-OBJ-0007W9": {
+      "birthDate": "2003-03-03",
+      "source": "https://www.mlssoccer.com/players/samuel-sarver/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0007W9"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q135223351"
+    },
+    "mls-MLS-OBJ-0007V7": {
+      "birthDate": "1993-05-22",
+      "source": "https://www.mlssoccer.com/players/ramiro-benetti/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0007V7"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil",
+        "Italy"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q15241347"
+    },
+    "mls-MLS-OBJ-000CGP": {
+      "birthDate": "2004-02-06",
+      "source": "https://www.mlssoccer.com/players/ran-binyamin/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CGP"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Israel",
+        "Poland"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q118211482"
+    },
+    "mls-MLS-OBJ-000CUX": {
+      "birthDate": "2001-04-13",
+      "source": "https://www.mlssoccer.com/players/joaquin-valiente/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CUX"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Uruguay"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q111906198"
+    },
+    "mls-MLS-OBJ-000824": {
+      "birthDate": "2005-04-17",
+      "source": "https://www.mlssoccer.com/players/alvaro-augusto/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000824"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000537": {
+      "birthDate": "2001-05-25",
+      "source": "https://www.mlssoccer.com/players/michael-collodi/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000537"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q133473297"
+    },
+    "mls-MLS-OBJ-000CGR": {
+      "birthDate": "2004-10-04",
+      "source": "https://www.mlssoccer.com/players/ricky-louis/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CGR"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Haiti",
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q138607930"
+    },
+    "mls-MLS-OBJ-0007VO": {
+      "birthDate": "2002-01-07",
+      "source": "https://www.mlssoccer.com/players/joao-peglow/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0007VO"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q75058907"
+    },
+    "mls-MLS-OBJ-000CGS": {
+      "birthDate": "2004-07-22",
+      "source": "https://www.mlssoccer.com/players/nikola-markovic/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CGS"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-00053K": {
+      "birthDate": "2004-03-28",
+      "source": "https://www.mlssoccer.com/players/jacob-murrell/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00053K"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-0001FB": {
+      "birthDate": "1995-02-20",
+      "source": "https://www.mlssoccer.com/players/franco-negri/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0001FB"
+      },
+      "retrievedOn": "2026-10-24",
+      "foot": "left",
+      "nationalities": [
+        "Argentina"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q26409015"
+    },
+    "mls-MLS-OBJ-000BVW": {
+      "birthDate": "2010-08-29",
+      "source": "https://www.mlssoccer.com/players/matthew-arana/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000BVW"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000CXX": {
+      "birthDate": "2004-11-28",
+      "source": "https://www.mlssoccer.com/players/gilberto-rivera/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CXX"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000825": {
+      "birthDate": "2002-10-11",
+      "source": "https://www.mlssoccer.com/players/blake-gillingham/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000825"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q133473336"
+    },
+    "mls-MLS-OBJ-000DAY": {
+      "birthDate": "2002-01-10",
+      "source": "https://www.mlssoccer.com/players/capita-capemba/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000DAY"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Angola"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q99955340"
+    },
+    "mls-MLS-OBJ-0001JP": {
+      "birthDate": "2001-08-29",
+      "source": "https://www.mlssoccer.com/players/jayden-reid/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0001JP"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000DBS": {
+      "birthDate": "2004-12-15",
+      "source": "https://www.mlssoccer.com/players/diego-borges/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000DBS"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q133544738"
+    },
+    "mls-MLS-OBJ-0005MD": {
+      "birthDate": "2007-01-01",
+      "source": "https://www.mlssoccer.com/players/johann-ortiz/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0005MD"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000CGU": {
+      "birthDate": "2006-06-27",
+      "source": "https://www.mlssoccer.com/players/kwaku-agyabeng/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CGU"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Ghana"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q138511267"
+    },
+    "mls-MLS-OBJ-0006OC": {
+      "birthDate": "2008-01-28",
+      "source": "https://www.mlssoccer.com/players/jack-kortkamp/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0006OC"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000882": {
+      "birthDate": "2002-03-11",
+      "source": "https://www.mlssoccer.com/players/pierre-lurot/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000882"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-0005M9": {
+      "birthDate": "2008-06-06",
+      "source": "https://www.mlssoccer.com/players/ian-james/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0005M9"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q132778574"
+    },
+    "mls-MLS-OBJ-00076E": {
+      "birthDate": "2007-06-01",
+      "source": "https://www.mlssoccer.com/players/shane-donovan/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00076E"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-00056X": {
+      "birthDate": "2002-03-08",
+      "source": "https://www.mlssoccer.com/players/ryan-schewe/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00056X"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-00081Y": {
+      "birthDate": "2002-02-10",
+      "source": "https://www.mlssoccer.com/players/jansen-miller/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00081Y"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q97656120"
+    },
+    "mls-MLS-OBJ-00081F": {
+      "birthDate": "2001-11-12",
+      "source": "https://www.mlssoccer.com/players/wyatt-meyer/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00081F"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-00004Z": {
+      "birthDate": "1999-12-26",
+      "source": "https://www.mlssoccer.com/players/anthony-markanich/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00004Z"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q112117689"
+    },
+    "mls-MLS-OBJ-000CK8": {
+      "birthDate": "2004-09-15",
+      "source": "https://www.mlssoccer.com/players/mauricio-gonzalez/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CK8"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Colombia"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q137202974"
+    },
+    "mls-MLS-OBJ-0006RY": {
+      "birthDate": "2004-02-04",
+      "source": "https://www.mlssoccer.com/players/mamadou-dieng/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0006RY"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Senegal"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q130243212"
+    },
+    "mls-MLS-OBJ-000CO5": {
+      "birthDate": "2004-10-14",
+      "source": "https://www.mlssoccer.com/players/marcus-caldeira/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CO5"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Canada"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q113291514"
+    },
+    "mls-MLS-OBJ-0007ZM": {
+      "birthDate": "2006-07-10",
+      "source": "https://www.mlssoccer.com/players/hennadii-synchuk/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0007ZM"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Ukraine"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q119154276"
+    },
+    "mls-MLS-OBJ-0001ET": {
+      "birthDate": "2000-05-02",
+      "source": "https://www.mlssoccer.com/players/dagur-thorhallsson/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0001ET"
+      },
+      "retrievedOn": "2026-10-24",
+      "foot": "right",
+      "nationalities": [
+        "Iceland"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q97441305"
+    },
+    "mls-MLS-OBJ-00083C": {
+      "birthDate": "2007-03-20",
+      "source": "https://www.mlssoccer.com/players/aleksandr-guboglo/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00083C"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Canada",
+        "Haiti"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q132862176"
+    },
+    "mls-MLS-OBJ-000CH1": {
+      "birthDate": "2004-07-24",
+      "source": "https://www.mlssoccer.com/players/ivan-losenko/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CH1"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000CTH": {
+      "birthDate": "2005-10-11",
+      "source": "https://www.mlssoccer.com/players/noah-streit/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CTH"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Switzerland"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q138116244"
+    },
+    "mls-MLS-OBJ-00058Z": {
+      "birthDate": "2004-07-24",
+      "source": "https://www.mlssoccer.com/players/warren-madrigal/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00058Z"
+      },
+      "retrievedOn": "2026-10-24",
+      "foot": "right",
+      "nationalities": [
+        "Costa Rica"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q99314924"
+    },
+    "mls-MLS-OBJ-0007XS": {
+      "birthDate": "1994-03-20",
+      "source": "https://www.mlssoccer.com/players/jeisson-palacios/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0007XS"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Colombia"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q28370762"
+    },
+    "mls-MLS-OBJ-00056R": {
+      "birthDate": "2001-05-11",
+      "source": "https://www.mlssoccer.com/players/woobens-pacius/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00056R"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Canada",
+        "Haiti"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q108016973"
+    },
+    "mls-MLS-OBJ-000CUR": {
+      "birthDate": "2003-11-26",
+      "source": "https://www.mlssoccer.com/players/charles-brunet/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CUR"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Canada"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q139731881"
+    },
+    "mls-MLS-OBJ-0005IH": {
+      "birthDate": "2002-04-08",
+      "source": "https://www.mlssoccer.com/players/jayden-da/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0005IH"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q124978963"
+    },
+    "mls-MLS-OBJ-0000GG": {
+      "birthDate": "1998-12-14",
+      "source": "https://www.mlssoccer.com/players/kevin-o-toole/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0000GG"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q27919946"
+    },
+    "mls-MLS-OBJ-00082W": {
+      "birthDate": "2001-12-27",
+      "source": "https://www.mlssoccer.com/players/nico-cavallo/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00082W"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q132862635"
+    },
+    "mls-MLS-OBJ-000CTG": {
+      "birthDate": "2003-01-18",
+      "source": "https://www.mlssoccer.com/players/arnau-farnos/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CTG"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Spain"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q139253961"
+    },
+    "mls-MLS-OBJ-000CUN": {
+      "birthDate": "2003-06-21",
+      "source": "https://www.mlssoccer.com/players/kevin-pierre/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CUN"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Japan",
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q139800265"
+    },
+    "mls-MLS-OBJ-00086T": {
+      "birthDate": "2008-03-04",
+      "source": "https://www.mlssoccer.com/players/seymour-reid/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00086T"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Jamaica"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q133467779"
+    },
+    "mls-MLS-OBJ-000D29": {
+      "birthDate": "2007-01-24",
+      "source": "https://www.mlssoccer.com/players/joyeux-bungi/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000D29"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Belgium"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q135393106"
+    },
+    "mls-MLS-OBJ-00078K": {
+      "birthDate": "2008-06-05",
+      "source": "https://www.mlssoccer.com/players/matthew-dos-santos/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00078K"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q133199157"
+    },
+    "mls-MLS-OBJ-000DBO": {
+      "birthDate": "2005-11-25",
+      "source": "https://www.mlssoccer.com/players/julian-bazan/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000DBO"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000A2P": {
+      "birthDate": "2005-02-24",
+      "source": "https://www.mlssoccer.com/players/nehuen-benedetti/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000A2P"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-0007CG": {
+      "birthDate": "2005-12-05",
+      "source": "https://www.mlssoccer.com/players/andy-rojas/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0007CG"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-0003EK": {
+      "birthDate": "2004-07-27",
+      "source": "https://www.mlssoccer.com/players/juan-mina/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0003EK"
+      },
+      "retrievedOn": "2026-10-24",
+      "foot": "right",
+      "nationalities": [
+        "Colombia"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q116047076"
+    },
+    "mls-MLS-OBJ-0003CB": {
+      "birthDate": "2005-05-24",
+      "source": "https://www.mlssoccer.com/players/rafael-mosquera/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0003CB"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Panama"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q120908103"
+    },
+    "mls-MLS-OBJ-0005LE": {
+      "birthDate": "2007-05-14",
+      "source": "https://www.mlssoccer.com/players/justin-ellis/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0005LE"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q134469364"
+    },
+    "mls-MLS-OBJ-000CHI": {
+      "birthDate": "2006-04-04",
+      "source": "https://www.mlssoccer.com/players/ignacio-gomez/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CHI"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q139469441"
+    },
+    "mls-MLS-OBJ-00089P": {
+      "birthDate": "2008-06-05",
+      "source": "https://www.mlssoccer.com/players/dylan-judelson/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00089P"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000CI6": {
+      "birthDate": "2006-06-28",
+      "source": "https://www.mlssoccer.com/players/pedro-leao/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CI6"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q138678562"
+    },
+    "mls-MLS-OBJ-000CPU": {
+      "birthDate": "2005-01-26",
+      "source": "https://www.mlssoccer.com/players/harvey-sarajian/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CPU"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q139469466"
+    },
+    "mls-MLS-OBJ-000876": {
+      "birthDate": "2003-07-15",
+      "source": "https://www.mlssoccer.com/players/tristan-himes/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000876"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-00077T": {
+      "birthDate": "2007-09-21",
+      "source": "https://www.mlssoccer.com/players/bernardo-santos-rhein-goncalves/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00077T"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q139536168"
+    },
+    "mls-MLS-OBJ-000820": {
+      "birthDate": "2002-04-18",
+      "source": "https://www.mlssoccer.com/players/bruno-damiani/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000820"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Uruguay"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q124255963"
+    },
+    "mls-MLS-OBJ-000CGK": {
+      "birthDate": "2005-09-13",
+      "source": "https://www.mlssoccer.com/players/ezekiel-alladoh/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CGK"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Ghana"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q131747488"
+    },
+    "mls-MLS-OBJ-0007K0": {
+      "birthDate": "2007-09-08",
+      "source": "https://www.mlssoccer.com/players/eric-izoita/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0007K0"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q138607953"
+    },
+    "mls-MLS-OBJ-000CHK": {
+      "birthDate": "2002-08-20",
+      "source": "https://www.mlssoccer.com/players/alex-bonetig/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CHK"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Australia"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q117706521"
+    },
+    "mls-MLS-OBJ-0007VH": {
+      "birthDate": "2003-02-26",
+      "source": "https://www.mlssoccer.com/players/sergi-solans/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0007VH"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Spain"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q138511169"
+    },
+    "mls-MLS-OBJ-000283": {
+      "birthDate": "2007-03-22",
+      "source": "https://www.mlssoccer.com/players/zavier-gozo/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000283"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q123090257"
+    },
+    "mls-MLS-OBJ-0005K2": {
+      "birthDate": "2007-06-28",
+      "source": "https://www.mlssoccer.com/players/aiden-hezarkhani/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0005K2"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q134638884"
+    },
+    "mls-MLS-OBJ-000C5X": {
+      "birthDate": "1999-09-05",
+      "source": "https://www.mlssoccer.com/players/victor-olatunji/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000C5X"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Nigeria"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q61744706"
+    },
+    "mls-MLS-OBJ-000285": {
+      "birthDate": "2008-04-20",
+      "source": "https://www.mlssoccer.com/players/luca-moisa/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000285"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Romania",
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q138511157"
+    },
+    "mls-MLS-OBJ-0007UU": {
+      "birthDate": "2008-08-08",
+      "source": "https://www.mlssoccer.com/players/antonio-riquelme/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0007UU"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-0007VG": {
+      "birthDate": "2002-03-12",
+      "source": "https://www.mlssoccer.com/players/lineker-rodrigues-dos-santos/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0007VG"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-00087O": {
+      "birthDate": "2002-11-11",
+      "source": "https://www.mlssoccer.com/players/ruben-mesalles/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00087O"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000CLO": {
+      "birthDate": "2004-01-08",
+      "source": "https://www.mlssoccer.com/players/juan-jose-arias/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CLO"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Colombia"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q112155206"
+    },
+    "mls-MLS-OBJ-000359": {
+      "birthDate": "2005-10-01",
+      "source": "https://www.mlssoccer.com/players/max-kerkvliet/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000359"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-0007VF": {
+      "birthDate": "2002-04-28",
+      "source": "https://www.mlssoccer.com/players/jesus-barea/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0007VF"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Spain"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q133758525"
+    },
+    "mls-MLS-OBJ-000CX6": {
+      "birthDate": "2008-02-19",
+      "source": "https://www.mlssoccer.com/players/bryan-zamble/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CX6"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Ivory Coast"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q138511413"
+    },
+    "mls-MLS-OBJ-000CHU": {
+      "birthDate": "2005-11-05",
+      "source": "https://www.mlssoccer.com/players/osvald-soe/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CHU"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Kingdom of Denmark"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q138007342"
+    },
+    "mls-MLS-OBJ-0006LX": {
+      "birthDate": "2008-06-20",
+      "source": "https://www.mlssoccer.com/players/anisse-saidi/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0006LX"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Tunisia",
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q132198135"
+    },
+    "mls-MLS-OBJ-00081P": {
+      "birthDate": "2003-03-21",
+      "source": "https://www.mlssoccer.com/players/ian-pilcher/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00081P"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q132861051"
+    },
+    "mls-MLS-OBJ-000143": {
+      "birthDate": "2003-12-04",
+      "source": "https://www.mlssoccer.com/players/jack-jasinski/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000143"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q97504520"
+    },
+    "mls-MLS-OBJ-000544": {
+      "birthDate": "2002-09-06",
+      "source": "https://www.mlssoccer.com/players/nathan-crockford/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000544"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000541": {
+      "birthDate": "1999-09-28",
+      "source": "https://www.mlssoccer.com/players/tomas-totland/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000541"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Norway"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q55318386"
+    },
+    "mls-MLS-OBJ-0001ER": {
+      "birthDate": "1998-02-05",
+      "source": "https://www.mlssoccer.com/players/rafael-santos/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0001ER"
+      },
+      "retrievedOn": "2026-10-24",
+      "foot": "left",
+      "nationalities": [
+        "Brazil"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q65030007"
+    },
+    "mls-MLS-OBJ-0002FO": {
+      "birthDate": "2002-04-01",
+      "source": "https://www.mlssoccer.com/players/sang-bin-jeong/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0002FO"
+      },
+      "retrievedOn": "2026-10-24",
+      "foot": "right",
+      "nationalities": [
+        "South Korea"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q105106303"
+    },
+    "mls-MLS-OBJ-0000YP": {
+      "birthDate": "1994-11-18",
+      "source": "https://www.mlssoccer.com/players/josh-yaro/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0000YP"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000CM1": {
+      "birthDate": "2005-08-05",
+      "source": "https://www.mlssoccer.com/players/emilio-aristizabal/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CM1"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Colombia"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q124538153"
+    },
+    "mls-MLS-OBJ-00088F": {
+      "birthDate": "2008-08-14",
+      "source": "https://www.mlssoccer.com/players/antone-bossenberry/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00088F"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Canada"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q136555656"
+    },
+    "mls-MLS-OBJ-000CKW": {
+      "birthDate": "2002-07-10",
+      "source": "https://www.mlssoccer.com/players/luca-costabile/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CKW"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-000158": {
+      "birthDate": "2004-04-29",
+      "source": "https://www.mlssoccer.com/players/jackson-gilman-x2365/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000158"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q139666477"
+    },
+    "mls-MLS-OBJ-000CXY": {
+      "birthDate": "2003-05-01",
+      "source": "https://www.mlssoccer.com/players/fletcher-bank/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CXY"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q138844235"
+    },
+    "mls-MLS-OBJ-000CGZ": {
+      "birthDate": "2000-12-21",
+      "source": "https://www.mlssoccer.com/players/matheus-pereira/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CGZ"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q62399029"
+    },
+    "mls-MLS-OBJ-000CQI": {
+      "birthDate": "2005-01-15",
+      "source": "https://www.mlssoccer.com/players/bruno-caicedo/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000CQI"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Ecuador"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q132124580"
+    },
+    "mls-MLS-OBJ-0000DM": {
+      "birthDate": "2001-10-25",
+      "source": "https://www.mlssoccer.com/players/aziel-jackson/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0000DM"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q108527714"
+    },
+    "mls-MLS-OBJ-0007T0": {
+      "birthDate": "2003-10-03",
+      "source": "https://www.mlssoccer.com/players/edier-ocampo/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0007T0"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Colombia"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q118207303"
+    },
+    "mls-MLS-OBJ-0003F4": {
+      "birthDate": "2007-03-15",
+      "source": "https://www.mlssoccer.com/players/liam-mackenzie/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0003F4"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Canada"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q133473182"
+    },
+    "mls-MLS-OBJ-000BX5": {
+      "birthDate": "2003-01-27",
+      "source": "https://www.mlssoccer.com/players/kenji-cabrera/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000BX5"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Peru"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q106923123"
+    },
+    "mls-MLS-OBJ-0002FH": {
+      "birthDate": "2006-03-11",
+      "source": "https://www.mlssoccer.com/players/jeevan-badwal/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0002FH"
+      },
+      "retrievedOn": "2026-10-24"
+    },
+    "mls-MLS-OBJ-0006W8": {
+      "birthDate": "2007-09-17",
+      "source": "https://www.mlssoccer.com/players/rayan-elloumi/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0006W8"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Canada",
+        "Tunisia"
+      ],
+      "nationalityBasis": "MLS National Team",
+      "nationalitySource": "https://www.wikidata.org/entity/Q134932034"
+    },
+    "mls-MLS-OBJ-0001C5": {
+      "birthDate": "2005-03-25",
+      "source": "https://www.mlssoccer.com/players/mihail-gherasimencov-x6092/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-0001C5"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Moldova"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q118244602"
+    },
+    "mls-MLS-OBJ-00088N": {
+      "birthDate": "2002-11-14",
+      "source": "https://www.mlssoccer.com/players/nikola-djordjevic/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00088N"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "United States"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q139564836"
+    },
+    "mls-MLS-OBJ-00009M": {
+      "birthDate": "2000-08-12",
+      "source": "https://www.mlssoccer.com/players/micael-dos-santos-silva/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00009M"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Brazil"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q110449941"
+    },
+    "mls-MLS-OBJ-00081L": {
+      "birthDate": "2003-05-29",
+      "source": "https://www.mlssoccer.com/players/artem-smolyakov/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-00081L"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Ukraine"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q109808075"
+    },
+    "mls-MLS-OBJ-000BNS": {
+      "birthDate": "2001-02-11",
+      "source": "https://www.mlssoccer.com/players/louicius-don-deedson/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000BNS"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Haiti"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q72697581"
+    },
+    "mls-MLS-OBJ-000BW1": {
+      "birthDate": "2000-01-11",
+      "source": "https://www.mlssoccer.com/players/nicolas-fernandez-mercau/",
+      "identity": {
+        "property": "MLS player_id",
+        "value": "MLS-OBJ-000BW1"
+      },
+      "retrievedOn": "2026-10-24",
+      "nationalities": [
+        "Argentina"
+      ],
+      "nationalitySource": "https://www.wikidata.org/entity/Q104834242"
+    }
+  }
+}

@@ -128,7 +128,52 @@
   function slots(t) {
     return formations[t.tactics?.formation] || formations["4-3-3"];
   }
-  function fit(p, s) {
+  const positionNames = {
+    GOL: "Goleiro",
+    LD: "Lateral direito",
+    LE: "Lateral esquerdo",
+    ZAG: "Zagueiro",
+    AD: "Ala direito",
+    AE: "Ala esquerdo",
+    VOL: "Volante",
+    MC: "Meia central",
+    MEI: "Meia ofensivo",
+    MD: "Meia pela direita",
+    ME: "Meia pela esquerda",
+    PD: "Ponta direita",
+    PE: "Ponta esquerda",
+    CA: "Centroavante",
+    SA: "Segundo atacante",
+  };
+  const targetPosition = (s) =>
+    ({
+      gk: "GOL",
+      rb: "LD",
+      lb: "LE",
+      rcb: "ZAG",
+      lcb: "ZAG",
+      cb: "ZAG",
+      rwb: "AD",
+      lwb: "AE",
+      dm: "VOL",
+      rdm: "VOL",
+      ldm: "VOL",
+      rcm: "MC",
+      lcm: "MC",
+      am: "MEI",
+      rm: "MD",
+      lm: "ME",
+      rw: "PD",
+      lw: "PE",
+      st: "CA",
+      rst: "CA",
+      lst: "CA",
+    })[s.id] || null;
+  const positionMatches = (p, code) =>
+    p.pos === code ||
+    p.naturalPositions?.includes(code) ||
+    p.secondaryPositions?.includes(code);
+  function generalFit(p, s) {
     if (p.pos === s.pos) return 1;
     if (p.pos === "GOL" || s.pos === "GOL") return 0.25;
     return (
@@ -140,6 +185,58 @@
         ATA: { MEI: 0.82, VOL: 0.6, LAT: 0.55, ZAG: 0.5 },
       }[p.pos]?.[s.pos] || 0.65
     );
+  }
+  const related = {
+    LD: { LE: 0.65, AD: 0.9, MD: 0.8, ZAG: 0.72 },
+    LE: { LD: 0.65, AE: 0.9, ME: 0.8, ZAG: 0.72 },
+    AD: { LD: 0.9, AE: 0.65, MD: 0.86, PD: 0.76 },
+    AE: { LE: 0.9, AD: 0.65, ME: 0.86, PE: 0.76 },
+    ZAG: { VOL: 0.78, LD: 0.65, LE: 0.65 },
+    VOL: { MC: 0.9, ZAG: 0.78, MEI: 0.72 },
+    MC: { VOL: 0.86, MEI: 0.86, MD: 0.78, ME: 0.78 },
+    MEI: { MC: 0.86, SA: 0.86, PE: 0.74, PD: 0.74 },
+    MD: { PD: 0.88, ME: 0.7, MC: 0.82, AD: 0.76 },
+    ME: { PE: 0.88, MD: 0.7, MC: 0.82, AE: 0.76 },
+    PD: { PE: 0.68, MD: 0.88, CA: 0.78, SA: 0.84, MEI: 0.76 },
+    PE: { PD: 0.68, ME: 0.88, CA: 0.78, SA: 0.84, MEI: 0.76 },
+    CA: { SA: 0.9, PE: 0.72, PD: 0.72, MEI: 0.65 },
+    SA: { CA: 0.92, MEI: 0.9, PE: 0.75, PD: 0.75 },
+  };
+  function fit(p, s) {
+    const target = targetPosition(s),
+      natural = p.naturalPositions || [],
+      secondary = p.secondaryPositions || [];
+    if (!target || !natural.length) return generalFit(p, s);
+    if (natural.includes(target)) return 1;
+    if (natural.includes("GOL") || target === "GOL") return 0.25;
+    if (secondary.includes(target)) return 0.92;
+    return Math.max(
+      ...natural.map(
+        (code) => related[code]?.[target] || Math.min(0.78, generalFit(p, s)),
+      ),
+    );
+  }
+  function adaptation(p, s) {
+    const factor = fit(p, s),
+      target = targetPosition(s);
+    return {
+      factor,
+      effective: Math.round(p.ovr * factor),
+      penalty: Math.round((1 - factor) * 100),
+      label:
+        factor === 1
+          ? p.naturalPositions?.length
+            ? "Natural"
+            : "Posição geral"
+          : p.secondaryPositions?.includes(target)
+            ? "Secundária"
+            : factor >= 0.85
+              ? "Adaptado"
+              : "Fora da posição",
+      natural: p.naturalPositions?.length
+        ? p.naturalPositions.join(" / ")
+        : p.pos + " · lado não informado",
+    };
   }
   function positions(t) {
     const available = t.players.filter((p) => !p.injury),
@@ -154,12 +251,16 @@
     });
     slots(t).forEach((s, i) => {
       if (chosen[i]) return;
-      const p = available
-        .filter((p) => !reserved.has(p.id))
-        .sort(
-          (a, b) =>
-            b.ovr * b.fitness * fit(b, s) - a.ovr * a.fitness * fit(a, s),
-        )[0];
+      let p = null,
+        best = -Infinity;
+      for (const candidate of available) {
+        if (reserved.has(candidate.id)) continue;
+        const score = candidate.ovr * candidate.fitness * fit(candidate, s);
+        if (score > best) {
+          best = score;
+          p = candidate;
+        }
+      }
       if (p) {
         chosen[i] = p;
         reserved.add(p.id);
@@ -391,6 +492,9 @@
     ensure,
     slots,
     fit,
+    adaptation,
+    positionNames,
+    positionMatches,
     positions,
     select,
     formation,

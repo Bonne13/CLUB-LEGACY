@@ -164,9 +164,8 @@
       if (c.expires >= s.season && c.winBonus)
         post(t, s, c.winBonus, "sponsors", `Bônus por vitória · ${c.name}`);
   }
-  function canHire(t, p, fee, salary, s) {
-    const f = init(t, s, true),
-      bonus = salary * 4;
+  function canHire(t, p, fee, salary, s, bonus = salary * 4) {
+    const f = init(t, s, true);
     if (fee > f.transferBudget)
       fail(
         "Orçamento de transferências insuficiente. Realocar verbas no Financeiro pode liberar espaço.",

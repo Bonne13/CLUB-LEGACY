@@ -76,6 +76,7 @@ test("simulação diária ou semanal para antes de jogar e não inventa resultad
   assert.deepEqual(result, {
     advanced: 5,
     stoppedForMatch: true,
+    stoppedForNegotiation: false,
     finished: false,
   });
   assert.equal(s.today, 7);

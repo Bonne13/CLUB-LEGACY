@@ -154,7 +154,7 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
     await page.getByRole("button", { name: "Meu clube", exact: true }).click();
     assert((await page.locator("[data-article]").count()) > 0);
     assert(
-      (await page.locator(".news-grid").innerText()).includes("contratado"),
+      (await page.locator(".news-grid").innerText()).includes("Proposta enviada"),
     );
     await page.locator("#news-category").selectOption("all");
     await page.setViewportSize({ width: 1440, height: 1000 });

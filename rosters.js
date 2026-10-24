@@ -40,7 +40,7 @@
     const [
         sourceId,
         name,
-        dob,
+        originalDob,
         pos,
         euroValue,
         valueDate,
@@ -50,6 +50,16 @@
         referenceAge,
         referenceYear,
       ] = row,
+      bio =
+        DATA.playerBios?.players?.[
+          /^\d+$/.test(sourceId) ? "tm-" + sourceId : sourceId
+        ],
+      positionProfile =
+        DATA.playerPositions?.players?.[
+          /^\d+$/.test(sourceId) ? "tm-" + sourceId : sourceId
+        ],
+      dob = originalDob || bio?.birthDate || null,
+      citizenship = nationality || bio?.nationalities?.join("  ") || null,
       age = dob ? ageOn(dob, season) : referenceAge + season - referenceYear,
       detail = row[11] || {},
       value =
@@ -76,13 +86,18 @@
       name,
       birthDate: dob,
       ageEstimated: !dob,
-      ageUnknown: Boolean(detail.ageUnknown),
+      ageUnknown: !dob && Boolean(detail.ageUnknown),
+      birthSource: bio?.source || null,
       positionEstimated: Boolean(detail.positionEstimated),
+      naturalPositions: [...(positionProfile?.natural || [])],
+      secondaryPositions: [...(positionProfile?.secondary || [])],
+      preferredFoot: positionProfile?.foot || bio?.foot || null,
+      positionSource: positionProfile?.source || null,
       contractEstimated: Boolean(detail.sourceKey),
       membershipReference: detail.reference || null,
       membershipKind: detail.membership || null,
-      nationalities: nationality ? nationality.split(/\s{2,}/) : [],
-      nationality: nationality?.split(/\s{2,}/)[0] || null,
+      nationalities: citizenship ? citizenship.split(/\s{2,}/) : [],
+      nationality: citizenship?.split(/\s{2,}/)[0] || null,
       dataSource: historicalSource || "transfermarkt-2025",
       pos,
       age,

@@ -21,7 +21,7 @@ A importação usa identificadores estáveis quando disponíveis. A conciliaçã
 
 IDs preservam a origem: `tm-`, `sf-`, `ss-`, `fb-` e `mls-`. A origem do vínculo, data e caráter parcial são mantidos. Não se baixam fotos nem escudos.
 
-Nascimento conhecido é preservado. Quando existe apenas ano ou idade histórica, a idade é aproximada. Sem referência suficiente, a interface mostra **Não informada**; o motor usa um parâmetro interno, sem apresentá-lo como dado real. Parte das posições brasileiras é estimada a partir das estatísticas e marcada **est.**; posições gerais de outras fontes podem ser complementadas por referências históricas. Elegibilidade de seleções é simplificada pela cidadania disponível, sem verificar vínculos oficiais FIFA. A base oferece 45 seleções elegíveis, até seis amistosos simulados por ano e folgas em calendários ímpares.
+Nascimento conhecido é preservado. Quando existe apenas ano ou idade histórica, a idade é aproximada. Sem referência suficiente, a interface mostra **Não informada**; o motor usa um parâmetro interno, sem apresentá-lo como dado real. Parte das posições brasileiras é estimada a partir das estatísticas e marcada **est.**; posições gerais de outras fontes podem ser complementadas por referências históricas. Elegibilidade de seleções é simplificada pela cidadania disponível, sem verificar vínculos oficiais FIFA. A base oferece 46 seleções elegíveis, até seis amistosos simulados por ano e folgas em calendários ímpares.
 
 ## Base histórica preservada
 
@@ -32,6 +32,18 @@ Nascimento conhecido é preservado. Quando existe apenas ano ou idade histórica
 - `datalake/transfermarkt/team_details/team_details.csv`: identidade dos clubes.
 
 Complementos históricos de SoFIFA: `2019/data.csv` e `2021/data.csv` de [amanthedorkknight/fifa18-all-player-statistics](https://github.com/amanthedorkknight/fifa18-all-player-statistics/tree/dfa2c55b08f9c9dd0fb26e5db9585e026bf263a7), e `data/FIFA23_official_data.csv` de [anselmoaxo/dataset-fifa23](https://github.com/anselmoaxo/dataset-fifa23/tree/ad01b925859ddf412d47856ce05d04ba4944dbf2). São identidades e vínculos antigos, não elencos atuais; alguns atletas podem estar aposentados. Preços SoFIFA são parâmetros estimados, sem `referenceValueEuro`. Não se usam identidades brasileiras genéricas dessas edições.
+
+## Nascimentos complementares e posições detalhadas (24/10/2026)
+
+`player-bios.json` mantém 259 correções, com data de nascimento, URL, data da consulta e prova de identidade. 115 usam a propriedade **P12302 (Sofascore player ID)** do [Wikidata](https://www.wikidata.org/) e **P569** com precisão de dia; datas conflitantes não são aplicadas. 144 vêm de perfis públicos de [MLSsoccer.com](https://www.mlssoccer.com/players/), aceitos somente quando o `player_id` principal da página coincide exatamente com o identificador importado. O nome ou a URL, sozinhos, não confirmam a identidade. A idade mostrada no perfil atual não é copiada: usa-se a data de nascimento para calcular a idade na temporada da carreira.
+
+Cidadanias complementares usam o Wikidata **P27**, com a mesma identidade confirmada; para perfis MLS, a URL **P2398** e o nascimento também precisam coincidir. O campo oficial **National Team**, quando presente, serve como nacionalidade de referência simplificada, não como prova de todas as cidadanias. Esses casos mantêm a origem do campo. Wikidata disponibiliza seus dados estruturados em CC0. Os perfis MLS fornecem somente fatos biográficos; imagens e conteúdo editorial não são copiados.
+
+Restam **103 registros sem nascimento ou idade verificáveis**, explicitamente identificados na interface. A correção não inventa datas, não muda IDs, nem recoloca jogadores nos clubes anteriores. Saves existentes recebem nascimento/idade e posições faltantes ao carregar, sem desfazer evolução, transferências ou contratos.
+
+`player-positions.json` contém a posição principal específica e o pé de 5.104 identidades já existentes, vinculadas por ID à revisão Transfermarkt descrita acima. Não se deduz a posição do jogador apenas por seu pé dominante. São referências históricas de posição principal, sem alegar um levantamento completo de posições alternativas em 2026. O motor aceita alternativas quando houver dados, mas não fabrica posições secundárias para preencher lacunas.
+
+`python3 scripts/apply-player-bios.py` incorpora esses dois arquivos factuais em `roster-data.js`. O atualizador de elencos também os preserva. Adaptação, queda de overall efetivo e preferência por posições na escalação são regras de `tactics.js`, não números fornecidos pelas fontes. A posição natural recebe fator 1; uma alternativa confirmada recebe 0,92; improvisações dependem da distância entre as posições e o lado, por exemplo PE → PD recebe 0,68.
 
 ## Reprodução da atualização
 

@@ -1,6 +1,6 @@
 {
   "name": "club-legacy",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "scripts": {
     "start": "python3 -m http.server 3000",
@@ -13,6 +13,7 @@
     "test:economy-browser": "node tests/finance-browser.cjs",
     "test:career-browser": "node tests/career-browser.cjs",
     "test:tactics-browser": "node tests/tactics-browser.cjs",
-    "test:current-browser": "node tests/current-modes-browser.cjs"
+    "test:current-browser": "node tests/current-modes-browser.cjs",
+    "test:market-browser": "node tests/market-negotiations-browser.cjs"
   }
 }

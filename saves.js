@@ -87,6 +87,14 @@
         number(p[k], 0);
       if (p.fitness > 100 || p.ovr > 100 || p.potential > 100 || p.age > 150)
         fail();
+      for (const key of ["naturalPositions", "secondaryPositions"])
+        if (
+          p[key] !== undefined &&
+          array(p[key], 16).some(
+            (code) => !Object.hasOwn(E.tactics.positionNames, code),
+          )
+        )
+          fail();
     }
     for (const t of teams) {
       if (!known.has(t.id) || ids.has(t.id)) fail();
@@ -132,6 +140,88 @@
       }
     }
     array(s.freeAgents, 30000).forEach(player);
+    if (s.negotiations !== undefined) {
+      const negotiations = array(s.negotiations, 100),
+        negotiationIds = new Set(),
+        activePlayers = new Set();
+      number(s.negotiationSequence, 0);
+      number(s.negotiationRevision, 0);
+      if (
+        !Number.isSafeInteger(s.negotiationSequence) ||
+        !Number.isSafeInteger(s.negotiationRevision)
+      )
+        fail();
+      const date = (value) => {
+        if (
+          typeof value !== "string" ||
+          !/^\d{4}-\d{2}-\d{2}$/.test(value) ||
+          !Number.isFinite(Date.parse(value)) ||
+          new Date(value).toISOString().slice(0, 10) !== value
+        )
+          fail();
+      };
+      for (const n of negotiations) {
+        string(n.id);
+        string(n.playerId);
+        string(n.playerName);
+        string(n.message, 1000);
+        if (
+          !/^neg-\d+$/.test(n.id) ||
+          Number(n.id.slice(4)) > s.negotiationSequence ||
+          negotiationIds.has(n.id) ||
+          !known.has(n.buyerId) ||
+          (n.sellerId !== null && !known.has(n.sellerId)) ||
+          !E.NEGOTIATION_STAGES.includes(n.stage)
+        )
+          fail();
+        negotiationIds.add(n.id);
+        for (const key of [
+          "fee",
+          "salary",
+          "bonus",
+          "askFee",
+          "askSalary",
+          "askBonus",
+          "clubRounds",
+          "playerRounds",
+        ]) {
+          number(n[key], 0, 1e13);
+          if (!Number.isSafeInteger(n[key])) fail();
+        }
+        number(n.years, 1, 5);
+        number(n.askYears, 1, 5);
+        if (
+          !Number.isInteger(n.years) ||
+          !Number.isInteger(n.askYears) ||
+          n.clubRounds > 3 ||
+          n.playerRounds > 3 ||
+          !["important", "rotation", "prospect"].includes(n.role)
+        )
+          fail();
+        if (n.salary > 30000000 || n.bonus > 1e12) fail();
+        date(n.createdOn);
+        date(n.updatedOn);
+        if (n.dueOn !== null) date(n.dueOn);
+        if (n.expiresOn !== null) date(n.expiresOn);
+        if (
+          ["club-pending", "player-pending", "medical-pending"].includes(
+            n.stage,
+          ) &&
+          !n.dueOn
+        )
+          fail();
+        array(n.history, 24).forEach((h) => {
+          date(h.date);
+          string(h.message, 1000);
+          if (!E.NEGOTIATION_STAGES.includes(h.stage)) fail();
+        });
+        if (E.negotiationActive(n)) {
+          if (activePlayers.has(n.playerId) || !players.has(n.playerId)) fail();
+          activePlayers.add(n.playerId);
+        }
+      }
+      if (activePlayers.size > 20) fail();
+    }
     if (s.clubId !== null && !known.has(s.clubId)) fail();
     const coaches = array(s.coaches, 2000);
     for (const c of coaches) {

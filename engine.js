@@ -343,6 +343,9 @@
       news: ["Bem-vindo. Escolha seu clube para construir um legado."],
       history: [],
       transfers: [],
+      negotiations: [],
+      negotiationSequence: 0,
+      negotiationRevision: 0,
       coachMoves: [],
       offers: [],
       freeAgents: [],
@@ -423,6 +426,9 @@
     return result;
   }
   function prepareCareer(s) {
+    s.negotiations ??= [];
+    s.negotiationSequence ??= 0;
+    s.negotiationRevision ??= 0;
     s.mode ??= "normal";
     s.rosterRevision ??= "legacy-preserved";
     s.testFundingTotal ??= 0;
@@ -438,12 +444,31 @@
     ];
     for (const p of existing) {
       const row = rows.get(p.id);
-      if (row && !p.nationalities) {
+      if (row) {
         const ref = R.make(row, s.season, "");
-        p.nationalities = ref.nationalities;
-        p.nationality = ref.nationality;
-        p.dataSource = ref.dataSource;
-        p.ageEstimated = ref.ageEstimated;
+        if (!p.naturalPositions?.length && ref.naturalPositions.length) {
+          p.naturalPositions = [...ref.naturalPositions];
+          p.secondaryPositions = [...ref.secondaryPositions];
+          p.preferredFoot = ref.preferredFoot;
+          p.positionSource = ref.positionSource;
+        }
+        if (!p.nationalities) {
+          p.nationalities = ref.nationalities;
+          p.nationality = ref.nationality;
+          p.dataSource = ref.dataSource;
+          p.ageEstimated = ref.ageEstimated;
+        }
+        if (!p.birthDate && ref.birthDate) {
+          p.birthDate = ref.birthDate;
+          p.age = ref.age;
+          p.ageEstimated = false;
+          p.ageUnknown = false;
+          p.birthSource = ref.birthSource;
+        }
+        if (!p.nationalities?.length && ref.nationalities.length) {
+          p.nationalities = ref.nationalities;
+          p.nationality = ref.nationality;
+        }
       }
     }
     if (!R.DATA.revision && s.dataRevision !== "historical-1") {
@@ -764,14 +789,17 @@
     if (s.live?.done) s.live = null;
     const limit = Math.min(365, amount * (unit === "weeks" ? 7 : 1));
     let advanced = 0;
+    const revision = s.negotiationRevision || 0;
     while (advanced < limit && dayInfo(s) && !nextFixture(s)) {
       advance(s, rng);
       advanced++;
+      if ((s.negotiationRevision || 0) !== revision) break;
     }
     return {
       advanced,
       stoppedForMatch: Boolean(nextFixture(s)),
       finished: !dayInfo(s),
+      stoppedForNegotiation: (s.negotiationRevision || 0) !== revision,
     };
   }
   const roundName = (r) =>
@@ -1174,6 +1202,7 @@
     s.history = s.history.filter((h) => h.season === s.season).slice(-6);
     if (d.kind !== "rest") s.day++;
     s.today = (s.today ?? d.offset) + 1;
+    processNegotiations(s);
     const next = calendar()[s.day];
     if (next?.kind === "cup") prepareKnockouts(s, next.round);
     if (!next) seasonEnd(s, rng);
@@ -1295,7 +1324,402 @@
   function minFee(s, p) {
     return Math.round(p.price * (p.contract <= s.season + 1 ? 0.8 : 1));
   }
-  function buy(s, id, fee, salary, years) {
+  function marketPlayers(s, filters = {}) {
+    const normalize = (value) =>
+      String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+    const bound = (value, fallback) =>
+      value === "" || value == null ? fallback : Number(value);
+    const minOverall = bound(filters.overallMin, 0),
+      maxOverall = bound(filters.overallMax, 100),
+      minAge = bound(filters.ageMin, -Infinity),
+      maxAge = bound(filters.ageMax, Infinity),
+      maxPrice = bound(filters.priceMax, Infinity),
+      ageLimited = Number.isFinite(minAge) || Number.isFinite(maxAge);
+    const result = s.teams
+      .filter(
+        (t) =>
+          t.id !== s.clubId &&
+          (!filters.league ||
+            filters.league === "all" ||
+            t.leagueId === filters.league),
+      )
+      .flatMap((t) => t.players.map((p) => ({ ...p, sellerName: t.name })))
+      .concat(
+        !filters.league || ["all", "free"].includes(filters.league)
+          ? s.freeAgents.map((p) => ({ ...p, sellerName: "Sem clube" }))
+          : [],
+      )
+      .filter((p) => {
+        const nations = (
+          p.nationalities?.length ? p.nationalities : [p.nationality]
+        ).filter(Boolean);
+        return (
+          (!filters.position ||
+            filters.position === "all" ||
+            T.positionMatches(p, filters.position)) &&
+          normalize(p.name).includes(normalize(filters.query)) &&
+          p.ovr >= minOverall &&
+          p.ovr <= maxOverall &&
+          p.price <= maxPrice &&
+          (!ageLimited ||
+            (!p.ageUnknown && p.age >= minAge && p.age <= maxAge)) &&
+          (!filters.nationality ||
+            filters.nationality === "all" ||
+            (filters.nationality === "unknown"
+              ? !nations.length
+              : nations.includes(filters.nationality)))
+        );
+      });
+    const byName = (a, b) =>
+      a.name.localeCompare(b.name, "pt-BR") || a.id.localeCompare(b.id);
+    const sorts = {
+      "overall-desc": (a, b) => b.ovr - a.ovr || byName(a, b),
+      "age-asc": (a, b) =>
+        Number(Boolean(a.ageUnknown)) - Number(Boolean(b.ageUnknown)) ||
+        (!a.ageUnknown && !b.ageUnknown ? a.age - b.age : 0) ||
+        byName(a, b),
+      "age-desc": (a, b) =>
+        Number(Boolean(a.ageUnknown)) - Number(Boolean(b.ageUnknown)) ||
+        (!a.ageUnknown && !b.ageUnknown ? b.age - a.age : 0) ||
+        byName(a, b),
+      "value-asc": (a, b) => a.price - b.price || byName(a, b),
+      "value-desc": (a, b) => b.price - a.price || byName(a, b),
+      name: byName,
+    };
+    return sorts[filters.sort] ? result.sort(sorts[filters.sort]) : result;
+  }
+  const NEGOTIATION_STAGES = [
+    "club-pending",
+    "club-counter",
+    "contract-ready",
+    "player-pending",
+    "player-counter",
+    "medical-pending",
+    "blocked",
+    "completed",
+    "rejected",
+    "cancelled",
+    "expired",
+  ];
+  const negotiationActive = (n) =>
+    !["completed", "rejected", "cancelled", "expired"].includes(n.stage);
+  const negotiationDate = (s, days = 0) =>
+    new Date(Date.UTC(s.season, 1, 1 + s.today + days))
+      .toISOString()
+      .slice(0, 10);
+  function negotiationUpdate(s, n, stage, message, delay = 0) {
+    n.stage = stage;
+    n.message = message;
+    n.updatedOn = negotiationDate(s);
+    n.dueOn = delay ? negotiationDate(s, delay) : null;
+    n.expiresOn = [
+      "club-counter",
+      "contract-ready",
+      "player-counter",
+      "blocked",
+    ].includes(stage)
+      ? negotiationDate(s, 10)
+      : null;
+    n.history.push({ date: n.updatedOn, stage, message });
+    n.history = n.history.slice(-24);
+    s.negotiationRevision = (s.negotiationRevision || 0) + 1;
+    news(s, `${n.playerName}: ${message}`, {
+      category: "market",
+      clubIds: [n.buyerId, ...(n.sellerId ? [n.sellerId] : [])],
+    });
+  }
+  function negotiationCheck(s, id, stages) {
+    if (s.live && !s.live.done) fail("Conclua a partida antes de negociar.");
+    const n = (s.negotiations || []).find((n) => n.id === id);
+    if (!n || n.buyerId !== s.clubId || !stages.includes(n.stage))
+      fail("Esta negociação não está disponível nesta etapa.");
+    if (!windowOpen(s)) fail("A janela de transferências está fechada.");
+    const found = locate(s, n.playerId);
+    if (!found || (found.t?.id || null) !== n.sellerId)
+      fail(
+        "O jogador mudou de clube; avance um dia para atualizar a negociação.",
+      );
+    return { n, ...found };
+  }
+  function validateClubFee(s, fee) {
+    if (!Number.isSafeInteger(fee) || fee < 0 || fee > 1e13)
+      fail("Informe um valor inteiro válido para a transferência.");
+    const buyer = team(s);
+    if (fee > buyer.finance.transferBudget)
+      fail("A proposta excede a verba de transferências.");
+    if (fee > buyer.money) fail("O caixa não cobre esta proposta.");
+  }
+  function negotiateClub(s, playerId, fee) {
+    if (!s.clubId) fail("Comece uma carreira primeiro.");
+    if (s.live && !s.live.done) fail("Conclua a partida antes de negociar.");
+    if (!windowOpen(s)) fail("A janela de transferências está fechada.");
+    const found = locate(s, playerId);
+    if (!found || found.t?.id === s.clubId) fail("Jogador indisponível.");
+    const active = (s.negotiations || []).filter(negotiationActive);
+    if (active.some((n) => n.playerId === playerId))
+      fail("Você já tem uma negociação em andamento com esse atleta.");
+    if (active.length >= 20)
+      fail("Conclua ou cancele uma das vinte negociações em andamento.");
+    validateClubFee(s, fee);
+    if (!found.t && fee !== 0)
+      fail("Jogadores livres não têm taxa de transferência.");
+    const { p, t } = found;
+    const n = {
+      id: "neg-" + ((s.negotiationSequence || 0) + 1),
+      playerId,
+      playerName: p.name,
+      buyerId: s.clubId,
+      sellerId: t?.id || null,
+      fee,
+      salary: 0,
+      years: 2,
+      bonus: 0,
+      role: "rotation",
+      clubRounds: t ? 1 : 0,
+      playerRounds: 0,
+      askFee: t
+        ? Math.ceil(
+            minFee(s, p) *
+              (t.players.filter((x) => x.ovr > p.ovr).length < 3 ? 1.15 : 1.05),
+          )
+        : 0,
+      askSalary: 0,
+      askBonus: 0,
+      askYears: 2,
+      createdOn: negotiationDate(s),
+      history: [],
+    };
+    s.negotiationSequence = (s.negotiationSequence || 0) + 1;
+    s.negotiations = [n, ...(s.negotiations || [])].filter(
+      (x, i, all) =>
+        negotiationActive(x) ||
+        all.slice(0, i).filter((v) => !negotiationActive(v)).length < 80,
+    );
+    negotiationUpdate(
+      s,
+      n,
+      t ? "club-pending" : "contract-ready",
+      t
+        ? "Proposta enviada ao clube. Resposta em dois dias."
+        : "Atleta livre: você pode negociar o contrato diretamente.",
+      t ? 2 : 0,
+    );
+    return n;
+  }
+  function counterClub(s, id, fee) {
+    const { n } = negotiationCheck(s, id, ["club-counter"]);
+    validateClubFee(s, fee);
+    n.fee = fee;
+    n.clubRounds++;
+    negotiationUpdate(
+      s,
+      n,
+      "club-pending",
+      "Nova proposta enviada ao clube. Resposta em dois dias.",
+      2,
+    );
+    return n;
+  }
+  function negotiatePlayer(s, id, salary, years, bonus, role = "rotation") {
+    const { n, p } = negotiationCheck(s, id, [
+      "contract-ready",
+      "player-counter",
+    ]);
+    terms(s, years, salary);
+    if (
+      !Number.isSafeInteger(bonus) ||
+      bonus < 0 ||
+      bonus > 1e12 ||
+      !["important", "rotation", "prospect"].includes(role)
+    )
+      fail("Informe luvas e papel no elenco válidos.");
+    F.canHire(team(s), p, n.fee, salary, s, bonus);
+    const roleFactor =
+      role === "important"
+        ? 1
+        : role === "prospect" && p.age >= 24
+          ? 1.15
+          : 1.05;
+    const reputationFactor = Math.max(
+      1,
+      Math.min(1.25, 1 + (p.ovr - 50 - s.reputation * 0.4) * 0.005),
+    );
+    n.askSalary = Math.min(
+      30000000,
+      Math.ceil(
+        p.salary * (n.sellerId ? 1.15 : 1.05) * roleFactor * reputationFactor,
+      ),
+    );
+    n.askBonus = n.askSalary * 4;
+    n.askYears = p.age >= 32 ? 2 : p.age < 24 ? 4 : 3;
+    Object.assign(n, {
+      salary,
+      years,
+      bonus,
+      role,
+      playerRounds: n.playerRounds + 1,
+    });
+    negotiationUpdate(
+      s,
+      n,
+      "player-pending",
+      "Contrato enviado ao jogador e ao empresário. Resposta em dois dias.",
+      2,
+    );
+    return n;
+  }
+  function cancelNegotiation(s, id) {
+    const n = (s.negotiations || []).find(
+      (n) => n.id === id && n.buyerId === s.clubId,
+    );
+    if (!n || !negotiationActive(n)) fail("Negociação já encerrada.");
+    negotiationUpdate(
+      s,
+      n,
+      "cancelled",
+      "Você encerrou a negociação. Nenhum valor foi cobrado.",
+    );
+  }
+  function retryNegotiation(s, id) {
+    const { n, p } = negotiationCheck(s, id, ["blocked"]);
+    F.canHire(team(s), p, n.fee, n.salary, s, n.bonus);
+    negotiationUpdate(
+      s,
+      n,
+      "medical-pending",
+      "Recursos conferidos. Documentação será reavaliada em um dia.",
+      1,
+    );
+  }
+  function processNegotiations(s) {
+    const today = negotiationDate(s);
+    for (const n of (s.negotiations || []).filter(negotiationActive)) {
+      const found = locate(s, n.playerId);
+      if (s.clubId !== n.buyerId) {
+        negotiationUpdate(
+          s,
+          n,
+          "cancelled",
+          "Negociação cancelada após a mudança de treinador.",
+        );
+        continue;
+      }
+      if (!found || (found.t?.id || null) !== n.sellerId) {
+        negotiationUpdate(
+          s,
+          n,
+          "cancelled",
+          "O jogador não está mais disponível no clube de origem.",
+        );
+        continue;
+      }
+      if (!windowOpen(s)) {
+        negotiationUpdate(
+          s,
+          n,
+          "expired",
+          "A janela encerrou antes da conclusão do acordo.",
+        );
+        continue;
+      }
+      if (n.dueOn && Date.parse(today) - Date.parse(n.dueOn) > 10 * 86400000) {
+        negotiationUpdate(
+          s,
+          n,
+          "expired",
+          "A negociação expirou durante o intervalo entre temporadas.",
+        );
+        continue;
+      }
+      if (n.expiresOn && today >= n.expiresOn) {
+        negotiationUpdate(
+          s,
+          n,
+          "expired",
+          "A proposta expirou após dez dias sem resposta.",
+        );
+        continue;
+      }
+      if (!n.dueOn || today < n.dueOn) continue;
+      const { p, t } = found;
+      if (n.stage === "club-pending") {
+        if (t.players.length <= 16)
+          negotiationUpdate(
+            s,
+            n,
+            "rejected",
+            "O clube recusou liberar o jogador por ter elenco reduzido.",
+          );
+        else if (n.fee >= Math.max(n.askFee, minFee(s, p)))
+          negotiationUpdate(
+            s,
+            n,
+            "contract-ready",
+            "O clube aceitou a transferência. Agora negocie o contrato com o jogador.",
+          );
+        else if (n.fee < n.askFee * 0.45 || n.clubRounds >= 3)
+          negotiationUpdate(
+            s,
+            n,
+            "rejected",
+            "O clube encerrou as conversas por falta de acordo no valor.",
+          );
+        else
+          negotiationUpdate(
+            s,
+            n,
+            "club-counter",
+            `Contraproposta do clube: R$ ${n.askFee.toLocaleString("pt-BR")}. Você pode aceitar ou fazer uma nova oferta.`,
+          );
+      } else if (n.stage === "player-pending") {
+        const yearsOK = p.age >= 32 ? n.years <= 2 : n.years >= n.askYears;
+        if (n.salary >= n.askSalary && n.bonus >= n.askBonus && yearsOK)
+          negotiationUpdate(
+            s,
+            n,
+            "medical-pending",
+            "O jogador aceitou o contrato. Exames e documentação em um dia.",
+            1,
+          );
+        else if (n.salary < n.askSalary * 0.55 || n.playerRounds >= 3)
+          negotiationUpdate(
+            s,
+            n,
+            "rejected",
+            "O jogador encerrou as conversas por falta de acordo contratual.",
+          );
+        else
+          negotiationUpdate(
+            s,
+            n,
+            "player-counter",
+            `O empresário pede R$ ${n.askSalary.toLocaleString("pt-BR")} por semana, R$ ${n.askBonus.toLocaleString("pt-BR")} de luvas e ${n.askYears} temporadas.`,
+          );
+      } else if (n.stage === "medical-pending") {
+        try {
+          buy(s, p.id, n.fee, n.salary, n.years, n.bonus);
+          p.squadRole = n.role;
+          negotiationUpdate(
+            s,
+            n,
+            "completed",
+            "Contrato assinado. O jogador já faz parte do elenco e os valores foram lançados no extrato.",
+          );
+        } catch (error) {
+          negotiationUpdate(
+            s,
+            n,
+            "blocked",
+            "Assinatura pendente: " + error.message,
+          );
+        }
+      }
+    }
+  }
+  function buy(s, id, fee, salary, years, signingBonus = salary * 4) {
     if (!windowOpen(s)) fail("A janela de transferências está fechada.");
     terms(s, years, salary);
     const found = locate(s, id),
@@ -1313,13 +1737,18 @@
       fail("O clube não libera o atleta: elenco reduzido.");
     if (salary < Math.ceil(p.salary * (seller ? 1.1 : 1)))
       fail("O jogador recusou o salário. Ofereça o valor sugerido ou mais.");
-    const cost = fee + salary * 4;
-    F.canHire(buyer, p, fee, salary, s);
+    if (
+      !Number.isSafeInteger(signingBonus) ||
+      signingBonus < 0 ||
+      signingBonus > 1e12
+    )
+      fail("Luvas inválidas.");
+    F.canHire(buyer, p, fee, salary, s, signingBonus);
     F.post(buyer, s, -fee, "transfer", `Compra · ${p.name}`);
     F.post(
       buyer,
       s,
-      -salary * 4,
+      -signingBonus,
       "signing",
       `Luvas de contratação · ${p.name}`,
     );
@@ -1463,6 +1892,7 @@
       to: "Você",
     });
     s.clubId = id;
+    processNegotiations(s);
     s.rosterRecovery = false;
     s.offers = [];
     s.live = null;
@@ -1599,6 +2029,7 @@
       you.contract = s.season + 2;
       news(s, "Seu contrato de treinador foi renovado por duas temporadas.");
     }
+    processNegotiations(s);
     news(
       s,
       `Temporada ${s.season} iniciada. Novas classificações continentais e janela aberta.`,
@@ -1761,6 +2192,14 @@
   }
   const api = {
     WORLD,
+    marketPlayers,
+    NEGOTIATION_STAGES,
+    negotiationActive,
+    negotiateClub,
+    counterClub,
+    negotiatePlayer,
+    cancelNegotiation,
+    retryNegotiation,
     enableTestMode,
     addTestFunds,
     tactics: T,

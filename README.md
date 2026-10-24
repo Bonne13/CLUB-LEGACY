@@ -113,7 +113,7 @@ npm run check
 npm test
 ```
 
-Os 45 testes de regras cobrem identidades, calendários de ida/volta e turno único, folgas, contratos, transferências, finanças, escalação, retomada, temporada completa, classificações, torneios, treinadores, migração integridade dos calendários históricos, notícias por escopo, contraste das cores, jogadores reais, pagamentos semanais e mensais, conciliação, orçamentos, migração e compressão.
+Os testes de regras cobrem identidades, calendários de ida/volta e turno único, folgas, contratos, transferências, finanças, escalação, retomada, temporada completa, classificações, torneios, treinadores, migração integridade dos calendários históricos, notícias por escopo, contraste das cores, jogadores reais, pagamentos semanais e mensais, conciliação, orçamentos, migração e compressão.
 
 Para os testes de navegador, com servidor já rodando e Playwright + Chromium disponíveis:
 
@@ -141,7 +141,7 @@ O fluxo de financeiro e progressão diária é verificado com `npm run test:econ
 
 ## Perfil, seleções e arquivos de carreira
 
-Na criação, informe nome, idade e nacionalidade. O perfil pode ser editado em **Carreira**, e a idade avança por temporada. Em **Seleções**, você pode acumular o cargo no clube com uma das 45 seleções com cobertura disponível nesta base, convocar até 23 atletas reais, usar filtros/busca e disputar até seis amistosos anuais (algumas seleções têm folgas) em texto ou 2D. O calendário para antes dos jogos da seleção. Elegibilidade é simplificada pela cidadania da base; Copa do Mundo e eliminatórias ainda não estão implementadas.
+Na criação, informe nome, idade e nacionalidade. O perfil pode ser editado em **Carreira**, e a idade avança por temporada. Em **Seleções**, você pode acumular o cargo no clube com uma das 46 seleções com cobertura disponível nesta base, convocar até 23 atletas reais, usar filtros/busca e disputar até seis amistosos anuais (algumas seleções têm folgas) em texto ou 2D. O calendário para antes dos jogos da seleção. Elegibilidade é simplificada pela cidadania da base; Copa do Mundo e eliminatórias ainda não estão implementadas.
 
 Em **Salvamentos**, salve no navegador, baixe um arquivo JSON, importe uma carreira ou exclua o progresso. Também há importação na tela inicial. A importação aceita arquivos exportados anteriormente (JSON direto), o novo envelope e dados CL3 comprimidos. O arquivo é validado antes de confirmar a substituição; um arquivo inválido não altera o save atual. A partida importada volta pausada. A exclusão pede confirmação e limpa a carreira e os backups locais, preservando o tema; arquivos baixados continuam no dispositivo.
 
@@ -170,3 +170,19 @@ Na tela inicial, escolha **Normal** ou **Teste**. O normal usa os recursos e rec
 Uma carreira normal pode ativar o modo teste em **Carreira**, mediante confirmação. A identificação **MODO TESTE** permanece nessa carreira, inclusive após exportar/importar. Para voltar a uma carreira normal, crie outra.
 
 `npm run test:current-browser` verifica os dois modos, aportes, persistência, fontes e exclusividade do avanço na Visão geral em desktop/celular. `LEGACY_STANDALONE=1 npm run test:current-browser` verifica o HTML único com todos os recursos externos bloqueados.
+
+## Mercado, negociações e posições (v0.6)
+
+**Transferências** combina nome (com ou sem acentos), liga, posição, nacionalidade, overall mínimo/máximo, idade mínima/máxima e valor máximo. É possível ordenar por overall, idade, valor ou nome e limpar os filtros. Dupla cidadania também conta; atletas sem idade disponível não entram em intervalos etários. A idade aproximada continua identificada.
+
+A **Central de negociações** separa o acordo com o clube do contrato com o atleta. A proposta ao clube recebe resposta após dois dias da carreira, com aceite, recusa ou contraproposta; há até três ofertas por etapa. Depois do acordo, negocie salário semanal, luvas, duração e papel no elenco com o jogador/empresário. A resposta também leva dois dias. Após o aceite, documentação e exames levam mais um dia para concluir a transferência. Jogadores livres seguem diretamente à etapa contratual.
+
+Avance os dias em **Visão geral**. A simulação para ao chegar uma resposta e também antes de seus jogos. A Central mostra etapa, previsão de resposta, prazo, valores e histórico. É possível encerrar conversas. Contrapropostas e contratos aguardando resposta expiram após dez dias; fechamento da janela e indisponibilidade do jogador encerram propostas pendentes.
+
+As propostas não reservam dinheiro. Na assinatura, caixa, verba de transferências e folha são conferidos novamente. Se faltarem recursos, ajuste o Financeiro e use **Reavaliar recursos**. O dinheiro só é lançado quando o jogador realmente muda de clube; a operação não é repetida ao recarregar. Acordos pendentes e suas datas fazem parte do save.
+
+Foram corrigidos **259 nascimentos ausentes**, por IDs da SofaScore registrados no Wikidata e por perfis oficiais da MLS com o mesmo `player_id`. Ainda há **103 jogadores sem idade verificável**; esses dados ficam identificados, sem inventar datas. A correção é aplicada a carreiras existentes, inclusive a atletas transferidos, preservando contratos, evolução e escalação. Para Messi, por exemplo, a data é 24/06/1987; a idade exibida é calculada na temporada da carreira.
+
+**5.104 atletas** receberam posição principal detalhada de sua identidade Transfermarkt: esquerda/direita, lateral, ala, meia central/ofensivo, ponta e centroavante. O campo informa posição natural, adaptação e overall efetivo naquele local. Vinicius Júnior tem **PE** como natural; ao colocá-lo na **PD**, aparece **Fora da posição**, com redução de 32% no componente posicional de rendimento. O overall base permanece intacto. A redução entra na força usada pela partida e pela escalação automática. Posições secundárias, quando informadas, têm penalidade menor; onde só existe posição geral, o lado fica como não informado. Os percentuais são parâmetros da simulação, não avaliações oficiais.
+
+Execute `npm run test:market-browser` para testar filtros, correção em save anterior, clube/jogador/assinatura, contrapropostas, persistência e o exemplo de Vini no computador/celular. A opção `LEGACY_STANDALONE=1` testa o HTML único com recursos externos bloqueados.
