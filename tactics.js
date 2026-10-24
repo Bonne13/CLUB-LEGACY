@@ -1,0 +1,410 @@
+"use strict";
+(function (root) {
+  const slot = (id, label, pos, x, y) => ({ id, label, pos, x, y });
+  const back4 = [
+    slot("gk", "GOL", "GOL", 50, 91),
+    slot("rb", "LD", "LAT", 85, 73),
+    slot("rcb", "ZD", "ZAG", 63, 77),
+    slot("lcb", "ZE", "ZAG", 37, 77),
+    slot("lb", "LE", "LAT", 15, 73),
+  ];
+  const front3 = [
+    slot("rw", "PD", "ATA", 85, 20),
+    slot("st", "CA", "ATA", 50, 13),
+    slot("lw", "PE", "ATA", 15, 20),
+  ];
+  const formations = {
+    "4-3-3": [
+      ...back4,
+      slot("dm", "VOL", "VOL", 50, 58),
+      slot("rcm", "MC-D", "MEI", 66, 40),
+      slot("lcm", "MC-E", "MEI", 34, 40),
+      ...front3,
+    ],
+    "4-2-3-1": [
+      ...back4,
+      slot("rdm", "VOL-D", "VOL", 65, 57),
+      slot("ldm", "VOL-E", "VOL", 35, 57),
+      slot("am", "MEI", "MEI", 50, 34),
+      ...front3,
+    ],
+    "4-4-2": [
+      ...back4,
+      slot("rm", "MD", "MEI", 88, 41),
+      slot("rcm", "MC-D", "MEI", 64, 48),
+      slot("lcm", "MC-E", "MEI", 36, 48),
+      slot("lm", "ME", "MEI", 12, 41),
+      slot("rst", "CA-D", "ATA", 65, 17),
+      slot("lst", "CA-E", "ATA", 35, 17),
+    ],
+    "3-5-2": [
+      slot("gk", "GOL", "GOL", 50, 91),
+      slot("rcb", "ZD", "ZAG", 77, 74),
+      slot("cb", "ZC", "ZAG", 50, 78),
+      slot("lcb", "ZE", "ZAG", 23, 74),
+      slot("rwb", "AD", "LAT", 90, 43),
+      slot("rdm", "VOL-D", "VOL", 65, 58),
+      slot("ldm", "VOL-E", "VOL", 35, 58),
+      slot("am", "MEI", "MEI", 50, 36),
+      slot("lwb", "AE", "LAT", 10, 43),
+      slot("rst", "CA-D", "ATA", 65, 17),
+      slot("lst", "CA-E", "ATA", 35, 17),
+    ],
+    "5-3-2": [
+      slot("gk", "GOL", "GOL", 50, 91),
+      slot("rcb", "ZD", "ZAG", 73, 77),
+      slot("cb", "ZC", "ZAG", 50, 79),
+      slot("lcb", "ZE", "ZAG", 27, 77),
+      slot("rwb", "AD", "LAT", 91, 61),
+      slot("dm", "VOL", "VOL", 50, 58),
+      slot("rcm", "MC-D", "MEI", 68, 39),
+      slot("lcm", "MC-E", "MEI", 32, 39),
+      slot("lwb", "AE", "LAT", 9, 61),
+      slot("rst", "CA-D", "ATA", 65, 17),
+      slot("lst", "CA-E", "ATA", 35, 17),
+    ],
+    "4-1-4-1": [
+      ...back4,
+      slot("dm", "VOL", "VOL", 50, 60),
+      slot("rm", "MD", "MEI", 87, 36),
+      slot("rcm", "MC-D", "MEI", 63, 43),
+      slot("lcm", "MC-E", "MEI", 37, 43),
+      slot("lm", "ME", "MEI", 13, 36),
+      slot("st", "CA", "ATA", 50, 15),
+    ],
+  };
+  const instructions = {
+    mentality: ["Defensivo", "Equilibrado", "Ofensivo"],
+    style: ["Equilibrado", "Posse de bola", "Contra-ataque", "Jogo direto"],
+    pressing: ["Baixa", "Média", "Alta"],
+    tempo: ["Lento", "Normal", "Rápido"],
+    width: ["Estreita", "Normal", "Aberta"],
+    line: ["Baixa", "Média", "Alta"],
+  };
+  const duties = ["Defender", "Apoiar", "Atacar"];
+  const assignments = {
+    captain: "Capitão",
+    viceCaptain: "Vice-capitão",
+    cornersLeft: "Escanteios pela esquerda",
+    cornersRight: "Escanteios pela direita",
+    freeKicks: "Faltas diretas",
+    penalties: "Pênaltis",
+  };
+  function roleOptions(s) {
+    return s.pos === "GOL"
+      ? ["Goleiro", "Goleiro-líbero"]
+      : s.pos === "LAT"
+        ? ["Lateral", "Ala"]
+        : s.pos === "ZAG"
+          ? ["Zagueiro", "Defensor com bola"]
+          : s.pos === "VOL"
+            ? ["Volante", "Primeiro volante", "Construtor recuado"]
+            : s.pos === "MEI"
+              ? ["Meia central", "Armador", "Meia de chegada"]
+              : [
+                  "Atacante",
+                  "Ponta",
+                  "Atacante interior",
+                  "Centroavante",
+                  "Falso 9",
+                ];
+  }
+  function ensure(t) {
+    if (!t.tactics)
+      t.tactics = {
+        formation: "4-3-3",
+        mentality: "Equilibrado",
+        style: "Equilibrado",
+        pressing: "Média",
+        tempo: "Normal",
+        width: "Normal",
+        line: "Média",
+        roles: {},
+        assignments: {},
+        bench: [],
+      };
+    return t.tactics;
+  }
+  function slots(t) {
+    return formations[t.tactics?.formation] || formations["4-3-3"];
+  }
+  function fit(p, s) {
+    if (p.pos === s.pos) return 1;
+    if (p.pos === "GOL" || s.pos === "GOL") return 0.25;
+    return (
+      {
+        LAT: { ZAG: 0.8, VOL: 0.75, MEI: 0.83, ATA: 0.7 },
+        ZAG: { LAT: 0.75, VOL: 0.85, MEI: 0.65, ATA: 0.55 },
+        VOL: { ZAG: 0.83, LAT: 0.7, MEI: 0.9, ATA: 0.6 },
+        MEI: { LAT: 0.7, ZAG: 0.6, VOL: 0.88, ATA: 0.85 },
+        ATA: { MEI: 0.82, VOL: 0.6, LAT: 0.55, ZAG: 0.5 },
+      }[p.pos]?.[s.pos] || 0.65
+    );
+  }
+  function positions(t) {
+    const available = t.players.filter((p) => !p.injury),
+      chosen = Array(11).fill(null),
+      reserved = new Set();
+    slots(t).forEach((s, i) => {
+      const p = available.find((p) => p.id === t.lineup[i]);
+      if (p && !reserved.has(p.id)) {
+        chosen[i] = p;
+        reserved.add(p.id);
+      }
+    });
+    slots(t).forEach((s, i) => {
+      if (chosen[i]) return;
+      const p = available
+        .filter((p) => !reserved.has(p.id))
+        .sort(
+          (a, b) =>
+            b.ovr * b.fitness * fit(b, s) - a.ovr * a.fitness * fit(a, s),
+        )[0];
+      if (p) {
+        chosen[i] = p;
+        reserved.add(p.id);
+      }
+    });
+    return chosen;
+  }
+  function select(t, index, id) {
+    if (!Number.isInteger(index) || index < 0 || index > 10)
+      throw Error("Posição inválida.");
+    if (id && !t.players.some((p) => p.id === id && !p.injury))
+      throw Error("Jogador indisponível ou lesionado.");
+    const current = positions(t).map((p) => p?.id || ""),
+      other = current.indexOf(id);
+    if (id && other !== index && other >= 0) current[other] = current[index];
+    current[index] = id;
+    t.lineup = current;
+    const plan = ensure(t);
+    plan.bench = plan.bench.filter((pid) => !current.includes(pid));
+  }
+  function formation(t, id) {
+    if (!formations[id]) throw Error("Formação inválida.");
+    const previous = slots(t),
+      players = positions(t),
+      map = new Map(previous.map((s, i) => [s.id, players[i]?.id || ""]));
+    ensure(t).formation = id;
+    t.lineup = formations[id].map((s) => map.get(s.id) || "");
+    t.lineup = positions(t).map((p) => p?.id || "");
+    ensure(t).bench = ensure(t).bench.filter((pid) => !t.lineup.includes(pid));
+  }
+  function update(t, key, value) {
+    if (!instructions[key]?.includes(value))
+      throw Error("Instrução tática inválida.");
+    ensure(t)[key] = value;
+  }
+  function setRole(t, index, role, duty) {
+    const s = slots(t)[index];
+    if (!s || !roleOptions(s).includes(role) || !duties.includes(duty))
+      throw Error("Função ou tarefa inválida.");
+    ensure(t).roles[s.id] = { role, duty };
+  }
+  function role(t, index) {
+    const s = slots(t)[index],
+      r = t.tactics?.roles?.[s.id];
+    return r && roleOptions(s).includes(r.role)
+      ? r
+      : {
+          role: roleOptions(s)[0],
+          duty: ["GOL", "ZAG", "VOL"].includes(s.pos)
+            ? "Defender"
+            : s.pos === "ATA"
+              ? "Atacar"
+              : "Apoiar",
+        };
+  }
+  function skills(p) {
+    const seed = [...p.id].reduce(
+        (n, c) => (n * 31 + c.charCodeAt(0)) >>> 0,
+        17,
+      ),
+      clamp = (n) => Math.max(25, Math.min(96, Math.round(n)));
+    return {
+      leadership: clamp(
+        p.ovr * 0.55 + Math.min(37, p.age) * 0.85 + (seed % 13) - 5,
+      ),
+      crossing: clamp(
+        p.ovr +
+          (["LAT", "MEI"].includes(p.pos) ? 3 : p.pos === "GOL" ? -30 : -8) +
+          (seed % 9) -
+          4,
+      ),
+      freeKicks: clamp(
+        p.ovr + (["MEI", "ATA"].includes(p.pos) ? 0 : -15) + (seed % 15) - 7,
+      ),
+      penalties: clamp(
+        p.ovr +
+          (p.pos === "ATA" ? 4 : p.pos === "GOL" ? -25 : -5) +
+          (seed % 11) -
+          5,
+      ),
+    };
+  }
+  function setAssignment(t, key, id) {
+    if (
+      !Object.hasOwn(assignments, key) ||
+      (id && !t.players.some((p) => p.id === id))
+    )
+      throw Error("Responsável inválido.");
+    const a = ensure(t).assignments;
+    if (
+      id &&
+      ((key === "captain" && a.viceCaptain === id) ||
+        (key === "viceCaptain" && a.captain === id))
+    )
+      throw Error("Capitão e vice-capitão devem ser diferentes.");
+    a[key] = id;
+  }
+  function specialists(t, eleven = positions(t).filter(Boolean)) {
+    const a = t.tactics?.assignments || {},
+      result = {},
+      choose = (key, skill, exclude = null) =>
+        eleven.find((p) => p.id === a[key] && p.id !== exclude) ||
+        [...eleven]
+          .filter((p) => p.id !== exclude)
+          .sort((x, y) => skills(y)[skill] - skills(x)[skill])[0] ||
+        null;
+    result.captain = choose("captain", "leadership") || null;
+    if (!eleven.some((p) => p.id === a.captain) && a.viceCaptain)
+      result.captain =
+        eleven.find((p) => p.id === a.viceCaptain) || result.captain;
+    result.viceCaptain = choose(
+      "viceCaptain",
+      "leadership",
+      result.captain?.id,
+    );
+    for (const [key, skill] of [
+      ["cornersLeft", "crossing"],
+      ["cornersRight", "crossing"],
+      ["freeKicks", "freeKicks"],
+      ["penalties", "penalties"],
+    ])
+      result[key] = choose(key, skill);
+    return result;
+  }
+  function bench(t) {
+    const starters = new Set(
+        positions(t)
+          .filter(Boolean)
+          .map((p) => p.id),
+      ),
+      available = t.players.filter((p) => !p.injury && !starters.has(p.id));
+    const preferred = (t.tactics?.bench || [])
+      .map((id) => available.find((p) => p.id === id))
+      .filter(Boolean);
+    return [
+      ...preferred,
+      ...available
+        .filter((p) => !preferred.includes(p))
+        .sort((a, b) => b.ovr - a.ovr),
+    ].slice(0, 9);
+  }
+  function toggleBench(t, id) {
+    if (!t.players.some((p) => p.id === id && !p.injury))
+      throw Error("Jogador indisponível.");
+    if (positions(t).some((p) => p?.id === id))
+      throw Error("Este jogador está entre os titulares.");
+    const plan = ensure(t);
+    plan.bench = plan.bench.filter(
+      (pid) =>
+        t.players.some((p) => p.id === pid && !p.injury) &&
+        !positions(t).some((p) => p?.id === pid),
+    );
+    if (plan.bench.includes(id))
+      plan.bench = plan.bench.filter((p) => p !== id);
+    else {
+      if (plan.bench.length >= 9)
+        throw Error("Escolha até nove reservas prioritários.");
+      plan.bench.push(id);
+    }
+  }
+  function ratings(t) {
+    const ps = positions(t),
+      plan = ensure(t);
+    let total = 0,
+      attack = 0,
+      defense = 0;
+    ps.forEach((p, i) => {
+      if (!p) return;
+      total += p.ovr * (0.65 + (0.35 * p.fitness) / 100) * fit(p, slots(t)[i]);
+      const d = role(t, i).duty;
+      attack += d === "Atacar" ? 1 : d === "Defender" ? -0.45 : 0;
+      defense += d === "Defender" ? 1 : d === "Atacar" ? -0.5 : 0;
+      const r = role(t, i).role;
+      if (
+        ["Armador", "Falso 9", "Construtor recuado"].includes(r) &&
+        plan.style === "Posse de bola"
+      )
+        attack += 0.3;
+      if (r === "Ala" && plan.width === "Aberta") attack += 0.3;
+    });
+    return {
+      strength: total / 11,
+      attack: attack * 0.003,
+      defense: defense * 0.002,
+      fatigue:
+        (plan.pressing === "Alta" ? 3 : plan.pressing === "Baixa" ? -1 : 0) +
+        (plan.tempo === "Rápido" ? 2 : plan.tempo === "Lento" ? -1 : 0),
+    };
+  }
+  function validate(t) {
+    const p = t.tactics;
+    if (!p) return true;
+    if (
+      !formations[p.formation] ||
+      !p.roles ||
+      !p.assignments ||
+      !Array.isArray(p.bench) ||
+      p.bench.length > 9 ||
+      new Set(p.bench).size !== p.bench.length
+    )
+      throw Error("Plano tático inválido.");
+    for (const key of Object.keys(instructions))
+      if (!instructions[key].includes(p[key]))
+        throw Error("Instrução tática inválida.");
+    for (const key of Object.keys(p.assignments))
+      if (
+        !Object.hasOwn(assignments, key) ||
+        typeof p.assignments[key] !== "string"
+      )
+        throw Error("Bola parada inválida.");
+    for (const [id, r] of Object.entries(p.roles))
+      if (
+        typeof id !== "string" ||
+        !r ||
+        typeof r.role !== "string" ||
+        !duties.includes(r.duty)
+      )
+        throw Error("Função inválida.");
+    if (p.bench.some((id) => typeof id !== "string"))
+      throw Error("Banco inválido.");
+    return true;
+  }
+  const api = {
+    formations,
+    instructions,
+    duties,
+    assignments,
+    roleOptions,
+    ensure,
+    slots,
+    fit,
+    positions,
+    select,
+    formation,
+    update,
+    setRole,
+    role,
+    skills,
+    setAssignment,
+    specialists,
+    bench,
+    toggleBench,
+    ratings,
+    validate,
+  };
+  root.LegacyTactics = api;
+  if (typeof module !== "undefined") module.exports = api;
+})(globalThis);

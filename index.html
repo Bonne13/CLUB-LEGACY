@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CLUB LEGACY · Carreira</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section id="career-entry" aria-label="Criar carreira"></section>
+    <aside id="sidebar" hidden>
+      <h1>CLUB<span>LEGACY</span></h1>
+      <small>SEU CLUBE. SUA HISTÓRIA.</small>
+      <nav id="nav" aria-label="Menu principal"></nav>
+      <p class="foot">
+        TREINADOR & GESTOR<br /><span>Clubes reais · carreira simulada</span>
+      </p>
+    </aside>
+    <main id="game" hidden>
+      <header>
+        <div>
+          <small id="context">CENTRAL DO TREINADOR</small>
+          <h2 id="title"></h2>
+        </div>
+        <div class="header-actions">
+          <button id="match-day" data-page="Dia de jogo" class="primary" hidden>
+            Dia de jogo
+          </button>
+          <button id="theme-toggle" data-action="toggle-theme">
+            Modo claro
+          </button>
+          <button id="export">Exportar carreira</button
+          ><button id="save">Salvar carreira</button>
+        </div>
+      </header>
+      <section id="time-controls" aria-label="Avanço de tempo"></section>
+      <section id="content"></section>
+    </main>
+    <div id="notification" class="notice" role="status" hidden></div>
+    <dialog id="deal" aria-label="Negociação de jogador">
+      <form id="deal-form"></form>
+    </dialog>
+    <input
+      id="import-file"
+      type="file"
+      accept=".json,application/json"
+      hidden
+    />
+    <dialog id="save-dialog" aria-label="Gerenciar carreira">
+      <div id="save-dialog-content"></div>
+    </dialog>
+    <script src="vendor/lz-string.js"></script>
+    <script src="world.js"></script>
+    <script src="calendar-data.js"></script>
+    <script src="appearance.js"></script>
+    <script src="roster-data.js"></script>
+    <script src="rosters.js"></script>
+    <script src="finance.js"></script>
+    <script src="tactics.js"></script>
+    <script src="national.js"></script>
+    <script src="engine.js"></script>
+    <script src="saves.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

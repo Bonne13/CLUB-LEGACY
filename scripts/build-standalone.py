@@ -1,0 +1,24 @@
+"""Gera a versão de arquivo único, sem dependências externas para jogar."""
+from pathlib import Path
+import re
+import sys
+
+root = Path(__file__).resolve().parents[1]
+output = Path(sys.argv[1]) if len(sys.argv) > 1 else root.parent / "CLUB-LEGACY-jogavel.html"
+html = (root / "index.html").read_text()
+css = (root / "style.css").read_text()
+html, count = re.subn(r'<link\s+rel="stylesheet"\s+href="style.css"\s*/?>', lambda _: '<style>\n' + css + '\n</style>', html)
+assert count == 1, "Folha de estilo não encontrada"
+
+def inline_script(match):
+    source = root / match.group(1)
+    assert source.resolve().is_relative_to(root.resolve()), "Script fora da raiz"
+    return '<script>\n' + source.read_text().replace('</script', '<\\/script') + '\n</script>'
+
+html = re.sub(r'<script\s+src="([^"<>]+\.js)"\s*>\s*</script>', inline_script, html)
+assert not re.search(r'<script\s+src=', html), "Script externo não incorporado"
+html = html.replace('</head>', '<!-- Calendários: OpenFootball / football.json, CC0 1.0. -->\n</head>')
+license_text=(root / "vendor/LICENSE.lz-string.txt").read_text()
+html=html.replace("</head>", "<!-- LZ-String · licença MIT\n"+license_text.replace("--", "—")+"\n-->\n</head>")
+output.write_text(html)
+print(f"Versão jogável atualizada: {output} ({output.stat().st_size} bytes)")

@@ -1,0 +1,4221 @@
+[
+  {
+    "id": "br-0",
+    "club": "Flamengo",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-1",
+    "club": "Palmeiras",
+    "players": 28,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-2",
+    "club": "Cruzeiro",
+    "players": 30,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-3",
+    "club": "Mirassol",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-4",
+    "club": "Fluminense",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-5",
+    "club": "Botafogo",
+    "players": 29,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-6",
+    "club": "Bahia",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-7",
+    "club": "São Paulo",
+    "players": 30,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-8",
+    "club": "Grêmio",
+    "players": 32,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-9",
+    "club": "Red Bull Bragantino",
+    "players": 28,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-10",
+    "club": "Atlético Mineiro",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-11",
+    "club": "Santos",
+    "players": 32,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-12",
+    "club": "Corinthians",
+    "players": 29,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-13",
+    "club": "Vasco da Gama",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-14",
+    "club": "Vitória",
+    "players": 33,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-15",
+    "club": "Internacional",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-16",
+    "club": "Athletico Paranaense",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-17",
+    "club": "Chapecoense",
+    "players": 29,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-18",
+    "club": "Coritiba",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "br-19",
+    "club": "Remo",
+    "players": 31,
+    "playable": true,
+    "reference": {
+      "source": "sofascore-br-2026",
+      "date": "2026-06-02",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "ar-0",
+    "club": "River Plate",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ar-1",
+    "club": "Boca Juniors",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-2",
+    "club": "Racing Club",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ar-3",
+    "club": "Independiente",
+    "players": 38,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-16",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-4",
+    "club": "San Lorenzo",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-30",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-5",
+    "club": "Estudiantes de La Plata",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ar-6",
+    "club": "Vélez Sarsfield",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-31",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-7",
+    "club": "Rosario Central",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-05",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-8",
+    "club": "Newell’s Old Boys",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-14",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-9",
+    "club": "Talleres",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-14",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-10",
+    "club": "Belgrano",
+    "players": 14,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-14",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-11",
+    "club": "Lanús",
+    "players": 13,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-16",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-12",
+    "club": "Huracán",
+    "players": 31,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-13",
+    "club": "Argentinos Juniors",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ar-14",
+    "club": "Defensa y Justicia",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ar-15",
+    "club": "Godoy Cruz",
+    "players": 31,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-06",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-16",
+    "club": "Unión de Santa Fe",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ar-17",
+    "club": "Tigre",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-10",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-18",
+    "club": "Gimnasia La Plata",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ar-19",
+    "club": "Banfield",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-09-06",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-20",
+    "club": "Atlético Tucumán",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ar-21",
+    "club": "Central Córdoba",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-21",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-22",
+    "club": "Instituto",
+    "players": 13,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-23",
+    "club": "Independiente Rivadavia",
+    "players": 5,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ar-24",
+    "club": "Deportivo Riestra",
+    "players": 17,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ar-25",
+    "club": "Barracas Central",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ar-26",
+    "club": "Platense",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-05",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ar-27",
+    "club": "Sarmiento",
+    "players": 14,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ar-28",
+    "club": "San Martín de San Juan",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ar-29",
+    "club": "Aldosivi",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-27",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "en-0",
+    "club": "Arsenal",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-1",
+    "club": "Manchester City",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-2",
+    "club": "Liverpool",
+    "players": 28,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-3",
+    "club": "Chelsea",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-4",
+    "club": "Manchester United",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-5",
+    "club": "Tottenham Hotspur",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-6",
+    "club": "Newcastle United",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-7",
+    "club": "Aston Villa",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-8",
+    "club": "Brighton & Hove Albion",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-9",
+    "club": "Nottingham Forest",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-10",
+    "club": "Crystal Palace",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-11",
+    "club": "Bournemouth",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-12",
+    "club": "Brentford",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-13",
+    "club": "Fulham",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-14",
+    "club": "Coventry City",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-15",
+    "club": "Everton",
+    "players": 15,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-16",
+    "club": "Hull City",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-17",
+    "club": "Leeds United",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-18",
+    "club": "Ipswich Town",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "en-19",
+    "club": "Sunderland",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-0",
+    "club": "Real Madrid",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-1",
+    "club": "Barcelona",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-2",
+    "club": "Atlético de Madrid",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-3",
+    "club": "Athletic Club",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-4",
+    "club": "Villarreal",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-5",
+    "club": "Real Betis",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-6",
+    "club": "Celta de Vigo",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-7",
+    "club": "Rayo Vallecano",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-8",
+    "club": "Osasuna",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-9",
+    "club": "Deportivo La Coruña",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-10",
+    "club": "Real Sociedad",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-11",
+    "club": "Valencia",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-12",
+    "club": "Getafe",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-13",
+    "club": "Espanyol",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-14",
+    "club": "Alavés",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-15",
+    "club": "Málaga",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-16",
+    "club": "Sevilla",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-17",
+    "club": "Levante",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-18",
+    "club": "Elche",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "es-19",
+    "club": "Racing Santander",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-0",
+    "club": "Inter de Milão",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-1",
+    "club": "Napoli",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-2",
+    "club": "Milan",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-3",
+    "club": "Juventus",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-4",
+    "club": "Atalanta",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-5",
+    "club": "Roma",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-6",
+    "club": "Lazio",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-7",
+    "club": "Fiorentina",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-8",
+    "club": "Bologna",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-9",
+    "club": "Como",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-10",
+    "club": "Torino",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-11",
+    "club": "Udinese",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-12",
+    "club": "Genoa",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-13",
+    "club": "Frosinone",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-14",
+    "club": "Cagliari",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-15",
+    "club": "Lecce",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-16",
+    "club": "Parma",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-17",
+    "club": "Sassuolo",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-18",
+    "club": "Monza",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "it-19",
+    "club": "Venezia",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-0",
+    "club": "Bayern de Munique",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-1",
+    "club": "Bayer Leverkusen",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-2",
+    "club": "Borussia Dortmund",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-3",
+    "club": "Eintracht Frankfurt",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-4",
+    "club": "RB Leipzig",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-5",
+    "club": "Stuttgart",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-6",
+    "club": "Freiburg",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-7",
+    "club": "Mainz 05",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-8",
+    "club": "Werder Bremen",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-9",
+    "club": "Borussia Mönchengladbach",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-10",
+    "club": "Elversberg",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-11",
+    "club": "Augsburg",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-12",
+    "club": "Union Berlin",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-13",
+    "club": "Paderborn",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-14",
+    "club": "Hoffenheim",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-15",
+    "club": "Schalke 04",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-16",
+    "club": "Hamburger SV",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "de-17",
+    "club": "Köln",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-0",
+    "club": "Paris Saint-Germain",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-1",
+    "club": "Olympique de Marseille",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-2",
+    "club": "Monaco",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-3",
+    "club": "Lille",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-4",
+    "club": "Lyon",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-5",
+    "club": "Nice",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-6",
+    "club": "Strasbourg",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-7",
+    "club": "Lens",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-8",
+    "club": "Brest",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-9",
+    "club": "Rennes",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-10",
+    "club": "Auxerre",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-11",
+    "club": "Toulouse",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-12",
+    "club": "Le Mans",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-13",
+    "club": "Angers",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-14",
+    "club": "Le Havre",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-15",
+    "club": "Lorient",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-16",
+    "club": "Paris FC",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "fr-17",
+    "club": "Troyes",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "fbref-eu-2026-27",
+      "date": "2026-09-27",
+      "kind": "appearances"
+    }
+  },
+  {
+    "id": "pt-0",
+    "club": "Sporting CP",
+    "players": 13,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-1",
+    "club": "Benfica",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-2",
+    "club": "Porto",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-3",
+    "club": "Braga",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-4",
+    "club": "Vitória de Guimarães",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-5",
+    "club": "Santa Clara",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-6",
+    "club": "Famalicão",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-7",
+    "club": "Estoril Praia",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-8",
+    "club": "Casa Pia",
+    "players": 29,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-9",
+    "club": "Moreirense",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-10",
+    "club": "Rio Ave",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-11",
+    "club": "Arouca",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-13",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pt-12",
+    "club": "Gil Vicente",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pt-13",
+    "club": "Nacional da Madeira",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-14",
+    "club": "AVS",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-15",
+    "club": "Alverca",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-16",
+    "club": "Tondela",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pt-17",
+    "club": "Estrela da Amadora",
+    "players": 32,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-0",
+    "club": "PSV",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-1",
+    "club": "Ajax",
+    "players": 16,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-2",
+    "club": "Feyenoord",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-3",
+    "club": "Utrecht",
+    "players": 28,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-4",
+    "club": "AZ Alkmaar",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-5",
+    "club": "Twente",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-6",
+    "club": "Go Ahead Eagles",
+    "players": 30,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-7",
+    "club": "NEC Nijmegen",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-8",
+    "club": "Heerenveen",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-9",
+    "club": "PEC Zwolle",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-10",
+    "club": "Fortuna Sittard",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-11",
+    "club": "Sparta Rotterdam",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-12",
+    "club": "Groningen",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-13",
+    "club": "Heracles Almelo",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-14",
+    "club": "NAC Breda",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-15",
+    "club": "Excelsior",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-16",
+    "club": "Volendam",
+    "players": 16,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "nl-17",
+    "club": "Telstar",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "co-0",
+    "club": "Atlético Nacional",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "co-1",
+    "club": "Millonarios",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-05",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "co-2",
+    "club": "América de Cali",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "co-3",
+    "club": "Independiente Medellín",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "co-4",
+    "club": "Junior Barranquilla",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "co-5",
+    "club": "Independiente Santa Fe",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "co-6",
+    "club": "Deportes Tolima",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-06",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "co-7",
+    "club": "Once Caldas",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-02-19",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "co-8",
+    "club": "Deportivo Cali",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-07",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "co-9",
+    "club": "Deportivo Pereira",
+    "players": 4,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "co-10",
+    "club": "Deportivo Pasto",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-16",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "co-11",
+    "club": "Atlético Bucaramanga",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "co-12",
+    "club": "La Equidad",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "co-13",
+    "club": "Fortaleza CEIF",
+    "players": 2,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "co-14",
+    "club": "Águilas Doradas",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "co-15",
+    "club": "Alianza FC",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-09",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "co-16",
+    "club": "Boyacá Chicó",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-22",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "co-17",
+    "club": "Envigado",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-05",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "co-18",
+    "club": "Llaneros",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "co-19",
+    "club": "Unión Magdalena",
+    "players": 6,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-0",
+    "club": "Colo-Colo",
+    "players": 31,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-08",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-1",
+    "club": "Universidad de Chile",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-13",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-2",
+    "club": "Universidad Católica",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-14",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-3",
+    "club": "Palestino",
+    "players": 32,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-07",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-4",
+    "club": "Coquimbo Unido",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-06-26",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-5",
+    "club": "Audax Italiano",
+    "players": 37,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-07",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-6",
+    "club": "O’Higgins",
+    "players": 31,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-25",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-7",
+    "club": "Cobresal",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-28",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-8",
+    "club": "Huachipato",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-9",
+    "club": "Ñublense",
+    "players": 13,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-21",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-10",
+    "club": "Unión La Calera",
+    "players": 32,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-11",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-11",
+    "club": "Everton de Viña del Mar",
+    "players": 35,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-19",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-12",
+    "club": "Unión Española",
+    "players": 30,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-03-03",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-13",
+    "club": "Deportes Iquique",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "cl-14",
+    "club": "Deportes La Serena",
+    "players": 11,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-13",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "cl-15",
+    "club": "Deportes Limache",
+    "players": 11,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-04",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "uy-0",
+    "club": "Peñarol",
+    "players": 30,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-20",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "uy-1",
+    "club": "Nacional",
+    "players": 15,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-02-04",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "uy-2",
+    "club": "Liverpool Montevideo",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "uy-3",
+    "club": "Defensor Sporting",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "uy-4",
+    "club": "Danubio",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "uy-5",
+    "club": "Boston River",
+    "players": 9,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-23",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "uy-6",
+    "club": "Racing Montevideo",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "uy-7",
+    "club": "Montevideo Wanderers",
+    "players": 12,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-02-04",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "uy-8",
+    "club": "Cerro Largo",
+    "players": 33,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-25",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "uy-9",
+    "club": "Cerro",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "uy-10",
+    "club": "Progreso",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "uy-11",
+    "club": "River Plate Montevideo",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "uy-12",
+    "club": "Miramar Misiones",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "uy-13",
+    "club": "Plaza Colonia",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-06",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "uy-14",
+    "club": "Juventud de Las Piedras",
+    "players": 6,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-31",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "uy-15",
+    "club": "Montevideo City Torque",
+    "players": 11,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-02-10",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ec-0",
+    "club": "LDU Quito",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ec-1",
+    "club": "Independiente del Valle",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ec-2",
+    "club": "Barcelona SC",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-13",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ec-3",
+    "club": "Emelec",
+    "players": 11,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ec-4",
+    "club": "Aucas",
+    "players": 15,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ec-5",
+    "club": "Universidad Católica del Ecuador",
+    "players": 12,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ec-6",
+    "club": "Deportivo Cuenca",
+    "players": 2,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ec-7",
+    "club": "El Nacional",
+    "players": 7,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ec-8",
+    "club": "Delfín",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ec-9",
+    "club": "Mushuc Runa",
+    "players": 11,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ec-10",
+    "club": "Técnico Universitario",
+    "players": 1,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ec-11",
+    "club": "Macará",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ec-12",
+    "club": "Orense",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ec-13",
+    "club": "Libertad de Loja",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ec-14",
+    "club": "Manta",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ec-15",
+    "club": "Vinotinto del Ecuador",
+    "players": 1,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pe-0",
+    "club": "Universitario",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-28",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-1",
+    "club": "Alianza Lima",
+    "players": 28,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-21",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-2",
+    "club": "Sporting Cristal",
+    "players": 8,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-3",
+    "club": "Melgar",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-06-30",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-4",
+    "club": "Cienciano",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-5",
+    "club": "ADT de Tarma",
+    "players": 3,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-02-13",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-6",
+    "club": "Cusco FC",
+    "players": 31,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-08",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-7",
+    "club": "Alianza Atlético",
+    "players": 8,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-16",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-8",
+    "club": "Atlético Grau",
+    "players": 28,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-9",
+    "club": "Deportivo Garcilaso",
+    "players": 3,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-10",
+    "club": "Sport Huancayo",
+    "players": 30,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-19",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-11",
+    "club": "UTC Cajamarca",
+    "players": 11,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-12",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-12",
+    "club": "Comerciantes Unidos",
+    "players": 8,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-21",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-13",
+    "club": "Los Chankas",
+    "players": 7,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-04",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-14",
+    "club": "Sport Boys",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-09-12",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-15",
+    "club": "Alianza Universidad",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pe-16",
+    "club": "Ayacucho FC",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "pe-17",
+    "club": "Juan Pablo II College",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "pe-18",
+    "club": "Deportivo Binacional",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-02-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "py-0",
+    "club": "Olimpia",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-22",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "py-1",
+    "club": "Cerro Porteño",
+    "players": 16,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "py-2",
+    "club": "Libertad",
+    "players": 29,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-14",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "py-3",
+    "club": "Guaraní",
+    "players": 29,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-28",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "py-4",
+    "club": "Nacional de Asunción",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-23",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "py-5",
+    "club": "Sportivo Luqueño",
+    "players": 18,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-26",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "py-6",
+    "club": "Sportivo Trinidense",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "py-7",
+    "club": "Sportivo Ameliano",
+    "players": 4,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-03-07",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "py-8",
+    "club": "General Caballero JLM",
+    "players": 12,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "py-9",
+    "club": "2 de Mayo",
+    "players": 17,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-09-02",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "py-10",
+    "club": "Deportivo Recoleta",
+    "players": 13,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "py-11",
+    "club": "Atlético Tembetary",
+    "players": 1,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "bo-0",
+    "club": "Bolívar",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-04",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "bo-1",
+    "club": "Always Ready",
+    "players": 16,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-05",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "bo-2",
+    "club": "The Strongest",
+    "players": 11,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "bo-3",
+    "club": "Blooming",
+    "players": 8,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "bo-4",
+    "club": "Oriente Petrolero",
+    "players": 13,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "bo-5",
+    "club": "San Antonio Bulo Bulo",
+    "players": 1,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "bo-6",
+    "club": "Nacional Potosí",
+    "players": 12,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "bo-7",
+    "club": "Real Tomayapo",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "bo-8",
+    "club": "Independiente Petrolero",
+    "players": 12,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "bo-9",
+    "club": "Aurora",
+    "players": 1,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-10",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "bo-10",
+    "club": "Universitario de Vinto",
+    "players": 1,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "bo-11",
+    "club": "GV San José",
+    "players": 3,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-02-25",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "bo-12",
+    "club": "ABB",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "bo-13",
+    "club": "CDT Real Oruro",
+    "players": 5,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-29",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "bo-14",
+    "club": "Guabirá",
+    "players": 11,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-02-10",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "bo-15",
+    "club": "Jorge Wilstermann",
+    "players": 11,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ve-0",
+    "club": "Deportivo Táchira",
+    "players": 12,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ve-1",
+    "club": "Caracas FC",
+    "players": 19,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-06-30",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ve-2",
+    "club": "Deportivo La Guaira",
+    "players": 16,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ve-3",
+    "club": "Universidad Central de Venezuela",
+    "players": 1,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ve-4",
+    "club": "Carabobo",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ve-5",
+    "club": "Academia Puerto Cabello",
+    "players": 17,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ve-6",
+    "club": "Metropolitanos",
+    "players": 15,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-20",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ve-7",
+    "club": "Monagas",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ve-8",
+    "club": "Portuguesa",
+    "players": 9,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ve-9",
+    "club": "Zamora",
+    "players": 8,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ve-10",
+    "club": "Estudiantes de Mérida",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ve-11",
+    "club": "Rayo Zuliano",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "ve-12",
+    "club": "Anzoátegui",
+    "players": 3,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-02-13",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "ve-13",
+    "club": "Yaracuyanos",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "us-0",
+    "club": "Inter Miami",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-1",
+    "club": "LA Galaxy",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-2",
+    "club": "Los Angeles FC",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-3",
+    "club": "Atlanta United",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-4",
+    "club": "Austin FC",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-5",
+    "club": "Charlotte FC",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-6",
+    "club": "Chicago Fire",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-7",
+    "club": "FC Cincinnati",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-8",
+    "club": "Colorado Rapids",
+    "players": 28,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-9",
+    "club": "Columbus Crew",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-10",
+    "club": "FC Dallas",
+    "players": 28,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-11",
+    "club": "D.C. United",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-12",
+    "club": "Houston Dynamo",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-13",
+    "club": "Sporting Kansas City",
+    "players": 28,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-14",
+    "club": "Minnesota United",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-15",
+    "club": "CF Montréal",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-16",
+    "club": "Nashville SC",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-17",
+    "club": "New England Revolution",
+    "players": 29,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-18",
+    "club": "New York City FC",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-19",
+    "club": "New York Red Bulls",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-20",
+    "club": "Orlando City",
+    "players": 30,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-21",
+    "club": "Philadelphia Union",
+    "players": 28,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-22",
+    "club": "Portland Timbers",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-23",
+    "club": "Real Salt Lake",
+    "players": 31,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-24",
+    "club": "San Diego FC",
+    "players": 28,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-25",
+    "club": "San Jose Earthquakes",
+    "players": 28,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-26",
+    "club": "Seattle Sounders",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-27",
+    "club": "St. Louis City",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-28",
+    "club": "Toronto FC",
+    "players": 37,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "us-29",
+    "club": "Vancouver Whitecaps",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "mls-2026",
+      "date": "2026-06-09",
+      "kind": "snapshot"
+    }
+  },
+  {
+    "id": "mx-0",
+    "club": "Club América",
+    "players": 20,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "mx-1",
+    "club": "Guadalajara",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "mx-2",
+    "club": "Cruz Azul",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-02-06",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "mx-3",
+    "club": "Pumas UNAM",
+    "players": 14,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-08",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "mx-4",
+    "club": "Tigres UANL",
+    "players": 32,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-09-09",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "mx-5",
+    "club": "Monterrey",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "mx-6",
+    "club": "Toluca",
+    "players": 17,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-06",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "mx-7",
+    "club": "Pachuca",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-16",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "mx-8",
+    "club": "León",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-08",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "mx-9",
+    "club": "Santos Laguna",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "mx-10",
+    "club": "Atlas",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-01-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "mx-11",
+    "club": "Necaxa",
+    "players": 11,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "mx-12",
+    "club": "Puebla",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-06",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "mx-13",
+    "club": "Querétaro",
+    "players": 26,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-11",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "mx-14",
+    "club": "Tijuana",
+    "players": 29,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-07",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "mx-15",
+    "club": "Atlético San Luis",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "mx-16",
+    "club": "Juárez",
+    "players": 17,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-07-01",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "mx-17",
+    "club": "Mazatlán",
+    "players": 25,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-0",
+    "club": "Al-Hilal",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-1",
+    "club": "Al-Nassr",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-2",
+    "club": "Al-Ittihad",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-3",
+    "club": "Al-Ahli",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-4",
+    "club": "Al-Shabab",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-5",
+    "club": "Al-Qadsiah",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-6",
+    "club": "Al-Ettifaq",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-7",
+    "club": "Al-Taawoun",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-8",
+    "club": "Al-Fateh",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-9",
+    "club": "Al-Fayha",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-10",
+    "club": "Al-Khaleej",
+    "players": 2,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-11",
+    "club": "Damac",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-12",
+    "club": "Al-Riyadh",
+    "players": 1,
+    "playable": false,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-09",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "sa-13",
+    "club": "Al-Okhdood",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-14",
+    "club": "Al-Kholood",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-15",
+    "club": "NEOM",
+    "players": 0,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-16",
+    "club": "Al-Najma",
+    "players": 9,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "sa-17",
+    "club": "Al-Hazem",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-0",
+    "club": "Kashima Antlers",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-1",
+    "club": "Kashiwa Reysol",
+    "players": 27,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-2",
+    "club": "Kyoto Sanga",
+    "players": 32,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-3",
+    "club": "Sanfrecce Hiroshima",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-4",
+    "club": "Vissel Kobe",
+    "players": 29,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-5",
+    "club": "Machida Zelvia",
+    "players": 17,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-6",
+    "club": "Urawa Red Diamonds",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-7",
+    "club": "Kawasaki Frontale",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-8",
+    "club": "Gamba Osaka",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-9",
+    "club": "Cerezo Osaka",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "sa-transfers-2026",
+      "date": "2026-08-10",
+      "kind": "last-known-transfers"
+    }
+  },
+  {
+    "id": "jp-10",
+    "club": "FC Tokyo",
+    "players": 28,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-11",
+    "club": "Fagiano Okayama",
+    "players": 10,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-12",
+    "club": "Yokohama F. Marinos",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-13",
+    "club": "Nagoya Grampus",
+    "players": 22,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-14",
+    "club": "Albirex Niigata",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-15",
+    "club": "Shimizu S-Pulse",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-16",
+    "club": "Tokyo Verdy",
+    "players": 4,
+    "playable": false,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-17",
+    "club": "Avispa Fukuoka",
+    "players": 21,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-18",
+    "club": "Shonan Bellmare",
+    "players": 24,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  },
+  {
+    "id": "jp-19",
+    "club": "Yokohama FC",
+    "players": 23,
+    "playable": true,
+    "reference": {
+      "source": "historical",
+      "date": null
+    }
+  }
+]
