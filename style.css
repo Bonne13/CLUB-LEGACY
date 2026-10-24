@@ -1283,6 +1283,19 @@ button.tactic-slot {
 .slot-duty {
   font-size: 0.65rem;
   color: #d0e4eb;
+  letter-spacing: 0;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.slot-fit {
+  font-size: 0.58rem;
+  line-height: 1.15;
+  white-space: nowrap;
+  color: #d0e4eb;
+}
+.tactic-slot.adapted .slot-fit {
+  color: #ffd18a;
+  font-weight: 700;
 }
 .slot-position {
   background: #213e52;
@@ -1421,10 +1434,11 @@ button.tactic-slot.adapted .slot-position {
     font-size: 0.63rem;
   }
   button.tactic-slot {
-    min-height: 61px;
+    min-height: 66px;
+    gap: 2px;
   }
   .slot-duty {
-    font-size: 0.55rem;
+    display: none;
   }
   .tactic-instructions,
   .set-piece-grid {

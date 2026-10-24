@@ -260,7 +260,8 @@ const path = require("node:path");
     await p.locator('[data-tactic-slot="8"]').click();
     await p.locator("#slot-player").selectOption("tm-371998");
     const right = p.locator('[data-tactic-slot="8"]');
-    assert((await right.innerText()).includes("Fora da posição"));
+    assert((await right.getAttribute("aria-label")).includes("Fora da posição"));
+    assert((await right.innerText()).includes("Fora"));
     const effective = await p.evaluate(
       () =>
         T.adaptation(
