@@ -42,6 +42,7 @@ const { chromium } = require("playwright"),
     await page.goto(url);
     await page.locator("#start-coach-name").fill("Camila Santos");
     await page.locator("#start-game-mode").selectOption("test");
+    await page.locator("#start-calendar").selectOption("classic");
     await page.locator("[data-action=begin]").click();
     await page.waitForFunction(
       () => document.querySelector("#save-status").textContent === "Salvo",

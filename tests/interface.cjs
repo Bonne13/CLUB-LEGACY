@@ -90,6 +90,7 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
     );
     await page.locator("#start-club").selectOption("br-1");
     await page.locator("#start-coach-name").fill("Carlos Silva");
+    await page.locator("#start-calendar").selectOption("classic");
     await page
       .getByRole("button", { name: "Começar carreira", exact: false })
       .click();

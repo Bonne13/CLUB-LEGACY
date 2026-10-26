@@ -29,6 +29,7 @@ const { chromium } = require("playwright"),
     }
     await p.goto(target);
     await p.locator("#start-coach-name").fill("Carlos Silva");
+    await p.locator("#start-calendar").selectOption("classic");
     await p.locator("[data-action=begin]").click();
     assert.equal(await p.locator('#nav [data-page="Dia de jogo"]').count(), 0);
     assert(await p.locator("#match-day").isVisible());

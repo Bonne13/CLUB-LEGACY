@@ -52,6 +52,7 @@ const { chromium } = require("playwright"),
       ),
     );
     await page.locator("#start-coach-name").fill("Rafaela Silva");
+    await page.locator("#start-calendar").selectOption("classic");
     await page.locator("[data-action=begin]").click();
     assert(await images());
     const clubColor = await primary();

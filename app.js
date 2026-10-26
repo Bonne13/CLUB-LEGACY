@@ -129,6 +129,7 @@ try {
 let setupLeague = "br",
   setupClub = "br-0",
   setupMode = "normal",
+  setupCalendar = "regional",
   setupProfile = { name: "", age: 35, nationality: "Brazil" },
   newsScope = "club",
   newsCategory = "all";
@@ -313,7 +314,7 @@ function renderNavigation() {
     nav.innerHTML = navigationGroups
       .map(
         ([label, items]) =>
-          `<div class="nav-group"><small class="nav-group-label">${label}</small>${items.map((p) => `<button data-page="${p}"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${navigationPaths[p]}</svg><span class="nav-label">${p}</span></button>`).join("")}</div>`,
+          `<div class="nav-group"><small class="nav-group-label">${label}</small>${items.map((p) => `<button data-page="${p}" aria-label="${p}" title="${p}"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${navigationPaths[p]}</svg><span class="nav-label">${p}</span></button>`).join("")}</div>`,
       )
       .join("");
     navigationReady = true;
@@ -383,6 +384,76 @@ function act(fn, save = true) {
     notify(e.message, true);
   }
 }
+const pageDescriptions = {
+  "Visão geral":
+    "O próximo passo da sua carreira, os compromissos e a situação do clube.",
+  Jornal: "As histórias do seu clube, da liga e do continente.",
+  Calendário: "Compromissos, preparação, amistosos e prazos da temporada.",
+  Elenco: "Escalação, funções, capitania e contratos em um só lugar.",
+  Treinamento: "Carga física e desenvolvimento, com espaço para cada decisão.",
+  Transferências: "Encontre reforços, compare custos e acompanhe negociações.",
+  Olheiros: "Transforme observação em decisões para o elenco e a base.",
+  "Categorias de base":
+    "Prepare os atletas reais da base para o próximo passo.",
+  Competições: "Classificações e caminho dos clubes nos campeonatos.",
+  Troféus: "As conquistas que fazem parte da sua história.",
+  Carreira: "Seu treinador, propostas de trabalho e próximos desafios.",
+  Clube: "Estrutura e planejamento para sustentar o futebol.",
+  Financeiro:
+    "Caixa, salários, transferências e o histórico de cada movimento.",
+  Seleções: "Convites, convocação e compromissos internacionais.",
+  Salvamentos: "Guarde, exporte ou gerencie sua carreira.",
+  "Dia de jogo": "Do apito inicial ao último lance, no seu ritmo.",
+};
+function openQuickMenu() {
+  if (!state.clubId) return;
+  const dialog = $("#quick-menu");
+  dialog.innerHTML = `<div class="dialog-heading"><div><span class="badge">CENTRAL DO TREINADOR</span><h2>Para onde vamos?</h2></div><button data-action="close-quick-menu" aria-label="Fechar menu">×</button></div><label class="menu-search">Buscar uma página<input id="quick-menu-search" type="search" placeholder="Elenco, calendário, financeiro…" autocomplete="off"></label><div id="quick-menu-results"></div><small>Ctrl/⌘ + K para abrir · Esc para fechar</small>`;
+  function results() {
+    const term = $("#quick-menu-search")
+      .value.normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+    $("#quick-menu-results").innerHTML =
+      navigationGroups
+        .map(([label, pages]) => {
+          const found = pages.filter((p) =>
+            (p + " " + pageDescriptions[p])
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .toLowerCase()
+              .includes(term),
+          );
+          return found.length
+            ? `<section><h3>${label}</h3>${found.map((p) => `<button data-page="${p}" class="${page === p ? "current" : ""}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">${navigationPaths[p]}</svg><span><strong>${p}</strong><small>${pageDescriptions[p]}</small></span><span aria-hidden="true">→</span></button>`).join("")}</section>`
+            : "";
+        })
+        .join("") ||
+      '<p class="muted">Nenhuma página encontrada. Tente outro nome.</p>';
+  }
+  $("#quick-menu-search").oninput = results;
+  $("#quick-menu-search").onkeydown = (e) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      dialog.close();
+      return;
+    }
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      $("#quick-menu-results button")?.focus();
+    }
+  };
+  results();
+  dialog.showModal();
+  $("#quick-menu-search").focus();
+}
+document.addEventListener("keydown", (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k" && state.clubId) {
+    e.preventDefault();
+    if (!document.querySelector("dialog[open]")) openQuickMenu();
+  }
+});
+
 function render() {
   const hasCareer = Boolean(state.clubId);
   $("#sidebar").hidden = !hasCareer;
@@ -407,12 +478,15 @@ function render() {
   $("#time-controls").innerHTML = page === "Visão geral" ? timeControls() : "";
   renderNavigation();
   $("#title").textContent = page;
+  $("#page-description").textContent = pageDescriptions[page] || "";
+  $("#content").dataset.view = page;
+  document.title = page + " · " + team().name + " · CLUB LEGACY";
   match3D?.dispose();
   match3D = null;
   $("#content").innerHTML = views[page]();
   decorateMoneyInputs();
   $("#context").textContent =
-    `${appearanceTeam().name} · ${E.date(state)}${state.mode === "test" ? " · MODO TESTE" : ""}`;
+    `${appearanceTeam().name} · ${E.seasonLabel(state)} · ${E.date(state)}${state.mode === "test" ? " · MODO TESTE" : ""}`;
   if (page === "Financeiro") updateBudgetPreview();
   if (page === "Dia de jogo" && state.live) draw();
   showCelebration();
@@ -444,10 +518,16 @@ function setup() {
       ["test", "Modo teste · adicionar dinheiro"],
     ],
     setupMode,
+  )}</select><label for="start-calendar">Início da carreira</label><select id="start-calendar">${options(
+    [
+      ["regional", "Pré-temporada · Europa 2026/27 / Américas 2026"],
+      ["classic", "Calendário clássico · jogos imediatos"],
+    ],
+    setupCalendar,
   )}</select><p class="muted">${setupMode === "test" ? "Você poderá adicionar dinheiro ao caixa e aos orçamentos no Financeiro." : "Administre as receitas, despesas e verbas do clube ao longo da carreira."}</p><label for="start-league">País e liga</label><select id="start-league">${options(
     state.leagues.map((l) => [l.id, l.country + " · " + l.name]),
     setupLeague,
-  )}</select><label for="start-club">Seu primeiro clube</label><select id="start-club">${clubOptions}</select><div class="club-preview">${badge(chosen, "large")}<div><strong>${esc(chosen.name)}</strong><span>${esc(l.name)}</span><small>Caixa inicial estimado · ${money(chosen.money)}</small><small>${chosen.players.length} profissionais reais confirmados</small></div></div>${rosterReferenceView(chosen)}${chosen.players.length < 11 ? '<p class="notice">A fonte ainda não tem onze atletas confirmados para este clube. Escolha outro clube ou liga.</p>' : ""}${startButton}<p class="entry-save-note">Sua carreira será salva neste navegador. Exporte um arquivo para guardar uma cópia.</p><button data-action="import-save">Importar carreira salva</button>${loadError ? '<button class="danger" data-action="delete-save">Excluir dados ilegíveis</button>' : ""}</section></div><div class="entry-bottom"><span>SEU CLUBE. SUA HISTÓRIA.</span><span>Dias e semanas · Texto ou 2D · Sem instalação</span></div>${dataNotice()}`;
+  )}</select><label for="start-club">Seu primeiro clube</label><select id="start-club">${clubOptions}</select><div class="club-preview">${badge(chosen, "large")}<div><strong>${esc(chosen.name)}</strong><span>${esc(l.name)}</span><small>Caixa inicial estimado · ${money(chosen.money)}</small><small>${chosen.players.length} profissionais reais confirmados</small></div></div>${rosterReferenceView(chosen)}${chosen.players.length < 11 ? '<p class="notice">A fonte ainda não tem onze atletas confirmados para este clube. Escolha outro clube ou liga.</p>' : ""}${startButton}<p class="entry-save-note">Sua carreira será salva neste navegador. Exporte um arquivo para guardar uma cópia.</p><button data-action="import-save">Importar carreira salva</button>${loadError ? '<button class="danger" data-action="delete-save">Excluir dados ilegíveis</button>' : ""}</section></div><div class="entry-bottom"><span>SEU CLUBE. SUA HISTÓRIA.</span><span>Dias e semanas · Texto, 2D ou 3D · Sem instalação</span></div>${dataNotice()}`;
 }
 function rosterReferenceView(t) {
   const ref = t.rosterReference || { source: "historical", date: null },
@@ -573,7 +653,7 @@ function timeControls() {
   const upcoming = E.upcomingFixture(state),
     todayMatch = E.nextFixture(state);
   if (!E.dayInfo(state))
-    return `<div class="time-panel"><div><small>TEMPORADA ${state.season} ENCERRADA</small><strong>Planeje o próximo ano</strong></div><button data-page="Carreira">Propostas de trabalho</button>${btn("Avançar 1 dia de planejamento", "planning-day")}${btn("Iniciar temporada " + (state.season + 1), "next-season", "", "primary")}</div>`;
+    return `<div class="time-panel"><div><small>TEMPORADA ${E.seasonLabel(state)} ENCERRADA</small><strong>Planeje o próximo ano</strong></div><button data-page="Carreira">Propostas de trabalho</button>${btn("Avançar 1 dia de planejamento", "planning-day")}${btn("Iniciar temporada " + E.seasonLabel({ ...state, season: state.season + 1 }), "next-season", "", "primary")}</div>`;
   return `<div class="time-panel"><div><small>CALENDÁRIO DA CARREIRA</small><strong>${esc(E.date(state))}</strong><p>${todayMatch ? "Hoje: " + matchup(todayMatch) : upcoming ? "Próximo jogo: " + E.formatDate(state, upcoming.offset) + " · " + matchup(upcoming) : "Sem partida confirmada."}</p></div><form id="simulation-form"><label>Avançar<input id="simulate-amount" type="number" min="1" max="52" value="${simulateAmount}" required></label><label>Período<select id="simulate-unit">${options(
     [
       ["days", "Dias"],
@@ -610,7 +690,7 @@ const views = {
         E.rank(E.league(state, t.leagueId).table).findIndex(
           (r) => r.id === t.id,
         ) + 1;
-    return `<div class="hero"><span class="badge">TEMPORADA ${state.season} · ${esc(E.date(state))}</span><h2 class="identity-title">${badge(t, "large")}<span>${esc(t.name)}</span></h2><p>${next ? esc(next.name) + " · " + matchup(next) : d ? "Data sem partida do seu clube. Acompanhe os outros resultados." : "A temporada terminou. Confira os títulos e as propostas para sua carreira."}</p>${next || E.currentMatch(state).active ? '<button class="primary" data-page="Dia de jogo">Central da partida →</button>' : '<button data-page="Calendário">Ver calendário →</button>'}</div><div class="grid">${metric("CAIXA DO CLUBE", money(t.money), "Folha semanal estimada: " + money(t.players.reduce((a, p) => a + p.salary, 0)))}${metric("POSIÇÃO NA LIGA", pos + "º", esc(E.league(state, t.leagueId).name))}${metric("FORÇA DO TIME", Math.round(E.strength(t)), "Reputação do treinador: " + state.reputation)}</div><div class="columns"><div class="card"><div class="row"><h3>Notícias do clube e do mundo</h3><button data-page="Jornal">Abrir jornal →</button></div>${state.news
+    return `<div class="hero"><span class="badge">TEMPORADA ${E.seasonLabel(state)} · ${esc(E.date(state))}</span><h2 class="identity-title">${badge(t, "large")}<span>${esc(t.name)}</span></h2><p>${next ? esc(next.name) + " · " + matchup(next) : d ? "Data sem partida do seu clube. Acompanhe os outros resultados." : "A temporada terminou. Confira os títulos e as propostas para sua carreira."}</p>${next || E.currentMatch(state).active ? '<button class="primary" data-page="Dia de jogo">Central da partida →</button>' : '<button data-page="Calendário">Ver calendário →</button>'}</div>${state.calendarProfile && state.today < state.calendarProfile.preseasonDays ? `<section class="preseason-banner"><div><span class="badge">PRÉ-TEMPORADA</span><h3>${state.calendarProfile.preseasonDays - state.today} dias para preparar a estreia</h3><p>Treine, negocie e organize jogos de preparação no calendário.</p></div><button data-page="Calendário">Organizar a pré-temporada →</button></section>` : ""}<div class="grid">${metric("CAIXA DO CLUBE", money(t.money), "Folha semanal estimada: " + money(t.players.reduce((a, p) => a + p.salary, 0)))}${metric("POSIÇÃO NA LIGA", pos + "º", esc(E.league(state, t.leagueId).name))}${metric("FORÇA DO TIME", Math.round(E.strength(t)), "Reputação do treinador: " + state.reputation)}</div><div class="columns"><div class="card"><div class="row"><h3>Notícias do clube e do mundo</h3><button data-page="Jornal">Abrir jornal →</button></div>${state.news
       .slice(0, 8)
       .map((n) => `<p>${esc(n)}</p>`)
       .join(
@@ -651,7 +731,7 @@ const views = {
       c = state.cups.find((c) => c.id === id);
     return `<div class="card"><label>Acompanhar competição<select id="competition">${options([...state.leagues.map((l) => [l.id, l.name]), ...state.cups.map((c) => [c.id, c.name])], id)}</select></label>${
       l
-        ? `<h3>${esc(l.name)} · ${state.season}</h3><p class="muted">${l.ids.length} clubes · ${l.single ? "Turno único" : "Turno e returno"} · ${l.fixtures.length} rodadas. Pontos, saldo e gols marcados.</p>${standings(l.table)}`
+        ? `<h3>${esc(l.name)} · ${E.seasonLabel(state, l.region)}</h3><p class="muted">${l.ids.length} clubes · ${l.single ? "Turno único" : "Turno e returno"} · ${l.fixtures.length} rodadas. Pontos, saldo e gols marcados.</p>${standings(l.table)}`
         : `<h3>${esc(c.name)}</h3><p class="muted">${c.entrants.length} clubes · ${c.region === "sa" ? "8 grupos de 4, seis jogos por clube. Os dois melhores de cada grupo avançam." : "Fase de liga com " + c.stageGames + " jogos por clube. Top 8 direto às oitavas; 9º a 24º disputam playoffs."} Mata-mata em jogo único.</p>${c.champion ? `<div class="hero"><span class="badge">CAMPEÃO</span><h2 class="identity-title">${teamLabel(c.champion, "large")}</h2></div>` : ""}${c.region === "sa" ? c.groups.map((g, i) => `<h3>Grupo ${String.fromCharCode(65 + i)}</h3>${standings(c.table.filter((t) => g.includes(t.id)))}`).join("") : standings(c.table)}${c.rounds
             .map(
               (r) =>
@@ -761,7 +841,7 @@ function financialView() {
    .slice(ledgerPage * 20, ledgerPage * 20 + 20)
    .map(
      (r) =>
-       `<tr><td>${esc(E.formatDate({ season: r.season }, r.offset))}</td><td>${financeLabels[r.category] || esc(r.category)}</td><td>${esc(r.description)}</td><td class="${r.amount > 0 ? "income" : r.amount < 0 ? "expense" : ""}">${money(r.amount)}</td><td>${money(r.balance)}</td></tr>`,
+       `<tr><td>${esc(E.formatDate({ ...state, season: r.season }, r.offset))}</td><td>${financeLabels[r.category] || esc(r.category)}</td><td>${esc(r.description)}</td><td class="${r.amount > 0 ? "income" : r.amount < 0 ? "expense" : ""}">${money(r.amount)}</td><td>${money(r.balance)}</td></tr>`,
    )
    .join(
      "",
@@ -776,7 +856,7 @@ function budgetEditor() {
       ? Math.round((f.transferBudget / c.allocated) * 100)
       : 100;
   const changes = (f.budgetHistory || []).slice(-5).reverse();
-  return `<section class="card budget-editor"><div class="row"><div><span class="badge">PLANEJAMENTO DO FUTEBOL</span><h3>Definir limites em reais</h3></div><span class="pill">Aplicação imediata ao confirmar</span></div><p>Edite quanto pode gastar em contratações e o teto da folha semanal. O espaço salarial adicional reserva 52 semanas; a folha atual tem uma reserva de segurança de 13 semanas.</p><div class="budget-summary"><div><small>Transferências atuais</small><strong id="current-transfer">${money(f.transferBudget)}</strong></div><div><small>Teto salarial atual / semana</small><strong id="current-wage">${money(f.wageBudget)}</strong></div><div><small>Folha já contratada / semana</small><strong>${money(c.committed)}</strong></div><div><small>Caixa livre para ampliar limites</small><strong>${money(c.free)}</strong></div></div><form id="budget-form"><div class="columns"><label for="budget-transfer">Novo limite de transferências (R$)<input id="budget-transfer" type="number" min="0" step="1" required value="${f.transferBudget}"></label><label for="budget-wage">Novo teto salarial por semana (R$)<input id="budget-wage" type="number" min="${c.committed}" step="1" required value="${Math.max(c.committed, f.wageBudget)}"></label></div><div id="budget-simulation" aria-live="polite"></div><details class="budget-slider"><summary>Redistribuir a verba atual com o controle deslizante</summary><label for="budget-share">Parcela para transferências <output id="budget-preview">${share}%</output></label><input id="budget-share" type="range" min="0" max="100" value="${share}"><p class="muted">← Mais espaço salarial · Mais verba para transferências →</p></details><div class="row"><button class="primary" id="apply-budget">Aplicar distribuição</button><button type="button" data-action="reset-budget">Restaurar valores atuais</button></div><p class="muted">Os cartões acima mostram os valores salvos. A prévia mostra o que será aplicado. Distribuir verba mantém o saldo bancário; os novos limites passam a valer nas negociações.</p></form><details><summary>Destinar um valor adicional do caixa livre</summary><form id="fund-budget-form" class="filters"><label>Valor para transferências (R$)<input id="fund-budget-amount" type="number" min="1" step="1" max="${c.free}" value="${c.free}"></label><button ${c.free < 1 ? "disabled" : ""}>Destinar caixa</button></form></details>${changes.length ? `<details><summary>Últimas alterações de orçamento</summary>${changes.map((h) => `<div class="budget-change"><small>${E.formatDate({ season: h.season }, h.offset)}</small><span>Transferências: ${money(h.before.transfer)} → <strong>${money(h.after.transfer)}</strong></span><span>Teto semanal: ${money(h.before.wage)} → <strong>${money(h.after.wage)}</strong></span></div>`).join("")}</details>` : ""}</section>`;
+  return `<section class="card budget-editor"><div class="row"><div><span class="badge">PLANEJAMENTO DO FUTEBOL</span><h3>Definir limites em reais</h3></div><span class="pill">Aplicação imediata ao confirmar</span></div><p>Edite quanto pode gastar em contratações e o teto da folha semanal. O espaço salarial adicional reserva 52 semanas; a folha atual tem uma reserva de segurança de 13 semanas.</p><div class="budget-summary"><div><small>Transferências atuais</small><strong id="current-transfer">${money(f.transferBudget)}</strong></div><div><small>Teto salarial atual / semana</small><strong id="current-wage">${money(f.wageBudget)}</strong></div><div><small>Folha já contratada / semana</small><strong>${money(c.committed)}</strong></div><div><small>Caixa livre para ampliar limites</small><strong>${money(c.free)}</strong></div></div><form id="budget-form"><div class="columns"><label for="budget-transfer">Novo limite de transferências (R$)<input id="budget-transfer" type="number" min="0" step="1" required value="${f.transferBudget}"></label><label for="budget-wage">Novo teto salarial por semana (R$)<input id="budget-wage" type="number" min="${c.committed}" step="1" required value="${Math.max(c.committed, f.wageBudget)}"></label></div><div id="budget-simulation" aria-live="polite"></div><details class="budget-slider"><summary>Redistribuir a verba atual com o controle deslizante</summary><label for="budget-share">Parcela para transferências <output id="budget-preview">${share}%</output></label><input id="budget-share" type="range" min="0" max="100" value="${share}"><p class="muted">← Mais espaço salarial · Mais verba para transferências →</p></details><div class="row"><button class="primary" id="apply-budget">Aplicar distribuição</button><button type="button" data-action="reset-budget">Restaurar valores atuais</button></div><p class="muted">Os cartões acima mostram os valores salvos. A prévia mostra o que será aplicado. Distribuir verba mantém o saldo bancário; os novos limites passam a valer nas negociações.</p></form><details><summary>Destinar um valor adicional do caixa livre</summary><form id="fund-budget-form" class="filters"><label>Valor para transferências (R$)<input id="fund-budget-amount" type="number" min="1" step="1" max="${c.free}" value="${c.free}"></label><button ${c.free < 1 ? "disabled" : ""}>Destinar caixa</button></form></details>${changes.length ? `<details><summary>Últimas alterações de orçamento</summary>${changes.map((h) => `<div class="budget-change"><small>${E.formatDate({ ...state, season: h.season }, h.offset)}</small><span>Transferências: ${money(h.before.transfer)} → <strong>${money(h.after.transfer)}</strong></span><span>Teto semanal: ${money(h.before.wage)} → <strong>${money(h.after.wage)}</strong></span></div>`).join("")}</details>` : ""}</section>`;
 }
 function updateBudgetPreview(source) {
   if (!$("#budget-transfer")) return;
@@ -1016,7 +1096,7 @@ function squadTacticsView() {
     )
     .join(
       "",
-    )}</div><p class="muted">Mentalidade, funções e ritmo alteram as oportunidades de gol. Pressão alta e ritmo rápido aumentam o desgaste. Contra-ataques e jogo direto aproveitam espaço contra linhas altas.</p></div><div class="card"><span class="badge">LIDERANÇA E BOLAS PARADAS</span><h3>Responsáveis da equipe</h3><div class="set-piece-grid">${Object.entries(
+    )}</div><p class="muted">Mentalidade, funções e ritmo alteram as oportunidades de gol. Pressão alta e ritmo rápido aumentam o desgaste. Contra-ataques e jogo direto aproveitam espaço contra linhas altas.</p></div><div class="card"><span class="badge">LIDERANÇA E BOLAS PARADAS</span><h3>Responsáveis da equipe</h3>${captainHierarchyView(t)}<div class="set-piece-grid">${Object.entries(
     T.assignments,
   )
     .map(([key, label]) => {
@@ -1027,11 +1107,11 @@ function squadTacticsView() {
           : key === "penalties"
             ? "penalties"
             : "leadership";
-      return `<label>${label}<select data-assignment="${key}">${options([["", "Automático entre titulares"], ...[...t.players].sort((a, b) => T.skills(b)[skill] - T.skills(a)[skill]).map((p) => [p.id, p.name + " · " + T.skills(p)[skill] + (assigned.has(p.id) ? " · titular" : " · fora do onze")])], plan.assignments[key] || "")}</select><small>Em campo: ${esc(specialists[key]?.name || "Indisponível")}</small></label>`;
+      return `<label>${label}<select data-assignment="${key}">${options([["", skill === "leadership" ? "Hierarquia do clube / liderança" : "Automático entre titulares"], ...[...t.players].sort((a, b) => T.skills(b)[skill] - T.skills(a)[skill]).map((p) => [p.id, p.name + " · " + (skill === "leadership" ? "Liderança " : "") + T.skills(p)[skill] + "/100" + (skill === "leadership" && T.leadership.hierarchy(t).some((c) => c.id === p.id) ? " · capitania de referência" : "") + (assigned.has(p.id) ? " · titular" : " · fora do onze")])], plan.assignments[key] || "")}</select><small>Em campo: ${esc(specialists[key]?.name || "Indisponível")}</small></label>`;
     })
     .join(
       "",
-    )}</div><p class="muted">Liderança e atributos de cobrança são estimativas da simulação. Se o escolhido estiver lesionado ou fora do onze, entra um substituto automático; o vice assume quando o capitão não joga.</p></div>`;
+    )}</div><p class="muted">A hierarquia automática usa as referências de capitania disponíveis. A nota de liderança e os atributos de cobrança são avaliações da simulação, de 0 a 100. Se o escolhido estiver lesionado ou fora do onze, entra um substituto automático; o vice assume quando o capitão não joga.</p></div>`;
 }
 
 const newsCategories = {
@@ -1062,7 +1142,7 @@ function newspaper() {
       : newsScope === "league"
         ? ownLeague.name
         : regions[ownLeague.region];
-  return `<section class="newspaper"><div class="paper-masthead"><div><span class="badge">O FUTEBOL ACONTECE AQUI</span><h2>LEGACY <em>Jornal</em></h2></div><span>${esc(E.date(state))}<br>Temporada ${state.season}</span></div><div class="paper-edition"><strong>${esc(scopeLabel)}</strong><span>Notícias do universo da sua carreira</span></div><div class="news-toolbar"><div class="scope-filters" role="group" aria-label="Abrangência das notícias">${[
+  return `<section class="newspaper"><div class="paper-masthead"><div><span class="badge">O FUTEBOL ACONTECE AQUI</span><h2>LEGACY <em>Jornal</em></h2></div><span>${esc(E.date(state))}<br>Temporada ${E.seasonLabel(state)}</span></div><div class="paper-edition"><strong>${esc(scopeLabel)}</strong><span>Notícias do universo da sua carreira</span></div><div class="news-toolbar"><div class="scope-filters" role="group" aria-label="Abrangência das notícias">${[
     ["club", "Meu clube"],
     ["league", "Minha liga"],
     ["continent", "Meu continente"],
@@ -1074,7 +1154,7 @@ function newspaper() {
     .join(
       "",
     )}</div><label class="inline">Editoria<select id="news-category">${options(Object.entries(newsCategories), newsCategory)}</select></label></div>
-    <div class="news-grid">${articles.map((a, i) => `<article class="news-article ${i === 0 ? "news-featured" : ""}" data-article="${esc(a.id)}" data-clubs="${esc(a.clubIds.join(" "))}"><div class="article-meta"><span>${newsCategories[a.category] || "Clube"}</span><time>${esc(E.formatDate({ ...state, season: a.season }, a.offset ?? E.calendar()[a.day]?.offset ?? 0))}</time></div><h3>${esc(a.title)}</h3>${a.body ? `<p>${esc(a.body)}</p>` : ""}<div class="article-clubs">${a.clubIds.map((id) => teamLabel(id, "tiny")).join("")}</div></article>`).join("") || '<div class="news-empty"><h3>Nenhuma notícia nesta editoria</h3><p class="muted">Escolha outra editoria ou avance a carreira para acompanhar novos acontecimentos.</p></div>'}</div></section>`;
+    <div class="news-grid">${articles.map((a, i) => `<article class="news-article ${i === 0 ? "news-featured" : ""}" data-article="${esc(a.id)}" data-clubs="${esc(a.clubIds.join(" "))}"><div class="article-meta"><span>${newsCategories[a.category] || "Clube"}</span><time>${esc(E.formatDate({ ...state, season: a.season }, a.offset ?? E.calendar(state)[a.day]?.offset ?? 0))}</time></div><h3>${esc(a.title)}</h3>${a.body ? `<p>${esc(a.body)}</p>` : ""}<div class="article-clubs">${a.clubIds.map((id) => teamLabel(id, "tiny")).join("")}</div></article>`).join("") || '<div class="news-empty"><h3>Nenhuma notícia nesta editoria</h3><p class="muted">Escolha outra editoria ou avance a carreira para acompanhar novos acontecimentos.</p></div>'}</div></section>`;
 }
 function referenceClubName(id) {
   const [code, index] = id.split("-"),
@@ -1753,6 +1833,7 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("click", (event) => {
   const nav = event.target.closest("[data-page]");
   if (nav) {
+    if ($("#quick-menu").open) $("#quick-menu").close();
     if (
       page === "Dia de jogo" &&
       nav.dataset.page !== page &&
@@ -1799,6 +1880,39 @@ document.addEventListener("click", (event) => {
   if (!b) return;
   const a = b.dataset.action,
     id = b.dataset.id;
+  if (a === "quick-menu") {
+    openQuickMenu();
+    return;
+  }
+  if (a === "close-quick-menu") {
+    $("#quick-menu").close();
+    return;
+  }
+  if (a === "toggle-sidebar") {
+    document.body.classList.toggle("compact-navigation");
+    b.setAttribute(
+      "aria-expanded",
+      String(!document.body.classList.contains("compact-navigation")),
+    );
+    return;
+  }
+  if (a === "close-calendar-dialog") {
+    $("#calendar-dialog").close();
+    return;
+  }
+  if (a === "training-layout") {
+    trainingLayout = id;
+    render();
+    return;
+  }
+  if (a === "arrange-friendly") {
+    openFriendlyDialog(false);
+    return;
+  }
+  if (a === "organize-preseason") {
+    openFriendlyDialog(true);
+    return;
+  }
   if (a === "shirt-squad") {
     openShirtDialog(id);
     return;
@@ -1850,21 +1964,26 @@ document.addEventListener("click", (event) => {
   ) {
     if (a === "calendar-month") {
       calendarMonth = Math.max(
-        0,
-        Math.min(11, (calendarMonth ?? 1) + Number(id)),
+        new Date(E.schedule.anchor(state)).getUTCMonth(),
+        Math.min(
+          new Date(E.schedule.anchor(state)).getUTCMonth() + 11,
+          (calendarMonth ?? new Date(E.schedule.anchor(state)).getUTCMonth()) +
+            Number(id),
+        ),
       );
       calendarSelected = Math.round(
-        (Date.UTC(state.season, calendarMonth, 1) -
-          Date.UTC(state.season, 1, 1)) /
+        (Date.UTC(state.season, calendarMonth, 1) - E.schedule.anchor(state)) /
           86400000,
       );
     }
     if (a === "calendar-select") calendarSelected = Number(id);
     if (a === "calendar-mode") calendarMode = id;
     if (a === "calendar-today") {
-      calendarMonth = new Date(
-        Date.UTC(state.season, 1, 1 + state.today),
-      ).getUTCMonth();
+      calendarMonth =
+        new Date(
+          E.schedule.anchor(state) + state.today * 86400000,
+        ).getUTCMonth() +
+        (E.schedule.at(state).getUTCFullYear() - state.season) * 12;
       calendarSelected = state.today;
     }
     if (a === "scout-scope") {
@@ -1944,6 +2063,12 @@ document.addEventListener("click", (event) => {
     )
       throw Error("Conclua a partida antes de mudar a gestão do clube.");
     switch (a) {
+      case "cancel-friendly":
+        E.cancelFriendly(state, id);
+        break;
+      case "cancel-preseason":
+        E.cancelPreseason(state, id);
+        break;
       case "reference-calendar":
         calendarView = "reference";
         break;
@@ -1951,7 +2076,18 @@ document.addEventListener("click", (event) => {
         calendarView = "career";
         break;
       case "begin":
-        E.start(state, $("#start-club").value, readProfile("start"), setupMode);
+        E.start(
+          state,
+          $("#start-club").value,
+          readProfile("start"),
+          setupMode,
+          {
+            calendar:
+              $("#start-calendar").value === "regional"
+                ? "regional"
+                : "classic",
+          },
+        );
         break;
       case "national-next":
         nationalPage++;
@@ -2095,6 +2231,7 @@ document.addEventListener("click", (event) => {
         animatingPlay = false;
         liveScoreHold = null;
         stopTimer();
+        if (!state.live) E.makeMatch(state, matchMode);
         state.live.secondHalfStarted = true;
         while (state.live.minute < 90) E.minute(state, state.live);
         E.advance(state);
@@ -2200,6 +2337,10 @@ document.addEventListener("change", (event) => {
     nationalFilter = el.value;
     nationalPage = 0;
     render();
+    return;
+  }
+  if (el.id === "start-calendar") {
+    setupCalendar = el.value;
     return;
   }
   if (el.id === "start-game-mode") {
@@ -2524,7 +2665,8 @@ function readProfile(prefix) {
     nationality: $("#" + prefix + "-coach-nationality").value,
   };
 }
-let trainingFilter = "all";
+let trainingFilter = "all",
+  trainingLayout = "cards";
 function trainingView() {
   const t = team(),
     all = [...t.players, ...t.youth],
@@ -2547,10 +2689,10 @@ function trainingView() {
       (trainingFilter === "youth" && t.youth.includes(p)) ||
       (trainingFilter === "injured" && p.injury),
   );
-  return `<div class="hero"><span class="badge">CENTRO DE TREINAMENTO · NÍVEL ${t.facility}</span><h2>Um plano para cada fase da temporada.</h2><p>Distribua a carga, recupere os titulares e trabalhe os fundamentos. O planejamento automático alivia a véspera dos jogos.</p><div class="row"><span class="pill">Hoje · ${esc(session.label)}</span><label>Plano geral<select id="training">${options(
+  return `<div class="hero training-hero"><span class="badge">CENTRO DE TREINAMENTO · NÍVEL ${t.facility}</span><h2>Prepare o próximo jogo.</h2><p>Distribua a carga, recupere os titulares e trabalhe os fundamentos. O planejamento automático alivia a véspera dos jogos.</p><div class="row"><span class="pill">Hoje · ${esc(session.label)}</span><label>Plano geral<select id="training">${options(
     ["Técnica", "Intensivo", "Recuperação"].map((v) => [v, v]),
     state.training,
-  )}</select></label></div></div><div class="grid">${metric("ENERGIA MÉDIA", average + "%", all.filter((p) => p.fitness >= 90 && !p.injury).length + " atletas prontos")}${metric("DESGASTE ACUMULADO", fatigue + "%", "A sequência de jogos afeta a recuperação")}${metric("PRÓXIMO COMPROMISSO", remaining === null ? "A confirmar" : remaining + " dia(s)", next ? E.formatDate(state, next.offset) : "Planejamento livre")}</div><section class="card"><div class="row"><div><span class="badge">MICROCICLO SEMANAL</span><h3>Treinar com propósito.</h3></div><span class="pill">${esc(E.date(state))}</span></div><div class="training-week">${["SEG", "TER", "QUA", "QUI", "SEX", "SÁB", "DOM"].map((day, i) => `<label class="training-day ${i === today ? "current" : ""}"><small>${day}${i === today ? " · HOJE" : ""}</small><select data-training-day="${i}" aria-label="Treino de ${day}">${options(Object.entries(E.training.sessions), schedule[i])}</select><span>${i === today ? esc(session.label) : schedule[i] === "auto" ? "Carga adaptada ao calendário" : esc(E.training.sessions[schedule[i]])}</span></label>`).join("")}</div><p class="muted">As sessões se repetem semanalmente. Dia de jogo tem prioridade; no automático, a véspera recebe ativação leve. Folga e recuperação não geram progresso técnico.</p></section><section class="card"><div class="row"><div><h3>Carga e desenvolvimento individual</h3><p class="muted">O foco acumula progresso nos dias treinados. Ao completar 100%, desenvolve o fundamento correspondente.</p></div>${btn("Descansar os desgastados por 2 dias", "recover-tired", "", "primary")}</div><label class="inline">Mostrar<select id="training-filter">${options(
+  )}</select></label></div></div><div class="grid">${metric("ENERGIA MÉDIA", average + "%", all.filter((p) => p.fitness >= 90 && !p.injury).length + " atletas prontos")}${metric("DESGASTE ACUMULADO", fatigue + "%", "A sequência de jogos afeta a recuperação")}${metric("PRÓXIMO COMPROMISSO", remaining === null ? "A confirmar" : remaining + " dia(s)", next ? E.formatDate(state, next.offset) : "Planejamento livre")}</div><section class="card"><div class="row"><div><span class="badge">MICROCICLO SEMANAL</span><h3>Treinar com propósito.</h3></div><span class="pill">${esc(E.date(state))}</span></div><div class="training-week">${["SEG", "TER", "QUA", "QUI", "SEX", "SÁB", "DOM"].map((day, i) => `<label class="training-day ${i === today ? "current" : ""}"><small>${day}${i === today ? " · HOJE" : ""}</small><select data-training-day="${i}" aria-label="Treino de ${day}">${options(Object.entries(E.training.sessions), schedule[i])}</select><span>${i === today ? esc(session.label) : schedule[i] === "auto" ? "Carga adaptada ao calendário" : esc(E.training.sessions[schedule[i]])}</span></label>`).join("")}</div><p class="muted">As sessões se repetem semanalmente. Dia de jogo tem prioridade; no automático, a véspera recebe ativação leve. Folga e recuperação não geram progresso técnico.</p></section><section class="card training-individual"><div class="row"><div><h3>Carga e desenvolvimento individual</h3><p class="muted">O foco acumula progresso nos dias treinados. Ao completar 100%, desenvolve o fundamento correspondente.</p></div>${btn("Descansar os desgastados por 2 dias", "recover-tired", "", "primary")}</div><div class="training-toolbar"><div class="segmented">${btn("Cartões", "training-layout", "cards", trainingLayout === "cards" ? "active" : "")}${btn("Tabela", "training-layout", "table", trainingLayout === "table" ? "active" : "")}</div><label class="inline">Mostrar<select id="training-filter">${options(
     [
       ["all", "Todos os atletas"],
       ["tired", "Precisam de recuperação"],
@@ -2558,7 +2700,7 @@ function trainingView() {
       ["injured", "Lesionados"],
     ],
     trainingFilter,
-  )}</select></label><div class="table-wrap"><table class="physical-table"><thead><tr><th>ATLETA</th><th>ENERGIA / CARGA</th><th>PLANO DE CARGA</th><th>FOCO DE DESENVOLVIMENTO</th><th>AMANHÃ SEM JOGO</th></tr></thead><tbody>${
+  )}</select></label></div><div class="${trainingLayout === "cards" ? "training-athletes" : "table-wrap"}"><table class="physical-table ${trainingLayout === "cards" ? "training-cards" : ""}"><thead><tr><th>ATLETA</th><th>ENERGIA / CARGA</th><th>PLANO DE CARGA</th><th>FOCO DE DESENVOLVIMENTO</th><th>AMANHÃ SEM JOGO</th></tr></thead><tbody>${
     players
       .map((p) => {
         const prediction = E.physical.preview(p, session.mode, t.facility),
@@ -2568,7 +2710,7 @@ function trainingView() {
           selected = p.restDays
             ? "rest" + p.restDays
             : p.trainingPlan || "auto";
-        return `<tr><td><strong>${esc(p.name)}</strong><small class="sub">${p.pos} · ${playerAge(p)} anos${t.youth.includes(p) ? " · base" : ""}${p.injury ? " · lesão " + p.injury + " dias" : ""}</small><small class="sub">Resistência ${p.stamina || 70} · overall ${p.ovr}</small></td><td><div class="readiness-meter"><i style="--readiness:${p.fitness}%"></i><strong>${p.fitness}%</strong></div><small class="sub">Desgaste ${p.fatigue || 0}%</small></td><td><select data-recovery-player="${esc(p.id)}" aria-label="Plano de ${esc(p.name)}">${options([["auto", "Automático / equipe"], ["normal", "Carga normal"], ["light", "Treino leve"], ...(!p.injury ? [["intense", "Treino intenso"]] : []), ...Array.from({ length: 7 }, (_, i) => ["rest" + (i + 1), "Descanso · " + (i + 1) + " dia(s)"])], selected)}</select></td><td><select data-training-focus="${esc(p.id)}" aria-label="Foco de ${esc(p.name)}">${options(Object.entries(E.training.focuses), focus)}</select><div class="development-progress"><i style="width:${xp}%"></i></div><small class="sub">${xp}% do ciclo${p.trainingBonuses?.[focus] ? " · +" + p.trainingBonuses[focus] + " no fundamento" : ""}</small></td><td><strong>${prediction.energyGain >= 0 ? "+" : ""}${prediction.energyGain} energia</strong><small class="sub">${prediction.fatigueChange >= 0 ? "+" : ""}${prediction.fatigueChange} desgaste</small><small class="sub">${days === 0 ? "Recuperado" : days > 7 ? "Recuperação acima de 7 dias" : days + " dias para recuperar"}</small></td></tr>`;
+        return `<tr><td data-field="Atleta"><strong>${esc(p.name)}</strong><small class="sub">${p.pos} · ${playerAge(p)} anos${t.youth.includes(p) ? " · base" : ""}${p.injury ? " · lesão " + p.injury + " dias" : ""}</small><small class="sub">Resistência ${p.stamina || 70} · overall ${p.ovr}</small></td><td data-field="Energia e carga"><div class="readiness-meter"><i style="--readiness:${p.fitness}%"></i><strong>${p.fitness}%</strong></div><small class="sub">Desgaste ${p.fatigue || 0}%</small></td><td data-field="Plano de carga"><label class="training-control-label">Plano de carga<select data-recovery-player="${esc(p.id)}" aria-label="Plano de ${esc(p.name)}">${options([["auto", "Automático / equipe"], ["normal", "Carga normal"], ["light", "Treino leve"], ...(!p.injury ? [["intense", "Treino intenso"]] : []), ...Array.from({ length: 7 }, (_, i) => ["rest" + (i + 1), "Descanso · " + (i + 1) + " dia(s)"])], selected)}</select></label></td><td data-field="Foco de desenvolvimento"><label class="training-control-label">Foco de desenvolvimento<select data-training-focus="${esc(p.id)}" aria-label="Foco de ${esc(p.name)}">${options(Object.entries(E.training.focuses), focus)}</select></label><div class="development-progress"><i style="width:${xp}%"></i></div><small class="sub">${xp}% do ciclo${p.trainingBonuses?.[focus] ? " · +" + p.trainingBonuses[focus] + " no fundamento" : ""}</small></td><td data-field="Projeção sem jogo"><strong>${prediction.energyGain >= 0 ? "+" : ""}${prediction.energyGain} energia</strong><small class="sub">${prediction.fatigueChange >= 0 ? "+" : ""}${prediction.fatigueChange} desgaste</small><small class="sub">${days === 0 ? "Recuperado" : days > 7 ? "Recuperação acima de 7 dias" : days + " dias para recuperar"}</small></td></tr>`;
       })
       .join("") || '<tr><td colspan="5">Nenhum atleta neste filtro.</td></tr>'
   }</tbody></table></div><p class="muted">Projeções consideram um dia sem jogo. Descanso dispensa treino; jogar durante o descanso continua consumindo energia. Lesionados seguem recuperação.</p></section><section class="card"><h3>Diário do CT</h3><div class="training-history">${
@@ -2576,7 +2718,7 @@ function trainingView() {
       .slice(0, 7)
       .map(
         (h) =>
-          `<article><small>${E.formatDate({ season: h.season }, h.offset)}</small><strong>${esc(h.label)}</strong><span>${h.trained} atletas treinaram · ${h.improved} fundamentos evoluíram</span></article>`,
+          `<article><small>${E.formatDate({ ...state, season: h.season }, h.offset)}</small><strong>${esc(h.label)}</strong><span>${h.trained} atletas treinaram · ${h.improved} fundamentos evoluíram</span></article>`,
       )
       .join("") ||
     '<p class="muted">As sessões aparecerão aqui quando você avançar os dias.</p>'
@@ -2691,7 +2833,7 @@ function scoutingView() {
                   0,
                   Math.min(100, ((state.today - m.started) / total) * 100),
                 );
-              return `<article class="mission-card"><div class="row"><strong>${m.status === "pending" ? "Em observação" : m.status === "completed" ? "Relatório entregue" : "Encerrada"}</strong><span>${m.depth === "deep" ? "Detalhada" : m.depth === "quick" ? "Triagem" : "Padrão"}</span></div><p>${m.position === "all" ? "Todos os setores" : esc(m.position)} · ${m.minAge || 15}–${m.maxAge} anos</p><div class="development-progress"><i style="width:${m.status === "completed" ? 100 : done}%"></i></div><small>${m.status === "pending" ? Math.max(0, m.due - state.today) + " dias restantes · " : ""}${E.formatDate({ season: m.season }, m.due)}</small></article>`;
+              return `<article class="mission-card"><div class="row"><strong>${m.status === "pending" ? "Em observação" : m.status === "completed" ? "Relatório entregue" : "Encerrada"}</strong><span>${m.depth === "deep" ? "Detalhada" : m.depth === "quick" ? "Triagem" : "Padrão"}</span></div><p>${m.position === "all" ? "Todos os setores" : esc(m.position)} · ${m.minAge || 15}–${m.maxAge} anos</p><div class="development-progress"><i style="width:${m.status === "completed" ? 100 : done}%"></i></div><small>${m.status === "pending" ? Math.max(0, m.due - state.today) + " dias restantes · " : ""}${E.formatDate({ ...state, season: m.season }, m.due)}</small></article>`;
             })
             .join("") ||
           '<div class="department-empty"><h3>Seu próximo reforço começa aqui.</h3><p>Envie uma missão para receber análise de encaixe, custos e riscos.</p></div>'
@@ -2701,7 +2843,7 @@ function scoutingView() {
       ? `<label>Consultar relatório<select id="scout-report">${options(
           reports.map((r) => [
             r.id,
-            E.formatDate({ season: r.season }, r.offset) +
+            E.formatDate({ ...state, season: r.season }, r.offset) +
               " · " +
               r.players.length +
               " jogadores",
@@ -2715,9 +2857,118 @@ let calendarMonth = null,
   calendarSelected = null,
   calendarMode = "month",
   calendarScope = "career";
+function captainHierarchyView(t) {
+  const hierarchy = T.leadership.hierarchy(t),
+    ref = T.leadership.club(t);
+  if (!hierarchy.length)
+    return '<p class="muted">Sem capitania confirmada nesta referência. O automático compara a liderança dos atletas em campo.</p>';
+  return `<section class="captain-hierarchy"><div><span class="badge">CAPITANIA DE REFERÊNCIA</span><p>O automático respeita esta hierarquia entre os jogadores disponíveis. Sua escolha manual tem prioridade.</p></div><div class="captain-list">${hierarchy.map((c) => `<span><b>${c.rank === 1 ? "C" : c.rank + "º"}</b><strong>${esc(c.name)}</strong><small>Liderança ${T.skills(c.player).leadership}/100</small></span>`).join("")}</div><small>Consulta de ${ref.checkedAt.split("-").reverse().join("/")} · <a href="${esc(ref.url)}" target="_blank" rel="noopener noreferrer">Ver referência</a> · Notas estimadas pelo jogo</small></section>`;
+}
+function preseasonView() {
+  const first = E.calendar(state)[0]?.offset,
+    preseason = state.calendarProfile && state.today < first;
+  const tournaments = (state.preseasonTournaments || []).filter(
+    (t) => t.status !== "cancelled",
+  );
+  return `${preseason ? `<section class="preseason-banner"><div><span class="badge">PRÉ-TEMPORADA · ${E.seasonLabel(state)}</span><h3>${first - state.today} dias para a estreia oficial</h3><p>Treine, negocie e monte a agenda de preparação. O primeiro compromisso de liga está previsto para ${E.formatDate(state, first)}.</p></div><button data-page="Treinamento">Preparar o elenco →</button></section>` : ""}${tournaments
+    .map(
+      (t) =>
+        `<section class="card preseason-tournament"><div class="row"><div><span class="badge">TORNEIO DE PREPARAÇÃO</span><h3>${esc(t.name)}</h3><p class="muted">${E.formatDate(state, t.start)} — ${E.formatDate(state, t.end)} · ${t.status === "completed" ? "Encerrado" : "Três rodadas · todos contra todos"}</p></div>${t.start > state.today && t.status === "scheduled" ? btn("Cancelar torneio", "cancel-preseason", t.id) : ""}</div>${t.champion ? `<p class="tournament-winner">🏆 Campeão: ${teamLabel(t.champion)}</p>` : ""}<div class="table-wrap"><table><thead><tr><th>CLUBE</th><th>PTS</th><th>J</th><th>V</th><th>SG</th></tr></thead><tbody>${E.rank(
+          t.table,
+        )
+          .map(
+            (r) =>
+              `<tr class="${r.id === state.clubId ? "mine" : ""}"><td>${teamLabel(r.id)}</td><td><strong>${r.p}</strong></td><td>${r.w + r.d + r.l}</td><td>${r.w}</td><td>${r.gf - r.ga}</td></tr>`,
+          )
+          .join("")}</tbody></table></div></section>`,
+    )
+    .join("")}`;
+}
+function openFriendlyDialog(tournament = false) {
+  if (state.live && !state.live.done) {
+    notify("Conclua a partida antes de organizar a agenda.");
+    return;
+  }
+  const eligible = state.teams
+    .filter((t) => t.id !== state.clubId && t.players.length >= 11)
+    .sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
+  const selected =
+    calendarSelected > state.today ? calendarSelected : state.today + 5;
+  const dialog = $("#calendar-dialog");
+  dialog.innerHTML = `<form id="friendly-form"><div class="dialog-heading"><div><span class="badge">AGENDA DO CLUBE</span><h2>${tournament ? "Organizar pré-temporada" : "Marcar amistoso"}</h2></div><button type="button" data-action="close-calendar-dialog" aria-label="Fechar planejamento">×</button></div><p class="muted">${tournament ? "Convide três clubes para um torneio de pontos corridos, com uma rodada a cada quatro dias." : "Escolha o adversário, a data e o estádio. Os dois clubes precisam de pelo menos três dias entre jogos."}</p>${tournament ? '<label>Nome do torneio<input name="title" required maxlength="60" minlength="3" value="Copa de pré-temporada"></label>' : ""}<div class="friendly-fields"><label>${tournament ? "Primeira rodada" : "Data do jogo"}<input name="date" type="date" min="${E.schedule.iso(state, state.today + 1)}" max="${E.schedule.iso(state, tournament ? (state.calendarProfile?.preseasonDays || 0) - 9 : E.calendar(state).at(-1).offset)}" required value="${E.schedule.iso(state, selected)}"></label>${tournament ? "" : `<label>Mando de campo<select name="venue"><option value="home">Em casa · ${esc(team().name)}</option><option value="away">Na casa do adversário</option></select></label>`}<label class="wide">Filtrar adversários por liga<select name="league"><option value="all">Todas as ligas</option>${options(
+    state.leagues.map((l) => [l.id, l.name]),
+    team().leagueId,
+  )}</select></label>${Array.from(
+    { length: tournament ? 3 : 1 },
+    (_, i) =>
+      `<label class="wide">${tournament ? "Convidado " + (i + 1) : "Adversário"}<select name="opponent${i}" required>${options(
+        eligible
+          .filter((t) => t.leagueId === team().leagueId)
+          .map((t) => [t.id, t.name]),
+        eligible.filter((t) => t.leagueId === team().leagueId)[i]?.id,
+      )}</select></label>`,
+  ).join(
+    "",
+  )}</div><div class="friendly-preview" id="friendly-preview" role="status"></div><p id="calendar-error" class="notice error" hidden role="alert"></p><div class="dialog-actions"><button type="button" data-action="close-calendar-dialog">Voltar ao calendário</button><button class="primary">${tournament ? "Confirmar torneio" : "Confirmar amistoso"}</button></div><p class="muted">São compromissos de preparação da sua carreira. Não alteram a tabela oficial e geram desgaste físico e receita de bilheteria.</p></form>`;
+  const form = $("#friendly-form");
+  function preview() {
+    const fd = new FormData(form),
+      off = E.schedule.offset(state, fd.get("date"));
+    $("#friendly-preview").textContent = tournament
+      ? `Rodadas: ${[0, 4, 8].map((n) => E.formatDate(state, off + n)).join(" · ")}. As datas dos quatro clubes serão conferidas antes da confirmação.`
+      : Number.isFinite(off)
+        ? `${fd.get("venue") === "home" ? team().name : name(fd.get("opponent0"))} × ${fd.get("venue") === "home" ? name(fd.get("opponent0")) : team().name} · ${E.formatDate(state, off)}`
+        : "Escolha uma data válida.";
+  }
+  form.onchange = (e) => {
+    if (e.target.name === "league") {
+      const filtered = eligible.filter(
+        (t) => e.target.value === "all" || t.leagueId === e.target.value,
+      );
+      form.querySelectorAll("[name^=opponent]").forEach(
+        (select, i) =>
+          (select.innerHTML = options(
+            filtered.map((t) => [t.id, t.name]),
+            filtered[i]?.id,
+          )),
+      );
+    }
+    preview();
+  };
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    try {
+      const off = E.schedule.offset(state, fd.get("date"));
+      if (tournament)
+        E.organizePreseason(
+          state,
+          [0, 1, 2].map((i) => fd.get("opponent" + i)),
+          off,
+          fd.get("title"),
+        );
+      else E.arrangeFriendly(state, fd.get("opponent0"), off, fd.get("venue"));
+      dialog.close();
+      scheduleSave();
+      render();
+      notify(
+        tournament
+          ? "Torneio confirmado no calendário."
+          : "Amistoso confirmado no calendário.",
+      );
+    } catch (error) {
+      $("#calendar-error").hidden = false;
+      $("#calendar-error").textContent = error.message;
+    }
+  };
+  preview();
+  dialog.showModal();
+}
+
 function careerCalendarView() {
-  const today = new Date(Date.UTC(state.season, 1, 1 + state.today));
-  calendarMonth ??= today.getUTCMonth();
+  const today = new Date(E.schedule.anchor(state) + state.today * 86400000);
+  calendarMonth ??=
+    today.getUTCMonth() + (today.getUTCFullYear() - state.season) * 12;
   calendarSelected ??= state.today;
   const fixtures = E.careerCalendar(state, calendarScope),
     monthStart = new Date(Date.UTC(state.season, calendarMonth, 1)),
@@ -2725,8 +2976,7 @@ function careerCalendarView() {
     first = (monthStart.getUTCDay() + 6) % 7;
   const offsetOf = (day) =>
     Math.round(
-      (Date.UTC(state.season, calendarMonth, day) -
-        Date.UTC(state.season, 1, 1)) /
+      (Date.UTC(state.season, calendarMonth, day) - E.schedule.anchor(state)) /
         86400000,
     );
   const labelMonth = monthStart.toLocaleDateString("pt-BR", {
@@ -2739,7 +2989,7 @@ function careerCalendarView() {
     if (n.dueOn && E.negotiationActive(n))
       events.push({
         offset: Math.round(
-          (Date.parse(n.dueOn) - Date.UTC(state.season, 1, 1)) / 86400000,
+          (Date.parse(n.dueOn) - E.schedule.anchor(state)) / 86400000,
         ),
         label: "Resposta · " + n.playerName,
       });
@@ -2755,7 +3005,7 @@ function careerCalendarView() {
   const detail = fixtures.filter((f) => f.offset === calendarSelected),
     dayEvents = events.filter((e) => e.offset === calendarSelected);
   const row = (f) =>
-    `<article class="fixture-card"><span class="badge">${esc(f.name)} · ${f.offset < state.today ? "Disputado" : f.offset === state.today ? "Hoje" : "Confirmado"}</span><h3>${matchup(f, f.goals)}</h3><p>${E.formatDate(state, f.offset)} · ${f.kind === "national" ? "Seleção" : f.pair[0] === state.clubId ? "Casa" : "Fora"}${f.penalties ? " · Pênaltis " + f.penalties.join("–") : ""}</p>${f.offset === state.today && E.nextFixture(state) ? '<button data-page="Dia de jogo" class="primary">Abrir partida</button>' : ""}${f.offset < state.today && !f.goals ? "<small>Placar não disponível no arquivo desta carreira.</small>" : ""}</article>`;
+    `<article class="fixture-card"><span class="badge">${esc(f.name)} · ${f.offset < state.today ? "Disputado" : f.offset === state.today ? "Hoje" : "Confirmado"}</span><h3>${matchup(f, f.goals)}</h3><p>${E.formatDate(state, f.offset)} · ${f.kind === "national" ? "Seleção" : f.pair[0] === state.clubId ? "Casa" : "Fora"}${f.penalties ? " · Pênaltis " + f.penalties.join("–") : ""}</p>${f.offset === state.today && E.nextFixture(state) ? '<button data-page="Dia de jogo" class="primary">Abrir partida</button>' : ""}${f.kind === "friendly" && f.status === "scheduled" && f.offset > state.today && !f.tournamentId ? btn("Cancelar amistoso", "cancel-friendly", f.id) : ""}${f.offset < state.today && !f.goals ? "<small>Placar não disponível no arquivo desta carreira.</small>" : ""}</article>`;
   const cells =
     Array.from(
       { length: first },
@@ -2766,21 +3016,23 @@ function careerCalendarView() {
         offset = offsetOf(day),
         matches = fixtures.filter((f) => f.offset === offset),
         notes = events.filter((e) => e.offset === offset);
-      return `<button class="calendar-day ${offset === state.today ? "today" : ""} ${offset === calendarSelected ? "selected" : ""} ${matches.length ? "has-match" : ""}" data-action="calendar-select" data-id="${offset}" ${offset === state.today ? 'aria-current="date"' : ""} aria-label="${esc(E.formatDate(state, offset))}${matches.length ? " · " + matches.length + " jogo(s)" : ""}${notes.length ? " · " + notes.map((n) => esc(n.label)).join(", ") : ""}"><span>${day}</span>${matches.map((f) => `<small class="match-chip ${f.kind === "national" ? "international" : ""}">${f.goals ? f.goals.join("–") : f.kind === "national" ? "SEL" : f.competition === team().leagueId ? "LIGA" : "COPA"}<span>${esc(name(f.pair.find((id) => id !== state.clubId && id !== state.national.job)))}</span></small>`).join("")}${notes.length ? '<i class="calendar-note-dot" aria-hidden="true"></i>' : ""}</button>`;
+      return `<button class="calendar-day ${offset === state.today ? "today" : ""} ${offset === calendarSelected ? "selected" : ""} ${matches.length ? "has-match" : ""}" data-action="calendar-select" data-id="${offset}" ${offset === state.today ? 'aria-current="date"' : ""} aria-label="${esc(E.formatDate(state, offset))}${matches.length ? " · " + matches.length + " jogo(s)" : ""}${notes.length ? " · " + notes.map((n) => esc(n.label)).join(", ") : ""}"><span>${day}</span>${matches.map((f) => `<small class="match-chip ${f.kind === "national" ? "international" : ""}">${f.goals ? f.goals.join("–") : f.kind === "national" ? "SEL" : f.kind === "friendly" ? "AMIST" : f.competition === team().leagueId ? "LIGA" : "COPA"}<span>${esc(name(f.pair.find((id) => id !== state.clubId && id !== state.national.job)))}</span></small>`).join("")}${notes.length ? '<i class="calendar-note-dot" aria-hidden="true"></i>' : ""}</button>`;
     }).join("");
   const monthFixtures = fixtures.filter(
     (f) =>
-      new Date(Date.UTC(state.season, 1, 1 + f.offset)).getUTCMonth() ===
+      new Date(E.schedule.anchor(state) + f.offset * 86400000).getUTCMonth() +
+        (E.schedule.at(state, f.offset).getUTCFullYear() - state.season) *
+          12 ===
       calendarMonth,
   );
-  return `<div class="hero"><span class="badge">AGENDA DO TREINADOR</span><h2>Planeje cada compromisso.</h2><p>Jogos, respostas de negociação, observações e janelas no mesmo calendário.</p></div><section class="card"><div class="row calendar-toolbar"><div class="row">${btn("← Mês anterior", "calendar-month", "-1")}<h3>${esc(labelMonth)}</h3>${btn("Próximo mês →", "calendar-month", "1")}${btn("Hoje", "calendar-today")}</div><div class="row">${btn("Mês", "calendar-mode", "month", calendarMode === "month" ? "primary" : "")}${btn("Agenda", "calendar-mode", "agenda", calendarMode === "agenda" ? "primary" : "")}<label>Compromissos<select id="calendar-scope">${options(
+  return `<div class="hero"><span class="badge">AGENDA DO TREINADOR</span><h2>Sua temporada, dia a dia.</h2><p>Temporada ${E.seasonLabel(state)} · Prepare o elenco, organize amistosos e acompanhe os compromissos.</p><div class="hero-actions">${btn("Marcar amistoso", "arrange-friendly", "", "primary")}${state.calendarProfile && state.today < state.calendarProfile.preseasonDays - 10 ? btn("Organizar torneio de pré-temporada", "organize-preseason") : ""}</div></div><section class="card"><div class="row calendar-toolbar"><div class="row">${btn("← Mês anterior", "calendar-month", "-1")}<h3>${esc(labelMonth)}</h3>${btn("Próximo mês →", "calendar-month", "1")}${btn("Hoje", "calendar-today")}</div><div class="row">${btn("Mês", "calendar-mode", "month", calendarMode === "month" ? "primary" : "")}${btn("Agenda", "calendar-mode", "agenda", calendarMode === "agenda" ? "primary" : "")}<label>Compromissos<select id="calendar-scope">${options(
     [
       ["career", "Clube e seleção"],
       ["club", "Somente clube"],
       ["national", "Somente seleção"],
     ],
     calendarScope,
-  )}</select></label></div></div><div class="calendar-workspace"><div>${calendarMode === "month" ? `<div class="calendar-weekdays">${["SEG", "TER", "QUA", "QUI", "SEX", "SÁB", "DOM"].map((d) => `<span>${d}</span>`).join("")}</div><div class="calendar-grid">${cells}</div><p class="muted calendar-legend">● Liga · Copa · Seleção · ponto dourado: prazo ou janela</p>` : monthFixtures.map(row).join("") || "<p>Nenhum jogo confirmado neste mês. Use as setas para consultar os demais meses.</p>"}</div><aside class="calendar-details"><span class="badge">${E.formatDate(state, calendarSelected)}</span>${detail.map(row).join("") || '<h3>Sem jogo confirmado</h3><p class="muted">Um dia para preparar o elenco, recuperar os atletas e acompanhar o mercado.</p>'}${dayEvents.map((e) => `<p class="calendar-deadline">${esc(e.label)}</p>`).join("")}<p class="muted">O avanço dos dias fica na Visão geral.</p><button data-page="Visão geral">Ir para Visão geral</button></aside></div></section>${windowBanner()}<div class="row"><button data-action="reference-calendar">Consultar datas reais da base</button></div>`;
+  )}</select></label></div></div><div class="calendar-workspace"><div>${calendarMode === "month" ? `<div class="calendar-weekdays">${["SEG", "TER", "QUA", "QUI", "SEX", "SÁB", "DOM"].map((d) => `<span>${d}</span>`).join("")}</div><div class="calendar-grid">${cells}</div><p class="muted calendar-legend">● Liga · Copa · Amistoso · Seleção · ponto dourado: prazo ou janela</p>` : monthFixtures.map(row).join("") || "<p>Nenhum jogo confirmado neste mês. Use as setas para consultar os demais meses.</p>"}</div><aside class="calendar-details"><span class="badge">${E.formatDate(state, calendarSelected)}</span>${detail.map(row).join("") || '<h3>Sem jogo confirmado</h3><p class="muted">Um dia para preparar o elenco, recuperar os atletas e acompanhar o mercado.</p>'}${dayEvents.map((e) => `<p class="calendar-deadline">${esc(e.label)}</p>`).join("")}${calendarSelected > state.today ? btn("Marcar amistoso nesta data", "arrange-friendly", "", "primary") : ""}<p class="muted">O avanço dos dias fica na Visão geral.</p><button data-page="Visão geral">Ir para Visão geral</button></aside></div></section>${preseasonView()}${windowBanner()}<div class="row"><button data-action="reference-calendar">Consultar datas reais da base</button></div>`;
 }
 function upcomingStrip() {
   return `<section class="card"><div class="row"><h3>Próximos compromissos</h3><button data-page="Calendário">Abrir agenda</button></div><div class="upcoming-strip">${
@@ -2801,7 +3053,7 @@ function trophyRoom() {
   const trophies = (state.trophies || []).filter(
     (t) => t.clubId === state.clubId || t.coachId === "you",
   );
-  return `<div class="hero"><span class="badge">SALA DE TROFÉUS</span><h2>As conquistas ficam para a história.</h2><p>Títulos confirmados do seu clube e das equipes que você levou ao topo.</p></div><div class="trophy-grid">${trophies.map((t) => `<article class="card trophy-card">${trophySvg()}<span class="badge">${t.season}</span><h3>${esc(t.name)}</h3><p>${teamLabel(t.clubId)}</p><small>${t.coachId === "you" ? "Conquistado durante sua gestão" : "Histórico do clube"}</small></article>`).join("") || `<div class="card trophy-empty">${trophySvg()}<h3>O primeiro capítulo ainda será escrito.</h3><p>Os títulos de liga e das competições continentais aparecem aqui após a confirmação do campeão.</p></div>`}</div>`;
+  return `<div class="hero"><span class="badge">SALA DE TROFÉUS</span><h2>As conquistas ficam para a história.</h2><p>Títulos confirmados do seu clube e das equipes que você levou ao topo.</p></div><div class="trophy-grid">${trophies.map((t) => `<article class="card trophy-card">${trophySvg()}<span class="badge">${E.seasonLabel({ ...state, season: t.season }, E.league(state, team(t.clubId).leagueId)?.region)}</span><h3>${esc(t.name)}</h3><p>${teamLabel(t.clubId)}</p><small>${t.coachId === "you" ? "Conquistado durante sua gestão" : "Histórico do clube"}</small></article>`).join("") || `<div class="card trophy-empty">${trophySvg()}<h3>O primeiro capítulo ainda será escrito.</h3><p>Os títulos de liga e das competições continentais aparecem aqui após a confirmação do campeão.</p></div>`}</div>`;
 }
 function showCelebration() {
   const title = (state.trophies || []).find(
@@ -2810,7 +3062,7 @@ function showCelebration() {
   if (!title || document.querySelector("dialog[open]")) return;
   const dialog = $("#trophy-dialog");
   if (!dialog) return;
-  dialog.innerHTML = `<div class="champion-celebration">${Array.from({ length: 24 }, (_, i) => `<i class="confetti" style="--i:${i};--left:${(i * 37) % 100}%"></i>`).join("")}<span class="badge">CAMPEÃO · ${title.season}</span>${trophySvg()}<h2>${esc(name(title.clubId))} no topo!</h2><h3>${esc(title.name)}</h3><p>Uma conquista para o clube. Um novo marco na sua carreira.</p>${btn("Guardar na sala de troféus", "close-celebration", title.id, "primary")}</div>`;
+  dialog.innerHTML = `<div class="champion-celebration">${Array.from({ length: 24 }, (_, i) => `<i class="confetti" style="--i:${i};--left:${(i * 37) % 100}%"></i>`).join("")}<span class="badge">CAMPEÃO · ${E.seasonLabel({ ...state, season: title.season }, E.league(state, team(title.clubId).leagueId)?.region)}</span>${trophySvg()}<h2>${esc(name(title.clubId))} no topo!</h2><h3>${esc(title.name)}</h3><p>Uma conquista para o clube. Um novo marco na sua carreira.</p>${btn("Guardar na sala de troféus", "close-celebration", title.id, "primary")}</div>`;
   dialog.showModal();
 }
 

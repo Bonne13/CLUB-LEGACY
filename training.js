@@ -1,5 +1,9 @@
 "use strict";
 (function (root) {
+  const D =
+    typeof module !== "undefined"
+      ? require("./schedule.js")
+      : root.LegacySchedule;
   const focuses = {
     balanced: "Desenvolvimento geral",
     technical: "Passe e criação",
@@ -25,7 +29,7 @@
     return s.trainingSchedule;
   }
   function weekday(s) {
-    return (new Date(Date.UTC(s.season, 1, 1 + s.today)).getUTCDay() + 6) % 7;
+    return (D.at(s).getUTCDay() + 6) % 7;
   }
   function session(s, daysToMatch = null) {
     const choice = ensure(s)[weekday(s)];

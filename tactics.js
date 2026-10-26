@@ -1,5 +1,9 @@
 "use strict";
 (function (root) {
+  const L =
+    typeof module !== "undefined"
+      ? require("./leadership.js")
+      : root.LegacyLeadership;
   const slot = (id, label, pos, x, y) => ({ id, label, pos, x, y });
   const back4 = [
     slot("gk", "GOL", "GOL", 50, 91),
@@ -404,7 +408,13 @@
       clamp = (n) => Math.max(25, Math.min(96, Math.round(n)));
     const result = {
       leadership: clamp(
-        p.ovr * 0.55 + Math.min(37, p.age) * 0.85 + (seed % 13) - 5,
+        Math.max(
+          L.reference(p)?.leadership || 0,
+          p.ovr * 0.55 +
+            Math.min(37, p.ageUnknown ? 24 : p.age) * 0.85 +
+            (seed % 13) -
+            5,
+        ),
       ),
       crossing: clamp(
         p.ovr +
@@ -456,15 +466,23 @@
           .filter((p) => p.id !== exclude)
           .sort((x, y) => skills(y)[skill] - skills(x)[skill])[0] ||
         null;
-    result.captain = choose("captain", "leadership") || null;
-    if (!eleven.some((p) => p.id === a.captain) && a.viceCaptain)
-      result.captain =
-        eleven.find((p) => p.id === a.viceCaptain) || result.captain;
-    result.viceCaptain = choose(
-      "viceCaptain",
-      "leadership",
-      result.captain?.id,
+    const hierarchy = L.hierarchy(t)
+      .map((c) => eleven.find((p) => p.id === c.id))
+      .filter(Boolean);
+    const available = (id) => eleven.find((p) => p.id === id);
+    const leaders = [...eleven].sort(
+      (x, y) => skills(y).leadership - skills(x).leadership,
     );
+    result.captain =
+      available(a.captain) ||
+      available(a.viceCaptain) ||
+      hierarchy[0] ||
+      leaders[0] ||
+      null;
+    result.viceCaptain =
+      [available(a.viceCaptain), ...hierarchy, ...leaders].find(
+        (p) => p && p.id !== result.captain?.id,
+      ) || null;
     for (const [key, skill] of [
       ["cornersLeft", "crossing"],
       ["cornersRight", "crossing"],
@@ -597,6 +615,7 @@
     instructions,
     duties,
     assignments,
+    leadership: L,
     roleOptions,
     ensure,
     slots,

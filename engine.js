@@ -35,6 +35,10 @@
     typeof module !== "undefined"
       ? require("./scouting.js")
       : root.LegacyScouting;
+  const D =
+    typeof module !== "undefined"
+      ? require("./schedule.js")
+      : root.LegacySchedule;
   const LEAGUES = WORLD.leagues;
   const CUP_DEFS = [
     {
@@ -193,35 +197,23 @@
       ? rounds
       : rounds.concat(rounds.map((p) => p.map(([a, b]) => [b, a])));
   }
-  let cachedCalendar;
-  function calendar() {
-    if (cachedCalendar) return cachedCalendar;
-    const days = [],
-      cupAfter = [1, 3, 5, 7, 9, 11, 13, 15, 19, 23, 27, 31, 37];
-    for (let r = 0; r < 38; r++) {
-      days.push({ kind: "league", round: r, offset: r * 7 });
-      if (cupAfter.includes(r))
-        days.push({
-          kind: "cup",
-          round: cupAfter.indexOf(r),
-          offset: r * 7 + 3,
-        });
-    }
-    cachedCalendar = Object.freeze(days.map(Object.freeze));
-    return cachedCalendar;
+  function calendar(s) {
+    return D.calendar(s?.calendarProfile);
   }
   function formatDate(s, offset) {
-    return new Date(Date.UTC(s.season, 1, 1 + offset)).toLocaleDateString(
-      "pt-BR",
-      { timeZone: "UTC", day: "2-digit", month: "short", year: "numeric" },
-    );
+    return D.at(s, offset).toLocaleDateString("pt-BR", {
+      timeZone: "UTC",
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
   }
   function date(s, day) {
     if (day !== undefined) {
-      const event = calendar()[day];
+      const event = calendar(s)[day];
       return event ? formatDate(s, event.offset) : "Fim da temporada";
     }
-    return formatDate(s, s.today ?? calendar()[s.day]?.offset ?? 0);
+    return formatDate(s, s.today ?? calendar(s)[s.day]?.offset ?? 0);
   }
   const blankTable = (ids) =>
     ids.map((id) => ({ id, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0 }));
@@ -459,6 +451,7 @@
     return result;
   }
   function prepareCareer(s) {
+    ensureFriendlies(s);
     TR.ensure(s);
     SC.ensure(s);
     s.trophies ??= [];
@@ -639,6 +632,39 @@
               m.kind === "national" ? index + 1 : reference.shirtNumber;
           }
         }
+        if (plan.leadershipRevision !== T.leadership.revision) {
+          for (const p of plan.starters) {
+            const reference = existing.find((x) => x.id === p.id);
+            if (reference)
+              p.skills = {
+                ...p.skills,
+                leadership: T.skills(reference).leadership,
+              };
+          }
+          for (const p of Object.values(plan.specialists)) {
+            const reference = existing.find((x) => x.id === p?.id);
+            if (reference)
+              p.skills = {
+                ...p.skills,
+                leadership: T.skills(reference).leadership,
+              };
+          }
+          const actual = team(s, m.pair[side]);
+          const present = plan.starters
+            .map((p) => existing.find((x) => x.id === p.id))
+            .filter(Boolean);
+          const leaders = T.specialists(
+            { ...actual, tactics: plan.instructions },
+            present,
+          );
+          for (const key of ["captain", "viceCaptain"]) {
+            const p = leaders[key];
+            plan.specialists[key] = p
+              ? { id: p.id, name: p.name, skills: T.skills(p) }
+              : null;
+          }
+          plan.leadershipRevision = T.leadership.revision;
+        }
         if (refreshPositions) {
           const slots = new Map(
             T.slots({ tactics: plan.instructions }).map((slot) => [
@@ -684,6 +710,7 @@
     id,
     profile = { name: "Você", age: 35, nationality: "Brazil" },
     mode = "normal",
+    settings = {},
   ) {
     if (s.clubId) fail("A carreira já foi iniciada.");
     const t = team(s, id);
@@ -707,6 +734,8 @@
     s.coaches.push(coach);
     t.manager = "you";
     s.clubId = id;
+    if (settings.calendar === "regional")
+      D.configure(s, league(s, t.leagueId).region);
     news(s, `Você assumiu o comando de ${t.name}.`, {
       category: "coaches",
       body: `O novo treinador assume o elenco e a gestão do clube, com contrato até ${coach.contract}.`,
@@ -808,7 +837,7 @@
           id: `result-${h.season}-${h.day}-${r.competition}-${r.pair[0]}`,
           season: h.season,
           day: h.day,
-          offset: h.offset ?? calendar()[h.day]?.offset,
+          offset: h.offset ?? calendar(s)[h.day]?.offset,
           title,
           body: `${r.name}. ${home.name} foi o mandante. Placar: ${a} a ${b}.${shootout}`,
           category: "results",
@@ -823,7 +852,7 @@
           day: s.day,
           offset: s.today,
           title: `${team(s, f.pair[0]).name} recebe ${team(s, f.pair[1]).name}`,
-          body: `${f.name}: o confronto está marcado para ${date(s)} no calendário da carreira. ${f.kind === "league" ? "O resultado contará para a classificação nacional." : f.kind === "cup" ? "Quem vencer avança; empate leva aos pênaltis." : "O resultado contará para a classificação da fase inicial."}`,
+          body: `${f.name}: o confronto está marcado para ${date(s)} no calendário da carreira. ${f.kind === "league" ? "O resultado contará para a classificação nacional." : f.kind === "cup" ? "Quem vencer avança; empate leva aos pênaltis." : f.kind === "friendly" ? "Jogo de preparação: o resultado não altera a classificação oficial." : "O resultado contará para a classificação da fase inicial."}`,
           category: "preview",
           ...articleMeta(s, f.pair, f.competition),
         });
@@ -908,6 +937,7 @@
       return {
         name: t.name,
         positionRevision: R.POSITION_REVISION,
+        leadershipRevision: T.leadership.revision,
         ...T.ratings(t),
         instructions: plan,
         slots: copy(T.slots(t)),
@@ -936,15 +966,196 @@
     });
   }
   function dayInfo(s) {
-    const event = calendar()[s.day];
+    const event = calendar(s)[s.day];
     if (!event) return null;
     const today = s.today ?? event.offset;
     return today === event.offset
       ? event
       : { kind: "rest", offset: today, round: Math.floor(today / 7) };
   }
+  function ensureFriendlies(s) {
+    s.friendlies ??= [];
+    s.preseasonTournaments ??= [];
+    s.friendlySequence ??= 0;
+    s.tournamentSequence ??= 0;
+  }
+  function fixtureReservations(s, id) {
+    const t = team(s, id),
+      l = league(s, t.leagueId),
+      list = [];
+    for (const d of calendar(s)) {
+      if (
+        d.kind === "league" &&
+        l.fixtures[d.round]?.some((pair) => pair.includes(id))
+      )
+        list.push(d.offset);
+      if (d.kind === "cup" && s.cups.some((c) => c.entrants.includes(id)))
+        list.push(d.offset);
+    }
+    for (const f of s.friendlies || [])
+      if (f.status !== "cancelled" && f.pair.includes(id)) list.push(f.offset);
+    return list;
+  }
+  function checkFriendly(s, pair, offset, pending = []) {
+    if (!s.clubId || (s.live && !s.live.done))
+      fail("Conclua a partida antes de organizar a agenda.");
+    if (
+      !Number.isInteger(offset) ||
+      offset <= s.today ||
+      offset > calendar(s).at(-1).offset
+    )
+      fail("Escolha uma data futura dentro da temporada.");
+    if (
+      new Set(pair).size !== 2 ||
+      pair.some(
+        (id) => !s.teams.some((t) => t.id === id && t.players.length >= 11),
+      )
+    )
+      fail("Escolha dois clubes diferentes com elenco disponível.");
+    for (const id of pair)
+      if (
+        [
+          ...fixtureReservations(s, id),
+          ...pending.filter((f) => f.pair.includes(id)).map((f) => f.offset),
+        ].some((d) => Math.abs(d - offset) < 3)
+      )
+        fail(
+          "Há jogo ou data de copa reservada próximo a esse dia. Mantenha pelo menos três dias entre partidas para os dois clubes.",
+        );
+    if (
+      s.national?.job &&
+      pair.includes(s.clubId) &&
+      s.national.fixtures.some(
+        (f) =>
+          f.pair.includes(s.national.job) && Math.abs(f.offset - offset) < 3,
+      )
+    )
+      fail("O amistoso conflita com um compromisso da sua seleção.");
+  }
+  function arrangeFriendly(s, opponentId, offset, venue = "home") {
+    ensureFriendlies(s);
+    if (!["home", "away"].includes(venue)) fail("Mando de campo inválido.");
+    if (s.friendlies.length >= 60)
+      fail("Limite de amistosos desta temporada atingido.");
+    const pair =
+      venue === "home" ? [s.clubId, opponentId] : [opponentId, s.clubId];
+    checkFriendly(s, pair, offset);
+    const f = {
+      id: "friendly-" + ++s.friendlySequence,
+      pair,
+      offset,
+      competition: "friendly",
+      name: "Amistoso de clubes",
+      kind: "friendly",
+      round: 0,
+      status: "scheduled",
+      tournamentId: null,
+    };
+    s.friendlies.push(f);
+    news(
+      s,
+      `Amistoso confirmado: ${team(s, pair[0]).name} × ${team(s, pair[1]).name}.`,
+      {
+        category: "club",
+        clubIds: pair,
+        body: `Preparação marcada para ${formatDate(s, offset)}. O resultado não altera a classificação das ligas.`,
+      },
+    );
+    return f;
+  }
+  function cancelFriendly(s, id) {
+    const f = s.friendlies?.find((f) => f.id === id);
+    if (
+      !f ||
+      f.status !== "scheduled" ||
+      f.offset <= s.today ||
+      (s.live && !s.live.done)
+    )
+      fail("Este amistoso não pode ser cancelado.");
+    if (f.tournamentId) fail("Cancele o torneio completo antes do início.");
+    f.status = "cancelled";
+  }
+  function organizePreseason(
+    s,
+    opponents,
+    startOffset,
+    title = "Copa de pré-temporada",
+  ) {
+    ensureFriendlies(s);
+    const ids = [s.clubId, ...opponents];
+    if (opponents.length !== 3 || new Set(ids).size !== 4)
+      fail("Escolha três adversários diferentes.");
+    if (
+      !s.calendarProfile ||
+      startOffset + 8 >= s.calendarProfile.preseasonDays
+    )
+      fail(
+        "As três rodadas devem acontecer antes do início dos jogos oficiais.",
+      );
+    if (s.preseasonTournaments.some((t) => t.status === "scheduled"))
+      fail("Conclua ou cancele o torneio já organizado.");
+    if (s.friendlies.length + 6 > 60)
+      fail("Limite de amistosos desta temporada atingido.");
+    if (
+      typeof title !== "string" ||
+      title.trim().length < 3 ||
+      title.trim().length > 60
+    )
+      fail("O nome do torneio deve ter de 3 a 60 caracteres.");
+    const rounds = fixtures(ids, true),
+      pending = [];
+    rounds.forEach((round, r) =>
+      round.forEach((pair) => {
+        const offset = startOffset + r * 4;
+        checkFriendly(s, pair, offset, pending);
+        pending.push({ pair, offset, round: r });
+      }),
+    );
+    const id = "preseason-" + ++s.tournamentSequence,
+      tournament = {
+        id,
+        name: title.trim(),
+        entrants: ids,
+        start: startOffset,
+        end: startOffset + 8,
+        table: blankTable(ids),
+        status: "scheduled",
+        champion: null,
+      };
+    pending.forEach((f) =>
+      s.friendlies.push({
+        ...f,
+        id: "friendly-" + ++s.friendlySequence,
+        competition: id,
+        name: tournament.name,
+        kind: "friendly",
+        status: "scheduled",
+        tournamentId: id,
+      }),
+    );
+    s.preseasonTournaments.push(tournament);
+    news(s, `${tournament.name}: pré-temporada confirmada.`, {
+      category: "competitions",
+      clubIds: ids,
+      body: `Quatro clubes, três rodadas, de ${formatDate(s, startOffset)} a ${formatDate(s, startOffset + 8)}. Todos se enfrentam uma vez; pontos, saldo e gols definem o campeão.`,
+    });
+    return tournament;
+  }
+  function cancelPreseason(s, id) {
+    const t = s.preseasonTournaments?.find((t) => t.id === id);
+    if (
+      !t ||
+      t.status !== "scheduled" ||
+      t.start <= s.today ||
+      (s.live && !s.live.done)
+    )
+      fail("O torneio já começou ou não pode ser cancelado.");
+    t.status = "cancelled";
+    for (const f of s.friendlies)
+      if (f.tournamentId === id) f.status = "cancelled";
+  }
   function managedFixtureAt(s, day = s.day, offset = s.today) {
-    const event = calendar()[day],
+    const event = calendar(s)[day],
       id = s.clubId;
     if (!id) return null;
     if (event?.offset === offset) {
@@ -981,15 +1192,22 @@
         }
     }
     return (
+      s.friendlies?.find(
+        (f) =>
+          f.offset === offset &&
+          f.status !== "cancelled" &&
+          f.pair.includes(id),
+      ) ||
       s.national?.fixtures?.find(
         (f) => f.offset === offset && f.pair.includes(s.national.job),
-      ) || null
+      ) ||
+      null
     );
   }
   function upcomingFixture(s) {
     const candidates = [];
-    for (let i = s.day; i < calendar().length; i++) {
-      const d = calendar()[i];
+    for (let i = s.day; i < calendar(s).length; i++) {
+      const d = calendar(s)[i];
       if (d.offset < s.today) continue;
       const f = managedFixtureAt(s, i, d.offset);
       if (f) {
@@ -1003,9 +1221,17 @@
     if (national)
       candidates.push({
         ...national,
-        event: calendar().findIndex((d) => d.offset >= national.offset),
+        event: calendar(s).findIndex((d) => d.offset >= national.offset),
         offset: national.offset,
       });
+    candidates.push(
+      ...(s.friendlies || []).filter(
+        (f) =>
+          f.status === "scheduled" &&
+          f.offset >= s.today &&
+          f.pair.includes(s.clubId),
+      ),
+    );
     return candidates.sort((a, b) => a.offset - b.offset)[0] || null;
   }
   function simulate(s, amount, unit = "days", rng = Math.random) {
@@ -1088,6 +1314,9 @@
   function allFixtures(s) {
     return [
       ...clubFixtures(s),
+      ...(s.friendlies || []).filter(
+        (f) => f.offset === s.today && f.status === "scheduled",
+      ),
       ...(s.national?.fixtures || []).filter((f) => f.offset === s.today),
     ];
   }
@@ -1328,6 +1557,16 @@
           skills: best.skills,
         };
       }
+    const leaders = T.specialists(
+      { ...team(s, m.pair[side]), tactics: plan.instructions },
+      plan.starters,
+    );
+    for (const key of ["captain", "viceCaptain"]) {
+      const p = leaders[key];
+      plan.specialists[key] = p
+        ? { id: p.id, name: p.name, skills: p.skills }
+        : null;
+    }
     m.events.unshift(
       `${m.minute}' — Substituição: sai ${outgoing.name}, entra ${incoming.name}.`,
     );
@@ -1524,9 +1763,7 @@
     if (dayInfo(s)) fail("Use o avanço normal enquanto há jogos na temporada.");
     if (s.live && !s.live.done) fail("Conclua a partida antes de planejar.");
     const last =
-      Math.round(
-        (Date.UTC(s.season + 1, 1, 1) - Date.UTC(s.season, 1, 1)) / 86400000,
-      ) - 1;
+      Math.round((D.anchor(s, s.season + 1) - D.anchor(s)) / 86400000) - 1;
     if (s.today >= last)
       fail("O planejamento deste ano terminou. Inicie a próxima temporada.");
     for (const t of s.teams) {
@@ -1552,10 +1789,21 @@
     return s.today;
   }
   function transferWindowInfo(s) {
-    const ranges = [
-        [0, 41],
-        [119, 153],
-      ],
+    const ranges =
+        s.calendarProfile?.region === "eu"
+          ? [
+              [0, 61],
+              [184, 214],
+            ]
+          : s.calendarProfile
+            ? [
+                [0, 90],
+                [182, 243],
+              ]
+            : [
+                [0, 41],
+                [119, 153],
+              ],
       active = ranges.find(
         ([start, end]) => s.today >= start && s.today <= end,
       );
@@ -1734,6 +1982,52 @@
               body: "Amistoso internacional. Resultado registrado no histórico da seleção.",
             },
           );
+      } else if (f.kind === "friendly") {
+        const friendly = s.friendlies.find((x) => x.id === f.id);
+        friendly.status = "completed";
+        friendly.goals = [...g];
+        const host = team(s, f.pair[0]);
+        F.post(
+          host,
+          s,
+          Math.round(
+            ((host.finance.annualRevenue * 0.16) / 19) *
+              0.25 *
+              (1 + (host.stadium - 1) * 0.12),
+          ),
+          "matchday",
+          `Bilheteria de preparação · ${f.name}`,
+        );
+        if (f.tournamentId) {
+          const tournament = s.preseasonTournaments.find(
+            (t) => t.id === f.tournamentId,
+          );
+          record(tournament.table, f.pair, g);
+          if (
+            s.friendlies
+              .filter((x) => x.tournamentId === tournament.id)
+              .every((x) => x.status === "completed")
+          ) {
+            tournament.status = "completed";
+            tournament.champion = rank(tournament.table)[0].id;
+            awardTrophy(
+              s,
+              tournament.champion,
+              tournament.id,
+              tournament.name,
+              "preseason",
+            );
+            news(
+              s,
+              `${team(s, tournament.champion).name} venceu ${tournament.name}.`,
+              {
+                category: "competitions",
+                clubIds: tournament.entrants,
+                body: "Título de preparação. Os pontos não contam para a liga nem para a classificação continental.",
+              },
+            );
+          }
+        }
       } else if (f.kind === "league") {
         record(league(s, f.competition).table, f.pair, g);
         F.gate(team(s, f.pair[0]), s);
@@ -1777,7 +2071,7 @@
           });
         }
       }
-      if (f.kind !== "national" && g[0] !== g[1])
+      if (!["national", "friendly"].includes(f.kind) && g[0] !== g[1])
         F.winBonus(team(s, f.pair[g[0] > g[1] ? 0 : 1]), s);
       results.push(entry);
       if (managed(s, f)) {
@@ -1802,7 +2096,10 @@
       );
       if (t.id !== s.clubId) ensureAI(s, t);
     });
-    for (const p of [...s.freeAgents, ...s.teams.flatMap((t) => t.youth)]) {
+    for (const p of [
+      ...s.freeAgents,
+      ...s.teams.filter((t) => t.id !== s.clubId).flatMap((t) => t.youth),
+    ]) {
       if (p.injury) p.injury--;
       P.apply(p, {
         minutes: international.get(p.id)?.minutes || 0,
@@ -1847,7 +2144,7 @@
         clubIds: [s.clubId],
         body: `${report.scope === "youth" ? "Base" : "Mercado"}: ${report.players.length} opções compatíveis com os recursos do clube.`,
       });
-    const next = calendar()[s.day];
+    const next = calendar(s)[s.day];
     if (next?.kind === "cup") prepareKnockouts(s, next.round);
     if (!next) seasonEnd(s, rng);
     return results;
@@ -1875,10 +2172,14 @@
       });
     }
     if (scope !== "national")
-      calendar().forEach((d, i) => {
+      calendar(s).forEach((d, i) => {
         const f = managedFixtureAt(s, i, d.offset);
         if (f?.kind !== "national") add(f, d.offset);
       });
+    if (scope !== "national")
+      for (const f of s.friendlies || [])
+        if (f.status !== "cancelled" && f.pair.includes(s.clubId))
+          add(f, f.offset);
     if (scope !== "club" && s.national?.job)
       for (const f of s.national.fixtures.filter((f) =>
         f.pair.includes(s.national.job),
@@ -2250,7 +2551,7 @@
   const negotiationActive = (n) =>
     !["completed", "rejected", "cancelled", "expired"].includes(n.stage);
   const negotiationDate = (s, days = 0) =>
-    new Date(Date.UTC(s.season, 1, 1 + s.today + days))
+    D.at(s, s.today + days)
       .toISOString()
       .slice(0, 10);
   function negotiationUpdate(s, n, stage, message, delay = 0) {
@@ -2914,6 +3215,8 @@
   function nextSeason(s) {
     if (dayInfo(s)) fail("Conclua a temporada atual.");
     s.season++;
+    s.friendlies = [];
+    s.preseasonTournaments = [];
     s.day = 0;
     s.today = 0;
     s.live = null;
@@ -2986,7 +3289,7 @@
     processNegotiations(s);
     news(
       s,
-      `Temporada ${s.season} iniciada. Novas classificações continentais e janela aberta.`,
+      `Temporada ${D.label(s)} iniciada. Novas classificações continentais e janela aberta.`,
     );
   }
   function upgradeSave(old) {
@@ -2996,7 +3299,7 @@
         ...baseline,
         ...copy(old),
         version: 3,
-        today: calendar()[old.day]?.offset ?? 263,
+        today: calendar(old)[old.day]?.offset ?? 263,
         freeAgents: [],
         live: null,
       };
@@ -3165,6 +3468,10 @@
     addTestFunds,
     tactics: T,
     currentMatch,
+    arrangeFriendly,
+    cancelFriendly,
+    organizePreseason,
+    cancelPreseason,
     matchPlans,
     national: N,
     setProfile,
@@ -3190,6 +3497,8 @@
     rank,
     fixtures,
     calendar,
+    schedule: D,
+    seasonLabel: D.label,
     dayInfo,
     allFixtures,
     nextFixture,

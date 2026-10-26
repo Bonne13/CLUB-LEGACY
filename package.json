@@ -1,10 +1,10 @@
 {
   "name": "club-legacy",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": true,
   "scripts": {
     "start": "python3 -m http.server 3000",
-    "check": "node --check world.js && node --check badges-data.js && node --check badges.js && node --check appearance.js && node --check calendar-data.js && node --check roster-data.js && node --check rosters.js && node --check finance.js && node --check tactics.js && node --check national.js && node --check physical.js && node --check scouting.js && node --check autosave.js && node --check engine.js && node --check saves.js && node --check money.js && node --check training.js && node --check match-renderer.js && node --check app.js",
+    "check": "node --check world.js && node --check badges-data.js && node --check badges.js && node --check appearance.js && node --check calendar-data.js && node --check roster-data.js && node --check rosters.js && node --check finance.js && node --check captains-data.js && node --check leadership.js && node --check schedule.js && node --check tactics.js && node --check national.js && node --check physical.js && node --check scouting.js && node --check autosave.js && node --check engine.js && node --check saves.js && node --check money.js && node --check training.js && node --check match-renderer.js && node --check app.js",
     "test": "node --test tests/*.test.cjs",
     "test:browser": "node tests/browser.cjs",
     "build:standalone": "python3 scripts/build-standalone.py",
@@ -17,6 +17,7 @@
     "test:market-browser": "node tests/market-negotiations-browser.cjs",
     "test:management-browser": "node tests/management-browser.cjs",
     "test:identity-browser": "node tests/identity-browser.cjs",
-    "test:coaching-browser": "node tests/coaching-browser.cjs"
+    "test:coaching-browser": "node tests/coaching-browser.cjs",
+    "test:preseason-browser": "node tests/preseason-browser.cjs"
   }
 }

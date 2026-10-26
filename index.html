@@ -21,8 +21,25 @@
         <div>
           <small id="context">CENTRAL DO TREINADOR</small>
           <h2 id="title"></h2>
+          <p id="page-description" class="page-description"></p>
         </div>
         <div class="header-actions">
+          <button
+            data-action="quick-menu"
+            id="navigation-search"
+            aria-keyshortcuts="Control+k Meta+k"
+          >
+            Menu e busca
+          </button>
+          <button
+            data-action="toggle-sidebar"
+            id="sidebar-toggle"
+            aria-controls="sidebar"
+            aria-expanded="true"
+            title="Recolher ou expandir menu lateral"
+          >
+            ☰
+          </button>
           <button id="match-day" data-page="Dia de jogo" class="primary" hidden>
             Dia de jogo
           </button>
@@ -41,6 +58,11 @@
     <dialog id="deal" aria-label="Negociação de jogador">
       <form id="deal-form"></form>
     </dialog>
+    <dialog
+      id="calendar-dialog"
+      aria-label="Planejamento de amistosos"
+    ></dialog>
+    <dialog id="quick-menu" aria-label="Navegação rápida"></dialog>
     <dialog id="trophy-dialog" aria-label="Comemoração de título"></dialog>
     <input
       id="import-file"
@@ -60,9 +82,12 @@
     <script src="roster-data.js"></script>
     <script src="rosters.js"></script>
     <script src="money.js"></script>
+    <script src="schedule.js"></script>
     <script src="training.js"></script>
     <script src="finance.js"></script>
     <script src="physical.js"></script>
+    <script src="captains-data.js"></script>
+    <script src="leadership.js"></script>
     <script src="tactics.js"></script>
     <script src="national.js"></script>
     <script src="scouting.js"></script>

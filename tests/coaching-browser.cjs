@@ -36,6 +36,7 @@ const { chromium } = require("playwright"),
     await page.locator("#start-club").selectOption("es-1");
     await page.locator("#start-coach-name").fill("Marina Costa");
     await page.locator("#start-game-mode").selectOption("test");
+    await page.locator("#start-calendar").selectOption("classic");
     await page.locator("[data-action=begin]").click();
     assert.equal(
       await page.evaluate(() =>

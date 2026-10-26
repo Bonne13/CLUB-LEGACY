@@ -30,6 +30,7 @@ const { chromium } = require("playwright"),
     await p.goto(target);
     assert.equal(await p.locator("#start-game-mode").inputValue(), "normal");
     await p.locator("#start-coach-name").fill("Ana Silva");
+    await p.locator("#start-calendar").selectOption("classic");
     await p.locator("[data-action=begin]").click();
     assert.equal(await p.evaluate(() => state.season), 2026);
     assert(await p.locator("#time-controls").isVisible());
@@ -98,6 +99,7 @@ const { chromium } = require("playwright"),
     await p.locator("#start-coach-name").fill("Ana Teste");
     await p.locator("#start-league").selectOption("en");
     assert.equal(await p.locator("#start-game-mode").inputValue(), "test");
+    await p.locator("#start-calendar").selectOption("classic");
     await p.locator("[data-action=begin]").click();
     assert.equal(await p.evaluate(() => state.mode), "test");
     await p.getByRole("button", { name: "Financeiro", exact: true }).click();

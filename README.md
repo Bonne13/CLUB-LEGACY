@@ -237,3 +237,22 @@ Valores aparecem em reais com separadores brasileiros. Cartões mostram a quanti
 **Elenco** permite filtrar e ordenar jogadores, alternar tabela/cartões e abrir uma grade de camisas de 1 a 99. Números ocupados ficam identificados e bloqueados; a confirmação preserva a unicidade no profissional e na base. Paletas de clubes como Barcelona, Sevilla, Real Madrid, Liverpool, Manchester City, Flamengo e Palmeiras receberam ajustes, com modo claro e azul escuro e identidade de seleção preservados.
 
 `npm run test:coaching-browser` verifica WebGL real, câmeras, gol, 2D, valores localizados, observação, comparações, treinamento, numeração, save e celular. `LEGACY_STANDALONE=1 npm run test:coaching-browser` repete o fluxo offline com toda requisição externa bloqueada.
+
+
+## Capitania, navegação e pré-temporada (v0.10)
+
+A escolha automática de capitão usa referências consultadas em 26/10/2026 para **31 clubes e 69 jogadores identificados pelo ID**, respeitando a presença no elenco e no onze em campo. Barcelona usa Raphinha, Pedri, Eric García e Lamine Yamal, com os postos da fonte; Frenkie de Jong não é reintroduzido caso não pertença ao elenco do save. A liderança de Raphinha passa a 94/100. As notas são estimativas do jogo orientadas pela capitania, e não atributos oficiais. Sua escolha manual tem prioridade; o vice assume a ausência do capitão. As fontes ficam acessíveis na tela de escalação e em `data/captains.json`.
+
+A mudança de liderança vale para saves existentes, inclusive planos de partida recuperados, sem reiniciar placar, minuto ou transferências. Não se afirma atualização de capitania para todos os 397 clubes. Onde não há referência confirmada, a seleção automática considera a liderança estimada. `python3 scripts/build-captains.py` regenera o pacote offline a partir das referências revisadas.
+
+**Menu e busca** reúne todas as páginas, também pelo atalho **Ctrl/⌘ + K**, com busca por nome ou assunto e fechamento por Esc. O menu lateral pode ser recolhido no computador. Cabeçalhos, superfícies, controles e espaçamentos foram ajustados nas páginas; os temas do clube e da seleção continuam ativos. Treinamento usa cartões responsivos com carga e foco separados, mantendo a tabela como alternativa com rolagem própria.
+
+Na criação de carreira, **Pré-temporada** é o padrão. Na Europa, o calendário começa em **1º de julho de 2026**, identifica a temporada **2026/27** e deixa 45 dias para preparação antes da primeira rodada de liga. As Américas começam em **1º de janeiro de 2026**, com 24 dias de preparação. Há pausa de inverno no modelo europeu e janelas coerentes com o novo eixo anual. As datas e o espaçamento são um calendário de simulação inspirado nos períodos das regiões; não representam as tabelas oficiais completas de cada federação. O mundo mantém o ciclo compartilhado da carreira.
+
+**Calendário → Marcar amistoso** permite escolher data, adversário por liga e mando de campo. O motor confere os dois clubes, data futura, partidas já marcadas e datas de copas reservadas, exigindo três dias entre jogos. É possível cancelar antes do dia do amistoso. A simulação para na data e permite acompanhar em texto, 2D ou 3D. Preparação gera carga física e receita estimada de bilheteria reduzida, sem alterar pontos das ligas nem gerar bônus de vitória de patrocínio.
+
+**Organizar torneio de pré-temporada** convida três clubes para um quadrangular de pontos corridos: três rodadas separadas por quatro dias, seis jogos no total. A tabela é independente e desempata por pontos, saldo e gols, com critério estável final pelo ID. O vencedor ganha troféu de preparação, sem vaga continental ou premiação inventada. Toda a agenda é validada antes de gravar; pode-se cancelar o torneio inteiro antes de começar. Amistosos, resultados e torneio são preservados no save.
+
+Carreiras antigas mantêm suas datas e resultados. O calendário regional é escolhido ao criar a carreira; a opção **Calendário clássico** preserva a variante com jogos imediatos. Não se volta o tempo de um save existente para acrescentar uma pré-temporada retroativa.
+
+`npm run test:preseason-browser` verifica capitania, treinamento em quatro larguras, navegação nas quinze páginas em desktop/celular, pré-temporada europeia, amistoso e cancelamento, torneio completo, passagem do calendário para janeiro de 2027 e persistência. Use `LEGACY_STANDALONE=1` para testar o arquivo único com rede bloqueada. As suítes anteriores escolhem o calendário clássico e continuam verificando seus fluxos originais.

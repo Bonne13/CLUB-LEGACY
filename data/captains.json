@@ -1,0 +1,675 @@
+{
+  "revision": "captains-2026-10-26",
+  "checkedAt": "2026-10-26",
+  "clubs": [
+    {
+      "clubId": "ar-1",
+      "club": "Boca Juniors",
+      "url": "https://en.wikipedia.org/wiki/Boca_Juniors",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-166237",
+          "name": "Leandro Paredes",
+          "rank": 1,
+          "leadership": 94
+        }
+      ]
+    },
+    {
+      "clubId": "ar-0",
+      "club": "River Plate",
+      "url": "https://en.wikipedia.org/wiki/Club_Atlético_River_Plate",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-373373",
+          "name": "Lucas Martínez Quarta",
+          "rank": 2,
+          "leadership": 92
+        }
+      ]
+    },
+    {
+      "clubId": "br-5",
+      "club": "Botafogo",
+      "url": "https://en.wikipedia.org/wiki/Botafogo_de_Futebol_e_Regatas",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-255755",
+          "name": "Alex Telles",
+          "rank": 1,
+          "leadership": 94
+        }
+      ]
+    },
+    {
+      "clubId": "br-4",
+      "club": "Fluminense",
+      "url": "https://en.wikipedia.org/wiki/Fluminense_FC",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-22415",
+          "name": "Fábio",
+          "rank": 2,
+          "leadership": 92
+        },
+        {
+          "id": "tm-198250",
+          "name": "Samuel Xavier",
+          "rank": 3,
+          "leadership": 90
+        }
+      ]
+    },
+    {
+      "clubId": "br-7",
+      "club": "São Paulo",
+      "url": "https://en.wikipedia.org/wiki/São_Paulo_FC",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-284727",
+          "name": "Jonathan Calleri",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-77100",
+          "name": "Lucas Moura",
+          "rank": 2,
+          "leadership": 92
+        },
+        {
+          "id": "tm-68097",
+          "name": "Rafael",
+          "rank": 3,
+          "leadership": 90
+        }
+      ]
+    },
+    {
+      "clubId": "br-11",
+      "club": "Santos",
+      "url": "https://en.wikipedia.org/wiki/Santos_FC",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-68290",
+          "name": "Neymar",
+          "rank": 1,
+          "leadership": 94
+        }
+      ]
+    },
+    {
+      "clubId": "br-0",
+      "club": "Flamengo",
+      "url": "https://en.wikipedia.org/wiki/Clube_de_Regatas_do_Flamengo",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-353108",
+          "name": "Bruno Henrique",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-248410",
+          "name": "Giorgian de Arrascaeta",
+          "rank": 2,
+          "leadership": 92
+        },
+        {
+          "id": "tm-79960",
+          "name": "Alex Sandro",
+          "rank": 3,
+          "leadership": 90
+        },
+        {
+          "id": "tm-288431",
+          "name": "Léo Pereira",
+          "rank": 4,
+          "leadership": 88
+        }
+      ]
+    },
+    {
+      "clubId": "br-12",
+      "club": "Corinthians",
+      "url": "https://en.wikipedia.org/wiki/Sport_Club_Corinthians_Paulista",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-565009",
+          "name": "Rodrigo Garro",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-208681",
+          "name": "Gustavo Henrique",
+          "rank": 2,
+          "leadership": 92
+        }
+      ]
+    },
+    {
+      "clubId": "pt-0",
+      "club": "Sporting CP",
+      "url": "https://en.wikipedia.org/wiki/Sporting_CP",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-549006",
+          "name": "Gonçalo Inácio",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-504073",
+          "name": "Eduardo Quaresma",
+          "rank": 2,
+          "leadership": 92
+        },
+        {
+          "id": "tm-946883",
+          "name": "Iván Fresneda",
+          "rank": 4,
+          "leadership": 88
+        }
+      ]
+    },
+    {
+      "clubId": "br-1",
+      "club": "Palmeiras",
+      "url": "https://en.wikipedia.org/wiki/Sociedade_Esportiva_Palmeiras",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-215390",
+          "name": "Gustavo Gómez",
+          "rank": 1,
+          "leadership": 94
+        }
+      ]
+    },
+    {
+      "clubId": "pt-1",
+      "club": "Benfica",
+      "url": "https://en.wikipedia.org/wiki/S.L._Benfica",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-223367",
+          "name": "Fredrik Aursnes",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-504087",
+          "name": "Tomás Araújo",
+          "rank": 2,
+          "leadership": 92
+        }
+      ]
+    },
+    {
+      "clubId": "pt-2",
+      "club": "Porto",
+      "url": "https://en.wikipedia.org/wiki/FC_Porto",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-357153",
+          "name": "Diogo Costa",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-756990",
+          "name": "Alan Varela",
+          "rank": 2,
+          "leadership": 92
+        }
+      ]
+    },
+    {
+      "clubId": "fr-0",
+      "club": "Paris Saint-Germain",
+      "url": "https://en.wikipedia.org/wiki/Paris_Saint-Germain_FC",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-181767",
+          "name": "Marquinhos",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-398073",
+          "name": "Achraf Hakimi",
+          "rank": 2,
+          "leadership": 92
+        },
+        {
+          "id": "tm-288230",
+          "name": "Ousmane Dembélé",
+          "rank": 4,
+          "leadership": 88
+        }
+      ]
+    },
+    {
+      "clubId": "it-3",
+      "club": "Juventus",
+      "url": "https://en.wikipedia.org/wiki/Juventus_FC",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-265088",
+          "name": "Manuel Locatelli",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-516716",
+          "name": "Gleison Bremer",
+          "rank": 2,
+          "leadership": 92
+        }
+      ]
+    },
+    {
+      "clubId": "it-2",
+      "club": "Milan",
+      "url": "https://en.wikipedia.org/wiki/AC_Milan",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-182906",
+          "name": "Mike Maignan",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-323167",
+          "name": "Matteo Gabbia",
+          "rank": 2,
+          "leadership": 92
+        }
+      ]
+    },
+    {
+      "clubId": "it-1",
+      "club": "Napoli",
+      "url": "https://en.wikipedia.org/wiki/SSC_Napoli",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-169880",
+          "name": "Giovanni Di Lorenzo",
+          "rank": 1,
+          "leadership": 94
+        }
+      ]
+    },
+    {
+      "clubId": "it-0",
+      "club": "Inter de Milão",
+      "url": "https://en.wikipedia.org/wiki/Inter_Milan",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-406625",
+          "name": "Lautaro Martínez",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-255942",
+          "name": "Nicolò Barella",
+          "rank": 2,
+          "leadership": 92
+        }
+      ]
+    },
+    {
+      "clubId": "de-2",
+      "club": "Borussia Dortmund",
+      "url": "https://en.wikipedia.org/wiki/Borussia_Dortmund",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-388198",
+          "name": "Nico Schlotterbeck",
+          "rank": 2,
+          "leadership": 92
+        },
+        {
+          "id": "tm-193004",
+          "name": "Waldemar Anton",
+          "rank": 3,
+          "leadership": 90
+        }
+      ]
+    },
+    {
+      "clubId": "de-0",
+      "club": "Bayern de Munique",
+      "url": "https://en.wikipedia.org/wiki/FC_Bayern_Munich",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-17259",
+          "name": "Manuel Neuer",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-161056",
+          "name": "Joshua Kimmich",
+          "rank": 2,
+          "leadership": 92
+        },
+        {
+          "id": "tm-132098",
+          "name": "Harry Kane",
+          "rank": 3,
+          "leadership": 90
+        }
+      ]
+    },
+    {
+      "clubId": "en-3",
+      "club": "Chelsea",
+      "url": "https://en.wikipedia.org/wiki/Chelsea_F.C.",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-472423",
+          "name": "Reece James",
+          "rank": 1,
+          "leadership": 94
+        }
+      ]
+    },
+    {
+      "clubId": "en-5",
+      "club": "Tottenham Hotspur",
+      "url": "https://en.wikipedia.org/wiki/Tottenham_Hotspur_F.C.",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-557459",
+          "name": "Micky van de Ven",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-553875",
+          "name": "Pedro Porro",
+          "rank": 2,
+          "leadership": 92
+        },
+        {
+          "id": "tm-294057",
+          "name": "James Maddison",
+          "rank": 4,
+          "leadership": 88
+        },
+        {
+          "id": "tm-922693",
+          "name": "Archie Gray",
+          "rank": 5,
+          "leadership": 86
+        }
+      ]
+    },
+    {
+      "clubId": "en-2",
+      "club": "Liverpool",
+      "url": "https://en.wikipedia.org/wiki/Liverpool_F.C.",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-139208",
+          "name": "Virgil van Dijk",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-105470",
+          "name": "Alisson",
+          "rank": 2,
+          "leadership": 92
+        },
+        {
+          "id": "tm-451276",
+          "name": "Dominik Szoboszlai",
+          "rank": 2,
+          "leadership": 92
+        }
+      ]
+    },
+    {
+      "clubId": "en-0",
+      "club": "Arsenal",
+      "url": "https://en.wikipedia.org/wiki/Arsenal_F.C.",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-316264",
+          "name": "Martin Ødegaard",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-433177",
+          "name": "Bukayo Saka",
+          "rank": 2,
+          "leadership": 92
+        }
+      ]
+    },
+    {
+      "clubId": "en-4",
+      "club": "Manchester United",
+      "url": "https://en.wikipedia.org/wiki/Manchester_United_F.C.",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-240306",
+          "name": "Bruno Fernandes",
+          "rank": 1,
+          "leadership": 94
+        }
+      ]
+    },
+    {
+      "clubId": "en-1",
+      "club": "Manchester City",
+      "url": "https://en.wikipedia.org/wiki/Manchester_City_F.C.",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-258004",
+          "name": "Rúben Dias",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-315858",
+          "name": "Gianluigi Donnarumma",
+          "rank": 2,
+          "leadership": 92
+        },
+        {
+          "id": "tm-392757",
+          "name": "Marc Guéhi",
+          "rank": 2,
+          "leadership": 92
+        },
+        {
+          "id": "tm-418560",
+          "name": "Erling Haaland",
+          "rank": 2,
+          "leadership": 92
+        }
+      ]
+    },
+    {
+      "clubId": "es-2",
+      "club": "Atlético de Madrid",
+      "url": "https://en.wikipedia.org/wiki/Atlético_Madrid",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-74229",
+          "name": "Koke",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-121483",
+          "name": "Jan Oblak",
+          "rank": 2,
+          "leadership": 92
+        },
+        {
+          "id": "tm-282411",
+          "name": "Marcos Llorente",
+          "rank": 3,
+          "leadership": 90
+        }
+      ]
+    },
+    {
+      "clubId": "es-16",
+      "club": "Sevilla",
+      "url": "https://en.wikipedia.org/wiki/Sevilla_FC",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-385105",
+          "name": "Gabriel Suazo",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-766583",
+          "name": "Kike Salas",
+          "rank": 2,
+          "leadership": 92
+        },
+        {
+          "id": "tm-569384",
+          "name": "Lucien Agoume",
+          "rank": 3,
+          "leadership": 90
+        }
+      ]
+    },
+    {
+      "clubId": "es-10",
+      "club": "Real Sociedad",
+      "url": "https://en.wikipedia.org/wiki/Real_Sociedad",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-351478",
+          "name": "Mikel Oyarzabal",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-355628",
+          "name": "Igor Zubeldia",
+          "rank": 2,
+          "leadership": 92
+        }
+      ]
+    },
+    {
+      "clubId": "es-1",
+      "club": "Barcelona",
+      "url": "https://en.wikipedia.org/wiki/FC_Barcelona",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-411295",
+          "name": "Raphinha",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-683840",
+          "name": "Pedri",
+          "rank": 2,
+          "leadership": 92
+        },
+        {
+          "id": "tm-466794",
+          "name": "Eric García",
+          "rank": 3,
+          "leadership": 90
+        },
+        {
+          "id": "tm-937958",
+          "name": "Lamine Yamal",
+          "rank": 5,
+          "leadership": 86
+        }
+      ]
+    },
+    {
+      "clubId": "es-0",
+      "club": "Real Madrid",
+      "url": "https://en.wikipedia.org/wiki/Real_Madrid_CF",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-369081",
+          "name": "Federico Valverde",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-371998",
+          "name": "Vinicius Júnior",
+          "rank": 2,
+          "leadership": 92
+        }
+      ]
+    },
+    {
+      "clubId": "es-3",
+      "club": "Athletic Club",
+      "url": "https://en.wikipedia.org/wiki/Athletic_Bilbao",
+      "checkedAt": "2026-10-26",
+      "captains": [
+        {
+          "id": "tm-255508",
+          "name": "Iñaki Williams",
+          "rank": 1,
+          "leadership": 94
+        },
+        {
+          "id": "tm-61812",
+          "name": "Yuri Berchiche",
+          "rank": 2,
+          "leadership": 92
+        }
+      ]
+    }
+  ],
+  "additionalSources": [
+    {
+      "clubId": "es-1",
+      "url": "https://www.fcbarcelona.com/en/football/first-team/news/4598953/raphinha-scores-again",
+      "note": "O clube identifica Raphinha como capitão no relato do Clásico."
+    }
+  ]
+}

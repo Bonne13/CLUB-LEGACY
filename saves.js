@@ -39,13 +39,21 @@
       if (typeof v !== "string" || !v.length || v.length > max) fail();
     };
     number(s.season, 2025, 2200);
-    number(s.day, 0, E.calendar().length);
+    if (
+      s.calendarProfile !== undefined &&
+      (s.calendarProfile.version !== 1 ||
+        !["eu", "calendar"].includes(s.calendarProfile.region) ||
+        s.calendarProfile.preseasonDays !==
+          (s.calendarProfile.region === "eu" ? 45 : 24))
+    )
+      fail();
+    number(s.day, 0, E.calendar(s).length);
     if (!Number.isInteger(s.day) || !Number.isInteger(s.season)) fail();
     if (s.version === 3) {
       number(s.today, 0, 366);
       if (!Number.isInteger(s.today)) fail();
-      const event = E.calendar()[s.day],
-        prior = E.calendar()[s.day - 1];
+      const event = E.calendar(s)[s.day],
+        prior = E.calendar(s)[s.day - 1];
       if (
         event &&
         (s.today > event.offset || (prior && s.today <= prior.offset))
@@ -338,6 +346,48 @@
       if (!E.national.countries.some(([c]) => c === s.profile.nationality))
         fail();
     }
+    if (s.friendlies !== undefined) {
+      const seen = new Set();
+      array(s.friendlies, 60).forEach((f) => {
+        string(f.id);
+        string(f.name, 60);
+        string(f.competition);
+        number(f.offset, 0, 366);
+        if (
+          !Number.isInteger(f.offset) ||
+          seen.has(f.id) ||
+          f.kind !== "friendly" ||
+          !["scheduled", "completed", "cancelled"].includes(f.status) ||
+          !Array.isArray(f.pair) ||
+          f.pair.length !== 2 ||
+          new Set(f.pair).size !== 2 ||
+          f.pair.some((id) => !known.has(id))
+        )
+          fail();
+        seen.add(f.id);
+        if (f.goals !== undefined) {
+          if (array(f.goals, 2).length !== 2) fail();
+          f.goals.forEach((g) => number(g, 0, 99));
+        }
+      });
+      number(s.friendlySequence, 0, 1e7);
+      number(s.tournamentSequence, 0, 1e7);
+      array(s.preseasonTournaments, 10).forEach((t) => {
+        string(t.id);
+        string(t.name, 60);
+        number(t.start, 0, 366);
+        number(t.end, 0, 366);
+        if (
+          !["scheduled", "completed", "cancelled"].includes(t.status) ||
+          array(t.entrants, 4).length !== 4 ||
+          new Set(t.entrants).size !== 4 ||
+          t.entrants.some((id) => !known.has(id))
+        )
+          fail();
+        table(t.table, t.entrants);
+        if (t.champion !== null && !t.entrants.includes(t.champion)) fail();
+      });
+    }
     const nationalIDs = new Set(E.national.definitions.map((n) => n.id));
     if (s.national) {
       const n = s.national;
@@ -446,7 +496,7 @@
         if (
           ids.has(t.id) ||
           !known.has(t.clubId) ||
-          !["league", "continental"].includes(t.kind)
+          !["league", "continental", "preseason"].includes(t.kind)
         )
           fail();
         ids.add(t.id);

@@ -18,6 +18,7 @@ const assert = require("node:assert/strict");
   await page.goto(base);
   await page.locator("#start-coach-name").fill("Carlos Silva");
   await page.locator("#start-club").selectOption("br-7");
+  await page.locator("#start-calendar").selectOption("classic");
   await page.getByRole("button", { name: "Começar carreira" }).click();
   await page.getByRole("button", { name: "Elenco", exact: true }).click();
   await page
@@ -117,7 +118,8 @@ const assert = require("node:assert/strict");
     persist();
   });
   await page.getByRole("button", { name: "Carreira", exact: true }).click();
-  while(await page.locator("#trophy-dialog").isVisible())await page.locator("[data-action=close-celebration]").click();
+  while (await page.locator("#trophy-dialog").isVisible())
+    await page.locator("[data-action=close-celebration]").click();
   page.once("dialog", (d) => d.accept());
   await page.getByRole("button", { name: "Aceitar proposta" }).first().click();
   await page.getByRole("button", { name: "Visão geral", exact: true }).click();

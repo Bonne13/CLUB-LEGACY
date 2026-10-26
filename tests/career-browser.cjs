@@ -36,6 +36,7 @@ const { chromium } = require("playwright"),
       await p.locator("#start-coach-name").inputValue(),
       "Mariana Costa",
     );
+    await p.locator("#start-calendar").selectOption("classic");
     await p
       .getByRole("button", { name: "Começar carreira", exact: false })
       .click();

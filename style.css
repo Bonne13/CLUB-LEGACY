@@ -3851,3 +3851,543 @@ button.active,
   position: absolute;
   inset: 0;
 }
+
+/* Central do treinador: navegação e superfícies compartilhadas. */
+#game > header {
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+#game > header > div:first-child {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+#game > header h2 {
+  font-size: clamp(24px, 2.5vw, 34px);
+  line-height: 1.2;
+  margin: 10px 0 8px;
+}
+.page-description {
+  color: var(--muted);
+  font-size: 12px;
+  max-width: 65ch;
+  margin: 0;
+  line-height: 1.7;
+}
+.header-actions {
+  justify-content: flex-end;
+  gap: 8px;
+  flex: 1 1 480px;
+}
+.header-actions #save-status {
+  flex-basis: 100%;
+  text-align: right;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+#content > * {
+  max-width: 100%;
+}
+#content > .hero {
+  padding: 26px 28px;
+}
+#content > .hero h2 {
+  font-size: clamp(24px, 2.8vw, 36px);
+  line-height: 1.22;
+  max-width: 28ch;
+}
+#content > .hero p {
+  max-width: 80ch;
+}
+#content .row {
+  flex-wrap: wrap;
+}
+#content .row > * {
+  min-width: 0;
+}
+#content .card h3 {
+  line-height: 1.45;
+}
+#content .filters {
+  gap: 12px;
+  align-items: flex-end;
+}
+#content label {
+  line-height: 1.5;
+}
+#content .table-wrap {
+  overscroll-behavior-x: contain;
+  scrollbar-color: var(--border) transparent;
+}
+.hero-actions,
+.dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+.dialog-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+.dialog-heading > div {
+  min-width: 0;
+}
+.dialog-heading > button {
+  font-size: 24px;
+  line-height: 1;
+  padding: 8px 13px;
+}
+#quick-menu,
+#calendar-dialog {
+  width: min(680px, calc(100vw - 24px));
+  padding: 26px;
+  max-height: 90dvh;
+  overflow: auto;
+}
+#quick-menu::backdrop,
+#calendar-dialog::backdrop {
+  background: #060f21bb;
+  backdrop-filter: blur(6px);
+}
+#quick-menu > small {
+  display: block;
+  letter-spacing: 0;
+  line-height: 1.6;
+  margin-top: 18px;
+}
+#quick-menu-results {
+  max-height: 52dvh;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+#quick-menu-results section + section {
+  margin-top: 18px;
+}
+#quick-menu-results h3 {
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  color: var(--muted);
+  margin: 8px 0;
+}
+#quick-menu-results button {
+  display: flex;
+  width: 100%;
+  gap: 14px;
+  text-align: left;
+  align-items: center;
+  border-color: transparent;
+  background: transparent;
+  padding: 12px;
+}
+#quick-menu-results button.current {
+  background: var(--soft);
+  border-color: var(--border);
+}
+#quick-menu-results svg {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  color: var(--accent);
+}
+#quick-menu-results button > span:first-of-type {
+  flex: 1;
+  min-width: 0;
+}
+#quick-menu-results small {
+  display: block;
+  letter-spacing: 0;
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+body.compact-navigation #sidebar {
+  width: 78px;
+  padding: 22px 12px;
+}
+body.compact-navigation #sidebar > h1,
+body.compact-navigation #sidebar > small,
+body.compact-navigation #sidebar .sidebar-club,
+body.compact-navigation #sidebar .foot,
+body.compact-navigation .nav-group-label,
+body.compact-navigation .nav-label,
+body.compact-navigation .workspace-switch {
+  display: none;
+}
+body.compact-navigation #sidebar #nav {
+  margin-top: 0;
+}
+body.compact-navigation #nav button {
+  justify-content: center;
+  padding: 12px;
+}
+body.compact-navigation #game {
+  margin-left: 78px;
+}
+.captain-hierarchy {
+  padding: 18px;
+  border: 1px solid var(--border);
+  background: var(--soft);
+  border-radius: 10px;
+  margin: 14px 0 24px;
+}
+.captain-hierarchy p {
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 8px 0;
+}
+.captain-hierarchy > small {
+  display: block;
+  letter-spacing: 0;
+  line-height: 1.8;
+  margin-top: 15px;
+}
+.captain-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+.captain-list > span {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 3px 10px;
+  align-items: center;
+  padding: 10px 12px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+}
+.captain-list b {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  background: var(--club-primary);
+  color: var(--club-on-primary);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+.captain-list strong {
+  font-size: 12px;
+}
+.captain-list small {
+  letter-spacing: 0;
+  font-size: 10px;
+}
+
+/* Treino: os controles ocupam sua própria área, em qualquer tamanho de tela. */
+.training-hero .row {
+  align-items: flex-end;
+}
+.training-hero .row label {
+  margin: 0;
+  min-width: 190px;
+}
+.training-week {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.training-day {
+  padding: 15px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.training-day select {
+  margin: 0;
+  padding: 10px 8px;
+  font-size: 12px;
+  min-height: 42px;
+}
+.training-day > span {
+  margin-top: 0;
+  font-size: 10px;
+  min-height: 28px;
+}
+.training-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0;
+}
+.training-toolbar label {
+  margin: 0;
+}
+.physical-table:not(.training-cards) {
+  min-width: 1000px;
+}
+.training-athletes {
+  min-width: 0;
+}
+.training-cards {
+  display: block;
+  min-width: 0 !important;
+}
+.training-cards thead {
+  display: none;
+}
+.training-cards tbody {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.training-cards tr {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 0;
+}
+.training-cards tr:hover {
+  background: var(--surface);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+}
+.training-cards td {
+  display: block;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+}
+.training-cards td:first-child {
+  grid-column: 1;
+}
+.training-cards td:first-child > strong {
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.training-cards td:nth-child(2) {
+  justify-self: end;
+  text-align: right;
+}
+.training-cards .readiness-meter {
+  justify-content: flex-end;
+}
+.training-control-label {
+  margin: 0;
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.training-cards select {
+  min-width: 0;
+  width: 100%;
+  font-size: 12px;
+  margin-top: 7px;
+  min-height: 44px;
+  padding: 10px 8px;
+}
+.training-cards .sub {
+  font-size: 10px;
+  line-height: 1.7;
+  letter-spacing: 0;
+  white-space: normal;
+}
+.training-cards td:last-child {
+  grid-column: 1/-1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  align-items: center;
+}
+.training-cards td:last-child::before {
+  content: "PROJEÇÃO · DIA SEM JOGO";
+  display: block;
+  flex-basis: 100%;
+  font-size: 8px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+.training-cards td:last-child > strong {
+  font-size: 12px;
+}
+.training-cards .development-progress {
+  margin-top: 12px;
+}
+.preseason-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  background: color-mix(in srgb, var(--success) 7%, var(--panel));
+  border: 1px solid color-mix(in srgb, var(--success) 32%, var(--border));
+  border-radius: 12px;
+  padding: 22px;
+  margin: 20px 0;
+}
+.preseason-banner > div {
+  flex: 1 1 300px;
+}
+.preseason-banner h3 {
+  margin: 10px 0 0;
+}
+.preseason-banner p {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+.preseason-tournament {
+  margin-bottom: 20px;
+}
+.tournament-winner {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--accent);
+}
+.friendly-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
+.friendly-fields .wide {
+  grid-column: 1/-1;
+}
+.friendly-preview {
+  background: var(--soft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 12px;
+  line-height: 1.8;
+}
+#friendly-form > p {
+  font-size: 12px;
+}
+#calendar-dialog input,
+#calendar-dialog select {
+  max-width: 100%;
+  min-width: 0;
+}
+@media (min-width: 1450px) {
+  .training-cards tbody {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .training-cards tr {
+    grid-template-columns: 1fr;
+  }
+  .training-cards td:first-child,
+  .training-cards td:last-child {
+    grid-column: 1;
+  }
+  .training-cards td:nth-child(2) {
+    justify-self: start;
+    text-align: left;
+  }
+  .training-cards .readiness-meter {
+    justify-content: flex-start;
+  }
+}
+@media (max-width: 1100px) {
+  .training-cards tbody {
+    grid-template-columns: 1fr;
+  }
+  .training-week {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 850px) {
+  #game > header > div:first-child,
+  .header-actions {
+    flex-basis: 100%;
+  }
+  .header-actions {
+    justify-content: flex-start;
+  }
+  .header-actions #save-status {
+    text-align: left;
+  }
+  #sidebar-toggle {
+    display: none;
+  }
+  body.compact-navigation #sidebar {
+    width: auto;
+    padding: 18px 20px;
+  }
+  body.compact-navigation #sidebar > h1,
+  body.compact-navigation #sidebar > small,
+  body.compact-navigation .nav-label {
+    display: initial;
+  }
+  body.compact-navigation #game {
+    margin-left: 0;
+  }
+  .training-week {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  #content > .hero {
+    padding: 22px 18px;
+  }
+  .page-description {
+    font-size: 11px;
+  }
+  .training-cards tr {
+    padding: 16px;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .training-cards td:first-child,
+  .training-cards td:last-child {
+    grid-column: 1;
+  }
+  .training-cards td:nth-child(2) {
+    justify-self: start;
+    text-align: left;
+  }
+  .training-cards .readiness-meter {
+    justify-content: flex-start;
+  }
+  .training-hero .row label {
+    min-width: 0;
+    width: 100%;
+  }
+  .training-toolbar .inline {
+    width: 100%;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .training-toolbar .inline select {
+    width: 100%;
+  }
+  .friendly-fields {
+    grid-template-columns: 1fr;
+  }
+  #quick-menu,
+  #calendar-dialog {
+    padding: 20px;
+  }
+  #quick-menu-results small {
+    font-size: 10px;
+  }
+  .dialog-actions > button {
+    flex: 1 1 180px;
+  }
+  .calendar-details button {
+    max-width: 100%;
+  }
+  .training-history article {
+    min-width: 0;
+  }
+  .training-history strong,
+  .training-history span {
+    overflow-wrap: anywhere;
+  }
+}
