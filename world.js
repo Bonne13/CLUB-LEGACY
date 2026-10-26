@@ -1,6 +1,6 @@
 "use strict";
 // Participantes atualizados em seis ligas para 2026/2026–27; demais históricos.
-// Nomes reais; sem escudos, imagens ou declaração de licença oficial.
+// Nomes reais; identidades visuais ficam no catálogo separado badges-data.js.
 (function (root) {
   const rows = [
     [

@@ -1,0 +1,4183 @@
+{
+  "retrievedOn": "2026-10-26",
+  "note": "Escudos de fontes públicas; bandeiras identificam seleções. Marcas pertencem aos titulares. Não indica licença oficial. Identidade por nome, preservada em saves antigos.",
+  "entries": [
+    {
+      "name": "Flamengo",
+      "file": "tm-614.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/614.png",
+      "sourceId": "614",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c3506e31611223e0bc32c28de4562ca32cb0dbd1826b3e711c31e0439ab20618"
+    },
+    {
+      "name": "Palmeiras",
+      "file": "tm-1023.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1023.png",
+      "sourceId": "1023",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "189fbc8941aac2f4dc9e384bc0e292c6a157f2aeb61e905a6d2e667e5fde82e1"
+    },
+    {
+      "name": "Cruzeiro",
+      "file": "tm-609.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/609.png",
+      "sourceId": "609",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "48a1006b6a5ea2f0a8beeb32c26c21aef700d6cac0351a91cd635530e83c4d80"
+    },
+    {
+      "name": "Mirassol",
+      "file": "tm-3876.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3876.png",
+      "sourceId": "3876",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "2bd63ffdb17c7053027a799b4e94c34239277804fa3d180a85627354f1ad37e2"
+    },
+    {
+      "name": "Fluminense",
+      "file": "tm-2462.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2462.png",
+      "sourceId": "2462",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "0f5dbceab6af206a42749a199e480cf50a4c4274c1996f8d94378df39b6411d7"
+    },
+    {
+      "name": "Botafogo",
+      "file": "tm-537.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/537.png",
+      "sourceId": "537",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "b3a934c22da3a71578b29758d62198b4ab7512fb9ada79a7f7d7e289538806a6"
+    },
+    {
+      "name": "Bahia",
+      "file": "tm-10010.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/10010.png",
+      "sourceId": "10010",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9e38bff4737d3fa7e2ed906ac6efa09fd93f4af189f5ad373288134dc42d7257"
+    },
+    {
+      "name": "São Paulo",
+      "file": "tm-585.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/585.png",
+      "sourceId": "585",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "294a11c787aa5bdf8728468aeb4d6e36c45ec05c1517e03960454252fecf5c58"
+    },
+    {
+      "name": "Grêmio",
+      "file": "tm-210.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/210.png",
+      "sourceId": "210",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "13c098e55a398d53520bde05c3351a54a83f4ff6c7efac2e470a3faf6dacd6de"
+    },
+    {
+      "name": "Red Bull Bragantino",
+      "file": "tm-8793.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/8793.png",
+      "sourceId": "8793",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "8b11c6a4b20c506903691eaff27952c22721fbcb08da33bc4d65f3edeefe9815"
+    },
+    {
+      "name": "Atlético Mineiro",
+      "file": "tm-330.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/330.png",
+      "sourceId": "330",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "08c0d315af1a7aee3e8983d27561342b6502c3f0b87b7d5adb4022334a3ba110"
+    },
+    {
+      "name": "Santos",
+      "file": "tm-221.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/221.png",
+      "sourceId": "221",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "b720f5fc4492a0a08d1b3cd87437c23c07f5c38ae981a6bf6b9e396b9a88d046"
+    },
+    {
+      "name": "Corinthians",
+      "file": "tm-199.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/199.png",
+      "sourceId": "199",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "7ffb551bbe80731caa15d47b62c0902b032fbff49f18aadaf6392dfa4c785077"
+    },
+    {
+      "name": "Vasco da Gama",
+      "file": "tm-978.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/978.png",
+      "sourceId": "978",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a73032a3b4446e7f11e3f4702a02c13df8b1e8db043751fdd65396e33b61009e"
+    },
+    {
+      "name": "Vitória",
+      "file": "tm-2125.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2125.png",
+      "sourceId": "2125",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "214f05b843ac615c2917100850607fa3a10f80be343b5e29368bd7cea3fc7d05"
+    },
+    {
+      "name": "Internacional",
+      "file": "tm-6600.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6600.png",
+      "sourceId": "6600",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e207b5010a5c3400487c4d5ada7c3e253002e6510b5a40416eadc03697f1cd68"
+    },
+    {
+      "name": "Athletico Paranaense",
+      "file": "tm-679.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/679.png",
+      "sourceId": "679",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1104e317075a1a326b9482568253567c5c95e379e006134853f8069bd706c3ea"
+    },
+    {
+      "name": "Chapecoense",
+      "file": "tm-17776.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/17776.png",
+      "sourceId": "17776",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e8dd59c1805b373fdc7ba84de8981a245313f76cc2b1de71aa31efb364e7257c"
+    },
+    {
+      "name": "Coritiba",
+      "file": "tm-776.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/776.png",
+      "sourceId": "776",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c4cd7c77e50d03805cfd337bcd3fa7ee4d2fcab6c7167f7e1e2bacdabdc6a8d9"
+    },
+    {
+      "name": "Remo",
+      "file": "tm-10997.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/10997.png",
+      "sourceId": "10997",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "5d569bfd47c23bc1d89b04581da0a9353b7509801c3dbaad37ece25e378ba54d"
+    },
+    {
+      "name": "River Plate",
+      "file": "tm-209.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/209.png",
+      "sourceId": "209",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "989ac886050e91b8907cd636414b3dc5161bfc1098076ae8264fb6bbdea37a0c"
+    },
+    {
+      "name": "Boca Juniors",
+      "file": "tm-189.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/189.png",
+      "sourceId": "189",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1cf4d1e8814139dbb87a0e8f1661cd1c9e674ed54d63733f85179cc1c57341c0"
+    },
+    {
+      "name": "Racing Club",
+      "file": "tm-1444.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1444.png",
+      "sourceId": "1444",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "4c656301175b5eb32a8bd93bc83aaaebaf52a455ad9eb385afcd20eaab01ff96"
+    },
+    {
+      "name": "Independiente",
+      "file": "tm-1234.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1234.png",
+      "sourceId": "1234",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "abf20e87621115134d998039fda3760b28031a0cd5900a262fa244e228f70bcb"
+    },
+    {
+      "name": "San Lorenzo",
+      "file": "tm-1775.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1775.png",
+      "sourceId": "1775",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "0d371684fd4cd16cdcce040c024055874e5ac8fdb8d7d2d2704489646f930e2c"
+    },
+    {
+      "name": "Estudiantes de La Plata",
+      "file": "tm-288.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/288.png",
+      "sourceId": "288",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1a4512e541b814ae9ea9bd5bd09e71a28e1e5f8c21e1eb0cb4909723d8793bd3"
+    },
+    {
+      "name": "Vélez Sarsfield",
+      "file": "tm-1029.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1029.png",
+      "sourceId": "1029",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "2496e44002974f215a999a33ef1d2f505f80c7612a3e19fd9fad9bc5843049ce"
+    },
+    {
+      "name": "Rosario Central",
+      "file": "tm-1418.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1418.png",
+      "sourceId": "1418",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "71492ee94dd06cb23f5567033164b32cbbfa89ebac927258eca2a7949c5889cf"
+    },
+    {
+      "name": "Newell’s Old Boys",
+      "file": "tm-1286.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1286.png",
+      "sourceId": "1286",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1736843056b6fb549cb72c7c274595a73eccfe29af0b838c0c12cf0269b064f0"
+    },
+    {
+      "name": "Talleres",
+      "file": "tm-3938.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3938.png",
+      "sourceId": "3938",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "af6b4f65fec2995f4f718ecba5ec931bddd00b2738a76a0adbf7191b7f1f2b62"
+    },
+    {
+      "name": "Belgrano",
+      "file": "tm-2417.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2417.png",
+      "sourceId": "2417",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "33856fb273d8f559af7aa434ca7f9d702fd4da4e3e529c11896aa83ad67de2ca"
+    },
+    {
+      "name": "Lanús",
+      "file": "tm-333.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/333.png",
+      "sourceId": "333",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "f32119e50640f566e98c9a18236a2696c54cfb07bffd92c2948286475de78b5d"
+    },
+    {
+      "name": "Huracán",
+      "file": "tm-2063.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2063.png",
+      "sourceId": "2063",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "28f1e459b6984cc8aaab95328cd539d5918041f4bdfc4e846c3c1f06c188b860"
+    },
+    {
+      "name": "Argentinos Juniors",
+      "file": "tm-1030.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1030.png",
+      "sourceId": "1030",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9e91c9a8850b42fa29e9e635b3299ff8c06d47dcb1ed9d1de1f7e23e76cd34a4"
+    },
+    {
+      "name": "Defensa y Justicia",
+      "file": "tm-2402.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2402.png",
+      "sourceId": "2402",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "85a824bb6ef675ea158079aa81de25a741711620fb607b4f0f2a6ea3cf77ab13"
+    },
+    {
+      "name": "Godoy Cruz",
+      "file": "tm-12574.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/12574.png",
+      "sourceId": "12574",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "7f64f41466ad97161610a54d719f2f8bad809d30d1f8ba3473a1171d230c3392"
+    },
+    {
+      "name": "Unión de Santa Fe",
+      "file": "tm-7097.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/7097.png",
+      "sourceId": "7097",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d60c768804ba6e57df39aa9966469796a0668ad3f49c136064c25144d70289e9"
+    },
+    {
+      "name": "Tigre",
+      "file": "tm-11831.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/11831.png",
+      "sourceId": "11831",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "991c820b2bf4f15673b2d9f10bfba2f0aecf5c5f8d66d45f1e7eedea1859fcb6"
+    },
+    {
+      "name": "Gimnasia La Plata",
+      "file": "tm-1106.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1106.png",
+      "sourceId": "1106",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "987656e0eead9e35eafe0de1e9e8a2d95e65f29a45a0c62c6c036a6a408fa606"
+    },
+    {
+      "name": "Banfield",
+      "file": "tm-830.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/830.png",
+      "sourceId": "830",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "ac0163523ad41b19e791ce308dc64031e7503db735c6df0632b270a03379ee22"
+    },
+    {
+      "name": "Atlético Tucumán",
+      "file": "tm-14554.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/14554.png",
+      "sourceId": "14554",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e83b7985b92bd2dffdf3cee8c62743b20f077a220483e32769d3fccfa2887f4e"
+    },
+    {
+      "name": "Central Córdoba",
+      "file": "tm-31284.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/31284.png",
+      "sourceId": "31284",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "3b8bb7fddf7f11172a2b8529f10846343ea9e4a163442781abc5cc82c3ad1d28"
+    },
+    {
+      "name": "Instituto",
+      "file": "tm-1829.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1829.png",
+      "sourceId": "1829",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "601d4a8dba653c18f2785eaa73de7d22d7380648819f80745db9206e3ff5f4c1"
+    },
+    {
+      "name": "Independiente Rivadavia",
+      "file": "tm-12179.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/12179.png",
+      "sourceId": "12179",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c8d204248401fcad90cdef87e38177a9559f49b0192f3dd510bc6061cff6192f"
+    },
+    {
+      "name": "Deportivo Riestra",
+      "file": "tm-19775.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/19775.png",
+      "sourceId": "19775",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "2e142382e633cdf4d440e5fd4e914ea0902a223a3b3903ff23beb2a1518322f7"
+    },
+    {
+      "name": "Barracas Central",
+      "file": "tm-25184.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/25184.png",
+      "sourceId": "25184",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "3f26f28fc4886ac1fb74df17777d610e0a409e8c8d43b0032e31956dd066db81"
+    },
+    {
+      "name": "Platense",
+      "file": "tm-928.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/928.png",
+      "sourceId": "928",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "85120992dc8b5b08fcf931afa43dffe10d71cc6b364f7aedbf5ee77f9befb547"
+    },
+    {
+      "name": "Sarmiento",
+      "file": "tm-12454.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/12454.png",
+      "sourceId": "12454",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c3836102ae6e8b55114c3140ed4b0a8c067a3c0f72a3bfacb086e49a8ad1cd67"
+    },
+    {
+      "name": "San Martín de San Juan",
+      "file": "tm-10511.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/10511.png",
+      "sourceId": "10511",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d4031a64a2cb799bfdb8beba2b3cb648e098f32ae959af159bb81375e6dd63ae"
+    },
+    {
+      "name": "Aldosivi",
+      "file": "tm-12301.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/12301.png",
+      "sourceId": "12301",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1b113ed0c132c2f07fdb13d860582a02e0ff537687e4d4f5e27da7bfe1a3a5f5"
+    },
+    {
+      "name": "Arsenal",
+      "file": "tm-11.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/11.png",
+      "sourceId": "11",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "17282d8a21e7784fa07a1ad3c360344602f99f3147248130de12c631c43d90f7"
+    },
+    {
+      "name": "Manchester City",
+      "file": "tm-281.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/281.png",
+      "sourceId": "281",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "22823b09d230611588322d7e2b6172b9d6fa2e7648ffe6c39e454d8e401c2c03"
+    },
+    {
+      "name": "Liverpool",
+      "file": "tm-31.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/31.png",
+      "sourceId": "31",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "571bcba9676fa59f3c7711edfd09549690b3ef60a94e0b3c065135b5f9db448a"
+    },
+    {
+      "name": "Chelsea",
+      "file": "tm-631.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/631.png",
+      "sourceId": "631",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "f02b2193e6ec398e8527373fb5f8266d4f5a9cc0c37000f1502c892368c2b3cd"
+    },
+    {
+      "name": "Manchester United",
+      "file": "tm-985.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/985.png",
+      "sourceId": "985",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "123c04a5be5b096569fbd95c47a4eee863ecdf53cf9bf645faa163b30c9a6879"
+    },
+    {
+      "name": "Tottenham Hotspur",
+      "file": "tm-148.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/148.png",
+      "sourceId": "148",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "10e03b58978e0356adfa2e423512a6bf56027cfa534ee4c1b393553c3dee007e"
+    },
+    {
+      "name": "Newcastle United",
+      "file": "tm-762.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/762.png",
+      "sourceId": "762",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "da12aaa5d8bb2c2ce136d92ac404bade5cbeae5d8f3d07cc8d3b78aabce63396"
+    },
+    {
+      "name": "Aston Villa",
+      "file": "tm-405.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/405.png",
+      "sourceId": "405",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "cf5961c1faf4beacb50be7f30fe48711c0af7475010f96460cdc6d1ab7cd1772"
+    },
+    {
+      "name": "Brighton & Hove Albion",
+      "file": "tm-1237.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1237.png",
+      "sourceId": "1237",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "cce9640c0639b514546584b45cf1eccaa177d2a0af821eacbbdc76812d6a2b90"
+    },
+    {
+      "name": "Nottingham Forest",
+      "file": "tm-703.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/703.png",
+      "sourceId": "703",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a2c6fd30e7fafddb31e06561e53f4d27365031dfbd8df3f58134582fdccbc43f"
+    },
+    {
+      "name": "Crystal Palace",
+      "file": "tm-873.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/873.png",
+      "sourceId": "873",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "88c3968440c5a749dbfa8d87d13e33ce359ffa61b7336dcc1ab9c6c459f8db99"
+    },
+    {
+      "name": "Bournemouth",
+      "file": "tm-989.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/989.png",
+      "sourceId": "989",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "48e91bc8579bcea74e4e40f744bc9dba985d57b69bb066cf431f8b44a6c205ba"
+    },
+    {
+      "name": "Brentford",
+      "file": "tm-1148.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1148.png",
+      "sourceId": "1148",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e5b8a3493527164595ba40633b53e6783cf1a21edcd1a7c426e3f11d930a0a54"
+    },
+    {
+      "name": "Fulham",
+      "file": "tm-931.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/931.png",
+      "sourceId": "931",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "f4cc416ed19471ddecb47373405e623d1be8c087e32e91344c6174d75eb06774"
+    },
+    {
+      "name": "Coventry City",
+      "file": "tm-990.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/990.png",
+      "sourceId": "990",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "61f3bc859d9b3fa3316bfbe8637ec60b017e6cdec5727d1358464d82b0a4b37c"
+    },
+    {
+      "name": "Everton",
+      "file": "tm-29.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/29.png",
+      "sourceId": "29",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "35235979c18fc344b378c42f98b846fb1d44822a7d0b2c3078456d63b0d5c21c"
+    },
+    {
+      "name": "Hull City",
+      "file": "tm-3008.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3008.png",
+      "sourceId": "3008",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "53dc29bcd8207a1806f622ae83d9ec7a2a3e415e0d4804adc2e591877ca666ed"
+    },
+    {
+      "name": "Leeds United",
+      "file": "tm-399.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/399.png",
+      "sourceId": "399",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "ecd3de821dcb99299babc79c770172d1289084f0d03a1ee8b98742e5e366371a"
+    },
+    {
+      "name": "Ipswich Town",
+      "file": "tm-677.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/677.png",
+      "sourceId": "677",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "38ffa99e638fd71ffdfc3b81b001cee827fa7a41b164dabf888d2e311cb9b685"
+    },
+    {
+      "name": "Sunderland",
+      "file": "tm-289.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/289.png",
+      "sourceId": "289",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "376b05aa26f4cf86dd460818054661881abddd24ef3db60bcfe9cc7dd1ae0a7b"
+    },
+    {
+      "name": "Real Madrid",
+      "file": "tm-418.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/418.png",
+      "sourceId": "418",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "5563771304ce4bb36f403f5410af91be92f6e143945736c879e623df9e8479db"
+    },
+    {
+      "name": "Barcelona",
+      "file": "tm-131.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/131.png",
+      "sourceId": "131",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "18b6c4cd613e60b7b76c542e9795430375ae561574fca2aaf359595d7307ba48"
+    },
+    {
+      "name": "Atlético de Madrid",
+      "file": "tm-13.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/13.png",
+      "sourceId": "13",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "5c0ac71849be042813166417b5468f24f36f196a3ea62ad0571a89d58d9e498b"
+    },
+    {
+      "name": "Athletic Club",
+      "file": "tm-621.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/621.png",
+      "sourceId": "621",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "6fa392cfb8af67fb609710374d07743ea2f3faa2d9d39ee6d02614180f617715"
+    },
+    {
+      "name": "Villarreal",
+      "file": "tm-1050.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1050.png",
+      "sourceId": "1050",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "640e1348a3edf2588583584ad73073e5a73df27bc83c622d792540881a7bf431"
+    },
+    {
+      "name": "Real Betis",
+      "file": "tm-150.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/150.png",
+      "sourceId": "150",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "faf658d28af1e500592844d2b91810987ecabf8105764d307ac90420fce62c87"
+    },
+    {
+      "name": "Celta de Vigo",
+      "file": "tm-940.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/940.png",
+      "sourceId": "940",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "94068f5371d38be3c90b3e7b842416438fb648bbd36dcf3bd4a820348d4ecea1"
+    },
+    {
+      "name": "Rayo Vallecano",
+      "file": "tm-367.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/367.png",
+      "sourceId": "367",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "ca7bcec454fb3c7261055e59d0743ce95603ae963b15396e47359d535e1256a0"
+    },
+    {
+      "name": "Osasuna",
+      "file": "tm-331.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/331.png",
+      "sourceId": "331",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "80cec8ec9e9b836cddf8f7cba13a1ee60738677b08a46ea52b376c9ef2d53395"
+    },
+    {
+      "name": "Deportivo La Coruña",
+      "file": "tm-897.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/897.png",
+      "sourceId": "897",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "fd9f4ca5d3e124d51a0d3fe35ba3d9c76a2d7ed8a85d0cf2cb038ad37e61fdb3"
+    },
+    {
+      "name": "Real Sociedad",
+      "file": "tm-681.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/681.png",
+      "sourceId": "681",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "968b15664f817d6f7b36b14aa94fe96533497e14c667ed9640977d932d72ab97"
+    },
+    {
+      "name": "Valencia",
+      "file": "tm-1049.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1049.png",
+      "sourceId": "1049",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "80f3437ac11b2e967b3418626e2f6e6a266f8931fe9f4b778e3ce81fde0c525e"
+    },
+    {
+      "name": "Getafe",
+      "file": "tm-3709.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3709.png",
+      "sourceId": "3709",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "f6d9f373c87e8540a2377bc50adf32e272260bf9069338fc05c1eb15f5a16a75"
+    },
+    {
+      "name": "Espanyol",
+      "file": "tm-714.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/714.png",
+      "sourceId": "714",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "8d64d6a55d1df07585d174dd6a50a8eea06dea5844acd8e85d2ece9beef00cc4"
+    },
+    {
+      "name": "Alavés",
+      "file": "tm-1108.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1108.png",
+      "sourceId": "1108",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d54ca6c9f80d7895bad814ecda201a40d8a4f1a9c72ee1d753a9b5859f3eeec5"
+    },
+    {
+      "name": "Málaga",
+      "file": "tm-1084.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1084.png",
+      "sourceId": "1084",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "b83f194715bdfd5f90b4d8061caa4f222d15b90f2ad7ffd7fe1c13787d61295b"
+    },
+    {
+      "name": "Sevilla",
+      "file": "tm-368.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/368.png",
+      "sourceId": "368",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "0ceaaa65a396bbd8e07bcfdb4264bed436405fb0cc92454e1d44004c98c4a477"
+    },
+    {
+      "name": "Levante",
+      "file": "tm-3368.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3368.png",
+      "sourceId": "3368",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "3cdd2252c72ad0d87cde0fe3061f0533ade480a389ee813c7201cb72c8ca3a81"
+    },
+    {
+      "name": "Elche",
+      "file": "tm-1531.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1531.png",
+      "sourceId": "1531",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "5440c80341bf40fd882a4071eca5fe0519e379f7f2f3b8de3605add60a7b9e8e"
+    },
+    {
+      "name": "Racing Santander",
+      "file": "tm-630.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/630.png",
+      "sourceId": "630",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "f4feb96c2a24fdbceca1d496e7cbeac58992372cc8a0596a4cec3c658849348b"
+    },
+    {
+      "name": "Inter de Milão",
+      "file": "tm-46.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/46.png",
+      "sourceId": "46",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c9389f4eb40247063bf877253ecb0e9a02260bbf73ea70512a52fc5e981cca38"
+    },
+    {
+      "name": "Napoli",
+      "file": "tm-6195.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6195.png",
+      "sourceId": "6195",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "4d4118047f20893a41802325cc63167104da9df63b77047a194700bc13e33fb4"
+    },
+    {
+      "name": "Milan",
+      "file": "tm-5.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/5.png",
+      "sourceId": "5",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "04cc46ece1dfabead2e25f4e055455d17edc6f73d91d64e43b199301ae97c5d8"
+    },
+    {
+      "name": "Juventus",
+      "file": "tm-506.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/506.png",
+      "sourceId": "506",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "0de8f69c0a4c3e941104c4c352a1fba0100a0a6f8f0c2d3ae2f780733328ec48"
+    },
+    {
+      "name": "Atalanta",
+      "file": "tm-800.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/800.png",
+      "sourceId": "800",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "8c722ccaac0e9e45b31b85d7515dd2304300996f55d612bd7bc82aa6db760060"
+    },
+    {
+      "name": "Roma",
+      "file": "tm-12.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/12.png",
+      "sourceId": "12",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "7da45bb7024b60881490ba0e4801d397a22913433fba311f061b18ce653fbf0f"
+    },
+    {
+      "name": "Lazio",
+      "file": "tm-398.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/398.png",
+      "sourceId": "398",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "15c961c435214de718ce63b842923076dd06f15cf76431b0a5f7b24b42a61c03"
+    },
+    {
+      "name": "Fiorentina",
+      "file": "tm-430.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/430.png",
+      "sourceId": "430",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "855e0fca304d76fbbb4261cd74eec9221c75c86de74fe372ff872428c07961a0"
+    },
+    {
+      "name": "Bologna",
+      "file": "tm-1025.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1025.png",
+      "sourceId": "1025",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9d07c17707c04911f69931f41eb9edf938f9bfd99cf38d41dd1268be49add610"
+    },
+    {
+      "name": "Como",
+      "file": "tm-1047.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1047.png",
+      "sourceId": "1047",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "def7e5e213f41f8f18a5143bdb54f01d22eee80460e3d3320d079b25a1dba750"
+    },
+    {
+      "name": "Torino",
+      "file": "tm-416.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/416.png",
+      "sourceId": "416",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d688eb41b1aa752ff637872e0413416f593f5a70ef6f8df6dda53f54704095c2"
+    },
+    {
+      "name": "Udinese",
+      "file": "tm-410.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/410.png",
+      "sourceId": "410",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c9dfdeda385087c869899f9e4ed6c8a5cbae11c1368d569f427160c157804f53"
+    },
+    {
+      "name": "Genoa",
+      "file": "tm-252.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/252.png",
+      "sourceId": "252",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "de2b0e4a64b737e558d3687c8d46d7f3a998649b3ddb615838612cf05583532d"
+    },
+    {
+      "name": "Frosinone",
+      "file": "tm-8970.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/8970.png",
+      "sourceId": "8970",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "22f866c49727d1b324ca4182b866943cb305ba28885c9d2e4c3caf26d7572647"
+    },
+    {
+      "name": "Cagliari",
+      "file": "tm-1390.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1390.png",
+      "sourceId": "1390",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "2ff0defae4c0db75122ca8c3c01f41f720990fe9c60e74c9e4f314b8cd2399f4"
+    },
+    {
+      "name": "Lecce",
+      "file": "tm-1005.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1005.png",
+      "sourceId": "1005",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1e49f899a13d26e9b52ec27835306a96ac61abfa09045f46ff570323467ee9e3"
+    },
+    {
+      "name": "Parma",
+      "file": "tm-130.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/130.png",
+      "sourceId": "130",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "043fde65fb03fe1afc5d4c73780006f6a29be5c5d3cdb4e7c8b381419267121c"
+    },
+    {
+      "name": "Sassuolo",
+      "file": "tm-6574.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6574.png",
+      "sourceId": "6574",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a64e586d9514c84dab6097e48d4134483f6b248319f7123cc283462953a40a60"
+    },
+    {
+      "name": "Monza",
+      "file": "tm-2919.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2919.png",
+      "sourceId": "2919",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c4f056e4de8f9ba294be64aa57ec8fefc0fd76a91b3cbdb199c0fb3525c5afc5"
+    },
+    {
+      "name": "Venezia",
+      "file": "tm-607.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/607.png",
+      "sourceId": "607",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "710f238f28fbe907a06805c66428dee33686df5985134a5b84bd0f6bd8451979"
+    },
+    {
+      "name": "Bayern de Munique",
+      "file": "tm-27.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/27.png",
+      "sourceId": "27",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "8e7ae512432e2c5f22dcf313e9159385e8f692b3c119be17469e490f4ecaa14b"
+    },
+    {
+      "name": "Bayer Leverkusen",
+      "file": "tm-15.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/15.png",
+      "sourceId": "15",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "2012aaf7bd42691a7051ebfb943bc742a58d9897d2929f9857d3d88dac1d8ab3"
+    },
+    {
+      "name": "Borussia Dortmund",
+      "file": "tm-16.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/16.png",
+      "sourceId": "16",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "4346a357de2e4d9241567d6ce4c6360bffc916c780fa43e74c96af3c4ba4fca9"
+    },
+    {
+      "name": "Eintracht Frankfurt",
+      "file": "tm-24.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/24.png",
+      "sourceId": "24",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "3d6a2e3bfe1cba6a29905d595e8b28501961eae7a634872ea2515897ebd97780"
+    },
+    {
+      "name": "RB Leipzig",
+      "file": "tm-23826.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/23826.png",
+      "sourceId": "23826",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e76468029dc1fba52fea3b144c144b3c79b9526cd650c95cb890653a29b39c7d"
+    },
+    {
+      "name": "Stuttgart",
+      "file": "tm-79.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/79.png",
+      "sourceId": "79",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "b77ebb1f6af59eb3608133c914c7cf497730f34fafa78d6c8a5be7ffb508d093"
+    },
+    {
+      "name": "Freiburg",
+      "file": "tm-60.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/60.png",
+      "sourceId": "60",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "97bc3be8781867aa8b462af36e7634a4a43cc70bef93c036640bb54bb3eab732"
+    },
+    {
+      "name": "Mainz 05",
+      "file": "tm-39.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/39.png",
+      "sourceId": "39",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "f7a4a099181d24f8ed63c59d46b2a371bab006fcb99738c7a912911b7aa109c9"
+    },
+    {
+      "name": "Werder Bremen",
+      "file": "tm-86.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/86.png",
+      "sourceId": "86",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "81960ee2d510cd71f33fc889a61dc1b6985dc56862eee567e6456645a497e84c"
+    },
+    {
+      "name": "Borussia Mönchengladbach",
+      "file": "tm-18.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/18.png",
+      "sourceId": "18",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "3859ad606be3ca4d5ce14a65cf9cd82cba5f13691d1290d413ccbf81cb9a764d"
+    },
+    {
+      "name": "Elversberg",
+      "file": "tm-64.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/64.png",
+      "sourceId": "64",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a78b9a7eac94f1fbab834601733f218d6fc462fa31ce99785f0428251b51b902"
+    },
+    {
+      "name": "Augsburg",
+      "file": "tm-167.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/167.png",
+      "sourceId": "167",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "95d5436dbc8da888619950f8627efd3088a22bd2bb8f5e23507d178035503e85"
+    },
+    {
+      "name": "Union Berlin",
+      "file": "tm-89.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/89.png",
+      "sourceId": "89",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1b9aa65482bf2c7bd509d14af1ae377268756883f8637f9817f09efa3c59c70d"
+    },
+    {
+      "name": "Paderborn",
+      "file": "tm-127.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/127.png",
+      "sourceId": "127",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "10fa16b6c943e8e312d691161ddda61db7f7208b37a9de04d432b3e37eca27b2"
+    },
+    {
+      "name": "Hoffenheim",
+      "file": "tm-533.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/533.png",
+      "sourceId": "533",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "78b7b266b119a33810162312e0dadaf18244dd49f7db5b571e45a4d6bf23ed52"
+    },
+    {
+      "name": "Schalke 04",
+      "file": "tm-33.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/33.png",
+      "sourceId": "33",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c042bbbc7460c1221678bf7ccd5560e100f45becb9db7c5c8a8a7e4ba40e5e6a"
+    },
+    {
+      "name": "Hamburger SV",
+      "file": "tm-41.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/41.png",
+      "sourceId": "41",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "4fa2fa07bec9a4c11c47bf217dcc0868e5273b34a866dd00cec56a569804c11d"
+    },
+    {
+      "name": "Köln",
+      "file": "tm-3.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3.png",
+      "sourceId": "3",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "305c12a1a4b761f48c32ac808d2c92534e91f853c5721a11d638115a6d43f334"
+    },
+    {
+      "name": "Paris Saint-Germain",
+      "file": "tm-583.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/583.png",
+      "sourceId": "583",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d84a778a5b1dfbc280422e70da738e98d853c8624bd1be48cd74c53f30993f2e"
+    },
+    {
+      "name": "Olympique de Marseille",
+      "file": "tm-244.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/244.png",
+      "sourceId": "244",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "310bdb5d177c79890c2534cbdd9fd8eb1c4d772888a309a320f9925cbd2f737b"
+    },
+    {
+      "name": "Monaco",
+      "file": "tm-162.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/162.png",
+      "sourceId": "162",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c8eca961c1135b5b36cb8bef016694ac55776bbf4dd909c086525a12d4671aa6"
+    },
+    {
+      "name": "Lille",
+      "file": "tm-1082.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1082.png",
+      "sourceId": "1082",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1580afedaca7176a43ed07a3ecf9f117a00f8b0748ffe19df80d60aad96e0873"
+    },
+    {
+      "name": "Lyon",
+      "file": "tm-1041.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1041.png",
+      "sourceId": "1041",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "bd1bea1d572b33081af33c0fca9ce790c7ab93117f158ba145a53f6fbe872900"
+    },
+    {
+      "name": "Nice",
+      "file": "tm-417.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/417.png",
+      "sourceId": "417",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c38756a9ff59c9b22e9a9d65556c0e16ca1559035fdd1382187eb7a64c172524"
+    },
+    {
+      "name": "Strasbourg",
+      "file": "tm-667.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/667.png",
+      "sourceId": "667",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e6d723017c35c8fab0b4bc587c7b33aaea9d101ac446f78ffcff3dab01063180"
+    },
+    {
+      "name": "Lens",
+      "file": "tm-826.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/826.png",
+      "sourceId": "826",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a0f215d41553b5f3e77268afe4ac64c7f3ecd3da617797ae2fc2c1a10898fc8b"
+    },
+    {
+      "name": "Brest",
+      "file": "tm-3911.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3911.png",
+      "sourceId": "3911",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "08125a2276838c5a938d9d39437a0f024ba84702a39427b02bb51679f5c990d3"
+    },
+    {
+      "name": "Rennes",
+      "file": "tm-273.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/273.png",
+      "sourceId": "273",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "7f9008bc660f47048cea7805ec47c97691a0026d5a285feb4a5c477f13c77efa"
+    },
+    {
+      "name": "Auxerre",
+      "file": "tm-290.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/290.png",
+      "sourceId": "290",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "df39553e09dec2a5ea21f32a635d37cff30923c6f7c5fa2d45b78c86b0f50e99"
+    },
+    {
+      "name": "Toulouse",
+      "file": "tm-415.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/415.png",
+      "sourceId": "415",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "7338a9ca751aa9e01b2c7bf15064a096c87d58ac84e674d3a1c7a455c426912b"
+    },
+    {
+      "name": "Le Mans",
+      "file": "tm-1164.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1164.png",
+      "sourceId": "1164",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "271a301517d635696eb5ba43dde0e79ed2ea89b562dd7ef94dacb177dbe8c3ba"
+    },
+    {
+      "name": "Angers",
+      "file": "tm-1420.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1420.png",
+      "sourceId": "1420",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "96c47ad5e904511f4b99a3521509c79fd4ed2b9b6a0044e0037b2912f3a2fdf1"
+    },
+    {
+      "name": "Le Havre",
+      "file": "tm-738.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/738.png",
+      "sourceId": "738",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "db62807aeb37be368510f8f24686ab6cd1cb825fc8fb21f35c048911f1f11ade"
+    },
+    {
+      "name": "Lorient",
+      "file": "tm-1158.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1158.png",
+      "sourceId": "1158",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "3150373a65466d9eb86b1ad6fa97cc8b83a60e6f0113fc16ad8198e627197bd5"
+    },
+    {
+      "name": "Paris FC",
+      "file": "tm-10004.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/10004.png",
+      "sourceId": "10004",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "3f9ca515bec20e053797711ebdf4dde09deb4eecb3b816ab1e899d3401723310"
+    },
+    {
+      "name": "Troyes",
+      "file": "tm-1095.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1095.png",
+      "sourceId": "1095",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "8d931c995e477a531908a3e7638e84ce7345f24208066967e483efd2aeec8ef6"
+    },
+    {
+      "name": "Sporting CP",
+      "file": "tm-336.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/336.png",
+      "sourceId": "336",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a415edab223b5c6c5c10bcb14dd8a4c119834bb389d2b0ec893071ce0002cfe2"
+    },
+    {
+      "name": "Benfica",
+      "file": "tm-294.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/294.png",
+      "sourceId": "294",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "32f6c6b7027756145f9d46af067c41c5347883375c67b3099d76e6456b1e9e8e"
+    },
+    {
+      "name": "Porto",
+      "file": "tm-720.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/720.png",
+      "sourceId": "720",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c8984283e24bdee4057d84ac5db830eb1366b3959b8856becee74ff6779aa009"
+    },
+    {
+      "name": "Braga",
+      "file": "tm-1075.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1075.png",
+      "sourceId": "1075",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1de42de593d14688cc085a92a6842d4a2648208f126dba14fb4e4fff0b53d25a"
+    },
+    {
+      "name": "Vitória de Guimarães",
+      "file": "tm-2420.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2420.png",
+      "sourceId": "2420",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e6144d6e5c57c2f985f764b4f967b2593451d0861e62132d31838f682870aa4a"
+    },
+    {
+      "name": "Santa Clara",
+      "file": "tm-2423.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2423.png",
+      "sourceId": "2423",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "980fd3b9fc7ecdd71b36fba35322b849c7ea956078b1674b2d0fa2e09e6ad43f"
+    },
+    {
+      "name": "Famalicão",
+      "file": "tm-3329.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3329.png",
+      "sourceId": "3329",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "83276901b29ae32f647b860a860202afee10db2d04a6387618b157b0db60f0c5"
+    },
+    {
+      "name": "Estoril Praia",
+      "file": "tm-1465.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1465.png",
+      "sourceId": "1465",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "597f98ab31a8593ec9da529bba1ff125af96233e322fc4359a3b220d9e72e308"
+    },
+    {
+      "name": "Casa Pia",
+      "file": "tm-3268.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3268.png",
+      "sourceId": "3268",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e4dd1140ad4e0bf07635ca607cd7d4af45cfe522a798d557766144450dc60607"
+    },
+    {
+      "name": "Moreirense",
+      "file": "tm-979.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/979.png",
+      "sourceId": "979",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "36b52892511d892eef98152ac9cd109836b41f73ac7030563b11bd06496dd569"
+    },
+    {
+      "name": "Rio Ave",
+      "file": "tm-2425.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2425.png",
+      "sourceId": "2425",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "4d875955c36613827ccce3d01735ad8e87e8eefd141c88f6b3216b86249c1918"
+    },
+    {
+      "name": "Arouca",
+      "file": "tm-8024.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/8024.png",
+      "sourceId": "8024",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "35c5b8be8ac61a83f457d836b63ead93e4000b4c84d43f7f4b92c264c99cbf1d"
+    },
+    {
+      "name": "Gil Vicente",
+      "file": "tm-2424.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2424.png",
+      "sourceId": "2424",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d89c34f6d1aec8069b951ae25915c2e0b78cb0d43862007eeed09d0cf872fe2c"
+    },
+    {
+      "name": "Nacional da Madeira",
+      "file": "tm-982.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/982.png",
+      "sourceId": "982",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "b9952d497241ae03a00dfa42b2978716117a1f36685f66275c186821c7ea8be4"
+    },
+    {
+      "name": "AVS",
+      "file": "tm-110302.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/110302.png",
+      "sourceId": "110302",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "6387be9d546bdfd221ac7a03509ef06115a7b834016a23dc9dd000d94891b6f6"
+    },
+    {
+      "name": "Alverca",
+      "file": "tm-2521.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2521.png",
+      "sourceId": "2521",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9f716991ddb396262ded315f03984cd1e607736b17f99e40188c3244389e2b4f"
+    },
+    {
+      "name": "Tondela",
+      "file": "tm-7179.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/7179.png",
+      "sourceId": "7179",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "8d1f63a599aac20c93595f1ed8181bad332f61937aa9954d6222d0550e214234"
+    },
+    {
+      "name": "Estrela da Amadora",
+      "file": "tm-2431.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2431.png",
+      "sourceId": "2431",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "34e84ac08da887460bb73b98aae48a66ab65a221a45ab567b2fd850a05170355"
+    },
+    {
+      "name": "PSV",
+      "file": "tm-383.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/383.png",
+      "sourceId": "383",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e4ca209f807f9e22b509e7abaacec242f1ec60b2b6936e48e35a56a02fb710e3"
+    },
+    {
+      "name": "Ajax",
+      "file": "tm-610.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/610.png",
+      "sourceId": "610",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "2b7a0d88fed85fa8eeb074e7fbc26f9a608ab86ffc33933f3ec84045ad8f1147"
+    },
+    {
+      "name": "Feyenoord",
+      "file": "tm-234.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/234.png",
+      "sourceId": "234",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1d254a64309b1d0472a1f7c659ffc22e6cd10e201a85c565def2be1bfb4ea760"
+    },
+    {
+      "name": "Utrecht",
+      "file": "tm-200.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/200.png",
+      "sourceId": "200",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d2044b345cb0cad58814393f9f2ed915b466281fa7e97ddd1798882dc0adb435"
+    },
+    {
+      "name": "AZ Alkmaar",
+      "file": "tm-1090.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1090.png",
+      "sourceId": "1090",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "047c26ecb0ebb15b35ef4c8e4b5ad611cb379a2fc07fb242a7c757473b2aa61a"
+    },
+    {
+      "name": "Twente",
+      "file": "tm-317.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/317.png",
+      "sourceId": "317",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1792b4743166698049adb1e94817ed26d1882fa72f94f4e76104ff680b287eff"
+    },
+    {
+      "name": "Go Ahead Eagles",
+      "file": "tm-1435.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1435.png",
+      "sourceId": "1435",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1e92709b7898a084b3a690727adfc24d3abaec6b6cee17c30ea3ca529363db25"
+    },
+    {
+      "name": "NEC Nijmegen",
+      "file": "tm-467.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/467.png",
+      "sourceId": "467",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "f229ef98a21342e551e2bf6e84359979ed54dbe5c5fe816302cddabd61267a0c"
+    },
+    {
+      "name": "Heerenveen",
+      "file": "tm-306.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/306.png",
+      "sourceId": "306",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "43071fb4b9603ec2fd7f48bbbe29adb86d1f1bfb27354321f9d81079905cf425"
+    },
+    {
+      "name": "PEC Zwolle",
+      "file": "tm-1269.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1269.png",
+      "sourceId": "1269",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "dcbd6788be05e4c155c1a77a735f9b49e6f09fffa031f4863cfe059b2960b7ff"
+    },
+    {
+      "name": "Fortuna Sittard",
+      "file": "tm-385.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/385.png",
+      "sourceId": "385",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "aca86ac99800375f14679188a6c7d5b383b9bb40a5047251748f9d72dfe0d867"
+    },
+    {
+      "name": "Sparta Rotterdam",
+      "file": "tm-468.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/468.png",
+      "sourceId": "468",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "94cdf1babe28cda92e50bd1a4a48ea1dd0eb5ac3891db682a4f96a0a7c405df2"
+    },
+    {
+      "name": "Groningen",
+      "file": "tm-202.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/202.png",
+      "sourceId": "202",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c968f197249f1e9e1d8ab8de05f2860d8b252e76e93133374c9fdfb3fc475c29"
+    },
+    {
+      "name": "Heracles Almelo",
+      "file": "tm-1304.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1304.png",
+      "sourceId": "1304",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "90cef0c5ebd9097e995c60aaa3730430bd27331b974c4519395e94801909646f"
+    },
+    {
+      "name": "NAC Breda",
+      "file": "tm-132.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/132.png",
+      "sourceId": "132",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "fb372416f92308f77cfd49e2723957d56d2b42f68f994870d88262bae9200e04"
+    },
+    {
+      "name": "Excelsior",
+      "file": "tm-798.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/798.png",
+      "sourceId": "798",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "caa436e6e32d3aec9dc13b4ffd080e5aa817d479b554f80ba0308b9b4d811a2d"
+    },
+    {
+      "name": "Volendam",
+      "file": "tm-724.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/724.png",
+      "sourceId": "724",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "cc42771e3ee868fa0743be1a6427b87886a1ff1b43bdc09262bf1600e6df0789"
+    },
+    {
+      "name": "Telstar",
+      "file": "tm-1434.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1434.png",
+      "sourceId": "1434",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "0cf8be4fbb91502ec81e47947ce74d004cbe9f09c6a47d59dbb286d2cbe17a68"
+    },
+    {
+      "name": "Atlético Nacional",
+      "file": "tm-8172.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/8172.png",
+      "sourceId": "8172",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "6b0529bfab4e745295cc27d272575df742951139fac6c051cb7cfe26c46b2d67"
+    },
+    {
+      "name": "Millonarios",
+      "file": "tm-2350.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2350.png",
+      "sourceId": "2350",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e4d858fab6dcdae5233f548d5b994008acfa6a284cb910a183f7d09135be10f0"
+    },
+    {
+      "name": "América de Cali",
+      "file": "tm-2352.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2352.png",
+      "sourceId": "2352",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "f8fa30896eaf09fa28c0a23cdd229ed3944bfcf79a75010d8e6553c1c190c914"
+    },
+    {
+      "name": "Independiente Medellín",
+      "file": "tm-10093.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/10093.png",
+      "sourceId": "10093",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "ca872b55a67cbccdf78b288fee06973742a8f9f55e39ae74dbbb23ec2528f26c"
+    },
+    {
+      "name": "Junior Barranquilla",
+      "file": "tm-11854.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/11854.png",
+      "sourceId": "11854",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "60abbc8f712a9e4c5b9873481176719ae51f572e4727382ceec0d83b21c579ca"
+    },
+    {
+      "name": "Independiente Santa Fe",
+      "file": "tm-11648.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/11648.png",
+      "sourceId": "11648",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "8ab965777b010f3d9aefe411e372966577a5da8e0f85d28a82e34fb9fa7cb208"
+    },
+    {
+      "name": "Deportes Tolima",
+      "file": "espn-5489.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/5489.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "5489",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/col.1/teams/5489",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/5489.png",
+      "sha256": "443a8c55ec3e61be9f0e0e1d4d43021bfa839e7b9414b814436146967caf5f6f"
+    },
+    {
+      "name": "Once Caldas",
+      "file": "tm-6984.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6984.png",
+      "sourceId": "6984",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "3037ae45215982987444a04f9eb9fcc4d8092280653e055765f3b0d14797603f"
+    },
+    {
+      "name": "Deportivo Cali",
+      "file": "tm-9961.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/9961.png",
+      "sourceId": "9961",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "2eb81541c40595bca6e00316eb55349662041735c2526d4d841e8a73d8e1b42e"
+    },
+    {
+      "name": "Deportivo Pereira",
+      "file": "tm-9811.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/9811.png",
+      "sourceId": "9811",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "24b4a446d92d52ff4f36539f796f2c0553966d0f7790d91b0c2efc9d240cd8c3"
+    },
+    {
+      "name": "Deportivo Pasto",
+      "file": "tm-10090.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/10090.png",
+      "sourceId": "10090",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "67f3e346b5a7fa3f88b3352914a8e0c27f1fb1ae35691354e830cd30d285675b"
+    },
+    {
+      "name": "Atlético Bucaramanga",
+      "file": "espn-6137.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/6137.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "6137",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/col.1/teams/6137",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/6137.png",
+      "sha256": "5f626253fc00993b54208c8460e119dcf656d0b9cfbf426d4b50f0071d08c495"
+    },
+    {
+      "name": "La Equidad",
+      "file": "tm-17425.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/17425.png",
+      "sourceId": "17425",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "5f0c598c06aab69ca7315e0d82c985e93ca84851f2e95796cefbb8d483563993"
+    },
+    {
+      "name": "Fortaleza CEIF",
+      "file": "tm-32041.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/32041.png",
+      "sourceId": "32041",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9c8e5a244851c079366d784ff7ca9749944e16e2ebd56cd2586c654c2368ab1a"
+    },
+    {
+      "name": "Águilas Doradas",
+      "file": "espn-9762.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/9762.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "9762",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/col.1/teams/9762",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/9762.png",
+      "sha256": "db794357f309db66da75d6de3bf5f0493721fc7a51ab035c902b1478aa85198a"
+    },
+    {
+      "name": "Alianza FC",
+      "file": "tm-22902.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/22902.png",
+      "sourceId": "22902",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9f4a580dec3d782c159b310f64f306de4793295481d47d63aa9a4fae005c2bd9"
+    },
+    {
+      "name": "Boyacá Chicó",
+      "file": "espn-5480.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/5480.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "5480",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/col.1/teams/5480",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/5480.png",
+      "sha256": "9b83403e8423d83853f19415fde663da8fa708e8b64c76fb7b4321cf7ecf6fcf"
+    },
+    {
+      "name": "Llaneros",
+      "file": "tm-38628.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/38628.png",
+      "sourceId": "38628",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d1967be53696b8ed1eac3e78bed2122fbc8985c36afbe0a0d45d264a7e656c20"
+    },
+    {
+      "name": "Unión Magdalena",
+      "file": "tm-14680.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/14680.png",
+      "sourceId": "14680",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "dcfc82d146a042f51f571229e4dbbc893698b8dee44a8346dea69ca482796190"
+    },
+    {
+      "name": "Colo-Colo",
+      "file": "tm-2433.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2433.png",
+      "sourceId": "2433",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "4cc1899e63facbfdfd30c0f8f81305012c9d7f513dc17935b9135199331f6d8a"
+    },
+    {
+      "name": "Universidad de Chile",
+      "file": "tm-1037.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1037.png",
+      "sourceId": "1037",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "b622f9a42b131310df3ef941bde170dbb8daa640d1d15603fa11301fa9d976ca"
+    },
+    {
+      "name": "Universidad Católica",
+      "file": "tm-3277.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3277.png",
+      "sourceId": "3277",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "943cf5985a826941a541f6ef31e700cd7ee6a227746bd1f77f1917d75cb330d4"
+    },
+    {
+      "name": "Palestino",
+      "file": "tm-6536.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6536.png",
+      "sourceId": "6536",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "4476f5c3821c6393700563d62b96201427d37aed8f2081ef5774265cc6bb8636"
+    },
+    {
+      "name": "Coquimbo Unido",
+      "file": "espn-8186.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/8186.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "8186",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/teams/8186",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/8186.png",
+      "sha256": "8b59c60be4dfa3266af7a1aba03d0264b5b5598c774707a15a5ddc41f54b292e"
+    },
+    {
+      "name": "Audax Italiano",
+      "file": "tm-6363.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6363.png",
+      "sourceId": "6363",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c54c0bdff69ddff7a896a748b5db87f1c6f2cf07dbc6a9c5df34d97e5ddd7f0f"
+    },
+    {
+      "name": "O’Higgins",
+      "file": "tm-11470.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/11470.png",
+      "sourceId": "11470",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9d21e1e53be49e663815c105ec6f10d1495c871eaa8fc99a2b4309504d1b19d8"
+    },
+    {
+      "name": "Cobresal",
+      "file": "tm-17482.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/17482.png",
+      "sourceId": "17482",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "4cd9676bb08eb42ea996930975bde5d418ed1f6b45204e3c8f1c5e33a9f6c5cc"
+    },
+    {
+      "name": "Huachipato",
+      "file": "espn-4134.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/4134.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "4134",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/teams/4134",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/4134.png",
+      "sha256": "ac962a519a866d434de419eaec59c88e2059a34716eb80326213938d4f6001aa"
+    },
+    {
+      "name": "Ñublense",
+      "file": "tm-14723.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/14723.png",
+      "sourceId": "14723",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "10f20a78ce95f65ee52efe95cdeb75082995a1418ccf466e699bc3285be0b064"
+    },
+    {
+      "name": "Unión La Calera",
+      "file": "tm-20514.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/20514.png",
+      "sourceId": "20514",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "54662d97ecd5057ecdfab47f63b8ceb3d9399a761433ce50c4ed0d3856e030ed"
+    },
+    {
+      "name": "Everton de Viña del Mar",
+      "file": "tm-7020.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/7020.png",
+      "sourceId": "7020",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9b940535452649e7ae137bc9267be279a10bdfdc94272ee71e7a0604bd38f6a2"
+    },
+    {
+      "name": "Unión Española",
+      "file": "tm-4321.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/4321.png",
+      "sourceId": "4321",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "58f09ffd4eef2b902e063f529f699d86f80a17fea6a7826185460d57b0b7309c"
+    },
+    {
+      "name": "Deportes Iquique",
+      "file": "tm-18076.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/18076.png",
+      "sourceId": "18076",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d6b6377e90b5a6b54551fde012d69807f2a5f1f273ddcbf4fba04f44703fea77"
+    },
+    {
+      "name": "Deportes La Serena",
+      "file": "tm-5747.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/5747.png",
+      "sourceId": "5747",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "2aee57d9aabd75f676b8a7e0508bfe85c5beebca403a2325c1dac47f4fb1b583"
+    },
+    {
+      "name": "Deportes Limache",
+      "file": "tm-26697.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/26697.png",
+      "sourceId": "26697",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "02855d833a15f91421d2f7f098d85480600c0811501220b54e013d4ccb751aab"
+    },
+    {
+      "name": "Peñarol",
+      "file": "tm-861.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/861.png",
+      "sourceId": "861",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "4b489b5fbd589b63fd2bc07025c3f69b457e603df4f74bf16a71e5ce6f5223c3"
+    },
+    {
+      "name": "Nacional",
+      "file": "tm-866.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/866.png",
+      "sourceId": "866",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "486766961900a358bcb1df1923317a0ff7afa0ad8575401097330952bf812f3f"
+    },
+    {
+      "name": "Liverpool Montevideo",
+      "file": "tm-10663.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/10663.png",
+      "sourceId": "10663",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "13905accbf22a721daabe22451d3be2865d122be83f5d51dd142233eed2c3a0b"
+    },
+    {
+      "name": "Defensor Sporting",
+      "file": "tm-2619.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2619.png",
+      "sourceId": "2619",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "81a3bcafe9b17319a1969f5ddfd5fec1a85311899dd72fc85b3827e6f36d590f"
+    },
+    {
+      "name": "Danubio",
+      "file": "tm-1306.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1306.png",
+      "sourceId": "1306",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "92fa98b364b152c46fbef27fbb00e67c20df81466ef254ade111517cece081ee"
+    },
+    {
+      "name": "Boston River",
+      "file": "tm-18074.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/18074.png",
+      "sourceId": "18074",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "de087bbfde9f06a9bd84a15a46d422d9d6a6b9b86a904e603f112d46d762b5d2"
+    },
+    {
+      "name": "Racing Montevideo",
+      "file": "tm-14758.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/14758.png",
+      "sourceId": "14758",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "17f72667e219df28c9263b239af3455ad2da815a4fe17a6e7f730ebddc6eb8cd"
+    },
+    {
+      "name": "Montevideo Wanderers",
+      "file": "tm-2403.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2403.png",
+      "sourceId": "2403",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "433fbbbd0a5d429b05fa221c5829ee926a873e42fcdbb51d89f017e237af4580"
+    },
+    {
+      "name": "Cerro Largo",
+      "file": "tm-20189.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/20189.png",
+      "sourceId": "20189",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "0c3376771830397de3b1f93cccd6df25633cd29244bd16a89e302dacf875164c"
+    },
+    {
+      "name": "Cerro",
+      "file": "tm-14806.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/14806.png",
+      "sourceId": "14806",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "0103145d2617c49c7b966024da67479c3d9c9a2583075735ea2a2b1a00b741df"
+    },
+    {
+      "name": "Progreso",
+      "file": "tm-17595.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/17595.png",
+      "sourceId": "17595",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "def007ecdb61d6c985edcd8469123447d5938d61afd15f805d679d1a601dd9ce"
+    },
+    {
+      "name": "River Plate Montevideo",
+      "file": "tm-2419.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2419.png",
+      "sourceId": "2419",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "6fbd945a100676d4e2055dcb92378dede2a9948c8eb5142654d3af8849d48fc0"
+    },
+    {
+      "name": "Miramar Misiones",
+      "file": "tm-7477.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/7477.png",
+      "sourceId": "7477",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "3adf0ec486769c1bfe56026b7b23765e021262157f041819f1129fead428aad6"
+    },
+    {
+      "name": "Plaza Colonia",
+      "file": "tm-6044.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6044.png",
+      "sourceId": "6044",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "65a1c0840d427b35284dba8716eb4663b8c7d6842959d3ef700e41ba5bee2a9a"
+    },
+    {
+      "name": "Juventud de Las Piedras",
+      "file": "tm-17428.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/17428.png",
+      "sourceId": "17428",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "4d03f1ad6f71cabf4820faffb0fae4231b4acdd15a8ca18b60e81ff300cb8645"
+    },
+    {
+      "name": "Montevideo City Torque",
+      "file": "tm-37535.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/37535.png",
+      "sourceId": "37535",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "3636ad2a68e63ef6d0ce9b52fb351e2af7878b725df906292de766450db34060"
+    },
+    {
+      "name": "LDU Quito",
+      "file": "tm-9855.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/9855.png",
+      "sourceId": "9855",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "694ded794c374839d39b0fbeb0777f12251e4c0f74fb170891d77e3731c11ebb"
+    },
+    {
+      "name": "Independiente del Valle",
+      "file": "tm-19309.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/19309.png",
+      "sourceId": "19309",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "855084c01a965aa498872bf4289798b1b985b3c6ef8075a50b91e33ce83a67d2"
+    },
+    {
+      "name": "Barcelona SC",
+      "file": "tm-3523.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3523.png",
+      "sourceId": "3523",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "0c1536bc8ef2017af3940bc22683095f9399df8f07f77152c70af5680c827c9c"
+    },
+    {
+      "name": "Emelec",
+      "file": "tm-4561.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/4561.png",
+      "sourceId": "4561",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "7478331a2be6d0943089dc35de01f6f31bef48123b3fc6515a6535528801d1bb"
+    },
+    {
+      "name": "Aucas",
+      "file": "tm-6362.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6362.png",
+      "sourceId": "6362",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "61eb5bf0c789d08cfe1b161054bf1bb2c2b07cfcee88625a273262fd88d2c326"
+    },
+    {
+      "name": "Universidad Católica del Ecuador",
+      "file": "tm-17584.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/17584.png",
+      "sourceId": "17584",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "06b872dce715bb744c00463fc0f3aa5687779b70dff9b650ea2243e9b1b62bfe"
+    },
+    {
+      "name": "Deportivo Cuenca",
+      "file": "tm-8781.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/8781.png",
+      "sourceId": "8781",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "8f0807b46fb030dbedac667d07f26cd8286871f583b45f257dd605d4a7e34225"
+    },
+    {
+      "name": "El Nacional",
+      "file": "tm-1143.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1143.png",
+      "sourceId": "1143",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "25c99ab87ed5450db73fa7546167c59364c674c312c990d6a47cd10bd6a8957d"
+    },
+    {
+      "name": "Delfín",
+      "file": "espn-1011.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/1011.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "1011",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/ecu.1/teams/1011",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/1011.png",
+      "sha256": "4938b9ece986098ae5c382ea2faedb6200d28b54ada309b26057a3c5f73e3951"
+    },
+    {
+      "name": "Mushuc Runa",
+      "file": "tm-25576.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/25576.png",
+      "sourceId": "25576",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c24a6a6fc18f0a56249f296e86d8a65e9ae598d486402711d2615ee7234345a2"
+    },
+    {
+      "name": "Técnico Universitario",
+      "file": "tm-19104.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/19104.png",
+      "sourceId": "19104",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "cde0929be65ba17f307aa6f239b4851e390f443bf80df2f9b403b551439f7b7b"
+    },
+    {
+      "name": "Macará",
+      "file": "tm-17426.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/17426.png",
+      "sourceId": "17426",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "7fbc7d4ea69180e374117aacbede640c17f3ced2408ab2be333c6ff932f6c33e"
+    },
+    {
+      "name": "Orense",
+      "file": "tm-36020.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/36020.png",
+      "sourceId": "36020",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c8bceaaf0be8225a922f7a8f6a106d26a2c53b0284680377de11fbf530a7785d"
+    },
+    {
+      "name": "Libertad de Loja",
+      "file": "espn-21843.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/21843.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "21843",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/ecu.1/teams/21843",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/21843.png",
+      "sha256": "d7ec052e3ec4c17eb505f7b639eee1cdbc3808ea33264d96e578cc77676d8906"
+    },
+    {
+      "name": "Manta",
+      "file": "tm-18099.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/18099.png",
+      "sourceId": "18099",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "bc2cca5c836f5fcd83d508561d01e10e48dc90961892d3c65a77bba482bb26dc"
+    },
+    {
+      "name": "Vinotinto del Ecuador",
+      "file": "tm-25958.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/25958.png",
+      "sourceId": "25958",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "32847d39b4fbf2266ae17c787af4163a1424183a9e24574c13e755b12cded68a"
+    },
+    {
+      "name": "Universitario",
+      "file": "tm-6593.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6593.png",
+      "sourceId": "6593",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a2ef7e77c09411eb79f65d69fc0a9c9768a9ce3bd7d6aa947736760070fe102c"
+    },
+    {
+      "name": "Alianza Lima",
+      "file": "tm-184.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/184.png",
+      "sourceId": "184",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "8b29f0feeebcf3783883f61c2829437617ec28b58e6cd348365474717fe0da4c"
+    },
+    {
+      "name": "Sporting Cristal",
+      "file": "tm-1450.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1450.png",
+      "sourceId": "1450",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "71fdb96dbdafe16c9f212a7252ff37bf766324abaa1ab9a4f0b8cb3d3d5c2a2f"
+    },
+    {
+      "name": "Melgar",
+      "file": "tm-2734.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2734.png",
+      "sourceId": "2734",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9222823a44fca26039b3d6f1a7d9bc8ec71f26a2986a757e3f80737595d9ab5d"
+    },
+    {
+      "name": "Cienciano",
+      "file": "tm-2729.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2729.png",
+      "sourceId": "2729",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "911634515bf8f819d464b6a18cc2d55808f5d0f6346dea6a4a00971fe92ea4e8"
+    },
+    {
+      "name": "ADT de Tarma",
+      "file": "espn-21314.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/21314.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "21314",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/per.1/teams/21314",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/21314.png",
+      "sha256": "6fa3a90910d769648c2c1be28d082019fa7fe6a79f6cc2fb038ee1f15910c1e6"
+    },
+    {
+      "name": "Cusco FC",
+      "file": "tm-28999.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/28999.png",
+      "sourceId": "28999",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "835bf268cca6aa0904155595adab14c7af9d987120bbd0b1588505131b12d226"
+    },
+    {
+      "name": "Alianza Atlético",
+      "file": "tm-17479.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/17479.png",
+      "sourceId": "17479",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "326157594cd68158bd9fa10f7bb72cd324bc063e9ab58f8eda266e03f5b06eb8"
+    },
+    {
+      "name": "Atlético Grau",
+      "file": "tm-27861.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/27861.png",
+      "sourceId": "27861",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "2a52bb7784a86b6b7a17333deb8f0e1149455b461b0df3d2ce19bbc3e2b3d4ad"
+    },
+    {
+      "name": "Deportivo Garcilaso",
+      "file": "tm-76945.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/76945.png",
+      "sourceId": "76945",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "42c6f52a749d9b39ff615c6eb121682af540d8cead598d129e0936972582afa4"
+    },
+    {
+      "name": "Sport Huancayo",
+      "file": "tm-21655.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/21655.png",
+      "sourceId": "21655",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a5e765332757e2882c566ebf09081bf3cb7263baff36e89f450604bfc350a0e0"
+    },
+    {
+      "name": "UTC Cajamarca",
+      "file": "espn-10122.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/10122.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "10122",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/per.1/teams/10122",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/10122.png",
+      "sha256": "0092260ec65d20dccf91b859b1adc8d81b1a5f1ef7d5dce0bd80be4eba831727"
+    },
+    {
+      "name": "Comerciantes Unidos",
+      "file": "tm-47107.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/47107.png",
+      "sourceId": "47107",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "62b3672d3374cc78022aa981a7af6c4c6d3a74e79ec9a57cf21a2152ac08fb12"
+    },
+    {
+      "name": "Los Chankas",
+      "file": "espn-22168.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/22168.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "22168",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/per.1/teams/22168",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/22168.png",
+      "sha256": "437b1d920527f0b95882c2a97a6c704c9d7593c25b8cc1c7a1e48d7fa2c06453"
+    },
+    {
+      "name": "Sport Boys",
+      "file": "tm-2730.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2730.png",
+      "sourceId": "2730",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "3dc899753798dd8bb5dfbedf885b60794f7720ebd9144b310de729ffe74412d9"
+    },
+    {
+      "name": "Alianza Universidad",
+      "file": "tm-35589.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/35589.png",
+      "sourceId": "35589",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d5ae652c1e40b12e14b27e76570565900df10b305699a36f483bafdff922488b"
+    },
+    {
+      "name": "Ayacucho FC",
+      "file": "tm-21178.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/21178.png",
+      "sourceId": "21178",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "76c1d73e094cd6c0d3e117a17e6537895f06b008416448d3de8f486ec93a943b"
+    },
+    {
+      "name": "Juan Pablo II College",
+      "file": "espn-22534.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/22534.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "22534",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/per.1/teams/22534",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/22534.png",
+      "sha256": "1f8a28111762fffb9c3d48f6dba2d2cb9b77fba8b89580a33827c70c8abd38ce"
+    },
+    {
+      "name": "Deportivo Binacional",
+      "file": "tm-41054.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/41054.png",
+      "sourceId": "41054",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "615f47ed13e46634443c6937dce30d20250621fca05cc67a097f63bc80b0faa0"
+    },
+    {
+      "name": "Olimpia",
+      "file": "tm-629.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/629.png",
+      "sourceId": "629",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a58c2be84c6746329dc792085e0e3699bd017e93be3e149715dc4377579b5144"
+    },
+    {
+      "name": "Cerro Porteño",
+      "file": "tm-1214.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1214.png",
+      "sourceId": "1214",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "476b27df10e6b148a9a15d2265ff6a7ce39554b136362d806e11f4f5e90a9494"
+    },
+    {
+      "name": "Libertad",
+      "file": "tm-9875.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/9875.png",
+      "sourceId": "9875",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "cfd2c209006884530f1116ccb7744d4734d6ab8ad07b27bed3e36380c0376ba0"
+    },
+    {
+      "name": "Guaraní",
+      "file": "tm-11855.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/11855.png",
+      "sourceId": "11855",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "3ffc0b734e16544b4bb22fb580b4619e5435b6d580a516544739ce9acbec0e58"
+    },
+    {
+      "name": "Nacional de Asunción",
+      "file": "tm-7098.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/7098.png",
+      "sourceId": "7098",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "50318faa30bacc8339504bc3d2dde5a556601fbe346222c6d71c4ebc739ae3b6"
+    },
+    {
+      "name": "Sportivo Luqueño",
+      "file": "tm-7656.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/7656.png",
+      "sourceId": "7656",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c19c464aadf6495265e0d096298afc31fd813f1d19ef91de25b684d15fa84590"
+    },
+    {
+      "name": "Sportivo Trinidense",
+      "file": "tm-17427.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/17427.png",
+      "sourceId": "17427",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "91570aaf3ea360983f1574821dbf7c8e70f603d80a4017f311751b81606d59d0"
+    },
+    {
+      "name": "Sportivo Ameliano",
+      "file": "tm-95571.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/95571.png",
+      "sourceId": "95571",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "f31dc480a8ad77c1dc2a5fca023c3e0cb2770a026617e95d993fcfdf2448b5cf"
+    },
+    {
+      "name": "2 de Mayo",
+      "file": "tm-17484.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/17484.png",
+      "sourceId": "17484",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "bf3128f9fc7ca3e89cf915e3fc8af3bb0ed8c08f1f67ac06bd004aa74caa67cf"
+    },
+    {
+      "name": "Deportivo Recoleta",
+      "file": "tm-14545.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/14545.png",
+      "sourceId": "14545",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "bd6438265ca69f1866a6f25836de671b6b6bb080d47a76a5f160cea1a35388a8"
+    },
+    {
+      "name": "Atlético Tembetary",
+      "file": "tm-908.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/908.png",
+      "sourceId": "908",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9fc580513542c80ddc4af29de15f1fc1e3e4611a1f83a8d4f5bb2495ced72be7"
+    },
+    {
+      "name": "Bolívar",
+      "file": "tm-6878.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6878.png",
+      "sourceId": "6878",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "3d6e7defcc2f25d4a0e2f05ec8407c23088fef461a48873cc6d1537d7de1cbdb"
+    },
+    {
+      "name": "Always Ready",
+      "file": "tm-42208.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/42208.png",
+      "sourceId": "42208",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e8da08ee189d4ce7de32606c67202fdcdc8f83c79639e1c29a9f1202f16727a1"
+    },
+    {
+      "name": "The Strongest",
+      "file": "tm-5570.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/5570.png",
+      "sourceId": "5570",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e8c8df8ea2e2aa1c875315a4f7ad161bb5089a462d66a53d41def9b9ae82836a"
+    },
+    {
+      "name": "Blooming",
+      "file": "tm-8056.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/8056.png",
+      "sourceId": "8056",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1970b094b5e1b377eeb5e94d1c473610c7c311f2f3f32125f395e618a6125efa"
+    },
+    {
+      "name": "Oriente Petrolero",
+      "file": "tm-6985.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6985.png",
+      "sourceId": "6985",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "2192e3e38f7d5b9e27de5ecb9949f45887d9879b3edf286a792fd67d74b47ee7"
+    },
+    {
+      "name": "San Antonio Bulo Bulo",
+      "file": "tm-92979.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/92979.png",
+      "sourceId": "92979",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "b1640076fc26d94bb0630faf7a41d98a53fb757438af5e582c56679e4c376fee"
+    },
+    {
+      "name": "Nacional Potosí",
+      "file": "tm-23171.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/23171.png",
+      "sourceId": "23171",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "191328e844acc0d1d6dc6b05bab218ccd5014b2b39f052f7462d82dd187a4d90"
+    },
+    {
+      "name": "Real Tomayapo",
+      "file": "tm-75558.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/75558.png",
+      "sourceId": "75558",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "673db03da3153b2314725a61460572baec9892a8589cfb9663c8ce9b1a852a8e"
+    },
+    {
+      "name": "Independiente Petrolero",
+      "file": "tm-30854.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/30854.png",
+      "sourceId": "30854",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "42776606b0543c49a4bf2cf85eba67860e7d224fed9e392e13d0ee47ca758696"
+    },
+    {
+      "name": "Aurora",
+      "file": "espn-6046.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/6046.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "6046",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/bol.1/teams/6046",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/6046.png",
+      "sha256": "62c3319b92efe5a7601dedd63c5527d5d63a5bea18ea61784a5e72bd87557c05"
+    },
+    {
+      "name": "Universitario de Vinto",
+      "file": "tm-92977.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/92977.png",
+      "sourceId": "92977",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "43411a6ea66ecde78524280cc7c7394b3040977552177a412f4870af40fa8749"
+    },
+    {
+      "name": "GV San José",
+      "file": "tm-132121.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/132121.png",
+      "sourceId": "132121",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "feee0da2eeb6c2af9c474b51151f15078600a8771cacb08a42c3d654f69afe77"
+    },
+    {
+      "name": "ABB",
+      "file": "espn-130875.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/130875.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "130875",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/bol.1/teams/130875",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/130875.png",
+      "sha256": "eef07f5ffdc40b9e54ae2131f6bbcc6a0a93638197383514c711d3842522fc12"
+    },
+    {
+      "name": "CDT Real Oruro",
+      "file": "tm-100047.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/100047.png",
+      "sourceId": "100047",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e531a1ade14b88cf934b5f44fcbecf682b942c51e40e318c3b17c28e38c6dc00"
+    },
+    {
+      "name": "Guabirá",
+      "file": "espn-9497.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/9497.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "9497",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/bol.1/teams/9497",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/9497.png",
+      "sha256": "70b6fb50b071c2a14d9d34a41106ab4e0d6b1eeacb178679eda700a3865321db"
+    },
+    {
+      "name": "Jorge Wilstermann",
+      "file": "tm-4862.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/4862.png",
+      "sourceId": "4862",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "80558f0bd9cbe20f17d359d7891e90e3689dc884e3e8f7950e9fed8676775652"
+    },
+    {
+      "name": "Deportivo Táchira",
+      "file": "tm-13297.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/13297.png",
+      "sourceId": "13297",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "83805bd025e290f556de3fec050f4d2f2ac9c75a9ff2190378ada6c5890f033b"
+    },
+    {
+      "name": "Caracas FC",
+      "file": "tm-531.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/531.png",
+      "sourceId": "531",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "af2dc0637b1d05d7a4245ca76722be8ec4c00227e19b4652dac238aa0fa4b9fd"
+    },
+    {
+      "name": "Deportivo La Guaira",
+      "file": "tm-26468.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/26468.png",
+      "sourceId": "26468",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "20fb04c81a21e00c8100ec224bc4127508487c7548cc25052801b94dac970d18"
+    },
+    {
+      "name": "Universidad Central de Venezuela",
+      "file": "tm-43146.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/43146.png",
+      "sourceId": "43146",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "bfb9dc82e7fb49b94a244891c3a0599d07102c3e313e43ebbf9af4591bcb764b"
+    },
+    {
+      "name": "Carabobo",
+      "file": "tm-14682.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/14682.png",
+      "sourceId": "14682",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e32e3357d7d483959f723cc6a3830539782e13082c05b3075367eb75e979b8b4"
+    },
+    {
+      "name": "Academia Puerto Cabello",
+      "file": "tm-45193.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/45193.png",
+      "sourceId": "45193",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "740c2584dbd240b51dfe1225becc3de97731fd08466c9ca0709e9e35de964b55"
+    },
+    {
+      "name": "Metropolitanos",
+      "file": "tm-42918.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/42918.png",
+      "sourceId": "42918",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d45ea29835a040f8dab7e3a298036f777d973b8439ed06762eceb503141d12c2"
+    },
+    {
+      "name": "Monagas",
+      "file": "tm-14596.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/14596.png",
+      "sourceId": "14596",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "282c249151d493dfd00390bbf270605cd5ef3e2551e08e270c3449a8589a4b08"
+    },
+    {
+      "name": "Portuguesa",
+      "file": "tm-10247.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/10247.png",
+      "sourceId": "10247",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "179516d4bc6248e99b3e581f6403b604c4a2f8c2c46276ff25486fcf21e5124f"
+    },
+    {
+      "name": "Zamora",
+      "file": "tm-18018.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/18018.png",
+      "sourceId": "18018",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "2427f99783c373630cf9726445463d42d8c253ad360c35250bbc243cfe339e6c"
+    },
+    {
+      "name": "Estudiantes de Mérida",
+      "file": "tm-14555.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/14555.png",
+      "sourceId": "14555",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "81315b6d395c253244b0647724b7178108124c6f5b239791f33b23d0002bde90"
+    },
+    {
+      "name": "Rayo Zuliano",
+      "file": "espn-21850.png",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/21850.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "sourceId": "21850",
+      "provider": "ESPN",
+      "identitySource": "https://site.api.espn.com/apis/site/v2/sports/soccer/ven.1/teams/21850",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/21850.png",
+      "sha256": "0c9def429785dfeb655cdbc93bfd7cffaa54520c91166a8cbe2a7dcf68a3f6b2"
+    },
+    {
+      "name": "Anzoátegui",
+      "file": "tm-97642.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/97642.png",
+      "sourceId": "97642",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d1e6eab31d34dc5dbacc3dd7ff5c9ccb427f9f8fd1854b1807f85e31cdb06b8a"
+    },
+    {
+      "name": "Inter Miami",
+      "file": "tm-69261.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/69261.png",
+      "sourceId": "69261",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "6b6d4fe432892841364b940e2cb592562e4d46fbf10acee73cd23b256ed6a297"
+    },
+    {
+      "name": "LA Galaxy",
+      "file": "tm-1061.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1061.png",
+      "sourceId": "1061",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "721921b25c5f6b05dbd2e17a2976fedfcd3def8e3d6146165734841a1d923610"
+    },
+    {
+      "name": "Los Angeles FC",
+      "file": "tm-51828.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/51828.png",
+      "sourceId": "51828",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e31e0eec650af6fee2d8126101f6882643adc4078cd5ac0b8f70ed1d5e947b5a"
+    },
+    {
+      "name": "Atlanta United",
+      "file": "tm-51663.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/51663.png",
+      "sourceId": "51663",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a1f8b8c533c7bec86b5184a7dca7b014cd524b8a37a5e47abfacdcbfcf4878de"
+    },
+    {
+      "name": "Austin FC",
+      "file": "tm-72309.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/72309.png",
+      "sourceId": "72309",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1b970a12f8a4382a1502dc17ca1f8ac58c6b6880bb8a4c5f104af15e81696d12"
+    },
+    {
+      "name": "Charlotte FC",
+      "file": "tm-78435.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/78435.png",
+      "sourceId": "78435",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "4bee798fcf185c4716d70486d97d748eb687bc0f328d4089def058a29eb8cfa0"
+    },
+    {
+      "name": "Chicago Fire",
+      "file": "tm-432.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/432.png",
+      "sourceId": "432",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9b374a8e8b4cafe186e59ac9d273e2bd21d7a4d67f20f57915af9349a82eb683"
+    },
+    {
+      "name": "FC Cincinnati",
+      "file": "tm-51772.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/51772.png",
+      "sourceId": "51772",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a831f14f9f46a0afed3a079eeec343b3102ae570c564253fc858d459267a9da1"
+    },
+    {
+      "name": "Colorado Rapids",
+      "file": "tm-1247.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1247.png",
+      "sourceId": "1247",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "bc70934387c0fe501e93ab4c09360fa5c95ed4c3289a9562d5927450835948bc"
+    },
+    {
+      "name": "Columbus Crew",
+      "file": "tm-813.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/813.png",
+      "sourceId": "813",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "b9516ebd3b0f511fa89ce6a4d397e33e34e333508ad0b47e828782682c6dee73"
+    },
+    {
+      "name": "FC Dallas",
+      "file": "tm-8816.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/8816.png",
+      "sourceId": "8816",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9a916f5628b6ad9c9bd2f11f43bffe688d424870790f115f238ee808ae57e2b1"
+    },
+    {
+      "name": "D.C. United",
+      "file": "tm-2440.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2440.png",
+      "sourceId": "2440",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "ffe3d302843ba67ed1d6d26f34c0bf092c6c1063fe263551c29d408e48c95aab"
+    },
+    {
+      "name": "Houston Dynamo",
+      "file": "tm-9168.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/9168.png",
+      "sourceId": "9168",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "920df550f03fe22e8d4c661fd7cd9c7e4f9cf420acebdb994c747541807856d2"
+    },
+    {
+      "name": "Sporting Kansas City",
+      "file": "tm-4284.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/4284.png",
+      "sourceId": "4284",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a6ce9fb1765fda5f3ba4ecd53bec2da413d9b9be1e3cb70bd3d033a607cae360"
+    },
+    {
+      "name": "Minnesota United",
+      "file": "tm-56089.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/56089.png",
+      "sourceId": "56089",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "bf746d3bb4e2a419c8971d6d63a79d8077b03deaf05d1faf6dc11ae484381568"
+    },
+    {
+      "name": "CF Montréal",
+      "file": "tm-4078.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/4078.png",
+      "sourceId": "4078",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "2025b94f10431008c0528065ed142662f08ea00d2dd7252b3d81047d64fdb02f"
+    },
+    {
+      "name": "Nashville SC",
+      "file": "tm-63966.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/63966.png",
+      "sourceId": "63966",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a6faa1e54d7fd387993fbb6508f87ccd84349c581b5b022144bd1f086dea7eef"
+    },
+    {
+      "name": "New England Revolution",
+      "file": "tm-626.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/626.png",
+      "sourceId": "626",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "09164a4a7b987bc10bfd0f0ff2e6ffa185255ef9792085489631dc9729c21d1b"
+    },
+    {
+      "name": "New York City FC",
+      "file": "tm-40058.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/40058.png",
+      "sourceId": "40058",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "ee490dec35bd428380febff6b5fc8403dcfb5de65d830fad732a253aee782620"
+    },
+    {
+      "name": "New York Red Bulls",
+      "file": "tm-623.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/623.png",
+      "sourceId": "623",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "20e1230586a84f158b73ee5c4fc93c78cd5974d0502aa628e531f10e0b0dbc31"
+    },
+    {
+      "name": "Orlando City",
+      "file": "tm-45604.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/45604.png",
+      "sourceId": "45604",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "97d41f87b45c9233811ae239aa3a39445c3a82e73afb86be7931956ce5914776"
+    },
+    {
+      "name": "Philadelphia Union",
+      "file": "tm-25467.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/25467.png",
+      "sourceId": "25467",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "786a1eb667035e9689eae2c6f183200f08ae501ee4a72f5827a5363a3034bf6f"
+    },
+    {
+      "name": "Portland Timbers",
+      "file": "tm-4291.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/4291.png",
+      "sourceId": "4291",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "95bbe24cd115e6aa1b5a6ee82be22eabc20debde877f5848fbdef38fbe176b34"
+    },
+    {
+      "name": "Real Salt Lake",
+      "file": "tm-6643.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6643.png",
+      "sourceId": "6643",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "560c0e82454741997fd67ca29567d2726ca232903afe959e65e2ed8ad729b70a"
+    },
+    {
+      "name": "San Diego FC",
+      "file": "tm-114977.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/114977.png",
+      "sourceId": "114977",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "698b59883f4d55c93d1fa79e576b181106d856ca6b71b2b285a7ae3fd07d69ef"
+    },
+    {
+      "name": "San Jose Earthquakes",
+      "file": "tm-677.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/677.png",
+      "sourceId": "677",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "38ffa99e638fd71ffdfc3b81b001cee827fa7a41b164dabf888d2e311cb9b685"
+    },
+    {
+      "name": "Seattle Sounders",
+      "file": "tm-9636.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/9636.png",
+      "sourceId": "9636",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "bd4163533c8b8098ea9ad7d03d4ff0dff2732b23785aaead09c37f2d114ba3d1"
+    },
+    {
+      "name": "St. Louis City",
+      "file": "tm-82686.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/82686.png",
+      "sourceId": "82686",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "48dbfc26bbd5024424625dd83b4a07bfbe3dfa0b382501ede47d54e06216bc88"
+    },
+    {
+      "name": "Toronto FC",
+      "file": "tm-11141.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/11141.png",
+      "sourceId": "11141",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e9c55909338cc9fc4fdabe4da7bcbe3ae25619769bd4253c2b365f34b7190f18"
+    },
+    {
+      "name": "Vancouver Whitecaps",
+      "file": "tm-6321.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6321.png",
+      "sourceId": "6321",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "f9b85b210df3bd43a1a5407d7ec5980cfa68e7c9012cd08aeed67cc3e73d4577"
+    },
+    {
+      "name": "Club América",
+      "file": "tm-3631.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3631.png",
+      "sourceId": "3631",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d5aa6561cad426b37ed6bdf2d6a9ded9f775d4135274c70d02abdb2a76525a37"
+    },
+    {
+      "name": "Guadalajara",
+      "file": "tm-6711.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6711.png",
+      "sourceId": "6711",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "eb4fad91d672ec53b4e456c860b9706e901048d91ce80e888c0fb1a99d4fcb99"
+    },
+    {
+      "name": "Cruz Azul",
+      "file": "tm-3711.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3711.png",
+      "sourceId": "3711",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "36460cfa5e9142b1cc3085b2ce63c95d27e3be98cf003e98afa21d0407be6584"
+    },
+    {
+      "name": "Pumas UNAM",
+      "file": "tm-7633.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/7633.png",
+      "sourceId": "7633",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "ea2b21a7ed66fb06784e67463edcd419031e0bf7ec3121350fc610c42803d472"
+    },
+    {
+      "name": "Tigres UANL",
+      "file": "tm-7055.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/7055.png",
+      "sourceId": "7055",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "7a0382ac47a7ea404888ed7409a6811feb999238d90efc9bcea4ecd827cc5421"
+    },
+    {
+      "name": "Monterrey",
+      "file": "tm-2407.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2407.png",
+      "sourceId": "2407",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e14942573f99b91efbc33122ff3deb3f5f1e3c83c724aa219ee2faa51009dbb5"
+    },
+    {
+      "name": "Toluca",
+      "file": "tm-1804.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1804.png",
+      "sourceId": "1804",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "417c36a1151509544a451e5e6f6e9a2aa566720f82858bf23a177cf809e13b85"
+    },
+    {
+      "name": "Pachuca",
+      "file": "tm-4035.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/4035.png",
+      "sourceId": "4035",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "804ad7d0c70182376fee6dc8721853cbfc12a04c55b70c880158f103744d37b2"
+    },
+    {
+      "name": "León",
+      "file": "tm-4941.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/4941.png",
+      "sourceId": "4941",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9373fbb4a956f1ff7d7d4b67c166fbaa3c5012288dbde313ed479b36f7346b16"
+    },
+    {
+      "name": "Santos Laguna",
+      "file": "tm-1403.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1403.png",
+      "sourceId": "1403",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d48a2d89178e31b7deb38ec1da3aa93e0409d7d50c4842108da115f9cd6ea0c3"
+    },
+    {
+      "name": "Atlas",
+      "file": "tm-8590.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/8590.png",
+      "sourceId": "8590",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "727c434cbd4543e458620972e45a0584f9a97d130c248c54b68daa64660cf501"
+    },
+    {
+      "name": "Necaxa",
+      "file": "tm-1146.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1146.png",
+      "sourceId": "1146",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "06e5c8068943e39914ad1066b8e887995616f76b37ddda4e1d46becccb8f0094"
+    },
+    {
+      "name": "Puebla",
+      "file": "tm-5662.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/5662.png",
+      "sourceId": "5662",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "5154a5a0cec200695a497a795748548f83623ed9b2db0c190aaf96f6142ec948"
+    },
+    {
+      "name": "Querétaro",
+      "file": "tm-4961.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/4961.png",
+      "sourceId": "4961",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "32ebab83d44d7395d45067ba1d4a7678b565d36f76ca592e2175d337b8abaf88"
+    },
+    {
+      "name": "Tijuana",
+      "file": "tm-13353.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/13353.png",
+      "sourceId": "13353",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "97b60d2ac55f6368a3b0d387e535936e5d39368a1e7425f1434cd2649da50c25"
+    },
+    {
+      "name": "Atlético San Luis",
+      "file": "tm-40188.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/40188.png",
+      "sourceId": "40188",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a5f5908dcbe471ded7c6c8aecbc4ca2f1ba374fcd43905cc2b73589db27e81e3"
+    },
+    {
+      "name": "Juárez",
+      "file": "tm-49283.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/49283.png",
+      "sourceId": "49283",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "cd38b92f41e270c12ceb71d209b7fbff79dbe339a595f28c2369f38d8ece09a9"
+    },
+    {
+      "name": "Mazatlán",
+      "file": "tm-82696.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/82696.png",
+      "sourceId": "82696",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "0a5e104330645513ed44e60829ea35159e2ca9cb2d21920800b2cca6ffabbc73"
+    },
+    {
+      "name": "Al-Hilal",
+      "file": "tm-1114.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1114.png",
+      "sourceId": "1114",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "f2fed126cb93f1d2dfc5c5d2efeded9e9f63ab6457b084cc96b5e05fa27e9637"
+    },
+    {
+      "name": "Al-Nassr",
+      "file": "tm-18544.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/18544.png",
+      "sourceId": "18544",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "fff5064c498526a80b1c0fc7c4ee1d978d0532079c199a4d579cc4f850fc8c50"
+    },
+    {
+      "name": "Al-Ittihad",
+      "file": "tm-8023.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/8023.png",
+      "sourceId": "8023",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "eb6532c48ff91a6a4ccac0204b461352eaafba5e8eca83ed819cef22843e0bcc"
+    },
+    {
+      "name": "Al-Ahli",
+      "file": "tm-18487.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/18487.png",
+      "sourceId": "18487",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "f1e69522955be5cdc86c1233fc4af9392f9acb51019f363438b0badb869c73e8"
+    },
+    {
+      "name": "Al-Shabab",
+      "file": "tm-9840.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/9840.png",
+      "sourceId": "9840",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9a24cb471f112ebca83f06629942a00aea210d5f1a3e8b9c714daca3cf8affe1"
+    },
+    {
+      "name": "Al-Qadsiah",
+      "file": "tm-26069.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/26069.png",
+      "sourceId": "26069",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "7dcc1c7861e5810bbd6b84c29233c547a050449d3d8f7ffdecdd4c331aea4818"
+    },
+    {
+      "name": "Al-Ettifaq",
+      "file": "tm-7732.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/7732.png",
+      "sourceId": "7732",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "48b3c9fe5a5bd354d45fff331c14bf694231bd6ce4ad284a945c8fff96ee5b0e"
+    },
+    {
+      "name": "Al-Taawoun",
+      "file": "tm-28887.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/28887.png",
+      "sourceId": "28887",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "5d4ca0b8a61188872e24ad8d0d1345c0255e7f1af5b76ed6ebe18e087bbebb39"
+    },
+    {
+      "name": "Al-Fateh",
+      "file": "tm-27221.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/27221.png",
+      "sourceId": "27221",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "4de3c1190ee4361ef52051decfddb144ff10958c662ee5dc561030fb9aae21ef"
+    },
+    {
+      "name": "Al-Fayha",
+      "file": "tm-50531.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/50531.png",
+      "sourceId": "50531",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "009b5bbc46343e9d7f73593ac38d23132133db8e38b5990a69fd0af548624bd9"
+    },
+    {
+      "name": "Al-Khaleej",
+      "file": "tm-6070.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6070.png",
+      "sourceId": "6070",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "0e39127f201810d548a63f5245b13df828535629dbd0047c4feb81f5bd33edd8"
+    },
+    {
+      "name": "Damac",
+      "file": "tm-50532.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/50532.png",
+      "sourceId": "50532",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a88458f6dbe2bbaef79d172ae3f5312b885ec900fbc4a1ef4208820efcc48358"
+    },
+    {
+      "name": "Al-Riyadh",
+      "file": "tm-31008.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/31008.png",
+      "sourceId": "31008",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "b57fc8cfabb7d605206dc3f393cc22715beca90129466dc622ac4bafc900de05"
+    },
+    {
+      "name": "Al-Okhdood",
+      "file": "tm-71665.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/71665.png",
+      "sourceId": "71665",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c418ac82094592241d55ac2eda355d588ca4b9cdb273e74eb3831b83dafe5589"
+    },
+    {
+      "name": "Al-Kholood",
+      "file": "tm-91427.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/91427.png",
+      "sourceId": "91427",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "fd3b565e39223902ca3236f4bda1fe7f945929a929956f9655787b796abbc395"
+    },
+    {
+      "name": "NEOM",
+      "file": "tm-34911.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/34911.png",
+      "sourceId": "34911",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "627737c17b8fba33cb1c42763b1a0f04a6b85e39e7059a6fc7a6818ab46ee8a2"
+    },
+    {
+      "name": "Al-Najma",
+      "file": "tm-32328.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/32328.png",
+      "sourceId": "32328",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "37f59b8bfe5e7fa39cb9893534e4a2e8944e0fc2971d1ea7a119d9f413a15d3a"
+    },
+    {
+      "name": "Al-Hazem",
+      "file": "tm-9131.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/9131.png",
+      "sourceId": "9131",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "34c21818557577f4a60004c303c3131e2b05c6e94d855115c19269f60d811816"
+    },
+    {
+      "name": "Kashima Antlers",
+      "file": "tm-2241.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2241.png",
+      "sourceId": "2241",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9fc81f6c24165b55dcf244d8ae2660f0d4223e5eceb904c41326b0d2ea8c6016"
+    },
+    {
+      "name": "Kashiwa Reysol",
+      "file": "tm-6632.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6632.png",
+      "sourceId": "6632",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "62736606328c9880f78a935737976cb3aefc783c2a8d1d4bd057529b7e6d97f5"
+    },
+    {
+      "name": "Kyoto Sanga",
+      "file": "tm-593.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/593.png",
+      "sourceId": "593",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "17c807c7fb878ee4dfbe3a56a55ddfecb51aad9470d1b6da9a4cb996effbe581"
+    },
+    {
+      "name": "Sanfrecce Hiroshima",
+      "file": "tm-2697.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2697.png",
+      "sourceId": "2697",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "4ca0c23ef638e095415ba1f8da825ad8b6184c03b346dca36f655290415b7db5"
+    },
+    {
+      "name": "Vissel Kobe",
+      "file": "tm-3958.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3958.png",
+      "sourceId": "3958",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "f2b5fe84a1bbfae3e50a1f78ede2a94dc089e2df0bb3a98af2522512e3f1494e"
+    },
+    {
+      "name": "Machida Zelvia",
+      "file": "tm-23568.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/23568.png",
+      "sourceId": "23568",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "b4eb85b976a1d3bc15aef18a47848ed31050a8d5876cd6d379fe383db3cb5349"
+    },
+    {
+      "name": "Urawa Red Diamonds",
+      "file": "tm-828.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/828.png",
+      "sourceId": "828",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "27c860037864bea51364d9fb110e4edc3bb411a238b30afbb9239bdfc4b3c79f"
+    },
+    {
+      "name": "Kawasaki Frontale",
+      "file": "tm-9598.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/9598.png",
+      "sourceId": "9598",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "8e32a5eb2e90613572d493116dd9ea40cb4a7617fbf0fffd92a9b2089c0a47b4"
+    },
+    {
+      "name": "Gamba Osaka",
+      "file": "tm-596.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/596.png",
+      "sourceId": "596",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "96ca07958806325006278805e3afe14bc2e374af54cec4d5a9a44a4da40a343e"
+    },
+    {
+      "name": "Cerezo Osaka",
+      "file": "tm-1022.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1022.png",
+      "sourceId": "1022",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "147a747170c158c03c83c9a698efcdf38f04b69d592a5b50bcd325e168002b8f"
+    },
+    {
+      "name": "FC Tokyo",
+      "file": "tm-6631.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/6631.png",
+      "sourceId": "6631",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "9572a2bea9004080e8af3367f100ad93ecf540991d41e57a5d4214871683ac5b"
+    },
+    {
+      "name": "Fagiano Okayama",
+      "file": "tm-22171.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/22171.png",
+      "sourceId": "22171",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "6798bd1cf1e0c4cb5a793bd808a5b6a4877e779b74268dc46a29ede7ee08289b"
+    },
+    {
+      "name": "Yokohama F. Marinos",
+      "file": "tm-3828.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3828.png",
+      "sourceId": "3828",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "fbefaa8557c061115e02ae2d47285da3385143ee226ef20912218d3668dada3a"
+    },
+    {
+      "name": "Nagoya Grampus",
+      "file": "tm-1066.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1066.png",
+      "sourceId": "1066",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "a254d36d37ac3c507675642fea2ab96cd0ae3ec1d01d532fd55c4502b5979f38"
+    },
+    {
+      "name": "Albirex Niigata",
+      "file": "tm-8344.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/8344.png",
+      "sourceId": "8344",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "cbb002cf3a7186b8e6b78f6d274b58e5ed5d15e66427a012ab17fb21a132c65d"
+    },
+    {
+      "name": "Shimizu S-Pulse",
+      "file": "tm-1062.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1062.png",
+      "sourceId": "1062",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "52e31fc48a672365ed5735ffb2e10f648aa94288662ae82369df981738251db2"
+    },
+    {
+      "name": "Tokyo Verdy",
+      "file": "tm-3734.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/3734.png",
+      "sourceId": "3734",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c542de4610db3c3d3c22bb22a6b79392cbcc0067bb108812c9625adc22aca752"
+    },
+    {
+      "name": "Avispa Fukuoka",
+      "file": "tm-9597.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/9597.png",
+      "sourceId": "9597",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "460752fa7c125bfc5d54ee2cb1225ac364946a0830c9e9c12afe2bbac580fc9d"
+    },
+    {
+      "name": "Shonan Bellmare",
+      "file": "tm-8457.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/8457.png",
+      "sourceId": "8457",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e0e71a4f42aec52f1302ae0e410a10d00b4ded862037f179385d27b474df3d01"
+    },
+    {
+      "name": "Yokohama FC",
+      "file": "tm-943.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/943.png",
+      "sourceId": "943",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "1599cbce02d44fb07a34d7534a1be17b2d27f24c1d0e3485d3998a9676399601"
+    },
+    {
+      "name": "Ceará",
+      "file": "tm-2029.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2029.png",
+      "sourceId": "2029",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "c992551be11bb293174c5ffb9842896412f1960a7f4392891e43e882cf1560ea"
+    },
+    {
+      "name": "Fortaleza",
+      "file": "tm-10870.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/10870.png",
+      "sourceId": "10870",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "4c13145e95ad4e4f8850b894a5da67e86f86bf0f6d69f76bbc69aa344165301f"
+    },
+    {
+      "name": "Juventude",
+      "file": "tm-10492.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/10492.png",
+      "sourceId": "10492",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "b01ca0da463d055aee8375ebf95caecf735bb5e970e19a545363207346b352c4"
+    },
+    {
+      "name": "Sport",
+      "file": "tm-8718.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/8718.png",
+      "sourceId": "8718",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d147740e5a25ff3c73e7c39a908fb115d95c17806a3e7e2b174b518bc62705d1"
+    },
+    {
+      "name": "West Ham United",
+      "file": "tm-379.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/379.png",
+      "sourceId": "379",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "cb7c179f3c99d0b1bc44f19fe0de4195294f7f090d8d22a241a025f7944369bd"
+    },
+    {
+      "name": "Wolverhampton Wanderers",
+      "file": "tm-543.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/543.png",
+      "sourceId": "543",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "5269438f93c5c9073ecf7b136c38a995eabb2d31cea4623c97f650b942410a2f"
+    },
+    {
+      "name": "Burnley",
+      "file": "tm-1132.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/1132.png",
+      "sourceId": "1132",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "331af465724e3286373c35ae652852a6e9019a4a557eccda776dff98c7805c83"
+    },
+    {
+      "name": "Mallorca",
+      "file": "tm-237.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/237.png",
+      "sourceId": "237",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "2976525fa9f4f31360be4267b57b3d0e9f5fda85b9bf88d394b74d1c806aee0f"
+    },
+    {
+      "name": "Girona",
+      "file": "tm-12321.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/12321.png",
+      "sourceId": "12321",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "721090f24e35752d0873466e35c8874796cab1eac82ced2a6c2cf129b22c49a0"
+    },
+    {
+      "name": "Real Oviedo",
+      "file": "tm-2497.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2497.png",
+      "sourceId": "2497",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "433a21c7b660bb7eb46b614737f2b37e447ba4ec78ab554fbb5bf716c3bc34da"
+    },
+    {
+      "name": "Hellas Verona",
+      "file": "tm-276.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/276.png",
+      "sourceId": "276",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "d04ad13d9e2e7046ff7584339ccdb4a788cffbb929698f141cd792eeeda19392"
+    },
+    {
+      "name": "Pisa",
+      "file": "tm-4172.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/4172.png",
+      "sourceId": "4172",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "260ca7b4e1c99afa4f176affd9a5704dfa8759d94e78f690f66aca426abb76be"
+    },
+    {
+      "name": "Cremonese",
+      "file": "tm-2239.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2239.png",
+      "sourceId": "2239",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "503947fd1bd2ca63c94adb29d7d7606a5c6a4a763fff51186e3d80e8b42d2b12"
+    },
+    {
+      "name": "Wolfsburg",
+      "file": "tm-82.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/82.png",
+      "sourceId": "82",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "092a1706e3691b753de2c0285a95690eba462e39af5164fed4ed08c39b42d56e"
+    },
+    {
+      "name": "St. Pauli",
+      "file": "tm-35.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/35.png",
+      "sourceId": "35",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "e416e44b28c3915d0245f554fdf99b8db11ff4e4865d67f283c2b4b815b813e0"
+    },
+    {
+      "name": "Heidenheim",
+      "file": "tm-2036.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/2036.png",
+      "sourceId": "2036",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "5afec61e2241e706592b930c60296f8d60259d0823b9381c914cce15804d6f3a"
+    },
+    {
+      "name": "Nantes",
+      "file": "tm-995.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/995.png",
+      "sourceId": "995",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "822a550598ae6ddfaed2a2d31a0e3356d3109a5782e4202a76157a81941bb968"
+    },
+    {
+      "name": "Metz",
+      "file": "tm-347.png",
+      "sourceUrl": "https://tmssl.akamaized.net/images/wappen/medium/347.png",
+      "sourceId": "347",
+      "provider": "Transfermarkt",
+      "identitySource": "roster baseline / team_details / player_profiles; explicit reviewed aliases",
+      "sha256": "816daf972039c7e849c997d6e548feea1696e1e105181a055d0c88a24c5d6978"
+    },
+    {
+      "country": "Brazil",
+      "file": "flag-br.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/br.png",
+      "sourceId": "br",
+      "sha256": "c9ea019c610713d111f4c81d97f5c0df2caf7ae4c9bda6079f414916dcada975"
+    },
+    {
+      "country": "Argentina",
+      "file": "flag-ar.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/ar.png",
+      "sourceId": "ar",
+      "sha256": "6350038be1f1cd0b67c22cbd02f08bcc0fef2c23b59d5c657c75ab23363cee16"
+    },
+    {
+      "country": "Uruguay",
+      "file": "flag-uy.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/uy.png",
+      "sourceId": "uy",
+      "sha256": "f446f4d253f26719bdee356b97231594bc2c01577cb7ddc26cca1652b0b330c1"
+    },
+    {
+      "country": "Colombia",
+      "file": "flag-co.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/co.png",
+      "sourceId": "co",
+      "sha256": "cc204eef36e8d922b38b794cd00000b9cfefeb7964c914d5c15d432b27cb0771"
+    },
+    {
+      "country": "Chile",
+      "file": "flag-cl.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/cl.png",
+      "sourceId": "cl",
+      "sha256": "cc0ac853ca90cf65565e5df4465a2108558eb397166abaa65838c71cecc18077"
+    },
+    {
+      "country": "Ecuador",
+      "file": "flag-ec.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/ec.png",
+      "sourceId": "ec",
+      "sha256": "767a69f140ef4f9a28bdba99a149b53cf1768e6896893b58b3e3ac7a444a515e"
+    },
+    {
+      "country": "Peru",
+      "file": "flag-pe.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/pe.png",
+      "sourceId": "pe",
+      "sha256": "41282776c7f57cd127e6577cbc380f3e252049f976bcf566ee77d4578e50ed57"
+    },
+    {
+      "country": "Paraguay",
+      "file": "flag-py.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/py.png",
+      "sourceId": "py",
+      "sha256": "3791bcf57ecc71e23b15b941b026ac807470e9fc5b97a624aaef0df74e2d0684"
+    },
+    {
+      "country": "Bolivia",
+      "file": "flag-bo.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/bo.png",
+      "sourceId": "bo",
+      "sha256": "2a3ef1143661691f5af75a5d0936baf2b89cebacf2aa5a7b606aa49d4ab19394"
+    },
+    {
+      "country": "Venezuela",
+      "file": "flag-ve.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/ve.png",
+      "sourceId": "ve",
+      "sha256": "c952d54805f2c507d393168985ccf2cd51df03549222d7a92998853d0e9390e9"
+    },
+    {
+      "country": "England",
+      "file": "flag-gb-eng.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/gb-eng.png",
+      "sourceId": "gb-eng",
+      "sha256": "51fab4e1b9edf84a4798756f8984c5d767d5d6326dd3614c59de3893bcbeb62e"
+    },
+    {
+      "country": "Spain",
+      "file": "flag-es.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/es.png",
+      "sourceId": "es",
+      "sha256": "cfd46911c2d8a218317ecfa94d776ca3784def0212332b2c230d0a7cfeb6be41"
+    },
+    {
+      "country": "Italy",
+      "file": "flag-it.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/it.png",
+      "sourceId": "it",
+      "sha256": "655b1b31b9a3d3b6f659863e6ffebedaf8810e5e97f12fea687e9ede6d298c3d"
+    },
+    {
+      "country": "Germany",
+      "file": "flag-de.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/de.png",
+      "sourceId": "de",
+      "sha256": "5eb33c86a8f1cd43cbbd990aee89e4ce4fabf7efdece1529be66fb1becf29fc9"
+    },
+    {
+      "country": "France",
+      "file": "flag-fr.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/fr.png",
+      "sourceId": "fr",
+      "sha256": "2a539c1a42f160aab68730f4caaa322bd6fbccf42145015bb7544961671a9cbd"
+    },
+    {
+      "country": "Portugal",
+      "file": "flag-pt.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/pt.png",
+      "sourceId": "pt",
+      "sha256": "0006bee743a0d81fc4dcea7ae2fdc2bb17e560792b9939fb10ec05d76dd828ef"
+    },
+    {
+      "country": "Netherlands",
+      "file": "flag-nl.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/nl.png",
+      "sourceId": "nl",
+      "sha256": "2551bcd6a2ea816da99fd646a6f68feef0e3b2897216b1afca88a6e4283ee42f"
+    },
+    {
+      "country": "Belgium",
+      "file": "flag-be.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/be.png",
+      "sourceId": "be",
+      "sha256": "4bb0a14682b00ccb8912a25aee9a44a5129362d0c09e3cfdb5257879bd23adb3"
+    },
+    {
+      "country": "Croatia",
+      "file": "flag-hr.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/hr.png",
+      "sourceId": "hr",
+      "sha256": "37700c20552eff5509370aa315cab83f84a878f3ca47c39f65bb280ef0c99422"
+    },
+    {
+      "country": "Denmark",
+      "file": "flag-dk.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/dk.png",
+      "sourceId": "dk",
+      "sha256": "7f9de76f88b1049ad15974b93e1bc863280bfc3c5c566227a702e57684e0f233"
+    },
+    {
+      "country": "Switzerland",
+      "file": "flag-ch.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/ch.png",
+      "sourceId": "ch",
+      "sha256": "c0238ceffa2927c670890712efe6eafdce019fa68e9118486ac08c2651ae4a4c"
+    },
+    {
+      "country": "Sweden",
+      "file": "flag-se.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/se.png",
+      "sourceId": "se",
+      "sha256": "e8433ddb96b727f2b2420f21f588feb88a5f3984b0c2fe65e97e0b5285f3a2ef"
+    },
+    {
+      "country": "Norway",
+      "file": "flag-no.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/no.png",
+      "sourceId": "no",
+      "sha256": "f58edc8912be7c7f5a462809dae326895a9b529bd841475a4aedf0ccf26e6d7f"
+    },
+    {
+      "country": "Poland",
+      "file": "flag-pl.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/pl.png",
+      "sourceId": "pl",
+      "sha256": "bc81e9a8f5f9482d3b266a434f5f28441b8df90b29c6f7e8d08d120d8dfb97d0"
+    },
+    {
+      "country": "Serbia",
+      "file": "flag-rs.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/rs.png",
+      "sourceId": "rs",
+      "sha256": "5a2996144f6c1415c6e680f36d21f6b7fae66091fc50840cc1b848da15a31d16"
+    },
+    {
+      "country": "Scotland",
+      "file": "flag-gb-sct.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/gb-sct.png",
+      "sourceId": "gb-sct",
+      "sha256": "e2fa0198019f3448ed6886da80043a93dc51538fd6eb17ddd21ddb3c67e06db9"
+    },
+    {
+      "country": "Wales",
+      "file": "flag-gb-wls.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/gb-wls.png",
+      "sourceId": "gb-wls",
+      "sha256": "c062c7167bbfaf6b42787a7883c5c321ee826eb452cdd0c98b706b3e4fbb887d"
+    },
+    {
+      "country": "Türkiye",
+      "file": "flag-tr.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/tr.png",
+      "sourceId": "tr",
+      "sha256": "1cacb57e7a84e9305b482108bfbd5af019dbb5268d55f8533ee651065cea9f85"
+    },
+    {
+      "country": "Ukraine",
+      "file": "flag-ua.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/ua.png",
+      "sourceId": "ua",
+      "sha256": "a7474c46f2e957e4d27bd034119bc4be4bf9b1faf908338d0f5d97574e1ba07d"
+    },
+    {
+      "country": "Austria",
+      "file": "flag-at.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/at.png",
+      "sourceId": "at",
+      "sha256": "6db2a0734919d8c19430b79af8b2682be3a6cb878162aaff1c9c2a47b7660953"
+    },
+    {
+      "country": "Greece",
+      "file": "flag-gr.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/gr.png",
+      "sourceId": "gr",
+      "sha256": "fd3a391dd9885d56b1fccf99870954dc68ff61184bd38fd4240b44fc562f69f4"
+    },
+    {
+      "country": "Ireland",
+      "file": "flag-ie.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/ie.png",
+      "sourceId": "ie",
+      "sha256": "3d67eb9367c3f8903cce0f1af01203d4e5edeb72c0106a6ef856d25ff943eb5b"
+    },
+    {
+      "country": "Czech Republic",
+      "file": "flag-cz.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/cz.png",
+      "sourceId": "cz",
+      "sha256": "2b1d29778294d45d3678cd7fdc240de70a16a638dd752be4a212401389dd44e5"
+    },
+    {
+      "country": "United States",
+      "file": "flag-us.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/us.png",
+      "sourceId": "us",
+      "sha256": "59ac434b97e6db8b4fcee5c8e1996995562747e76875625f0886f1936488b7c9"
+    },
+    {
+      "country": "Canada",
+      "file": "flag-ca.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/ca.png",
+      "sourceId": "ca",
+      "sha256": "c6a0b1b087f62170a41cd9d0b35bd532df0286608cc7c1c5a8c3639937b6c867"
+    },
+    {
+      "country": "Mexico",
+      "file": "flag-mx.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/mx.png",
+      "sourceId": "mx",
+      "sha256": "c0fdb027d455efda31d165351dbac9b2145fdca51aa1f9c9410a346b43bf1f2f"
+    },
+    {
+      "country": "Costa Rica",
+      "file": "flag-cr.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/cr.png",
+      "sourceId": "cr",
+      "sha256": "aed03feb8e13cbd79cb0118741182306f30878d44a58b095cd3758dfb4f75138"
+    },
+    {
+      "country": "Jamaica",
+      "file": "flag-jm.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/jm.png",
+      "sourceId": "jm",
+      "sha256": "1319eb2c2e936f9b8d797fe2f554f05faf37808ba93ac76e99463ba00fc0849a"
+    },
+    {
+      "country": "Japan",
+      "file": "flag-jp.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/jp.png",
+      "sourceId": "jp",
+      "sha256": "25c1ac6db4fa0b5e6b79b4efe546683c8589cf060f5f848b27be02944fad8114"
+    },
+    {
+      "country": "South Korea",
+      "file": "flag-kr.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/kr.png",
+      "sourceId": "kr",
+      "sha256": "8a0e8db363c5177c129bdc1140f5c219f17014153a5da592877c4b4c718c248f"
+    },
+    {
+      "country": "Saudi Arabia",
+      "file": "flag-sa.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/sa.png",
+      "sourceId": "sa",
+      "sha256": "279bc6e2da48470081c4c754c9c6b880465fa425d70319fcc786b06a4e01821b"
+    },
+    {
+      "country": "Australia",
+      "file": "flag-au.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/au.png",
+      "sourceId": "au",
+      "sha256": "eb3cd6aba81315a7db38b55a555938f3d4c1553342eafb3a37e13d4d1fe76450"
+    },
+    {
+      "country": "Iran",
+      "file": "flag-ir.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/ir.png",
+      "sourceId": "ir",
+      "sha256": "2b08721b074f09dd599539aae078ca6b5a59c2b7f18c493b0124bce28daf4f8e"
+    },
+    {
+      "country": "Morocco",
+      "file": "flag-ma.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/ma.png",
+      "sourceId": "ma",
+      "sha256": "2c5b318cf6fef7f438edc4bf43507a50b782ac57191b6069fe367ee5151c1b0d"
+    },
+    {
+      "country": "Senegal",
+      "file": "flag-sn.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/sn.png",
+      "sourceId": "sn",
+      "sha256": "858bcf6fe5da87f2b9affb7492ef06482b6ad0b475b70203d38f4fbb0fbaa7e8"
+    },
+    {
+      "country": "Nigeria",
+      "file": "flag-ng.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/ng.png",
+      "sourceId": "ng",
+      "sha256": "6076be1144054cb5cecb1fe958b5f0bbfd23d6a1894146300c60fc54a09b15ca"
+    },
+    {
+      "country": "Ghana",
+      "file": "flag-gh.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/gh.png",
+      "sourceId": "gh",
+      "sha256": "df792a38cf9620fd3ac55b759de8f54b9ddf4c3f90ff558445f024524f29f42b"
+    },
+    {
+      "country": "Algeria",
+      "file": "flag-dz.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/dz.png",
+      "sourceId": "dz",
+      "sha256": "15e7ef69c144fa4d9d57ef9c6761a23c5dc1e2f2506c0c77a847139ca6663039"
+    },
+    {
+      "country": "Cameroon",
+      "file": "flag-cm.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/cm.png",
+      "sourceId": "cm",
+      "sha256": "422c019d8e77d3bb92335c43dd2641286c736d1e22c2df943f5f49948307efd6"
+    },
+    {
+      "country": "Cote d'Ivoire",
+      "file": "flag-ci.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/ci.png",
+      "sourceId": "ci",
+      "sha256": "827734ef91f84698ef5764b62df02de108effe041b90c6fbb8d766b1ea3626e6"
+    },
+    {
+      "country": "Egypt",
+      "file": "flag-eg.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/eg.png",
+      "sourceId": "eg",
+      "sha256": "650c5df8ef5e0d1c2267b67caeac0fb8643a5fb4e55df3117e4aa8b1a5861a77"
+    },
+    {
+      "country": "South Africa",
+      "file": "flag-za.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/za.png",
+      "sourceId": "za",
+      "sha256": "ed7056cd01ca444344dd15379189fe9da0f6b500f0f1049d5442cee9fe6ea65e"
+    },
+    {
+      "country": "New Zealand",
+      "file": "flag-nz.png",
+      "provider": "Flagcdn",
+      "sourceUrl": "https://flagcdn.com/w80/nz.png",
+      "sourceId": "nz",
+      "sha256": "2a69d660a346b756b26e5faba477f8033901b76b2ccf35d00463620be4a794c4"
+    },
+    {
+      "name": "Envigado",
+      "file": "espn-5481.png",
+      "sourceId": "5481",
+      "provider": "ESPN",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/5481.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "identitySource": "https://site.web.api.espn.com/apis/common/v3/search?query=Envigado",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/5481.png",
+      "sha256": "7ce0b93015fc72541dfbe79423a7edd60b3f46a4ca2bdeaa1b28db7c6b60722e"
+    },
+    {
+      "name": "General Caballero JLM",
+      "file": "espn-21316.png",
+      "sourceId": "21316",
+      "provider": "ESPN",
+      "sourceUrl": "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/21316.png&w=80&h=80&scale=crop&cquality=80&location=origin",
+      "identitySource": "https://site.web.api.espn.com/apis/common/v3/search?query=General%20Caballero",
+      "originalUrl": "https://a.espncdn.com/i/teamlogos/soccer/500/21316.png",
+      "sha256": "f6733b7c258c1d3cdd6520de57afdbe4a2a0b68471d2d6eae0c63d203cdddb00"
+    },
+    {
+      "name": "Yaracuyanos",
+      "file": "wiki-yaracuyanos.png",
+      "sourceId": "File:Yaracuyanos FC.png",
+      "provider": "Wikipedia",
+      "sourceUrl": "https://thumb.wikimedia.org/wikipedia/en/thumb/5/56/Yaracuyanos_FC.png/120px-Yaracuyanos_FC.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "identitySource": "https://en.wikipedia.org/wiki/Yaracuyanos_F.C.",
+      "sha256": "945b7438bda1a2a340b8a7aaa7b9b3408bfab2f1f1bb4d6221fc41db3227fc8a"
+    }
+  ]
+}

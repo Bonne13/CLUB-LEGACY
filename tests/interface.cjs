@@ -154,7 +154,9 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
     await page.getByRole("button", { name: "Meu clube", exact: true }).click();
     assert((await page.locator("[data-article]").count()) > 0);
     assert(
-      (await page.locator(".news-grid").innerText()).includes("Proposta enviada"),
+      (await page.locator(".news-grid").innerText()).includes(
+        "Proposta enviada",
+      ),
     );
     await page.locator("#news-category").selectOption("all");
     await page.setViewportSize({ width: 1440, height: 1000 });
@@ -172,7 +174,11 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
     const background = await page.evaluate(
       () => getComputedStyle(document.body).backgroundColor,
     );
-    assert.equal(background, "rgb(11, 20, 38)");
+    const [red, green, blue] = background.match(/\d+/g).map(Number);
+    assert(
+      blue > green && green >= red && blue < 65,
+      "O tema escuro mantém um fundo azul escuro nas diferentes paletas.",
+    );
     await page.screenshot({
       path: "/tmp/legacy-paper-dark.png",
       fullPage: true,

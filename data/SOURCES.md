@@ -19,7 +19,7 @@ Brasil e as cinco grandes ligas europeias têm os participantes ajustados aos no
 
 A importação usa identificadores estáveis quando disponíveis. A conciliação com o catálogo anterior exige nome inequívoco, nascimento compatível quando fornecido e contexto de clube para desambiguar. Similaridade de palavras sem nascimento não basta. Registros ambíguos com múltiplos clubes no mesmo snapshot (32 europeus e dois atletas da MLS) não recebem um destino arbitrário. Movimentações antigas não acrescentam ausentes a um snapshot posterior do clube.
 
-IDs preservam a origem: `tm-`, `sf-`, `ss-`, `fb-` e `mls-`. A origem do vínculo, data e caráter parcial são mantidos. Não se baixam fotos nem escudos.
+IDs preservam a origem: `tm-`, `sf-`, `ss-`, `fb-` e `mls-`. A origem do vínculo, data e caráter parcial são mantidos. A importação de atletas não baixa fotos nem escudos; o catálogo visual separado está descrito abaixo.
 
 Nascimento conhecido é preservado. Quando existe apenas ano ou idade histórica, a idade é aproximada. Sem referência suficiente, a interface mostra **Não informada**; o motor usa um parâmetro interno, sem apresentá-lo como dado real. Parte das posições brasileiras é estimada a partir das estatísticas e marcada **est.**; posições gerais de outras fontes podem ser complementadas por referências históricas. Elegibilidade de seleções é simplificada pela cidadania disponível, sem verificar vínculos oficiais FIFA. A base oferece 46 seleções elegíveis, até seis amistosos simulados por ano e folgas em calendários ímpares.
 
@@ -78,5 +78,15 @@ LZ-String 1.5.0, MIT, em `vendor/lz-string.js`; licença em `vendor/LICENSE.lz-s
 `data/player-ratings.json` preserva origem, revisão, data e ID de cada referência. O jogo usa posições secundárias dessa fonte quando a identidade foi conciliada. `python3 scripts/import-ratings.py --players /caminho/players.csv --profiles /caminho/player_profiles.csv` reproduz a conciliação; `scripts/apply-player-bios.py` incorpora o resultado ao catálogo offline.
 
 Avaliações ausentes são estimadas, com calibrações explícitas para alguns atletas, e marcadas **Estimativa do jogo**. Não se declara cobertura oficial de todos os brasileiros ou atualização completa de 2026. A nova revisão preserva o crescimento acumulado ao migrar saves e não sobrescreve salários/contratos vigentes. Pretensões de negociação têm um piso modelado por habilidade, contexto e referências salariais; não são demandas contratuais reais verificadas.
+
+## Escudos e bandeiras (26/10/2026)
+
+`data/badges.json` registra **415 identidades de clubes**, cobrindo os 397 participantes atuais e 18 nomes de participantes anteriores, e **53 bandeiras de seleções**. Cada registro contém nome, fornecedor, identificador, URL e SHA-256 do arquivo. As imagens ficam em `assets/badges/`; não são carregadas de terceiros durante a carreira. O HTML único e o site publicado incorporam o catálogo uma única vez.
+
+Os escudos vêm de miniaturas públicas do Transfermarkt, conciliadas com os IDs do baseline e com `team_details`/`player_profiles` da revisão histórica acima. Nomes abreviados diferentes têm aliases revisados explicitamente. Complementos usam o catálogo de equipes da ESPN e suas miniaturas de 80 px, com identificador e endpoint registrados. Yaracuyanos usa o arquivo [Yaracuyanos FC.png](https://en.wikipedia.org/wiki/File:Yaracuyanos_FC.png), identificado na [página do clube](https://en.wikipedia.org/wiki/Yaracuyanos_F.C.). Bandeiras usam as imagens de 80 px do [Flagcdn](https://flagcdn.com/). Os desenhos são preservados; não há mudança de cores dos escudos nem uso de imagens do EA FC. Marcas pertencem aos respectivos titulares; a inclusão não declara licença ou parceria oficial.
+
+O vínculo visual usa o nome do clube, sem depender apenas da posição na liga: uma carreira antiga com Ceará não recebe o escudo do Athletico que ocupa sua vaga no catálogo novo. Identidades desconhecidas ou imagens indisponíveis usam um pequeno escudo neutro nas cores da equipe. Bandeiras identificam seleções; não são apresentadas como escudos oficiais de federações.
+
+`python3 scripts/import-badges.py` baixa arquivos ausentes, verifica os formatos e gera `badges-data.js`. `--refresh` baixa novamente as mesmas URLs. Os hashes versionados documentam a cópia distribuída, sem alegar que as URLs dos fornecedores sejam imutáveis. O build incorpora os arquivos locais sem depender dessas URLs.
 
 Energia, carga acumulada, recuperação, risco de lesão, observação de atletas, tolerância a propostas, convites de federações e papéis no elenco são regras da simulação. Números de uniforme são atribuídos pela carreira e podem ser editados; não constituem uma base oficial de camisas atuais. Janelas de transferência seguem os dias da temporada unificada, com datas explícitas na interface. A animação do campo deriva do autor e da trajetória de cada evento gerado, sem imagens reais de partidas.

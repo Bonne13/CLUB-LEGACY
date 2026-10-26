@@ -14,6 +14,10 @@
   --club-secondary: #8ed7ff;
   --club-on-primary: #ffffff;
   --accent: #8ed7ff;
+  --nav-bg: #0e1c30;
+  --success: #71dbb0;
+  --warning: #f0c779;
+  --info: #94c7f5;
 }
 :root[data-theme="light"] {
   color-scheme: light;
@@ -27,6 +31,10 @@
   --hero: #f8fafd;
   --error: #ac2939;
   --shadow: 0 16px 48px #24385b0d;
+  --nav-bg: #ffffff;
+  --success: #126b48;
+  --warning: #82550c;
+  --info: #245d9f;
 }
 * {
   box-sizing: border-box;
@@ -874,7 +882,7 @@ details p {
   gap: 6px;
   margin-top: 20px;
 }
-.article-clubs span {
+.article-clubs > span {
   padding: 5px 8px;
   border: 1px solid var(--border);
   border-radius: 4px;
@@ -2386,4 +2394,483 @@ button.calendar-day {
   font-weight: 800;
   border-radius: 16px 16px 8px 8px;
 }
-#trophy-dialog{max-height:90dvh;overflow:auto;}.champion-celebration{overflow:hidden;}
+#trophy-dialog {
+  max-height: 90dvh;
+  overflow: auto;
+}
+.champion-celebration {
+  overflow: hidden;
+}
+
+/* Identidade e navegação: uma estrutura estável, compartilhada por clube e seleção. */
+.team-badge {
+  --badge-size: 38px;
+  display: inline-grid;
+  place-items: center;
+  position: relative;
+  vertical-align: middle;
+  width: var(--badge-size);
+  height: var(--badge-size);
+  min-width: var(--badge-size);
+  flex: 0 0 var(--badge-size);
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #d9e1ec;
+  overflow: hidden;
+  padding: 5px;
+}
+.team-badge img,
+.badge-fallback {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.team-badge[data-loaded="true"] .badge-fallback {
+  display: none;
+}
+.badge-tiny {
+  --badge-size: 23px;
+  padding: 2px;
+  border-radius: 5px;
+}
+.badge-small {
+  --badge-size: 29px;
+  padding: 3px;
+  border-radius: 6px;
+}
+.badge-large {
+  --badge-size: 68px;
+  padding: 7px;
+  border-radius: 15px;
+}
+.badge-identity {
+  --badge-size: 56px;
+  padding: 6px;
+  border-radius: 13px;
+}
+.team-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  vertical-align: middle;
+  min-width: 0;
+}
+.team-label > span:last-child {
+  min-width: 0;
+}
+.identity-title {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.identity-title > span:last-child {
+  min-width: 0;
+}
+#sidebar {
+  background: var(--nav-bg);
+  padding: 25px 17px 18px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+#sidebar h1,
+#sidebar > small {
+  margin-left: 9px;
+}
+#sidebar h1 {
+  font-size: 28px;
+}
+#sidebar > small {
+  font-size: 8px;
+  letter-spacing: 1.5px;
+}
+.sidebar-identity {
+  margin-top: 24px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel);
+  padding: 12px;
+}
+.sidebar-club {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  gap: 11px;
+}
+.sidebar-club > div {
+  min-width: 0;
+}
+.sidebar-club strong {
+  font-size: 13px;
+  margin: 5px 0;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.sidebar-club small {
+  font-size: 8px;
+  letter-spacing: 1.1px;
+  color: var(--accent);
+  margin: 0;
+}
+.sidebar-club div > span {
+  font-size: 10px;
+  color: var(--muted);
+}
+.workspace-switch {
+  display: flex;
+  gap: 5px;
+  padding-top: 11px;
+  margin-top: 11px;
+  border-top: 1px solid var(--border);
+}
+.workspace-switch button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  padding: 6px 5px;
+  font-size: 10px;
+  background: transparent;
+}
+.workspace-switch button[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent) 12%, var(--panel));
+  border-color: var(--accent);
+  color: var(--accent);
+}
+#nav {
+  margin-top: 14px;
+  gap: 13px;
+}
+.nav-group {
+  display: grid;
+  gap: 3px;
+}
+.nav-group-label {
+  font-size: 8px;
+  letter-spacing: 1.4px;
+  padding: 3px 12px 5px;
+  color: var(--muted);
+}
+#nav button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 37px;
+  padding: 8px 11px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+#nav .nav-label {
+  width: auto;
+  color: inherit;
+}
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+#nav button:hover {
+  background: var(--surface);
+  color: var(--text);
+  border-color: transparent;
+}
+#nav button.active {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--panel));
+  border-color: color-mix(in srgb, var(--accent) 24%, var(--border));
+  box-shadow: inset 3px 0 var(--accent);
+}
+#sidebar .foot {
+  margin: 20px 10px 0;
+  font-size: 8px;
+}
+.header-actions {
+  gap: 7px;
+}
+.header-actions button {
+  padding: 9px 12px;
+}
+#game > header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 22px;
+  margin-bottom: 23px;
+}
+#context {
+  line-height: 1.8;
+  font-size: 9px;
+  letter-spacing: 1.3px;
+}
+.card {
+  border-radius: 13px;
+  box-shadow: none;
+}
+.hero {
+  border-left-width: 4px;
+  border-radius: 14px;
+}
+input,
+select {
+  background: var(--soft);
+}
+input::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
+}
+button:not(:disabled):active {
+  filter: brightness(0.96);
+}
+button:not(.primary):not(.active):hover {
+  background-color: color-mix(in srgb, var(--accent) 6%, var(--surface));
+}
+thead {
+  background: var(--soft);
+}
+th {
+  letter-spacing: 0.5px;
+  font-size: 10px;
+}
+tbody tr:hover {
+  background: color-mix(in srgb, var(--accent) 4%, var(--panel));
+}
+tr.mine {
+  background: color-mix(in srgb, var(--accent) 9%, var(--panel));
+}
+.rating,
+.pill {
+  background: color-mix(in srgb, var(--accent) 9%, var(--soft));
+  border: 1px solid color-mix(in srgb, var(--accent) 15%, var(--border));
+}
+.notice {
+  background: color-mix(in srgb, var(--info) 7%, var(--panel));
+  border-left-color: var(--info);
+}
+.notice.error,
+#notification.error {
+  background: color-mix(in srgb, var(--error) 8%, var(--panel));
+  border-left-color: var(--error);
+  color: var(--error);
+}
+.income,
+:root[data-theme="light"] .income {
+  color: var(--success);
+}
+.condition-meter i {
+  background: var(--success);
+}
+.condition-meter.wear i {
+  background: var(--warning);
+}
+.condition-meter.tired i {
+  background: var(--error);
+}
+.window-banner.closed {
+  border-left-color: var(--warning);
+}
+.calendar-deadline {
+  border-left-color: var(--warning);
+}
+.calendar-day.has-match {
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
+.match-chip {
+  background: color-mix(in srgb, var(--accent) 10%, var(--soft));
+}
+.match-chip.international {
+  border-left-color: var(--info);
+}
+.calendar-note-dot {
+  background: var(--warning);
+}
+.shirt-number {
+  background: color-mix(in srgb, var(--accent) 7%, var(--soft));
+}
+.matchup {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 100%;
+}
+.matchup > .team-label {
+  flex: 1;
+}
+.matchup > .team-label:first-child {
+  justify-content: flex-end;
+}
+.matchup > strong {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.match-heading .score > .matchup {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  width: 100%;
+}
+.match-heading .team-label {
+  font-size: 17px;
+}
+.match-heading .team-label:first-child {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+.match-heading .team-badge {
+  --badge-size: 48px;
+  padding: 5px;
+}
+.fixture-card .matchup {
+  justify-content: flex-start;
+  font-size: 13px;
+  gap: 8px;
+}
+.fixture-card .team-label {
+  flex: initial;
+}
+.fixture-card .badge-small {
+  --badge-size: 25px;
+}
+@media (max-height: 850px) and (min-width: 851px) {
+  #sidebar {
+    padding-top: 19px;
+  }
+  .sidebar-identity {
+    margin-top: 17px;
+    padding: 10px;
+  }
+  #nav {
+    gap: 9px;
+    margin-top: 11px;
+  }
+  #nav button {
+    min-height: 34px;
+    padding-block: 6px;
+  }
+  #sidebar .foot {
+    display: none;
+  }
+}
+@media (max-width: 850px) {
+  #sidebar {
+    padding: 18px 20px 12px;
+    position: relative;
+  }
+  #sidebar > small {
+    display: none;
+  }
+  #sidebar h1 {
+    font-size: 23px;
+    margin-left: 0;
+  }
+  .sidebar-identity {
+    margin-top: 12px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .sidebar-club {
+    min-width: 0;
+  }
+  .badge-identity {
+    --badge-size: 43px;
+    border-radius: 10px;
+    padding: 4px;
+  }
+  .sidebar-club strong {
+    font-size: 12px;
+  }
+  .sidebar-club small {
+    font-size: 7px;
+  }
+  .workspace-switch {
+    flex-shrink: 0;
+    border-top: 0;
+    padding-top: 0;
+    margin-top: 0;
+  }
+  .workspace-switch button {
+    flex: initial;
+    padding: 5px;
+  }
+  .workspace-switch button > span:last-child {
+    display: none;
+  }
+  #nav {
+    display: flex;
+    gap: 4px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    scrollbar-width: thin;
+    scroll-padding-inline: 5px;
+  }
+  .nav-group {
+    display: contents;
+  }
+  .nav-group-label {
+    display: none;
+  }
+  #nav button {
+    padding: 9px 11px;
+    min-height: 37px;
+    font-size: 11px;
+    gap: 7px;
+  }
+  #nav .nav-icon {
+    width: 16px;
+    height: 16px;
+    flex-basis: 16px;
+  }
+  #game {
+    padding: 20px;
+  }
+  #game > header {
+    gap: 12px;
+    padding-bottom: 17px;
+    margin-bottom: 18px;
+  }
+  .header-actions {
+    gap: 6px;
+  }
+  .header-actions button {
+    font-size: 10px;
+    padding: 8px 9px;
+  }
+  .identity-title {
+    gap: 12px;
+  }
+  .identity-title .badge-large {
+    --badge-size: 54px;
+    padding: 5px;
+    border-radius: 12px;
+  }
+  .match-heading .team-label {
+    flex-direction: column !important;
+    justify-content: center;
+    text-align: center !important;
+    font-size: 11px;
+    gap: 8px;
+  }
+  .match-heading .team-badge {
+    --badge-size: 40px;
+  }
+  .matchup {
+    gap: 7px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #nav button {
+    transition: none;
+  }
+}
+
+.primary,
+button.active,
+.squad-tabs [aria-selected="true"] {
+  border-color: var(--action-border, var(--accent));
+}
+#nav button.active {
+  border-color: color-mix(in srgb, var(--accent) 24%, var(--border));
+}

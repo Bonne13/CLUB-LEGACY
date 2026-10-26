@@ -74,19 +74,21 @@
       ? "#ffffff"
       : "#101827";
   }
-  function accent(primary, secondary, background) {
+  function accent(primary, secondary, background, minimum = 4.5) {
     let color = primary;
     if (
-      contrast(color, background) < 4.5 &&
-      contrast(secondary, background) >= 4.5
+      contrast(color, background) < minimum &&
+      contrast(secondary, background) >= minimum
     )
       color = secondary;
     const target = luminance(background) > 0.4 ? "#101827" : "#ffffff";
-    for (let n = 0; contrast(color, background) < 4.5 && n < 20; n++)
+    for (let n = 0; contrast(color, background) < minimum && n < 30; n++)
       color = hex(rgb(color).map((v, i) => v * 0.9 + rgb(target)[i] * 0.1));
     return color;
   }
   function clubColors(club) {
+    if (club?.isNational || club?.id?.startsWith("nt-"))
+      return nationalColors(club.country || club.id.slice(3));
     if (!club) return { primary: "#2875c8", secondary: "#8ed7ff" };
     const updated = {
       "Athletico Paranaense": ["#cf102d", "#111111"],
@@ -114,7 +116,105 @@
     const [primary, secondary] = palettes[code] || palettes.bw;
     return { primary, secondary };
   }
-  const api = { palettes, rows, clubColors, contrast, readable, accent };
+  const nationalPalettes = {
+    Brazil: ["#f5cc35", "#168452"],
+    Argentina: ["#77bce6", "#ffffff"],
+    Uruguay: ["#79c5ec", "#102442"],
+    Colombia: ["#f9d230", "#184a91"],
+    Chile: ["#d82838", "#184185"],
+    Ecuador: ["#f6ce33", "#184485"],
+    Peru: ["#c3263c", "#ffffff"],
+    Paraguay: ["#c62a3c", "#214c96"],
+    Bolivia: ["#188754", "#ffffff"],
+    Venezuela: ["#821d3b", "#e9c779"],
+    England: ["#ffffff", "#cf3049"],
+    Spain: ["#c82e3b", "#f4c548"],
+    Italy: ["#1765bd", "#ffffff"],
+    Germany: ["#ffffff", "#242b36"],
+    France: ["#2346a2", "#e9384b"],
+    Portugal: ["#c52a39", "#187752"],
+    Netherlands: ["#ef8027", "#143667"],
+    Belgium: ["#c92b3d", "#f5cb42"],
+    Croatia: ["#cf3042", "#ffffff"],
+    Denmark: ["#c52c42", "#ffffff"],
+    Switzerland: ["#d52c3c", "#ffffff"],
+    Sweden: ["#f5d036", "#2262ad"],
+    Norway: ["#cc3041", "#23488c"],
+    Poland: ["#ffffff", "#ce304c"],
+    Serbia: ["#c72d42", "#ffffff"],
+    Scotland: ["#1d3f85", "#ffffff"],
+    Wales: ["#c92b3c", "#ffffff"],
+    Türkiye: ["#d62a3e", "#ffffff"],
+    Ukraine: ["#f3d239", "#2775c6"],
+    Austria: ["#d72f42", "#ffffff"],
+    Greece: ["#2777c5", "#ffffff"],
+    Ireland: ["#158253", "#ffffff"],
+    "Czech Republic": ["#c62f42", "#2763a6"],
+    "United States": ["#ffffff", "#214a89"],
+    Canada: ["#d62d41", "#ffffff"],
+    Mexico: ["#14774f", "#ffffff"],
+    "Costa Rica": ["#cd2c3d", "#25488d"],
+    Jamaica: ["#f2cc3d", "#178451"],
+    Japan: ["#2151b6", "#ffffff"],
+    "South Korea": ["#e34c63", "#183c78"],
+    "Saudi Arabia": ["#147a50", "#ffffff"],
+    Australia: ["#f4ca35", "#177c57"],
+    Iran: ["#ffffff", "#1b8557"],
+    Morocco: ["#c72e40", "#17774e"],
+    Senegal: ["#ffffff", "#1c8752"],
+    Nigeria: ["#209458", "#ffffff"],
+    Ghana: ["#ffffff", "#d02e43"],
+    Algeria: ["#ffffff", "#1a8050"],
+    Cameroon: ["#1a8151", "#efc837"],
+    "Cote d'Ivoire": ["#ed7d32", "#ffffff"],
+    Egypt: ["#cf2c3e", "#ffffff"],
+    "South Africa": ["#edc933", "#1a7d54"],
+    "New Zealand": ["#ffffff", "#253143"],
+  };
+  function nationalColors(country) {
+    const [primary, secondary] = nationalPalettes[country] || palettes.bw;
+    return { primary, secondary };
+  }
+  function mix(a, b, weight) {
+    return hex(rgb(a).map((v, i) => v * (1 - weight) + rgb(b)[i] * weight));
+  }
+  function themeTokens(colors, mode = "dark") {
+    const dark = mode !== "light",
+      p = colors.primary;
+    const panel = mix(dark ? "#13233b" : "#ffffff", p, dark ? 0.035 : 0.012);
+    return {
+      "--bg": mix(dark ? "#0b1425" : "#f0f4f9", p, 0.018),
+      "--panel": panel,
+      "--surface": mix(dark ? "#1b2d47" : "#f4f7fb", p, 0.035),
+      "--soft": mix(dark ? "#0f1d32" : "#eaf0f7", p, 0.025),
+      "--hero": mix(dark ? "#1b304d" : "#f8fafd", p, 0.065),
+      "--nav-bg": mix(dark ? "#0e1c30" : "#ffffff", p, 0.035),
+      "--border": mix(dark ? "#30435d" : "#cfdae7", p, 0.06),
+      "--text": dark ? "#edf3fc" : "#172b45",
+      "--muted": dark ? "#a9bbd3" : "#53657c",
+      "--accent": accent(p, colors.secondary, panel, 5.8),
+      "--club-primary": p,
+      "--club-secondary": colors.secondary,
+      "--club-on-primary": readable(p),
+      "--action-border":
+        contrast(p, panel) >= 3 ? p : accent(p, colors.secondary, panel, 3),
+      "--success": dark ? "#71dbb0" : "#126b48",
+      "--warning": dark ? "#f0c779" : "#82550c",
+      "--error": dark ? "#f4a5ae" : "#b12e45",
+      "--info": dark ? "#94c7f5" : "#245d9f",
+    };
+  }
+  const api = {
+    palettes,
+    rows,
+    clubColors,
+    nationalColors,
+    nationalPalettes,
+    themeTokens,
+    contrast,
+    readable,
+    accent,
+  };
   root.LegacyAppearance = api;
   if (typeof module !== "undefined") module.exports = api;
 })(globalThis);

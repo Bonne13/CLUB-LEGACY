@@ -210,3 +210,13 @@ A **central da partida** desacelera passes, finalizações e gols. A bola percor
 Títulos de liga e continentais confirmados geram **troféus**, com clube, competição, temporada e treinador. A conquista do usuário abre uma comemoração animada, e o registro permanece na sala de troféus. Não se criam conquistas antigas sem evidência no save. A preferência de movimento reduzido é respeitada.
 
 `npm run test:management-browser` verifica autosave, responsividade de cliques, gol com origem/autor, intervalo, troca, descanso, relatórios, agenda, propostas, convite, camisa, renovação e troféus. `LEGACY_STANDALONE=1` repete o fluxo no HTML único, com recursos externos bloqueados. Os testes de regras cobrem também validade dos convites, negociação abaixo do valor-base, custo de renovações, recuperação por minutos e preservação dos saves.
+
+## Identidade visual e menu (v0.8)
+
+Escudos substituem as siglas na escolha de clube e na identidade do menu. Também aparecem em classificações, confrontos, jornal, calendário, propostas de carreira e troféus. Os 397 clubes atuais têm imagem local; nomes de participantes anteriores continuam associados ao escudo correto ao carregar um save. As seleções usam suas bandeiras. Os arquivos ficam disponíveis offline na versão de arquivo único e no site publicado, com as fontes em [data/SOURCES.md](data/SOURCES.md).
+
+O menu agrupa **Dia a dia**, **Futebol**, **Competições** e **Gestão**, com ícones vetoriais e estado ativo mais legível. A estrutura, o foco e a posição de rolagem são preservados ao trocar de tela. No celular, as opções ficam numa faixa horizontal. Fundos, superfícies, bordas e destaques acompanham a equipe; avisos, finanças e condição física usam cores semânticas com contraste nos modos claro e azul escuro.
+
+Depois de **receber e aceitar um convite**, o menu oferece a alternância **Clube / Seleção**. Seleções, elenco internacional, calendário da seleção e áreas compartilhadas usam as cores da seleção em gestão. Telas exclusivas do clube, como Financeiro, retornam à identidade do clube. A aba de jogadores no elenco internacional mostra os convocados, sem oferecer contratos pagos pelo clube. Os dois times usam suas cores na partida 2D, com alternativa quando os uniformes ficam parecidos. Não há escolha livre de seleção: as regras de convite por mérito continuam em vigor.
+
+`npm run test:identity-browser` verifica escudos, falha de imagem, estabilidade do menu e foco, convites, troca de contexto, temas, convocados, calendário e celular. `LEGACY_STANDALONE=1` verifica o mesmo fluxo com rede bloqueada. `npm test` confere a cobertura, integridade dos arquivos e contraste das paletas de todos os clubes e seleções.
