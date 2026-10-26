@@ -714,8 +714,21 @@
         };
       });
   }
+  function journalText(s, text) {
+    const coach = s.profile?.name || "O treinador";
+    return String(text ?? "")
+      .split(coach)
+      .map((part) =>
+        part.replace(
+          /(^|[^\p{L}\p{N}_])você(?=$|[^\p{L}\p{N}_])/giu,
+          (_, prefix) => prefix + coach,
+        ),
+      )
+      .join(coach);
+  }
   function news(s, text, details = {}) {
     ensureJournal(s);
+    text = journalText(s, text);
     s.news.unshift(text);
     s.news = s.news.slice(0, 70);
     s.articleSequence = (s.articleSequence || 0) + 1;
@@ -725,7 +738,7 @@
       day: s.day,
       offset: s.today,
       title: text,
-      body: details.body || "",
+      body: journalText(s, details.body),
       category: details.category || "club",
       ...articleMeta(
         s,
@@ -819,7 +832,12 @@
           b.day - a.day ||
           Number(a.category === "preview") - Number(b.category === "preview"),
       )
-      .slice(0, 80);
+      .slice(0, 80)
+      .map((article) => ({
+        ...article,
+        title: journalText(s, article.title),
+        body: journalText(s, article.body),
+      }));
   }
 
   function lineup(t) {
