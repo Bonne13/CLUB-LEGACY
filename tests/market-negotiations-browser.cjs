@@ -78,6 +78,7 @@ const path = require("node:path");
         await p.locator("#simulate-amount").fill("1");
         await p.locator("#simulate-unit").selectOption("weeks");
         await nav("Simular período");
+        await p.waitForFunction(() => !advancing);
       }
       await nav("Transferências");
     };
@@ -260,7 +261,9 @@ const path = require("node:path");
     await p.locator('[data-tactic-slot="8"]').click();
     await p.locator("#slot-player").selectOption("tm-371998");
     const right = p.locator('[data-tactic-slot="8"]');
-    assert((await right.getAttribute("aria-label")).includes("Fora da posição"));
+    assert(
+      (await right.getAttribute("aria-label")).includes("Fora da posição"),
+    );
     assert((await right.innerText()).includes("Fora"));
     const effective = await p.evaluate(
       () =>
@@ -270,7 +273,9 @@ const path = require("node:path");
         ).effective,
     );
     assert((await right.innerText()).includes(String(effective)));
-    await p.locator(".tactical-board").screenshot({ path: "/tmp/legacy-position-right.png" });
+    await p
+      .locator(".tactical-board")
+      .screenshot({ path: "/tmp/legacy-position-right.png" });
     await p.locator('[data-tactic-slot="10"]').click();
     await p.locator("#slot-player").selectOption("tm-371998");
     assert(

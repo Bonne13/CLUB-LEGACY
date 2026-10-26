@@ -35,7 +35,11 @@ test("catálogo contém exclusivamente IDs reais, sem preenchimento de clubes in
   assert.equal(all.length, 7815);
   assert(
     all.every(
-      (p) => p.real && p.sourceId && (p.birthDate || p.ageEstimated) && (p.id === "tm-" + p.sourceId || p.id === p.sourceId),
+      (p) =>
+        p.real &&
+        p.sourceId &&
+        (p.birthDate || p.ageEstimated) &&
+        (p.id === "tm-" + p.sourceId || p.id === p.sourceId),
     ),
   );
   assert.equal(s.teams.filter((t) => t.players.length >= 11).length, 341);
@@ -77,6 +81,8 @@ test("simulação diária ou semanal para antes de jogar e não inventa resultad
     advanced: 5,
     stoppedForMatch: true,
     stoppedForNegotiation: false,
+    stoppedForReport: false,
+    stoppedForInvitation: false,
     finished: false,
   });
   assert.equal(s.today, 7);

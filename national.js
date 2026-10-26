@@ -110,7 +110,13 @@
         results: [],
         season: null,
       };
+    s.national.invites ??= [];
+    s.national.invitationRevision ??= 0;
+    s.national.nextReview ??= Math.max(28, Math.ceil((s.today || 0) / 28) * 28);
     if (s.national.season !== s.season) {
+      s.national.nextReview = 28;
+      for (const offer of s.national.invites)
+        if (offer.status === "pending") offer.status = "expired";
       const ids = available(s).map((n) => n.id);
       if (ids.length % 2) ids.push(null);
       const rotating = [...ids];
@@ -151,6 +157,91 @@
       isNational: true,
     };
   }
+  function review(s, force = false) {
+    const n = ensure(s),
+      expired = n.invites.filter(
+        (o) =>
+          o.status === "pending" &&
+          (o.season !== s.season || s.today > o.expires),
+      );
+    expired.forEach((o) => (o.status = "expired"));
+    if (!s.clubId || (!force && s.today < n.nextReview)) return null;
+    n.nextReview = s.today + 28;
+    if (
+      n.invites.some((o) => o.status === "pending") ||
+      (n.lastInviteSeason === s.season &&
+        s.today - (n.lastInviteOffset || 0) < 84)
+    )
+      return null;
+    const club = s.teams.find((t) => t.id === s.clubId),
+      l = s.leagues.find((l) => l.id === club.leagueId);
+    const ranked = [...l.table].sort(
+      (a, b) => b.p - a.p || b.gf - b.ga - (a.gf - a.ga),
+    );
+    const row = ranked.find((r) => r.id === s.clubId),
+      games = row.w + row.d + row.l;
+    if (games < 6 && !force) return null;
+    if (games < 6 && !s.trophies?.some((t) => t.coachId === "you")) return null;
+    const place = ranked.findIndex((r) => r.id === s.clubId) + 1;
+    const performance = Math.round(
+      (0.5 - (place - 1) / Math.max(1, ranked.length - 1)) * 24,
+    );
+    const score = s.reputation + performance;
+    const candidates = available(s)
+      .filter(
+        (d) =>
+          d.id !== n.job &&
+          !n.invites.some(
+            (o) => o.selectionId === d.id && o.season === s.season,
+          ),
+      )
+      .map((d) => {
+        const ids = best(s, d.country),
+          map = new Map(pool(s, d.country).map((p) => [p.id, p]));
+        const avg =
+          ids
+            .slice(0, 11)
+            .reduce((sum, id) => sum + (map.get(id)?.ovr || 60), 0) / 11;
+        return {
+          ...d,
+          required: Math.max(35, Math.round(avg - 25)),
+          affinity: d.country === s.profile?.nationality ? 3 : 0,
+        };
+      })
+      .filter((d) => score + d.affinity >= d.required)
+      .sort(
+        (a, b) =>
+          b.affinity - a.affinity ||
+          b.required - a.required ||
+          a.id.localeCompare(b.id),
+      );
+    const choice = candidates[0];
+    if (!choice) return null;
+    const offer = {
+      id: `invite-${s.season}-${s.today}-${choice.id}`,
+      selectionId: choice.id,
+      name: choice.name,
+      season: s.season,
+      offset: s.today,
+      expires: s.today + 14,
+      status: "pending",
+      required: choice.required,
+      reason: `A federação destacou seu trabalho no ${club.name}: ${place}º lugar, ${row.w} vitórias e reputação ${s.reputation}.`,
+    };
+    n.invites.unshift(offer);
+    n.invites = n.invites.slice(0, 24);
+    n.invitationRevision++;
+    n.lastInviteSeason = s.season;
+    n.lastInviteOffset = s.today;
+    return offer;
+  }
+  function decline(s, id) {
+    const offer = ensure(s).invites.find(
+      (o) => o.id === id && o.status === "pending",
+    );
+    if (!offer) throw Error("Convite indisponível.");
+    offer.status = "declined";
+  }
   function assume(s, id) {
     if (!s.clubId) throw Error("Comece sua carreira em um clube primeiro.");
     if (s.live && !s.live.done)
@@ -160,6 +251,18 @@
         "Seleção sem onze jogadores reais e goleiro disponíveis na base.",
       );
     const n = ensure(s);
+    const offer = n.invites.find(
+      (o) =>
+        o.selectionId === id &&
+        o.status === "pending" &&
+        o.season === s.season &&
+        o.expires >= s.today,
+    );
+    if (!offer)
+      throw Error(
+        "Você precisa receber um convite vigente da federação para assumir esta seleção.",
+      );
+    offer.status = "accepted";
     n.job = id;
     n.squads[id] = best(s, definitions.find((x) => x.id === id).country);
   }
@@ -202,6 +305,8 @@
     ensure,
     team,
     assume,
+    review,
+    decline,
     call,
   };
   root.LegacyNational = api;

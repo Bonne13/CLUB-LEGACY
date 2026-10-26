@@ -180,6 +180,7 @@ base.update({'revision':'current-2026-v1','initialSeason':2026,'reference':'Snap
  'fbref-eu-2026-27':{'url':'https://github.com/payamhabibi/Football_Players_Stats_2026-2027','commit':'846fbca183be1ec2fae294c3d175ea29c7008894','date':'2026-09-27'},
  'sa-transfers-2026':{'url':'https://github.com/Joao1531/south-american-transfers-analysis','commit':'05f62f8614bad126cd6bcc62043f0002a60b5d72','date':'2026-10-23'},
  'mls-2026':{'url':'https://github.com/Leomgama/mls-2026-scout-report','commit':'dde6ecd4adfed441c5711c5ad8843b75757855ad','date':'2026-06-09'}},'unresolvedMemberships':unresolved,'retrievedOn':today})
+if (root/'data/player-ratings.json').exists():base['playerRatings']=json.loads((root/'data/player-ratings.json').read_text())
 if (root/'data/player-positions.json').exists():base['playerPositions']=json.loads((root/'data/player-positions.json').read_text())
 if (root/'data/player-bios.json').exists():base['playerBios']=json.loads((root/'data/player-bios.json').read_text())
 (root/'roster-data.js').write_text('"use strict";\n(function(root){const data='+json.dumps(base,ensure_ascii=False,separators=(',',':'))+';root.LegacyRosterData=data;if(typeof module!=="undefined")module.exports=data;})(globalThis);\n')

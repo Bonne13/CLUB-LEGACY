@@ -23,6 +23,14 @@
     typeof module !== "undefined"
       ? require("./tactics.js")
       : root.LegacyTactics;
+  const P =
+    typeof module !== "undefined"
+      ? require("./physical.js")
+      : root.LegacyPhysical;
+  const SC =
+    typeof module !== "undefined"
+      ? require("./scouting.js")
+      : root.LegacyScouting;
   const LEAGUES = WORLD.leagues;
   const CUP_DEFS = [
     {
@@ -181,7 +189,9 @@
       ? rounds
       : rounds.concat(rounds.map((p) => p.map(([a, b]) => [b, a])));
   }
+  let cachedCalendar;
   function calendar() {
+    if (cachedCalendar) return cachedCalendar;
     const days = [],
       cupAfter = [1, 3, 5, 7, 9, 11, 13, 15, 19, 23, 27, 31, 37];
     for (let r = 0; r < 38; r++) {
@@ -193,7 +203,8 @@
           offset: r * 7 + 3,
         });
     }
-    return days;
+    cachedCalendar = Object.freeze(days.map(Object.freeze));
+    return cachedCalendar;
   }
   function formatDate(s, offset) {
     return new Date(Date.UTC(s.season, 1, 1 + offset)).toLocaleDateString(
@@ -218,9 +229,23 @@
         b.gf - a.gf ||
         a.id.localeCompare(b.id),
     );
+  const lookupCache = new WeakMap();
+  function lookups(s) {
+    let cache = lookupCache.get(s);
+    if (!cache || cache.teams !== s.teams || cache.leagues !== s.leagues) {
+      cache = {
+        teams: s.teams,
+        leagues: s.leagues,
+        teamMap: new Map(s.teams.map((t) => [t.id, t])),
+        leagueMap: new Map(s.leagues.map((l) => [l.id, l])),
+      };
+      lookupCache.set(s, cache);
+    }
+    return cache;
+  }
   const team = (s, id = s.clubId) =>
-    s.teams.find((t) => t.id === id) || N.team(s, id);
-  const league = (s, id) => s.leagues.find((l) => l.id === id);
+    lookups(s).teamMap.get(id) || N.team(s, id);
+  const league = (s, id) => lookups(s).leagueMap.get(id);
   function leaguePhase(ids, games) {
     const rounds = [];
     for (const step of [1, 3, 5, 7].slice(0, games / 2)) {
@@ -342,6 +367,8 @@
       reputation: 40,
       news: ["Bem-vindo. Escolha seu clube para construir um legado."],
       history: [],
+      fixtureResults: [],
+      trophies: [],
       transfers: [],
       negotiations: [],
       negotiationSequence: 0,
@@ -402,11 +429,13 @@
       t.youth = eligible;
       t.players = t.players.filter((p) => !eligible.includes(p));
       t.rosterCoverage = R.DATA.teams[t.id]?.players.length || 0;
+      ensureSquadNumbers(t);
       F.init(t, s);
     });
     s.cups = selectCups(s);
     s.dataRevision = R.DATA.revision || "historical-1";
     N.ensure(s);
+    SC.ensure(s);
     return s;
   }
   function setProfile(s, profile) {
@@ -426,6 +455,9 @@
     return result;
   }
   function prepareCareer(s) {
+    SC.ensure(s);
+    s.trophies ??= [];
+    s.fixtureResults ??= [];
     s.negotiations ??= [];
     s.negotiationSequence ??= 0;
     s.negotiationRevision ??= 0;
@@ -442,10 +474,59 @@
       ...s.teams.flatMap((t) => [...t.players, ...t.youth]),
       ...s.freeAgents,
     ];
+    const references = new Map(
+      Object.keys(R.DATA.teams).flatMap((id) =>
+        R.roster(id, s.season).map((p) => [p.id, p]),
+      ),
+    );
     for (const p of existing) {
+      p.fatigue ??= Math.max(0, Math.round((100 - p.fitness) * 0.6));
+      p.trainingPlan ??= "auto";
+      p.restDays ??= 0;
       const row = rows.get(p.id);
       if (row) {
-        const ref = R.make(row, s.season, "");
+        const ref = references.get(p.id);
+        if (p.ratingRevision !== ref.ratingRevision) {
+          const growth = Math.max(
+            -8,
+            Math.min(
+              12,
+              p.ovr -
+                (p.ratingBase ??
+                  Math.min(
+                    94,
+                    Math.max(
+                      45,
+                      Math.round(
+                        40 +
+                          10 *
+                            Math.log10(
+                              Math.max(1000, p.price / R.DATA.eurBrl) / 1000,
+                            ),
+                      ),
+                    ),
+                  )),
+            ),
+          );
+          p.ovr = Math.max(35, Math.min(97, ref.ovr + growth));
+          p.potential = Math.max(
+            p.ovr,
+            Math.min(98, ref.potential + Math.max(0, growth)),
+          );
+          Object.assign(p, {
+            ratingBase: ref.ovr,
+            ratingRevision: ref.ratingRevision,
+            ratingSource: ref.ratingSource,
+            ratingEstimated: ref.ratingEstimated,
+            referenceOverall: ref.referenceOverall,
+            stamina: ref.stamina,
+          });
+        }
+        p.stamina ??= ref.stamina;
+        p.marketSalary = Math.max(p.salary, ref.marketSalary);
+        if (ref.secondaryPositions?.length && !p.secondaryPositions?.length)
+          p.secondaryPositions = [...ref.secondaryPositions];
+
         if (!p.naturalPositions?.length && ref.naturalPositions.length) {
           p.naturalPositions = [...ref.naturalPositions];
           p.secondaryPositions = [...ref.secondaryPositions];
@@ -494,7 +575,10 @@
         nationality: "Brazil",
       });
     }
-    s.teams.forEach((t) => T.ensure(t));
+    s.teams.forEach((t) => {
+      T.ensure(t);
+      ensureSquadNumbers(t);
+    });
     if (s.clubId) T.ensure(team(s)).mentality = s.tactic;
     N.ensure(s);
     if (s.live && !s.live.done) {
@@ -513,6 +597,34 @@
           body: "O calendário atual foi preservado. Nenhum placar extra foi lançado.",
         });
       }
+    }
+    if (s.live && !s.live.done) {
+      const m = s.live;
+      m.plans ??= matchPlans(s, m);
+      if (!m.minutesPlayed)
+        m.minutesPlayed = Object.fromEntries(
+          m.plans.flatMap((plan) => plan.starters.map((p) => [p.id, m.minute])),
+        );
+      m.possession ??= [Math.ceil(m.minute / 2), Math.floor(m.minute / 2)];
+      m.substitutions ??= [];
+      m.goalReplays ??= [];
+      m.timeline ??= [];
+      m.secondHalfStarted ??= m.minute > 45;
+      for (let side = 0; side < m.plans.length; side++)
+        for (let index = 0; index < m.plans[side].starters.length; index++) {
+          const p = m.plans[side].starters[index],
+            reference = existing.find((x) => x.id === p.id);
+          if (reference) {
+            p.fitness ??= reference.fitness;
+            p.stamina ??= reference.stamina;
+            p.age ??= reference.age;
+            p.fatigue ??= reference.fatigue;
+            p.naturalPositions ??= reference.naturalPositions;
+            p.secondaryPositions ??= reference.secondaryPositions;
+            p.shirtNumber ??=
+              m.kind === "national" ? index + 1 : reference.shirtNumber;
+          }
+        }
     }
     return s;
   }
@@ -745,7 +857,15 @@
           id: p.id,
           name: p.name,
           pos: p.pos,
+          shirtNumber:
+            m.kind === "national" ? starters.indexOf(p) + 1 : p.shirtNumber,
           ovr: p.ovr,
+          fatigue: p.fatigue,
+          fitness: p.fitness,
+          stamina: p.stamina,
+          age: p.age,
+          naturalPositions: p.naturalPositions,
+          secondaryPositions: p.secondaryPositions,
           skills: T.skills(p),
         })),
         specialists: Object.fromEntries(
@@ -765,14 +885,70 @@
       ? event
       : { kind: "rest", offset: today, round: Math.floor(today / 7) };
   }
-  function upcomingFixture(s) {
-    for (let offset = s.today; offset <= calendar().at(-1).offset; offset++) {
-      const event = calendar().findIndex((d) => d.offset >= offset);
-      if (event < 0) break;
-      const f = nextFixture({ ...s, day: event, today: offset });
-      if (f) return { ...f, event, offset };
+  function managedFixtureAt(s, day = s.day, offset = s.today) {
+    const event = calendar()[day],
+      id = s.clubId;
+    if (!id) return null;
+    if (event?.offset === offset) {
+      if (event.kind === "league") {
+        const l = league(s, team(s).leagueId),
+          pair = l.fixtures[event.round]?.find((pair) => pair.includes(id));
+        if (pair)
+          return {
+            pair,
+            competition: l.id,
+            name: l.name,
+            kind: "league",
+            round: event.round,
+            referenceDate:
+              l.referenceCompatible === false
+                ? null
+                : REFERENCES?.[l.id]?.matches.find(
+                    (m) => m.pair[0] === pair[0] && m.pair[1] === pair[1],
+                  )?.date || null,
+          };
+      } else
+        for (const c of s.cups) {
+          const pair = cupPairs(c, event.round).find((pair) =>
+            pair.includes(id),
+          );
+          if (pair)
+            return {
+              pair,
+              competition: c.id,
+              name: c.name,
+              kind: event.round < c.stageGames ? "group" : "cup",
+              round: event.round,
+            };
+        }
     }
-    return null;
+    return (
+      s.national?.fixtures?.find(
+        (f) => f.offset === offset && f.pair.includes(s.national.job),
+      ) || null
+    );
+  }
+  function upcomingFixture(s) {
+    const candidates = [];
+    for (let i = s.day; i < calendar().length; i++) {
+      const d = calendar()[i];
+      if (d.offset < s.today) continue;
+      const f = managedFixtureAt(s, i, d.offset);
+      if (f) {
+        candidates.push({ ...f, event: i, offset: d.offset });
+        break;
+      }
+    }
+    const national = s.national?.fixtures?.find(
+      (f) => f.offset >= s.today && f.pair.includes(s.national.job),
+    );
+    if (national)
+      candidates.push({
+        ...national,
+        event: calendar().findIndex((d) => d.offset >= national.offset),
+        offset: national.offset,
+      });
+    return candidates.sort((a, b) => a.offset - b.offset)[0] || null;
   }
   function simulate(s, amount, unit = "days", rng = Math.random) {
     if (
@@ -790,16 +966,26 @@
     const limit = Math.min(365, amount * (unit === "weeks" ? 7 : 1));
     let advanced = 0;
     const revision = s.negotiationRevision || 0;
+    const scoutRevision = s.scouting?.revision || 0;
+    const invitationRevision = s.national?.invitationRevision || 0;
     while (advanced < limit && dayInfo(s) && !nextFixture(s)) {
       advance(s, rng);
       advanced++;
-      if ((s.negotiationRevision || 0) !== revision) break;
+      if (
+        (s.negotiationRevision || 0) !== revision ||
+        (s.scouting?.revision || 0) !== scoutRevision ||
+        (s.national?.invitationRevision || 0) !== invitationRevision
+      )
+        break;
     }
     return {
       advanced,
       stoppedForMatch: Boolean(nextFixture(s)),
       finished: !dayInfo(s),
       stoppedForNegotiation: (s.negotiationRevision || 0) !== revision,
+      stoppedForReport: (s.scouting?.revision || 0) !== scoutRevision,
+      stoppedForInvitation:
+        (s.national?.invitationRevision || 0) !== invitationRevision,
     };
   }
   const roundName = (r) =>
@@ -851,7 +1037,7 @@
     f.kind === "national"
       ? Boolean(s.national?.job && f.pair.includes(s.national.job))
       : f.pair.includes(s.clubId);
-  const nextFixture = (s) => allFixtures(s).find((f) => managed(s, f)) || null;
+  const nextFixture = (s) => managedFixtureAt(s);
   function makeMatch(s, mode = "text") {
     if (s.live && !s.live.done) {
       if (!currentMatch(s).active)
@@ -878,6 +1064,12 @@
       goals: [0, 0],
       shots: [0, 0],
       events: ["A bola está rolando!"],
+      minutesPlayed: {},
+      substitutions: [],
+      possession: [0, 0],
+      timeline: [],
+      goalReplays: [],
+      secondHalfStarted: false,
       done: false,
     };
     s.live.plans = matchPlans(s, s.live);
@@ -889,10 +1081,233 @@
     );
     return s.live;
   }
+  const fatigueLoss = P.loss;
+  function matchFitness(p, m, extra = 0) {
+    return Math.max(
+      40,
+      Math.round(
+        (p.fitness ?? 100) -
+          fatigueLoss(p, m.minutesPlayed?.[p.id] ?? m.minute, extra),
+      ),
+    );
+  }
+  function matchVisual(m, play = m.lastPlay) {
+    if (play?.positions)
+      return {
+        positions: play.positions.map((p) => ({ ...p })),
+        ball: play.path[0],
+        side: play.side,
+      };
+    const side = play?.side ?? m.possessionSide ?? 0;
+    const positions = m.plans.flatMap((plan, teamSide) =>
+      plan.starters.map((p, i) => {
+        const slot = plan.slots[i],
+          advance = teamSide === side ? 5 : -3;
+        let x =
+            12 +
+            (100 - slot.y) * 0.8 +
+            advance +
+            Math.sin(m.minute * 0.4 + i) * 1.8,
+          y = Math.max(
+            8,
+            Math.min(92, slot.x + Math.cos(m.minute * 0.3 + i) * 2),
+          );
+        if (teamSide) x = 100 - x;
+        return {
+          id: p.id,
+          name: p.name,
+          shirtNumber: p.shirtNumber,
+          side: teamSide,
+          index: i,
+          x: Math.max(3, Math.min(97, x)),
+          y,
+        };
+      }),
+    );
+    if (play?.from && play.playerId) {
+      const scorer = positions.find((p) => p.id === play.playerId);
+      if (scorer) Object.assign(scorer, play.from);
+    }
+    const carrier =
+      positions.find((p) => p.side === side && p.index === 7) || positions[0];
+    return {
+      positions,
+      ball: play?.path?.[0] || { x: carrier.x, y: carrier.y },
+      side,
+    };
+  }
+  function recordPlay(m, type, side, actor = null, detail = "jogada") {
+    const view = matchVisual(m, null),
+      players = view.positions.filter((p) => p.side === side),
+      shooter = players.find((p) => p.id === actor?.id) ||
+        players[8] ||
+        players[0] || {
+          id: null,
+          name: "Autoria não disponível na base",
+          x: 50,
+          y: 50,
+        };
+    const direction = side ? -1 : 1,
+      from =
+        type === "build-up"
+          ? { x: shooter.x, y: shooter.y }
+          : {
+              x: side ? 16 + (m.minute % 5) : 84 - (m.minute % 5),
+              y: detail === "pênalti" ? 50 : 36 + ((m.minute * 7) % 28),
+            };
+    const passer1 = players[5] || players[1] || shooter,
+      passer2 = players[7] || players[6] || shooter;
+    const target =
+      type === "goal"
+        ? { x: side ? 1 : 99, y: 46 + (m.minute % 9) }
+        : type === "shot"
+          ? { x: side ? 3 : 97, y: m.minute % 2 ? 26 : 74 }
+          : { x: shooter.x, y: shooter.y };
+    const path = [
+      { x: passer1.x, y: passer1.y, playerId: passer1.id, name: passer1.name },
+      { x: passer2.x, y: passer2.y, playerId: passer2.id, name: passer2.name },
+      { ...from, playerId: shooter.id, name: shooter.name },
+      target,
+    ];
+    const play = {
+      id: `play-${m.minute}-${type}-${side}`,
+      minute: m.minute,
+      type,
+      side,
+      playerId: shooter.id,
+      playerName: actor?.name || shooter.name,
+      from,
+      target,
+      path,
+      detail,
+      positions: view.positions.map((p) =>
+        p.id === shooter.id ? { ...p, ...from } : p,
+      ),
+    };
+    m.lastPlay = play;
+    m.timeline ??= [];
+    m.timeline.push(play);
+    m.timeline = m.timeline.slice(-40);
+    if (type === "goal") {
+      m.goalReplays ??= [];
+      m.goalReplays.push(play);
+      m.goalReplays = m.goalReplays.slice(-12);
+    }
+    return play;
+  }
+  function startSecondHalf(s) {
+    const m = s.live;
+    if (!m || m.done || m.minute !== 45 || m.secondHalfStarted)
+      fail("O intervalo não está disponível.");
+    m.secondHalfStarted = true;
+    m.events.unshift("46' — Começa o segundo tempo.");
+  }
+  function substitute(s, outId, inId) {
+    const m = s.live;
+    if (!m || m.done || m.minute >= 90 || !currentMatch(s).active)
+      fail("Substituição indisponível.");
+    const ownId = m.kind === "national" ? s.national.job : s.clubId,
+      side = m.pair.indexOf(ownId),
+      plan = m.plans[side],
+      t = team(s, ownId);
+    if (side < 0 || !plan || !t)
+      fail("A equipe gerida não participa desta partida.");
+    const changes = (m.substitutions || []).filter((x) => x.side === side),
+      index = plan?.starters.findIndex((p) => p.id === outId),
+      incoming = t.players.find((p) => p.id === inId && !p.injury);
+    if (
+      index < 0 ||
+      !incoming ||
+      plan.starters.some((p) => p.id === inId) ||
+      changes.some((x) => x.outId === inId) ||
+      changes.length >= 5
+    )
+      fail(
+        "Escolha um titular e um reserva disponível. São permitidas cinco substituições, sem reentrada.",
+      );
+    const outgoing = plan.starters[index];
+    plan.starters[index] = {
+      id: incoming.id,
+      name: incoming.name,
+      shirtNumber: m.kind === "national" ? index + 1 : incoming.shirtNumber,
+      pos: incoming.pos,
+      ovr: incoming.ovr,
+      fitness: incoming.fitness,
+      fatigue: incoming.fatigue,
+      stamina: incoming.stamina,
+      age: incoming.age,
+      naturalPositions: incoming.naturalPositions,
+      secondaryPositions: incoming.secondaryPositions,
+      skills: T.skills(incoming),
+    };
+    m.minutesPlayed ??= {};
+    m.minutesPlayed[inId] ??= 0;
+    m.substitutions ??= [];
+    m.substitutions.push({ side, outId, inId, minute: m.minute });
+    plan.baseStrength =
+      plan.starters.reduce(
+        (sum, p, i) =>
+          sum +
+          p.ovr *
+            (0.65 + (0.35 * (p.fitness || 100)) / 100) *
+            (1 - (p.fatigue || 0) * 0.001) *
+            T.fit(p, plan.slots[i]),
+        0,
+      ) / 11;
+    plan.strength = plan.baseStrength;
+    const valid = new Set(plan.starters.map((p) => p.id));
+    if (
+      !valid.has(plan.specialists.captain?.id) &&
+      valid.has(plan.specialists.viceCaptain?.id)
+    )
+      plan.specialists.captain = plan.specialists.viceCaptain;
+    for (const key of Object.keys(plan.specialists))
+      if (!valid.has(plan.specialists[key]?.id)) {
+        const skill = key.includes("corners")
+          ? "crossing"
+          : key === "penalties"
+            ? "penalties"
+            : key === "freeKicks"
+              ? "freeKicks"
+              : "leadership";
+        const best = [...plan.starters].sort(
+          (a, b) => b.skills[skill] - a.skills[skill],
+        )[0];
+        plan.specialists[key] = {
+          id: best.id,
+          name: best.name,
+          skills: best.skills,
+        };
+      }
+    m.events.unshift(
+      `${m.minute}' — Substituição: sai ${outgoing.name}, entra ${incoming.name}.`,
+    );
+    return m.substitutions.at(-1);
+  }
   function minute(s, m, rng = Math.random) {
     if (m.done || m.minute >= 90) return;
     if (!m.plans) m.plans = matchPlans(s, m);
     m.minute++;
+    m.minutesPlayed ??= {};
+    m.possession ??= [0, 0];
+    if (!m.compact)
+      for (const plan of m.plans) {
+        for (const p of plan.starters)
+          m.minutesPlayed[p.id] = (m.minutesPlayed[p.id] || 0) + 1;
+        plan.baseStrength ??= plan.strength;
+        const condition =
+          plan.starters.reduce(
+            (sum, p) => sum + matchFitness(p, m, plan.fatigue),
+            0,
+          ) / 11;
+        plan.strength = plan.baseStrength * (0.85 + (0.15 * condition) / 100);
+      }
+    m.possessionSide =
+      (Math.floor(m.minute / 4) * 37) % 100 <
+      50 + (m.plans[0].strength - m.plans[1].strength) * 0.3
+        ? 0
+        : 1;
+    let producedPlay = false;
     const pace = (p) =>
       p.instructions.tempo === "Rápido"
         ? 0.035
@@ -980,24 +1395,43 @@
           ? taker
           : pool[Math.min(pool.length - 1, Math.floor(rng() * pool.length))];
       m.shots[side]++;
+      m.possessionSide = side;
+      producedPlay = true;
       const detail =
         type === "escanteio"
           ? `escanteio cobrado por ${taker?.name || own.name}`
           : type;
       if (rng() < chance) {
         m.goals[side]++;
+        if (!m.compact) recordPlay(m, "goal", side, scorer, detail);
         m.events.unshift(
           `${m.minute}' — GOL de ${scorer?.name || own.name} (${own.name}) · ${detail}!`,
         );
-      } else
+      } else {
+        if (!m.compact) recordPlay(m, "shot", side, scorer, detail);
         m.events.unshift(
           `${m.minute}' — ${own.name}: ${type === "jogada" ? scorer?.name || "o ataque" : taker?.name || "o cobrador"} tenta ${detail}; ${rng() < 0.5 ? "a bola sai" : "o goleiro defende"}.`,
         );
+      }
     }
+    m.possession[m.possessionSide]++;
+    if (!producedPlay && !m.compact)
+      recordPlay(m, "build-up", m.possessionSide);
+    if (m.minute === 45)
+      m.events.unshift(
+        "45' — Intervalo. Prepare a equipe para o segundo tempo.",
+      );
     m.events = m.events.slice(0, 45);
   }
   function score(s, f, rng) {
-    const m = { ...f, minute: 0, goals: [0, 0], shots: [0, 0], events: [] };
+    const m = {
+      ...f,
+      compact: true,
+      minute: 0,
+      goals: [0, 0],
+      shots: [0, 0],
+      events: [],
+    };
     while (m.minute < 90) minute(s, m, rng);
     return m.goals;
   }
@@ -1019,35 +1453,101 @@
       l.l++;
     }
   }
-  function windowOpen(s) {
-    const d = dayInfo(s);
-    if (!d) return true;
-    const r = d.kind === "league" ? d.round : Math.floor((d.offset || 0) / 7);
-    return r <= 5 || (r >= 17 && r <= 21);
+  function advancePlanning(s, rng = Math.random) {
+    if (dayInfo(s)) fail("Use o avanço normal enquanto há jogos na temporada.");
+    if (s.live && !s.live.done) fail("Conclua a partida antes de planejar.");
+    const last =
+      Math.round(
+        (Date.UTC(s.season + 1, 1, 1) - Date.UTC(s.season, 1, 1)) / 86400000,
+      ) - 1;
+    if (s.today >= last)
+      fail("O planejamento deste ano terminou. Inicie a próxima temporada.");
+    for (const t of s.teams) {
+      F.daily(t, s);
+      train(s, t, rng, false);
+    }
+    for (const p of s.freeAgents) P.apply(p, { globalMode: "Recuperação" });
+    s.today++;
+    processNegotiations(s);
+    for (const report of SC.process(s))
+      news(s, "Relatório do olheiro disponível.", {
+        category: "club",
+        clubIds: [s.clubId],
+        body: `${report.players.length} opções no relatório de observação.`,
+      });
+    const invitation = N.review(s);
+    if (invitation)
+      news(s, `Convite para treinar ${invitation.name}.`, {
+        category: "coaches",
+        clubIds: [s.clubId, invitation.selectionId],
+        body: invitation.reason,
+      });
+    return s.today;
   }
-  function train(s, t, rng, played = false, international = new Map()) {
+  function transferWindowInfo(s) {
+    const ranges = [
+        [0, 41],
+        [119, 153],
+      ],
+      active = ranges.find(
+        ([start, end]) => s.today >= start && s.today <= end,
+      );
+    const next = ranges.find(([start]) => start > s.today);
+    const offseason = !dayInfo(s);
+    return {
+      open: Boolean(active || offseason),
+      label: offseason
+        ? "Entre temporadas"
+        : active
+          ? "Janela aberta"
+          : "Janela fechada",
+      start: active?.[0] ?? next?.[0] ?? 0,
+      end: active?.[1] ?? next?.[1] ?? 41,
+      days: active ? active[1] - s.today + 1 : next ? next[0] - s.today : null,
+      ranges,
+    };
+  }
+  const windowOpen = (s) => transferWindowInfo(s).open;
+  function train(
+    s,
+    t,
+    rng,
+    played = false,
+    international = new Map(),
+    playedMinutes = null,
+  ) {
     const mode = t.id === s.clubId ? s.training : "Técnica",
       starters = played
-        ? lineup(t)
+        ? playedMinutes
+          ? t.players.filter((p) => (playedMinutes[p.id] || 0) > 0)
+          : lineup(t)
         : t.players.filter((p) => international.has(p.id)),
       fatigue = played ? T.ratings(t).fatigue : 0;
     for (const p of t.players) {
       if (p.injury) p.injury--;
-      p.fitness = Math.max(
-        45,
-        Math.min(
-          100,
-          p.fitness +
-            (starters.includes(p)
-              ? -(12 + (international.get(p.id) ?? fatigue))
-              : mode === "Recuperação"
-                ? 10
-                : mode === "Intensivo"
-                  ? 2
-                  : 5),
-        ),
-      );
-      if (starters.includes(p) && !p.injury && rng() < 0.012) {
+      const minutes = playedMinutes
+        ? playedMinutes[p.id] || 0
+        : starters.includes(p)
+          ? 90
+          : 0;
+      const internationalLoad = international.get(p.id);
+      const loadMinutes = Math.max(minutes, internationalLoad?.minutes || 0);
+      const physical = P.apply(p, {
+        minutes: loadMinutes,
+        extra: internationalLoad?.fatigue ?? fatigue,
+        globalMode: mode,
+        facility: t.facility,
+      });
+      if (t.id === s.clubId)
+        p.lastPhysical = { ...physical, season: s.season, offset: s.today };
+      if (
+        starters.includes(p) &&
+        !p.injury &&
+        rng() <
+          0.012 *
+            (loadMinutes / 90) *
+            (1 + Math.max(0, 85 - p.fitness) / 30 + (p.fatigue || 0) / 80)
+      ) {
         p.injury = 2 + Math.floor(rng() * 5);
         if (t.id === s.clubId)
           news(s, `${p.name} se lesionou: ${p.injury} dias de recuperação.`, {
@@ -1058,9 +1558,14 @@
       if (
         (s.today + 1) % 7 === 0 &&
         mode !== "Recuperação" &&
+        physical.plan !== "rest" &&
         rng() <
           (p.age < 24 ? 0.22 : 0.06) *
-            (mode === "Intensivo" ? 1.4 : 1) *
+            (physical.plan === "intense"
+              ? 1.4
+              : physical.plan === "light"
+                ? 0.5
+                : 1) *
             (1 + (t.facility - 1) * 0.2)
       )
         p.ovr = Math.min(p.potential, p.ovr + 1);
@@ -1101,7 +1606,11 @@
       if (f.kind === "national") {
         const plans = managed(s, f) && m.plans ? m.plans : matchPlans(s, f);
         for (const plan of plans)
-          for (const p of plan.starters) international.set(p.id, plan.fatigue);
+          for (const p of plan.starters)
+            international.set(p.id, {
+              fatigue: plan.fatigue,
+              minutes: m?.minutesPlayed?.[p.id] ?? 90,
+            });
         s.national.results.push({
           ...entry,
           season: s.season,
@@ -1144,6 +1653,7 @@
         c.rounds.find((r) => r.phase === d.round).results.push(entry);
         if (d.round === 12) {
           c.champion = entry.winner;
+          awardTrophy(s, entry.winner, c.id, c.name, "continental");
           F.post(
             team(s, entry.winner),
             s,
@@ -1162,22 +1672,35 @@
       if (f.kind !== "national" && g[0] !== g[1])
         F.winBonus(team(s, f.pair[g[0] > g[1] ? 0 : 1]), s);
       results.push(entry);
+      if (managed(s, f)) {
+        s.fixtureResults ??= [];
+        s.fixtureResults.push({
+          ...copy(entry),
+          season: s.season,
+          offset: s.today,
+        });
+        s.fixtureResults = s.fixtureResults.slice(-2000);
+      }
     }
     s.teams.forEach((t) => {
       F.daily(t, s);
-      train(s, t, rng, participants.has(t.id), international);
+      train(
+        s,
+        t,
+        rng,
+        participants.has(t.id),
+        international,
+        m?.pair.includes(t.id) ? m.minutesPlayed || null : null,
+      );
       if (t.id !== s.clubId) ensureAI(s, t);
     });
     for (const p of [...s.freeAgents, ...s.teams.flatMap((t) => t.youth)]) {
       if (p.injury) p.injury--;
-      p.fitness = Math.max(
-        45,
-        Math.min(
-          100,
-          p.fitness +
-            (international.has(p.id) ? -(12 + international.get(p.id)) : 5),
-        ),
-      );
+      P.apply(p, {
+        minutes: international.get(p.id)?.minutes || 0,
+        extra: international.get(p.id)?.fatigue || 0,
+        globalMode: "Recuperação",
+      });
     }
     const ownResult = results.find((r) => managed(s, r));
     if (ownResult) {
@@ -1203,10 +1726,76 @@
     if (d.kind !== "rest") s.day++;
     s.today = (s.today ?? d.offset) + 1;
     processNegotiations(s);
+    const invitation = N.review(s);
+    if (invitation)
+      news(s, `Convite para treinar ${invitation.name}.`, {
+        category: "coaches",
+        clubIds: [s.clubId, invitation.selectionId],
+        body: invitation.reason + " Responda em Seleções dentro de 14 dias.",
+      });
+    for (const report of SC.process(s))
+      news(s, "Relatório do olheiro disponível.", {
+        category: "club",
+        clubIds: [s.clubId],
+        body: `${report.scope === "youth" ? "Base" : "Mercado"}: ${report.players.length} opções compatíveis com os recursos do clube.`,
+      });
     const next = calendar()[s.day];
     if (next?.kind === "cup") prepareKnockouts(s, next.round);
     if (!next) seasonEnd(s, rng);
     return results;
+  }
+  function careerCalendar(s, scope = "career") {
+    const fixtures = [],
+      seen = new Set();
+    function add(f, offset) {
+      if (!f) return;
+      const key = offset + "|" + f.competition + "|" + f.pair.join("|");
+      if (seen.has(key)) return;
+      seen.add(key);
+      const result = (s.fixtureResults || []).find(
+        (r) =>
+          r.season === s.season &&
+          r.offset === offset &&
+          r.competition === f.competition &&
+          r.pair.join("|") === f.pair.join("|"),
+      );
+      fixtures.push({
+        ...f,
+        offset,
+        goals: result?.goals || null,
+        penalties: result?.penalties || null,
+      });
+    }
+    if (scope !== "national")
+      calendar().forEach((d, i) => {
+        const f = managedFixtureAt(s, i, d.offset);
+        if (f?.kind !== "national") add(f, d.offset);
+      });
+    if (scope !== "club" && s.national?.job)
+      for (const f of s.national.fixtures.filter((f) =>
+        f.pair.includes(s.national.job),
+      ))
+        add(f, f.offset);
+    return fixtures.sort(
+      (a, b) => a.offset - b.offset || a.name.localeCompare(b.name),
+    );
+  }
+  function awardTrophy(s, clubId, competitionId, name, kind) {
+    s.trophies ??= [];
+    const id = `${s.season}-${competitionId}-${clubId}`;
+    if (s.trophies.some((t) => t.id === id)) return;
+    s.trophies.unshift({
+      id,
+      clubId,
+      competitionId,
+      name,
+      kind,
+      season: s.season,
+      offset: s.today,
+      coachId: clubId === s.clubId ? "you" : null,
+      celebrated: clubId !== s.clubId,
+    });
+    s.trophies = s.trophies.slice(0, 1000);
   }
   function seasonEnd(s, rng) {
     const my = team(s);
@@ -1222,6 +1811,7 @@
     );
     s.leagues.forEach((l) => {
       l.ranking = rank(l.table).map((t) => t.id);
+      awardTrophy(s, l.ranking[0], l.id, l.name, "league");
       F.post(
         team(s, l.ranking[0]),
         s,
@@ -1240,6 +1830,13 @@
         },
       );
     });
+    const invitation = N.review(s, true);
+    if (invitation)
+      news(s, `Convite para treinar ${invitation.name}.`, {
+        category: "coaches",
+        clubIds: [s.clubId, invitation.selectionId],
+        body: invitation.reason,
+      });
     const you = s.coaches.find((c) => c.id === "you");
     you.reputation = s.reputation;
     // Clubes do último quarto trocam de treinador ao fim da temporada.
@@ -1391,6 +1988,143 @@
     };
     return sorts[filters.sort] ? result.sort(sorts[filters.sort]) : result;
   }
+  const SQUAD_ROLES = {
+    key: "Indispensável",
+    important: "Jogador importante",
+    rotation: "Rotação",
+    backup: "Reserva",
+    prospect: "Promessa",
+  };
+  function ensureSquadNumbers(t) {
+    const players = [...t.players, ...t.youth],
+      used = new Set(),
+      ranked = [...t.players].sort((a, b) => b.ovr - a.ovr);
+    for (const p of players)
+      if (!p.squadRole) {
+        const rank = ranked.indexOf(p);
+        p.squadRole =
+          t.youth.includes(p) || (p.age < 21 && rank >= 11)
+            ? "prospect"
+            : rank < 3
+              ? "key"
+              : rank < 11
+                ? "important"
+                : rank < 20
+                  ? "rotation"
+                  : "backup";
+      }
+    for (const p of players) {
+      if (
+        Number.isInteger(p.shirtNumber) &&
+        p.shirtNumber >= 1 &&
+        p.shirtNumber <= 99 &&
+        !used.has(p.shirtNumber)
+      )
+        used.add(p.shirtNumber);
+      else delete p.shirtNumber;
+    }
+    for (const p of [...players].sort(
+      (a, b) =>
+        Number(b.pos === "GOL") - Number(a.pos === "GOL") || b.ovr - a.ovr,
+    ))
+      if (!p.shirtNumber) {
+        const preferred =
+          {
+            GOL: [1, 12, 22],
+            LAT: [2, 6],
+            ZAG: [3, 4, 5],
+            VOL: [5, 8],
+            MEI: [10, 8],
+            ATA: [9, 7, 11],
+          }[p.pos] || [];
+        p.shirtNumber = [
+          ...preferred,
+          ...Array.from({ length: 99 }, (_, i) => i + 1),
+        ].find((n) => !used.has(n));
+        if (p.shirtNumber) used.add(p.shirtNumber);
+      }
+  }
+  function setShirtNumber(s, id, number) {
+    if (!s.clubId) fail("Comece uma carreira primeiro.");
+    if (s.live && !s.live.done)
+      fail("Conclua a partida antes de mudar a numeração.");
+    const t = team(s),
+      players = [...t.players, ...t.youth],
+      p = players.find((p) => p.id === id);
+    if (!p || !Number.isInteger(number) || number < 1 || number > 99)
+      fail("Escolha um número de 1 a 99 para um atleta do clube.");
+    if (players.some((p) => p.id !== id && p.shirtNumber === number))
+      fail("Esse número já pertence a outro jogador do elenco ou da base.");
+    p.shirtNumber = number;
+  }
+  function contractCapacity(s, n, p, salary, bonus) {
+    if (n.kind !== "renewal")
+      return F.canHire(team(s), p, n.fee, salary, s, bonus);
+    if (F.payroll(team(s)) - p.salary + salary > team(s).finance.wageBudget)
+      fail("A renovação excede o teto salarial. Ajuste o Financeiro.");
+    if (team(s).money < bonus)
+      fail("Caixa insuficiente para as luvas da renovação.");
+  }
+  function proposeRenewal(
+    s,
+    playerId,
+    salary,
+    years,
+    bonus,
+    role = "rotation",
+  ) {
+    if (s.live && !s.live.done)
+      fail("Conclua a partida antes de negociar a renovação.");
+    const p = team(s)?.players.find((p) => p.id === playerId);
+    if (!p) fail("Jogador não pertence ao elenco profissional.");
+    terms(s, years, salary);
+    if (
+      !Number.isSafeInteger(bonus) ||
+      bonus < 0 ||
+      bonus > 1e12 ||
+      !Object.hasOwn(SQUAD_ROLES, role)
+    )
+      fail("Revise as luvas e o papel no elenco.");
+    if (
+      s.negotiations.some(
+        (n) => negotiationActive(n) && n.playerId === playerId,
+      )
+    )
+      fail("Você já tem uma negociação com esse jogador.");
+    if (s.negotiations.filter(negotiationActive).length >= 20)
+      fail("Conclua uma negociação antes de iniciar outra.");
+    contractCapacity(s, { kind: "renewal" }, p, salary, bonus);
+    const n = {
+      id: "neg-" + ++s.negotiationSequence,
+      kind: "renewal",
+      playerId,
+      playerName: p.name,
+      buyerId: s.clubId,
+      sellerId: s.clubId,
+      fee: 0,
+      salary: 0,
+      years,
+      bonus: 0,
+      role,
+      clubRounds: 0,
+      playerRounds: 0,
+      askFee: 0,
+      askSalary: 0,
+      askBonus: 0,
+      askYears: years,
+      createdOn: negotiationDate(s),
+      history: [],
+    };
+    s.negotiations.unshift(n);
+    s.negotiations = s.negotiations.slice(0, 100);
+    negotiationUpdate(
+      s,
+      n,
+      "contract-ready",
+      "Renovação iniciada: o jogador vai avaliar as condições.",
+    );
+    return negotiatePlayer(s, n.id, salary, years, bonus, role);
+  }
   const NEGOTIATION_STAGES = [
     "club-pending",
     "club-counter",
@@ -1398,6 +2132,7 @@
     "player-pending",
     "player-counter",
     "medical-pending",
+    "signature-pending",
     "blocked",
     "completed",
     "rejected",
@@ -1427,8 +2162,8 @@
     n.history = n.history.slice(-24);
     s.negotiationRevision = (s.negotiationRevision || 0) + 1;
     news(s, `${n.playerName}: ${message}`, {
-      category: "market",
-      clubIds: [n.buyerId, ...(n.sellerId ? [n.sellerId] : [])],
+      category: n.kind === "renewal" ? "contracts" : "market",
+      clubIds: [...new Set([n.buyerId, ...(n.sellerId ? [n.sellerId] : [])])],
     });
   }
   function negotiationCheck(s, id, stages) {
@@ -1436,7 +2171,8 @@
     const n = (s.negotiations || []).find((n) => n.id === id);
     if (!n || n.buyerId !== s.clubId || !stages.includes(n.stage))
       fail("Esta negociação não está disponível nesta etapa.");
-    if (!windowOpen(s)) fail("A janela de transferências está fechada.");
+    if (n.kind !== "renewal" && !windowOpen(s))
+      fail("A janela de transferências está fechada.");
     const found = locate(s, n.playerId);
     if (!found || (found.t?.id || null) !== n.sellerId)
       fail(
@@ -1533,24 +2269,40 @@
       !Number.isSafeInteger(bonus) ||
       bonus < 0 ||
       bonus > 1e12 ||
-      !["important", "rotation", "prospect"].includes(role)
+      !Object.hasOwn(SQUAD_ROLES, role)
     )
       fail("Informe luvas e papel no elenco válidos.");
-    F.canHire(team(s), p, n.fee, salary, s, bonus);
+    contractCapacity(s, n, p, salary, bonus);
     const roleFactor =
-      role === "important"
-        ? 1
-        : role === "prospect" && p.age >= 24
-          ? 1.15
-          : 1.05;
+      role === "key"
+        ? 0.98
+        : role === "important"
+          ? 1
+          : role === "backup"
+            ? 1.12
+            : role === "prospect" && p.age >= 24
+              ? 1.15
+              : 1.05;
     const reputationFactor = Math.max(
       1,
       Math.min(1.25, 1 + (p.ovr - 50 - s.reputation * 0.4) * 0.005),
     );
-    n.askSalary = Math.min(
-      30000000,
-      Math.ceil(
-        p.salary * (n.sellerId ? 1.15 : 1.05) * roleFactor * reputationFactor,
+    n.askSalary = Math.max(
+      1500,
+      Math.min(
+        30000000,
+        Math.ceil(
+          Math.max(p.salary, p.marketSalary || p.salary) *
+            (n.kind === "renewal"
+              ? p.age >= 33
+                ? 0.98
+                : 1.1
+              : n.sellerId
+                ? 1.15
+                : 1.05) *
+            roleFactor *
+            reputationFactor,
+        ),
       ),
     );
     n.askBonus = n.askSalary * 4;
@@ -1585,11 +2337,11 @@
   }
   function retryNegotiation(s, id) {
     const { n, p } = negotiationCheck(s, id, ["blocked"]);
-    F.canHire(team(s), p, n.fee, n.salary, s, n.bonus);
+    contractCapacity(s, n, p, n.salary, n.bonus);
     negotiationUpdate(
       s,
       n,
-      "medical-pending",
+      n.kind === "renewal" ? "signature-pending" : "medical-pending",
       "Recursos conferidos. Documentação será reavaliada em um dia.",
       1,
     );
@@ -1616,7 +2368,7 @@
         );
         continue;
       }
-      if (!windowOpen(s)) {
+      if (n.kind !== "renewal" && !windowOpen(s)) {
         negotiationUpdate(
           s,
           n,
@@ -1653,12 +2405,36 @@
             "rejected",
             "O clube recusou liberar o jogador por ter elenco reduzido.",
           );
-        else if (n.fee >= Math.max(n.askFee, minFee(s, p)))
+        else if (
+          n.fee >=
+          Math.max(
+            Math.ceil(
+              minFee(s, p) *
+                (t.money < F.payroll(t) * 8
+                  ? 0.9
+                  : t.players.filter((x) => x.ovr > p.ovr).length < 3
+                    ? 1
+                    : t.players.length >= 25
+                      ? 0.93
+                      : 0.97),
+            ),
+            Math.ceil(
+              n.askFee *
+                (n.clubRounds > 1
+                  ? 0.97
+                  : p.contract <= s.season + 1
+                    ? 0.97
+                    : 1),
+            ),
+          )
+        )
           negotiationUpdate(
             s,
             n,
             "contract-ready",
-            "O clube aceitou a transferência. Agora negocie o contrato com o jogador.",
+            n.fee < n.askFee
+              ? "O clube aceitou ceder no valor. Agora negocie o contrato com o jogador."
+              : "O clube aceitou a transferência. Agora negocie o contrato com o jogador.",
           );
         else if (n.fee < n.askFee * 0.45 || n.clubRounds >= 3)
           negotiationUpdate(
@@ -1667,21 +2443,30 @@
             "rejected",
             "O clube encerrou as conversas por falta de acordo no valor.",
           );
-        else
+        else {
+          const priorAsk = n.askFee;
+          if (n.clubRounds > 1 && n.fee >= priorAsk * 0.8)
+            n.askFee = Math.max(
+              Math.ceil(minFee(s, p) * 0.93),
+              Math.ceil(priorAsk * 0.97),
+            );
           negotiationUpdate(
             s,
             n,
             "club-counter",
-            `Contraproposta do clube: R$ ${n.askFee.toLocaleString("pt-BR")}. Você pode aceitar ou fazer uma nova oferta.`,
+            `${n.askFee < priorAsk ? "O clube cedeu na negociação. " : n.fee < priorAsk * 0.65 ? "A diretoria considerou a oferta muito baixa. " : ""}Contraproposta: R$ ${n.askFee.toLocaleString("pt-BR")}. Você pode aceitar ou melhorar sua proposta.`,
           );
+        }
       } else if (n.stage === "player-pending") {
         const yearsOK = p.age >= 32 ? n.years <= 2 : n.years >= n.askYears;
         if (n.salary >= n.askSalary && n.bonus >= n.askBonus && yearsOK)
           negotiationUpdate(
             s,
             n,
-            "medical-pending",
-            "O jogador aceitou o contrato. Exames e documentação em um dia.",
+            n.kind === "renewal" ? "signature-pending" : "medical-pending",
+            n.kind === "renewal"
+              ? "O jogador aceitou a renovação. Assinatura em um dia."
+              : "O jogador aceitou o contrato. Exames e documentação em um dia.",
             1,
           );
         else if (n.salary < n.askSalary * 0.55 || n.playerRounds >= 3)
@@ -1698,15 +2483,31 @@
             "player-counter",
             `O empresário pede R$ ${n.askSalary.toLocaleString("pt-BR")} por semana, R$ ${n.askBonus.toLocaleString("pt-BR")} de luvas e ${n.askYears} temporadas.`,
           );
-      } else if (n.stage === "medical-pending") {
+      } else if (
+        n.stage === "medical-pending" ||
+        n.stage === "signature-pending"
+      ) {
         try {
-          buy(s, p.id, n.fee, n.salary, n.years, n.bonus);
+          if (n.kind === "renewal") {
+            contractCapacity(s, n, p, n.salary, n.bonus);
+            F.post(
+              team(s),
+              s,
+              -n.bonus,
+              "signing",
+              `Luvas de renovação · ${p.name}`,
+            );
+            p.salary = n.salary;
+            p.contract = Math.max(p.contract, s.season + n.years);
+          } else buy(s, p.id, n.fee, n.salary, n.years, n.bonus, n);
           p.squadRole = n.role;
           negotiationUpdate(
             s,
             n,
             "completed",
-            "Contrato assinado. O jogador já faz parte do elenco e os valores foram lançados no extrato.",
+            n.kind === "renewal"
+              ? "Renovação assinada. Salário, duração e papel no clube foram atualizados."
+              : "Contrato assinado. O jogador já faz parte do elenco e os valores foram lançados no extrato.",
           );
         } catch (error) {
           negotiationUpdate(
@@ -1719,7 +2520,15 @@
       }
     }
   }
-  function buy(s, id, fee, salary, years, signingBonus = salary * 4) {
+  function buy(
+    s,
+    id,
+    fee,
+    salary,
+    years,
+    signingBonus = salary * 4,
+    agreement = null,
+  ) {
     if (!windowOpen(s)) fail("A janela de transferências está fechada.");
     terms(s, years, salary);
     const found = locate(s, id),
@@ -1729,7 +2538,19 @@
     if (!Number.isFinite(fee) || fee < 0) fail("Valor de proposta inválido.");
     if (!seller && fee !== 0)
       fail("Jogadores sem clube não têm taxa de transferência.");
-    if (seller && fee < minFee(s, p))
+    if (
+      seller &&
+      fee < minFee(s, p) &&
+      !(
+        agreement &&
+        s.negotiations?.includes(agreement) &&
+        agreement.stage === "medical-pending" &&
+        agreement.playerId === id &&
+        agreement.buyerId === s.clubId &&
+        agreement.sellerId === seller.id &&
+        agreement.fee === fee
+      )
+    )
       fail(
         `Proposta recusada. O clube pede pelo menos R$ ${minFee(s, p).toLocaleString("pt-BR")}.`,
       );
@@ -1759,7 +2580,9 @@
       seller.players.splice(seller.players.indexOf(p), 1);
       seller.lineup = seller.lineup.map((x) => (x === id ? "" : x));
     } else s.freeAgents.splice(s.freeAgents.indexOf(p), 1);
+    delete p.shirtNumber;
     buyer.players.push(p);
+    ensureSquadNumbers(buyer);
     p.salary = salary;
     p.contract = s.season + years;
     s.transfers.unshift({
@@ -1794,7 +2617,9 @@
     seller.finance.transferBudget += Math.round(fee * 0.8);
     seller.players.splice(seller.players.indexOf(p), 1);
     seller.lineup = seller.lineup.map((x) => (x === id ? "" : x));
+    delete p.shirtNumber;
     buyer.players.push(p);
+    ensureSquadNumbers(buyer);
     p.contract = s.season + 2;
     s.transfers.unshift({
       season: s.season,
@@ -1825,6 +2650,25 @@
       )
       .sort((a, b) => a.players.length - b.players.length || b.money - a.money);
     return buyers[0] ? { buyerId: buyers[0].id, fee } : null;
+  }
+  function setRecoveryPlan(s, id, value) {
+    if (!s.clubId) fail("Comece uma carreira primeiro.");
+    if (s.live && !s.live.done)
+      fail("Conclua a partida antes de mudar a carga de treino.");
+    const t = team(s),
+      p = [...t.players, ...t.youth].find((p) => p.id === id);
+    if (!p) fail("Jogador não pertence ao clube.");
+    if (/^rest[1-7]$/.test(value)) {
+      p.restDays = Number(value.slice(4));
+      p.trainingPlan = "auto";
+      return;
+    }
+    if (!["auto", "light", "normal", "intense"].includes(value))
+      fail("Plano de recuperação inválido.");
+    if (p.injury && value === "intense")
+      fail("O departamento médico não libera treino intenso durante a lesão.");
+    p.trainingPlan = value;
+    p.restDays = 0;
   }
   function promote(s, id) {
     const t = team(s),
@@ -1989,6 +2833,8 @@
         p.age++;
         p.injury = 0;
         p.fitness = 100;
+        p.fatigue = 0;
+        p.restDays = 0;
         if (p.contract < s.season) {
           s.freeAgents.push(p);
           if (t.id === s.clubId)
@@ -2193,6 +3039,12 @@
   const api = {
     WORLD,
     marketPlayers,
+    scouting: SC,
+    SQUAD_ROLES,
+    proposeRenewal,
+    setShirtNumber,
+    physical: P,
+    setRecoveryPlan,
     NEGOTIATION_STAGES,
     negotiationActive,
     negotiateClub,
@@ -2236,8 +3088,16 @@
     strength,
     makeMatch,
     minute,
+    matchVisual,
+    matchFitness,
+    fatigueLoss,
+    startSecondHalf,
+    substitute,
     advance,
     windowOpen,
+    transferWindowInfo,
+    advancePlanning,
+    careerCalendar,
     renew,
     buy,
     sell,

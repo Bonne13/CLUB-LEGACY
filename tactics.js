@@ -255,7 +255,11 @@
         best = -Infinity;
       for (const candidate of available) {
         if (reserved.has(candidate.id)) continue;
-        const score = candidate.ovr * candidate.fitness * fit(candidate, s);
+        const score =
+          candidate.ovr *
+          candidate.fitness *
+          (1 - (candidate.fatigue || 0) * 0.002) *
+          fit(candidate, s);
         if (score > best) {
           best = score;
           p = candidate;
@@ -429,7 +433,11 @@
       defense = 0;
     ps.forEach((p, i) => {
       if (!p) return;
-      total += p.ovr * (0.65 + (0.35 * p.fitness) / 100) * fit(p, slots(t)[i]);
+      total +=
+        p.ovr *
+        (0.65 + (0.35 * p.fitness) / 100) *
+        (1 - (p.fatigue || 0) * 0.001) *
+        fit(p, slots(t)[i]);
       const d = role(t, i).duty;
       attack += d === "Atacar" ? 1 : d === "Defender" ? -0.45 : 0;
       defense += d === "Defender" ? 1 : d === "Atacar" ? -0.5 : 0;

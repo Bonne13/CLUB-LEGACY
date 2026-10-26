@@ -96,6 +96,7 @@ test("planos e bolas paradas persistem com save e continuam disponíveis para cl
   T.formation(t, "3-5-2");
   const captain = E.lineup(t)[0];
   T.setAssignment(t, "captain", captain.id);
+  invite(s, "nt-Brazil");
   E.assumeNational(s, "nt-Brazil");
   let nt = E.team(s, s.national.job);
   T.formation(nt, "4-4-2");
@@ -156,6 +157,7 @@ test("jogo antigo fora da data é arquivado e não mantém acesso ou calendário
 });
 test("titulares de seleção recebem desgaste do plano sem duplicar seus registros no clube", () => {
   const s = career();
+  invite(s, "nt-Argentina");
   E.assumeNational(s, "nt-Argentina");
   let nt = E.team(s, s.national.job);
   T.update(nt, "pressing", "Alta");
@@ -174,5 +176,19 @@ test("titulares de seleção recebem desgaste do plano sem duplicar seus registr
   let m = E.makeMatch(s);
   while (m.minute < 90) E.minute(s, m, () => 0.99);
   E.advance(s, () => 0.99);
-  assert.equal(player.fitness, before - 17);
+  assert.equal(player.fitness, before - E.fatigueLoss(player, 90, 5));
 });
+
+function invite(s, id) {
+  s.national.invites.push({
+    id: "test-" + id,
+    selectionId: id,
+    name: E.national.definitions.find((d) => d.id === id).name,
+    status: "pending",
+    season: s.season,
+    offset: s.today,
+    expires: s.today + 14,
+    required: 35,
+    reason: "Convite de teste para verificar convocação e partida.",
+  });
+}

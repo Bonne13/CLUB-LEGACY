@@ -17,9 +17,7 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
     page.on("pageerror", (e) => errors.push(e.message));
     await page.goto(base);
     await page.locator("#start-league").selectOption("ve");
-    assert(
-      (await page.locator("#start-club option:disabled").count()) > 0,
-    );
+    assert((await page.locator("#start-club option:disabled").count()) > 0);
     assert(
       (await page.locator("#career-entry").innerText()).includes("incompleto"),
     );
@@ -61,11 +59,14 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
         team().finance.sponsors.some((c) => c.slot === "kit"),
       ),
     );
-    await page.getByRole("button",{name:"Visão geral",exact:true}).click();
+    await page
+      .getByRole("button", { name: "Visão geral", exact: true })
+      .click();
     await page.locator("#simulate-unit").selectOption("weeks");
     await page
       .getByRole("button", { name: "Simular período", exact: true })
       .click();
+    await page.waitForFunction(() => !advancing);
     assert.equal(await page.evaluate(() => state.today), 0);
     assert.equal(
       await page.locator('#nav [data-page="Dia de jogo"]').count(),
@@ -95,12 +96,16 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
     await page
       .getByRole("button", { name: "Simular período", exact: true })
       .click();
+    await page.waitForFunction(() => !advancing);
     assert.equal(await page.evaluate(() => state.today), 2);
-    await page.getByRole("button",{name:"Visão geral",exact:true}).click();
+    await page
+      .getByRole("button", { name: "Visão geral", exact: true })
+      .click();
     await page.locator("#simulate-unit").selectOption("weeks");
     await page
       .getByRole("button", { name: "Simular período", exact: true })
       .click();
+    await page.waitForFunction(() => !advancing);
     assert.equal(await page.evaluate(() => state.today), 7);
     assert.equal(
       await page.locator('#nav [data-page="Dia de jogo"]').count(),
@@ -119,6 +124,7 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
         await page
           .getByRole("button", { name: "Simular período", exact: true })
           .click();
+      await page.waitForFunction(() => !advancing);
     }
     await page.getByRole("button", { name: "Financeiro", exact: true }).click();
     await page.locator("#ledger-category").selectOption("wages");

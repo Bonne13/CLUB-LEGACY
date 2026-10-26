@@ -70,3 +70,13 @@ Salários são pagos a cada sete dias; patrocínio, TV e operação a cada trint
 OpenFootball / football.json (CC0): 2.984 confrontos históricos de nove ligas, referências de 2025/2025–26. Fontes em `calendar-data.js`, licença em `LICENSE.openfootball.txt`. Os nomes históricos permanecem na consulta; as datas da carreira seguem calendário unificado simulado. Ligas com participantes diferentes geram seus confrontos.
 
 LZ-String 1.5.0, MIT, em `vendor/lz-string.js`; licença em `vendor/LICENSE.lz-string.txt`. Não é necessária rede para jogar ou salvar.
+
+## Habilidades e resistência: referência FC26
+
+[ismailoksuz/EAFC26-DataHub](https://github.com/ismailoksuz/EAFC26-DataHub/tree/8724af5803a787c9c262eee2ac8f942651b0e4b9), arquivo `data/players.csv`, revisão fixa `8724af5803a787c9c262eee2ac8f942651b0e4b9`. A compilação traz atualização FC26 de **19/09/2025**, não avaliações ao vivo de outubro de 2026. Foram conciliadas **4.017 identidades**, por ID SoFIFA estável ou nascimento exato e nome/legal compatíveis; candidatos ambíguos são descartados. São usados overall, potencial, resistência e posições. Nenhuma imagem, rosto, escudo ou ativo visual do produto é distribuído.
+
+`data/player-ratings.json` preserva origem, revisão, data e ID de cada referência. O jogo usa posições secundárias dessa fonte quando a identidade foi conciliada. `python3 scripts/import-ratings.py --players /caminho/players.csv --profiles /caminho/player_profiles.csv` reproduz a conciliação; `scripts/apply-player-bios.py` incorpora o resultado ao catálogo offline.
+
+Avaliações ausentes são estimadas, com calibrações explícitas para alguns atletas, e marcadas **Estimativa do jogo**. Não se declara cobertura oficial de todos os brasileiros ou atualização completa de 2026. A nova revisão preserva o crescimento acumulado ao migrar saves e não sobrescreve salários/contratos vigentes. Pretensões de negociação têm um piso modelado por habilidade, contexto e referências salariais; não são demandas contratuais reais verificadas.
+
+Energia, carga acumulada, recuperação, risco de lesão, observação de atletas, tolerância a propostas, convites de federações e papéis no elenco são regras da simulação. Números de uniforme são atribuídos pela carreira e podem ser editados; não constituem uma base oficial de camisas atuais. Janelas de transferência seguem os dias da temporada unificada, com datas explícitas na interface. A animação do campo deriva do autor e da trajetória de cada evento gerado, sem imagens reais de partidas.

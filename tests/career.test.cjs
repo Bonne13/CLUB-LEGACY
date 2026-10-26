@@ -44,6 +44,7 @@ test("perfil valida antes de começar e mantém identidade ao mudar de clube", (
 test("convocação usa os mesmos atletas reais, rejeita inelegíveis e limita 23 nomes", () => {
   const s = start(),
     count = E.national.players(s).length;
+  invite(s, "nt-Brazil");
   E.assumeNational(s, "nt-Brazil");
   const n = E.team(s, "nt-Brazil");
   assert.equal(n.players.length, 23);
@@ -64,6 +65,7 @@ test("convocação usa os mesmos atletas reais, rejeita inelegíveis e limita 23
 test("simulação para em amistoso e registra placar sem cobrar o caixa do clube por convocação", () => {
   const s = start(),
     cash = E.team(s).money;
+  invite(s, "nt-Argentina");
   E.assumeNational(s, "nt-Argentina");
   assert.equal(E.team(s).money, cash);
   complete(s);
@@ -93,6 +95,7 @@ test("simulação para em amistoso e registra placar sem cobrar o caixa do clube
 });
 test("exportação, JSON anterior e arquivo comprimido preservam partida e perfil", () => {
   const s = start();
+  invite(s, "nt-Brazil");
   E.assumeNational(s, "nt-Brazil");
   const m = E.makeMatch(s, "2d");
   for (let i = 0; i < 24; i++) E.minute(s, m, () => 0.99);
@@ -148,3 +151,17 @@ test("atualização de save anterior adiciona metadados sem recolocar atleta tra
     count,
   );
 });
+
+function invite(s, id) {
+  s.national.invites.push({
+    id: "test-" + id,
+    selectionId: id,
+    name: E.national.definitions.find((d) => d.id === id).name,
+    status: "pending",
+    season: s.season,
+    offset: s.today,
+    expires: s.today + 14,
+    required: 35,
+    reason: "Convite de teste para verificar convocação e partida.",
+  });
+}

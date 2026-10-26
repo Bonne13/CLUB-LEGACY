@@ -9,6 +9,7 @@
     "Erling Haaland": 550000,
     "Cristiano Ronaldo": 3800000,
     "Lionel Messi": 400000,
+    "Leo Messi": 400000,
     Neymar: 180000,
     "Mohamed Salah": 450000,
     "Giorgian de Arrascaeta": 70000,
@@ -64,10 +65,60 @@
       detail = row[11] || {},
       value =
         euroValue > 0 ? euroValue : Math.max(25000, Math.round(median * 0.35));
-    const ovr = Math.min(
+    const legacyOverall = Math.min(
       94,
       Math.max(45, Math.round(40 + 10 * Math.log10(value / 1000))),
     );
+    const id = /^\d+$/.test(sourceId) ? "tm-" + sourceId : sourceId;
+    const reference = DATA.playerRatings?.players?.[id];
+    const benchmarks = {
+      "tm-68290": 84,
+      "tm-248410": 84,
+      "tm-432895": 83,
+      "tm-80562": 82,
+      "tm-77100": 81,
+      "ss-1150391": 80,
+      "ss-954888": 81,
+      "ss-611876": 82,
+      "tm-588989": 82,
+      "ss-358554": 79,
+    };
+    const mature = age >= 27 && age <= 34 ? 2 : age < 21 ? -2 : 0;
+    const estimate = Math.max(
+      50,
+      Math.min(85, Math.round(46 + 8 * Math.log10(value / 1000) + mature)),
+    );
+    const ovr = reference?.overall || benchmarks[id] || estimate;
+    const potential =
+      reference?.potential ||
+      Math.min(90, ovr + (age < 20 ? 9 : age < 23 ? 6 : age < 27 ? 3 : 0));
+    const seed = [...id].reduce((n, c) => (n * 31 + c.charCodeAt(0)) >>> 0, 7);
+    const stamina =
+      reference?.stamina ||
+      Math.max(
+        50,
+        Math.min(
+          90,
+          Math.round(
+            78 -
+              Math.max(0, age - 29) * 0.9 +
+              (seed % 13) -
+              6 +
+              (["VOL", "LAT"].includes(pos) ? 3 : 0),
+          ),
+        ),
+      );
+    const natural = positionProfile?.natural?.length
+      ? positionProfile.natural
+      : reference?.positions?.slice(0, 1) || [];
+    const secondary = [
+      ...new Set([
+        ...(positionProfile?.secondary || []),
+        ...(reference?.positions || []).filter(
+          (code) => !natural.includes(code),
+        ),
+      ]),
+    ];
     const wageFactor = ["en", "es", "it", "de", "fr", "sa"].includes(leagueId)
       ? 1.2
       : leagueId === "br"
@@ -89,8 +140,8 @@
       ageUnknown: !dob && Boolean(detail.ageUnknown),
       birthSource: bio?.source || null,
       positionEstimated: Boolean(detail.positionEstimated),
-      naturalPositions: [...(positionProfile?.natural || [])],
-      secondaryPositions: [...(positionProfile?.secondary || [])],
+      naturalPositions: [...natural],
+      secondaryPositions: secondary,
       preferredFoot: positionProfile?.foot || bio?.foot || null,
       positionSource: positionProfile?.source || null,
       contractEstimated: Boolean(detail.sourceKey),
@@ -102,11 +153,24 @@
       pos,
       age,
       ovr,
-      potential: Math.min(97, ovr + (age < 21 ? 10 : age < 25 ? 5 : 1)),
+      potential: Math.max(ovr, potential),
+      stamina,
+      ratingBase: ovr,
+      legacyRatingBase: legacyOverall,
+      ratingRevision: DATA.playerRatings?.revision || "balanced-2026-v1",
+      ratingSource: reference
+        ? "FC26 · " + reference.reference
+        : "Estimativa do jogo",
+      ratingEstimated: !reference,
+      referenceOverall: reference?.overall || null,
       fitness: 100,
+      fatigue: 0,
+      trainingPlan: "auto",
+      restDays: 0,
       injury: 0,
       price: Math.round(value * DATA.eurBrl),
       salary: Math.round(salary),
+      marketSalary: Math.max(Math.round(salary),Math.round(Math.pow(Math.max(0,ovr-50),3)*(["en","es","it","de","fr"].includes(leagueId)?5:leagueId==="br"?4:["us","mx","sa","pt","nl"].includes(leagueId)?2.6:1.2))),
       contract: Math.max(season, Number(contract?.slice(0, 4)) || season + 2),
       real: true,
       referenceValueEuro: historicalSource?.startsWith("sofifa-")

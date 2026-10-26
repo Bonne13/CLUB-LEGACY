@@ -44,7 +44,21 @@ const { chromium } = require("playwright"),
       (await p.locator("#content").innerText()).includes("32 anos · Portugal"),
     );
     await p.getByRole("button", { name: "Seleções", exact: true }).click();
-    await p.locator("#national-choice").selectOption("nt-Argentina");
+    await p.evaluate(() => {
+      const id = "nt-Argentina";
+      state.national.invites.push({
+        id: "browser-invite",
+        selectionId: id,
+        name: E.national.definitions.find((d) => d.id === id).name,
+        season: state.season,
+        offset: state.today,
+        expires: state.today + 14,
+        required: 35,
+        status: "pending",
+        reason: "Oferta de federação para testar convocação e persistência.",
+      });
+      render();
+    });
     await p.locator("[data-action=assume-national]").click();
     assert.equal(await p.evaluate(() => state.national.job), "nt-Argentina");
     await p.locator("#national-filter").selectOption("called");
@@ -63,6 +77,7 @@ const { chromium } = require("playwright"),
     await p
       .getByRole("button", { name: "Simular período", exact: true })
       .click();
+    await p.waitForFunction(() => !advancing);
     assert.equal(await p.evaluate(() => state.today), 5);
     await p.getByRole("button", { name: "Dia de jogo", exact: true }).click();
     assert((await p.locator(".score").innerText()).includes("Argentina"));
@@ -80,13 +95,11 @@ const { chromium } = require("playwright"),
     assert.equal(exported.career.live.kind, "national");
     // Arquivo inválido preserva toda a simulação.
     const before = await p.evaluate(() => JSON.stringify(state));
-    await p
-      .locator("#import-file")
-      .setInputFiles({
-        name: "broken.json",
-        mimeType: "application/json",
-        buffer: Buffer.from("{invalid"),
-      });
+    await p.locator("#import-file").setInputFiles({
+      name: "broken.json",
+      mimeType: "application/json",
+      buffer: Buffer.from("{invalid"),
+    });
     await p.waitForTimeout(200);
     assert((await p.locator("#notification").innerText()).includes("inválido"));
     assert.equal(await p.evaluate(() => JSON.stringify(state)), before);

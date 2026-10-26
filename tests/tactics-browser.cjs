@@ -159,10 +159,25 @@ const { chromium } = require("playwright"),
     await p
       .getByRole("button", { name: "Simular período", exact: true })
       .click();
+    await p.waitForFunction(() => !advancing);
     assert(await p.locator("#match-day").isVisible());
     assert.equal(await p.locator('#nav [data-page="Dia de jogo"]').count(), 0);
     await p.getByRole("button", { name: "Seleções", exact: true }).click();
-    await p.locator("#national-choice").selectOption("nt-Brazil");
+    await p.evaluate(() => {
+      const id = "nt-Brazil";
+      state.national.invites.push({
+        id: "browser-invite",
+        selectionId: id,
+        name: E.national.definitions.find((d) => d.id === id).name,
+        season: state.season,
+        offset: state.today,
+        expires: state.today + 14,
+        required: 35,
+        status: "pending",
+        reason: "Oferta de federação para testar convocação e persistência.",
+      });
+      render();
+    });
     await p.locator("[data-action=assume-national]").click();
     await p.getByRole("button", { name: "Elenco", exact: true }).click();
     await p.locator("#tactical-scope").selectOption("national");

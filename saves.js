@@ -87,6 +87,29 @@
         number(p[k], 0);
       if (p.fitness > 100 || p.ovr > 100 || p.potential > 100 || p.age > 150)
         fail();
+      if (p.shirtNumber !== undefined) {
+        number(p.shirtNumber, 1, 99);
+        if (!Number.isInteger(p.shirtNumber)) fail();
+      }
+      if (
+        p.squadRole !== undefined &&
+        !Object.hasOwn(E.SQUAD_ROLES, p.squadRole)
+      )
+        fail();
+      if (p.fatigue !== undefined) number(p.fatigue, 0, 100);
+      if (p.restDays !== undefined) {
+        number(p.restDays, 0, 7);
+        if (!Number.isInteger(p.restDays)) fail();
+      }
+      if (
+        p.trainingPlan !== undefined &&
+        !["auto", "light", "normal", "intense"].includes(p.trainingPlan)
+      )
+        fail();
+      if (p.stamina !== undefined) number(p.stamina, 1, 100);
+      if(p.marketSalary!==undefined)number(p.marketSalary,0,30000000);
+      if (p.ratingBase !== undefined) number(p.ratingBase, 0, 100);
+
       for (const key of ["naturalPositions", "secondaryPositions"])
         if (
           p[key] !== undefined &&
@@ -112,6 +135,10 @@
       number(t.stadium, 1, 5);
       array(t.players, 300).forEach(player);
       array(t.youth, 300).forEach(player);
+      const shirts = [...t.players, ...t.youth]
+        .map((p) => p.shirtNumber)
+        .filter((n) => n !== undefined);
+      if (new Set(shirts).size !== shirts.length) fail();
       array(t.lineup, 11);
       if (t.lineup.some((id) => id && !t.players.some((p) => p.id === id)))
         fail();
@@ -161,6 +188,10 @@
           fail();
       };
       for (const n of negotiations) {
+        if (n.kind !== undefined && !["transfer", "renewal"].includes(n.kind))
+          fail();
+        if (n.kind === "renewal" && (n.buyerId !== n.sellerId || n.fee !== 0))
+          fail();
         string(n.id);
         string(n.playerId);
         string(n.playerName);
@@ -195,7 +226,7 @@
           !Number.isInteger(n.askYears) ||
           n.clubRounds > 3 ||
           n.playerRounds > 3 ||
-          !["important", "rotation", "prospect"].includes(n.role)
+          !Object.hasOwn(E.SQUAD_ROLES, n.role)
         )
           fail();
         if (n.salary > 30000000 || n.bonus > 1e12) fail();
@@ -204,9 +235,12 @@
         if (n.dueOn !== null) date(n.dueOn);
         if (n.expiresOn !== null) date(n.expiresOn);
         if (
-          ["club-pending", "player-pending", "medical-pending"].includes(
-            n.stage,
-          ) &&
+          [
+            "club-pending",
+            "player-pending",
+            "medical-pending",
+            "signature-pending",
+          ].includes(n.stage) &&
           !n.dueOn
         )
           fail();
@@ -332,6 +366,88 @@
           fail();
       }
     }
+    if (s.scouting !== undefined) {
+      const c = s.scouting;
+      number(c.sequence, 0);
+      number(c.revision, 0);
+      array(c.missions, 30).forEach((m) => {
+        string(m.id);
+        if (
+          !known.has(m.clubId) ||
+          !["market", "youth"].includes(m.scope) ||
+          !["pending", "completed", "cancelled"].includes(m.status)
+        )
+          fail();
+        number(m.season, 2025, 2200);
+        number(m.started, 0, 366);
+        number(m.due, 0, 800);
+        number(m.maxFee, 0, 1e13);
+        number(m.maxAge, 15, 23);
+        string(m.position);
+      });
+      array(c.reports, 12).forEach((r) => {
+        string(r.id);
+        if (!known.has(r.clubId) || !["market", "youth"].includes(r.scope))
+          fail();
+        number(r.season, 2025, 2200);
+        number(r.offset, 0, 366);
+        array(r.players, 10).forEach((p) => {
+          string(p.playerId);
+          if (p.clubId !== null && !known.has(p.clubId)) fail();
+          number(p.score, -100, 200);
+        });
+      });
+    }
+    if (s.trophies !== undefined) {
+      const ids = new Set();
+      array(s.trophies, 1000).forEach((t) => {
+        string(t.id);
+        string(t.name);
+        if (
+          ids.has(t.id) ||
+          !known.has(t.clubId) ||
+          !["league", "continental"].includes(t.kind)
+        )
+          fail();
+        ids.add(t.id);
+        number(t.season, 2025, 2200);
+        number(t.offset, 0, 366);
+        if (t.coachId !== null && t.coachId !== "you") fail();
+        if (typeof t.celebrated !== "boolean") fail();
+      });
+    }
+    if (s.fixtureResults !== undefined)
+      array(s.fixtureResults, 2000).forEach((r) => {
+        if (
+          !Array.isArray(r.pair) ||
+          r.pair.length !== 2 ||
+          r.pair.some((id) => !known.has(id) && !nationalIDs.has(id))
+        )
+          fail();
+        number(r.season, 2025, 2200);
+        number(r.offset, 0, 366);
+        array(r.goals, 2).forEach((g) => number(g, 0, 99));
+        string(r.competition);
+      });
+    if (s.national?.invites !== undefined) {
+      array(s.national.invites, 24).forEach((o) => {
+        string(o.id);
+        string(o.name);
+        string(o.reason, 1000);
+        if (
+          !nationalIDs.has(o.selectionId) ||
+          !["pending", "accepted", "declined", "expired"].includes(o.status)
+        )
+          fail();
+        number(o.season, 2025, 2200);
+        number(o.offset, 0, 366);
+        number(o.expires, 0, 800);
+        number(o.required, 0, 100);
+      });
+      number(s.national.invitationRevision, 0);
+      number(s.national.nextReview, 0, 800);
+    }
+    if(s.matchPreferences!==undefined&&![120,400,900,1600].includes(s.matchPreferences.speed))fail();
     if (s.live) {
       const m = s.live;
       if (
@@ -348,6 +464,34 @@
       number(m.day, 0, 51);
       if (m.goals.length !== 2 || m.shots.length !== 2) fail();
       if (!["text", "2d"].includes(m.mode)) fail();
+      if (m.minutesPlayed)
+        for (const [id, minutes] of Object.entries(m.minutesPlayed)) {
+          string(id);
+          number(minutes, 0, 90);
+        }
+      if (m.possession) array(m.possession, 2).forEach((n) => number(n, 0, 90));
+      if (m.substitutions)
+        array(m.substitutions, 10).forEach((c) => {
+          number(c.side, 0, 1);
+          number(c.minute, 0, 90);
+          string(c.outId);
+          string(c.inId);
+        });
+      const play = (p) => {
+        string(p.id);
+        if (!["goal", "shot", "build-up"].includes(p.type)) fail();
+        number(p.minute, 0, 90);
+        number(p.side, 0, 1);
+        if(p.playerId!==null)string(p.playerId);
+        string(p.playerName);
+        array(p.path, 4).forEach((point) => {
+          number(point.x, 0, 100);
+          number(point.y, 0, 100);
+        });
+        if(p.positions)array(p.positions,22).forEach(point=>{string(point.id);string(point.name);number(point.side,0,1);number(point.index,0,10);number(point.x,0,100);number(point.y,0,100);});
+      };
+      if (m.timeline) array(m.timeline, 40).forEach(play);
+      if (m.goalReplays) array(m.goalReplays, 12).forEach(play);
     }
     return s;
   }

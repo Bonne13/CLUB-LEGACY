@@ -32,7 +32,7 @@ const assert = require("node:assert/strict");
     await page
       .getByRole("status")
       .innerText()
-      .then((t) => t.includes("concluída")),
+      .then((t) => t.includes("Proposta enviada")),
   );
   await page
     .getByRole("button", { name: "Vender", exact: true })
@@ -117,6 +117,7 @@ const assert = require("node:assert/strict");
     persist();
   });
   await page.getByRole("button", { name: "Carreira", exact: true }).click();
+  while(await page.locator("#trophy-dialog").isVisible())await page.locator("[data-action=close-celebration]").click();
   page.once("dialog", (d) => d.accept());
   await page.getByRole("button", { name: "Aceitar proposta" }).first().click();
   await page.getByRole("button", { name: "Visão geral", exact: true }).click();
