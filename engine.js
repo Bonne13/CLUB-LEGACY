@@ -43,6 +43,8 @@
     typeof module !== "undefined"
       ? require("./performance.js")
       : root.LegacyPerformance;
+  const PR =
+    typeof module !== "undefined" ? require("./press.js") : root.LegacyPress;
   const LEAGUES = WORLD.leagues;
   const CUP_DEFS = [
     {
@@ -823,7 +825,7 @@
     });
     s.articles = s.articles.slice(0, 180);
   }
-  function journal(s, scope = "club", category = "all") {
+  function journal(s, scope = "club", category = "all", filters = {}) {
     if (!s.clubId) return [];
     ensureJournal(s);
     const own = team(s),
@@ -864,19 +866,22 @@
           ...articleMeta(s, f.pair, f.competition),
         });
       }
-    let filtered = articles.filter((a) => {
-      if (category !== "all" && a.category !== category) return false;
-      if (scope === "club")
-        return (
-          a.clubIds.includes(s.clubId) || a.clubIds.includes(s.national?.job)
-        );
-      if (scope === "league")
-        return (
-          a.competitionId === ownLeague.id ||
-          a.clubIds.some((id) => team(s, id)?.leagueId === ownLeague.id)
-        );
-      return a.regions.includes(ownLeague.region);
-    });
+    let filtered = articles
+      .filter((a) => {
+        if (category !== "all" && a.category !== category) return false;
+        if (scope === "club")
+          return (
+            a.clubIds.includes(s.clubId) || a.clubIds.includes(s.national?.job)
+          );
+        if (scope === "league")
+          return (
+            a.competitionId === ownLeague.id ||
+            a.clubIds.some((id) => team(s, id)?.leagueId === ownLeague.id)
+          );
+        return scope === "world" || a.regions.includes(ownLeague.region);
+      })
+      .map((article) => ({ ...article, press: PR.coverage(s, article) }))
+      .filter((article) => PR.matches(article, filters));
     // As prévias não devem esconder resultados e movimentações já publicados.
     if (category === "all") {
       const previews = filtered
@@ -904,7 +909,8 @@
       .sort(
         (a, b) =>
           b.season - a.season ||
-          b.day - a.day ||
+          (b.offset ?? calendar(s)[b.day]?.offset ?? 0) -
+            (a.offset ?? calendar(s)[a.day]?.offset ?? 0) ||
           Number(a.category === "preview") - Number(b.category === "preview"),
       )
       .slice(0, 80)
@@ -3534,6 +3540,7 @@
     physical: P,
     training: TR,
     performance: PF,
+    press: PR,
     setRecoveryPlan,
     NEGOTIATION_STAGES,
     negotiationActive,

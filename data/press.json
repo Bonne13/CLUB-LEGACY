@@ -1,0 +1,277 @@
+{
+  "version": 1,
+  "checkedAt": "2026-10-26",
+  "outlets": [
+    {
+      "id": "ge",
+      "name": "ge",
+      "url": "https://ge.globo.com/",
+      "leagues": [
+        "br"
+      ],
+      "regions": [
+        "sa"
+      ],
+      "focus": "Futebol brasileiro e cobertura internacional."
+    },
+    {
+      "id": "uol",
+      "name": "UOL Esporte",
+      "url": "https://www.uol.com.br/esporte/",
+      "leagues": [
+        "br"
+      ],
+      "regions": [
+        "sa"
+      ],
+      "focus": "Futebol brasileiro, análise e mercado."
+    },
+    {
+      "id": "marca",
+      "name": "MARCA",
+      "url": "https://www.marca.com/futbol.html",
+      "leagues": [
+        "es"
+      ],
+      "regions": [
+        "eu"
+      ],
+      "focus": "Futebol espanhol e competições europeias."
+    },
+    {
+      "id": "as",
+      "name": "AS",
+      "url": "https://as.com/futbol/",
+      "leagues": [
+        "es"
+      ],
+      "regions": [
+        "eu"
+      ],
+      "focus": "Futebol espanhol e cenário internacional."
+    },
+    {
+      "id": "mundo-deportivo",
+      "name": "Mundo Deportivo",
+      "url": "https://www.mundodeportivo.com/futbol/fc-barcelona",
+      "leagues": [
+        "es"
+      ],
+      "regions": [
+        "eu"
+      ],
+      "focus": "Barcelona, futebol espanhol e Europa."
+    },
+    {
+      "id": "guardian",
+      "name": "The Guardian",
+      "url": "https://www.theguardian.com/football",
+      "leagues": [
+        "en",
+        "es",
+        "fr"
+      ],
+      "regions": [
+        "eu"
+      ],
+      "focus": "Análise, futebol europeu e transferências."
+    },
+    {
+      "id": "bbc",
+      "name": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football",
+      "leagues": [
+        "en"
+      ],
+      "regions": [
+        "eu"
+      ],
+      "focus": "Futebol britânico e cobertura mundial."
+    },
+    {
+      "id": "france-football",
+      "name": "France Football",
+      "url": "https://www.francefootball.fr/ballon-d-or/",
+      "leagues": [
+        "fr"
+      ],
+      "regions": [
+        "eu"
+      ],
+      "focus": "Premiações e futebol internacional."
+    },
+    {
+      "id": "di-marzio",
+      "name": "Gianluca Di Marzio",
+      "url": "https://www.gianlucadimarzio.com/",
+      "leagues": [
+        "it"
+      ],
+      "regions": [
+        "eu"
+      ],
+      "focus": "Futebol italiano e mercado de transferências."
+    }
+  ],
+  "journalists": [
+    {
+      "id": "pvc",
+      "name": "Paulo Vinícius Coelho (PVC)",
+      "outletId": "uol",
+      "url": "https://www.uol.com.br/esporte/colunas/pvc/",
+      "leagues": [
+        "br"
+      ],
+      "categories": [
+        "results",
+        "preview",
+        "market",
+        "competitions",
+        "coaches"
+      ],
+      "focus": "Análise e futebol brasileiro."
+    },
+    {
+      "id": "juca-kfouri",
+      "name": "Juca Kfouri",
+      "outletId": "uol",
+      "url": "https://www.uol.com.br/esporte/colunas/juca-kfouri/",
+      "leagues": [
+        "br"
+      ],
+      "categories": [
+        "club",
+        "results",
+        "competitions",
+        "coaches"
+      ],
+      "focus": "Futebol brasileiro e contexto esportivo."
+    },
+    {
+      "id": "lozetti",
+      "name": "Alexandre Lozetti",
+      "outletId": "ge",
+      "url": "https://ge.globo.com/blogs/blog-do-lozetti/",
+      "leagues": [
+        "br"
+      ],
+      "categories": [
+        "preview",
+        "results",
+        "training",
+        "competitions"
+      ],
+      "focus": "Tática e futebol brasileiro."
+    },
+    {
+      "id": "sid-lowe",
+      "name": "Sid Lowe",
+      "outletId": "guardian",
+      "url": "https://www.theguardian.com/profile/sidlowe",
+      "leagues": [
+        "es"
+      ],
+      "categories": [
+        "results",
+        "preview",
+        "coaches",
+        "competitions"
+      ],
+      "focus": "Futebol espanhol."
+    },
+    {
+      "id": "jonathan-wilson",
+      "name": "Jonathan Wilson",
+      "outletId": "guardian",
+      "url": "https://www.theguardian.com/profile/jonathanwilson",
+      "leagues": [
+        "en"
+      ],
+      "categories": [
+        "results",
+        "preview",
+        "training",
+        "competitions"
+      ],
+      "focus": "Análise tática e futebol internacional."
+    },
+    {
+      "id": "philippe-auclair",
+      "name": "Philippe Auclair",
+      "outletId": "guardian",
+      "url": "https://www.theguardian.com/profile/philippe-auclair",
+      "leagues": [
+        "fr",
+        "en"
+      ],
+      "categories": [
+        "competitions",
+        "club",
+        "coaches"
+      ],
+      "focus": "Futebol francês e europeu."
+    },
+    {
+      "id": "fabrizio-romano",
+      "name": "Fabrizio Romano",
+      "outletId": "guardian",
+      "url": "https://www.theguardian.com/profile/fabrizio-romano",
+      "leagues": [],
+      "categories": [
+        "market",
+        "contracts",
+        "coaches"
+      ],
+      "focus": "Mercado de transferências; perfil de jornalista independente."
+    },
+    {
+      "id": "gianluca-di-marzio",
+      "name": "Gianluca Di Marzio",
+      "outletId": "di-marzio",
+      "url": "https://www.gianlucadimarzio.com/",
+      "leagues": [
+        "it"
+      ],
+      "categories": [
+        "market",
+        "contracts",
+        "coaches",
+        "competitions"
+      ],
+      "focus": "Futebol italiano e mercado de transferências."
+    }
+  ],
+  "awardCriteria": {
+    "sourceName": "Ballon d’Or · página oficial",
+    "url": "https://ballondor.com/pt/the-ballon-dor",
+    "checkedAt": "2026-10-26",
+    "pillars": [
+      {
+        "id": "individual",
+        "order": 1,
+        "name": "Desempenho individual",
+        "description": "Qualidade das atuações e capacidade de decidir jogos.",
+        "application": "Notas, gols, assistências, regularidade, gols e assistências que definem vitórias e destaque no mata-mata continental."
+      },
+      {
+        "id": "collective",
+        "order": 2,
+        "name": "Resultados coletivos",
+        "description": "Conquistas da equipe e contribuição do atleta.",
+        "application": "Títulos recebem pesos diferentes e só pontuam proporcionalmente à participação pelo clube campeão."
+      },
+      {
+        "id": "fair-play",
+        "order": 3,
+        "name": "Classe e fair play",
+        "description": "Conduta esportiva como parte da avaliação real.",
+        "application": "Referência informativa: cartões e sanções disciplinares ainda não são acompanhados; este item não dá bônus nem punições no jogo."
+      }
+    ],
+    "decisivenessCap": 20,
+    "winningGoalPoints": 1.5,
+    "winningAssistPoints": 1,
+    "knockoutMvpPoints": 3,
+    "note": "Adaptação estatística do jogo. Não reproduz uma votação real nem atribui votos a jornalistas reais."
+  }
+}

@@ -132,7 +132,10 @@ let setupLeague = "br",
   setupCalendar = "regional",
   setupProfile = { name: "", age: 35, nationality: "Brazil" },
   newsScope = "club",
-  newsCategory = "all";
+  newsCategory = "all",
+  newsOutlet = "all",
+  newsJournalist = "all",
+  newsQuery = "";
 let managerScope = "club",
   appearanceKey = "",
   navigationReady = false,
@@ -1133,8 +1136,35 @@ const newsCategories = {
   training: "Treinamento",
   club: "Clube",
 };
+function pressDirectory() {
+  const data = E.press.data;
+  return `<details class="card press-directory"><summary>Veículos e jornalistas de referência</summary><p class="muted">Conheça os perfis reais e abra as páginas de origem. As matérias desta carreira são escritas pela Redação Legacy e não representam publicações ou opiniões dessas pessoas.</p><h3>Veículos</h3><div class="press-outlets">${data.outlets.map((o) => `<a href="${esc(o.url)}" target="_blank" rel="noopener noreferrer"><strong>${esc(o.name)}</strong><small>${esc(o.focus)}</small></a>`).join("")}</div><h3>Jornalistas</h3><div class="press-profiles">${data.journalists
+    .map(
+      (p) =>
+        `<article><span class="press-initials" aria-hidden="true">${esc(
+          p.name
+            .split(" ")
+            .slice(0, 2)
+            .map((n) => n[0])
+            .join(""),
+        )}</span><div><h4>${esc(p.name)}</h4><p>${esc(p.focus)}</p><a href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">Abrir perfil de referência ↗</a></div><button data-action="press-follow" data-id="${p.id}">Ver cobertura simulada</button></article>`,
+    )
+    .join(
+      "",
+    )}</div><small>Referências consultadas em ${data.checkedAt.split("-").reverse().join("/")}.</small></details>`;
+}
+function realAwardCriteria() {
+  const c = E.press.data.awardCriteria,
+    start = state.performance?.criteriaStarted;
+  return `<section class="card real-award-criteria" id="award-real-criteria" tabindex="-1"><div class="row"><div><span class="badge">REFERÊNCIA DA PREMIAÇÃO REAL</span><h3>O que inspira a Bola de Ouro da carreira</h3></div><a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">Consultar critérios oficiais ↗</a></div><div class="criteria-pillars">${c.pillars.map((p) => `<article><span class="criteria-order">0${p.order}</span><h4>${esc(p.name)}</h4><p>${esc(p.description)}</p><small>${esc(p.application)}</small></article>`).join("")}</div><p class="muted">A ordem de referência começa pelo desempenho individual. O jogo adapta esses pilares a estatísticas; não simula votos de jornalistas reais.</p><details><summary>Novos pontos por atuações decisivas</summary><p>O gol da vitória é o gol de número “gols sofridos + 1” do time vencedor: vale ${note(c.winningGoalPoints)} ponto(s). A assistência nesse gol vale ${note(c.winningAssistPoints)}. Ser melhor em campo nas quartas, semifinais ou final de uma copa continental vale ${note(c.knockoutMvpPoints)}.</p><p>O bônus de atuações decisivas é limitado a ${c.decisivenessCap} pontos por apuração. Jogos empatados não geram gol da vitória; amistosos continuam fora dos rankings oficiais. Apenas gols acompanhados depois desta atualização contam.${start ? " Início desse acompanhamento: " + E.formatDate({ ...state, season: start.season }, start.offset) + "." : ""}</p></details></section>`;
+}
+
 function newspaper() {
-  const articles = E.journal(state, newsScope, newsCategory),
+  const articles = E.journal(state, newsScope, newsCategory, {
+      outlet: newsOutlet,
+      journalist: newsJournalist,
+      query: newsQuery,
+    }),
     ownLeague = E.league(state, team().leagueId);
   const regions = {
     eu: "Europa",
@@ -1147,11 +1177,14 @@ function newspaper() {
       ? team().name
       : newsScope === "league"
         ? ownLeague.name
-        : regions[ownLeague.region];
-  return `<section class="newspaper"><div class="paper-masthead"><div><span class="badge">O FUTEBOL ACONTECE AQUI</span><h2>LEGACY <em>Jornal</em></h2></div><span>${esc(E.date(state))}<br>Temporada ${E.seasonLabel(state)}</span></div><div class="paper-edition"><strong>${esc(scopeLabel)}</strong><span>Notícias do universo da sua carreira</span></div><div class="news-toolbar"><div class="scope-filters" role="group" aria-label="Abrangência das notícias">${[
+        : newsScope === "world"
+          ? "Futebol mundial"
+          : regions[ownLeague.region];
+  return `<section class="newspaper"><div class="paper-masthead"><div><span class="badge">O FUTEBOL ACONTECE AQUI</span><h2>LEGACY <em>Jornal</em></h2></div><span>${esc(E.date(state))}<br>Temporada ${E.seasonLabel(state)}</span></div><div class="paper-edition"><strong>${esc(scopeLabel)}</strong><span>Notícias do universo da sua carreira</span></div><div class="press-disclosure"><span class="pill">COBERTURA SIMULADA</span><p>Os veículos e jornalistas são reais e aparecem como referências. Os textos e acontecimentos desta página pertencem ao jogo; não são notícias publicadas nem declarações feitas por eles.</p></div><div class="news-toolbar"><div class="scope-filters" role="group" aria-label="Abrangência das notícias">${[
     ["club", "Meu clube"],
     ["league", "Minha liga"],
     ["continent", "Meu continente"],
+    ["world", "Mundo"],
   ]
     .map(
       ([id, label]) =>
@@ -1159,8 +1192,8 @@ function newspaper() {
     )
     .join(
       "",
-    )}</div><label class="inline">Editoria<select id="news-category">${options(Object.entries(newsCategories), newsCategory)}</select></label></div>
-    <div class="news-grid">${articles.map((a, i) => `<article class="news-article ${i === 0 ? "news-featured" : ""}" data-article="${esc(a.id)}" data-clubs="${esc(a.clubIds.join(" "))}"><div class="article-meta"><span>${newsCategories[a.category] || "Clube"}</span><time>${esc(E.formatDate({ ...state, season: a.season }, a.offset ?? E.calendar(state)[a.day]?.offset ?? 0))}</time></div><h3>${esc(a.title)}</h3>${a.body ? `<p>${esc(a.body)}</p>` : ""}<div class="article-clubs">${a.clubIds.map((id) => teamLabel(id, "tiny")).join("")}</div></article>`).join("") || '<div class="news-empty"><h3>Nenhuma notícia nesta editoria</h3><p class="muted">Escolha outra editoria ou avance a carreira para acompanhar novos acontecimentos.</p></div>'}</div></section>`;
+    )}</div><label class="inline">Editoria<select id="news-category">${options(Object.entries(newsCategories), newsCategory)}</select></label></div><form id="press-search" class="press-filters"><label>Veículo de referência<select id="news-outlet">${options([["all", "Todos os veículos"], ...E.press.data.outlets.map((o) => [o.id, o.name])], newsOutlet)}</select></label><label>Jornalista de referência<select id="news-journalist">${options([["all", "Todos os perfis"], ...E.press.data.journalists.filter((p) => newsOutlet === "all" || p.outletId === newsOutlet).map((p) => [p.id, p.name])], newsJournalist)}</select></label><label>Buscar no jornal<input id="news-query" type="search" value="${esc(newsQuery)}" placeholder="Jogador, treinador, clube…"></label><button class="primary">Filtrar</button>${btn("Limpar", "press-clear").replace("<button ", '<button type="button" ')}</form><p class="muted press-results">${articles.length} matérias nesta seleção · autoria: Redação Legacy</p>
+    <div class="news-grid">${articles.map((a, i) => `<article class="news-article ${i === 0 ? "news-featured" : ""}" data-article="${esc(a.id)}" data-clubs="${esc(a.clubIds.join(" "))}"><div class="press-source"><a href="${esc(a.press.outlet.url)}" target="_blank" rel="noopener noreferrer">${esc(a.press.outlet.name)}</a><small>Simulação</small></div><div class="article-meta"><span>${newsCategories[a.category] || "Clube"}</span><time>${esc(E.formatDate({ ...state, season: a.season }, a.offset ?? E.calendar(state)[a.day]?.offset ?? 0))}</time></div><h3>${esc(a.title)}</h3>${a.body ? `<p>${esc(a.body)}</p>` : ""}<div class="article-clubs">${a.clubIds.map((id) => teamLabel(id, "tiny")).join("")}</div><footer class="article-reference"><strong>${a.press.byline}</strong>${a.press.journalist ? `<span>Perfil de referência: <a href="${esc(a.press.journalist.url)}" target="_blank" rel="noopener noreferrer">${esc(a.press.journalist.name)}</a></span>` : "<span>Veículo usado como referência de cobertura.</span>"}</footer></article>`).join("") || '<div class="news-empty"><h3>Nenhuma notícia nesta seleção</h3><p class="muted">Amplie a abrangência ou limpe os filtros para acompanhar outras coberturas da carreira.</p><button data-action="news-scope" data-id="world">Ver o mundo</button></div>'}</div>${pressDirectory()}</section>`;
 }
 function referenceClubName(id) {
   const [code, index] = id.split("-"),
@@ -1911,6 +1944,17 @@ document.addEventListener("click", (event) => {
     $("#calendar-dialog").close();
     return;
   }
+  if (a === "show-award-criteria") {
+    const section = $("#award-real-criteria");
+    section?.focus({ preventScroll: true });
+    section?.scrollIntoView({
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+      block: "start",
+    });
+    return;
+  }
   if (a === "awards-page") {
     awardsPage = Math.max(0, awardsPage + Number(id));
     render();
@@ -2068,6 +2112,25 @@ document.addEventListener("click", (event) => {
   }
   if (a === "confirm-delete") {
     deleteCareer();
+    return;
+  }
+  if (a === "press-clear") {
+    newsOutlet = "all";
+    newsJournalist = "all";
+    newsQuery = "";
+    render();
+    return;
+  }
+  if (a === "press-follow") {
+    const p = E.press.data.journalists.find((p) => p.id === id);
+    if (p) {
+      newsOutlet = p.outletId;
+      newsJournalist = id;
+      newsScope = "world";
+      newsCategory = "all";
+      newsQuery = "";
+      render();
+    }
     return;
   }
   if (a === "news-scope") {
@@ -2387,6 +2450,19 @@ document.addEventListener("change", (event) => {
     render();
     return;
   }
+  if (el.id === "news-outlet") {
+    newsOutlet = el.value;
+    newsJournalist = "all";
+    render();
+    return;
+  }
+  if (el.id === "news-journalist") {
+    newsJournalist = el.value;
+    const p = E.press.data.journalists.find((p) => p.id === el.value);
+    if (p) newsOutlet = p.outletId;
+    render();
+    return;
+  }
   if (el.id === "news-category") {
     newsCategory = el.value;
     render();
@@ -2560,6 +2636,12 @@ document.addEventListener("submit", (event) => {
       E.substitute(state, f.get("out"), f.get("in"));
       notify("Substituição realizada.");
     });
+    return;
+  }
+  if (event.target.id === "press-search") {
+    event.preventDefault();
+    newsQuery = $("#news-query").value.trim();
+    render();
     return;
   }
   if (event.target.id === "roster-search") {
@@ -3125,10 +3207,10 @@ function awardCard(a) {
         year: "numeric",
       })
     : a.seasonLabel;
-  return `<article class="card individual-award"><span class="award-symbol ${a.type === "ballon" ? "gold-ball" : ""}" aria-hidden="true">${a.type === "ballon" ? "" : a.type === "keeper" ? "◈" : "★"}</span><span class="badge">${esc(a.name)}</span><h3>${esc(a.winner.name)}</h3><p>${teamLabel(a.winner.clubId, "small")}</p><p class="award-period">${esc(month)}${a.competitionName ? " · " + esc(a.competitionName) : ""}</p><div class="award-card-stats"><span>Nota <b>${note(a.winner.average, 2)}</b></span>${a.type === "keeper" ? `<span><b>${a.winner.saves}</b> defesas</span><span><b>${a.winner.keeperCleanSheets}</b> sem sofrer gol</span>` : `<span><b>${a.winner.goals}</b> gols</span><span><b>${a.winner.assists}</b> assistências</span>`}</div><details><summary>Ver pontuação e pódio</summary>${a.podium.map((p, i) => `<p>${i + 1}º · ${esc(p.name)} · ${note(p.points.total)} pontos</p>`).join("")}<small>${a.partial ? "Apuração parcial: esta temporada já estava em andamento ao iniciar o acompanhamento." : "Apuração do desempenho acompanhado na temporada."}</small></details></article>`;
+  return `<article class="card individual-award"><span class="award-symbol ${a.type === "ballon" ? "gold-ball" : ""}" aria-hidden="true">${a.type === "ballon" ? "" : a.type === "keeper" ? "◈" : "★"}</span><span class="badge">${esc(a.name)}</span><h3>${esc(a.winner.name)}</h3><p>${teamLabel(a.winner.clubId, "small")}</p><p class="award-period">${esc(month)}${a.competitionName ? " · " + esc(a.competitionName) : ""}</p><div class="award-card-stats"><span>Nota <b>${note(a.winner.average, 2)}</b></span>${a.type === "keeper" ? `<span><b>${a.winner.saves}</b> defesas</span><span><b>${a.winner.keeperCleanSheets}</b> sem sofrer gol</span>` : `<span><b>${a.winner.goals}</b> gols</span><span><b>${a.winner.assists}</b> assistências</span>`}</div><details><summary>Ver pontuação e pódio</summary>${a.podium.map((p, i) => `<p>${i + 1}º · ${esc(p.name)} · ${note(p.points.total)} pontos</p>`).join("")}<small>${a.partial ? "Apuração parcial: esta temporada já estava em andamento ao iniciar o acompanhamento." : "Apuração do desempenho acompanhado na temporada."}</small>${(a.criteriaRevision || 1) < 2 ? '<small class="sub">Resultado preservado com os critérios vigentes na época.</small>' : ""}</details></article>`;
 }
 function performanceDetails(p) {
-  return `<details class="performance-breakdown"><summary>Como foram calculados os ${note(p.points.total)} pontos</summary><dl><dt>Desempenho e nota média</dt><dd>${note(p.points.performance)}</dd><dt>Gols e assistências</dt><dd>${note(p.points.production)}</dd><dt>Minutos e melhores em campo</dt><dd>${note(p.points.consistency)}</dd><dt>Contribuição para títulos</dt><dd>${note(p.points.titles)}</dd>${awardsKind === "keeper" ? `<dt>Defesas, eficiência e jogos sem sofrer gol</dt><dd>${note(p.points.goalkeeping)}</dd>` : ""}</dl></details>`;
+  return `<details class="performance-breakdown"><summary>Como foram calculados os ${note(p.points.total)} pontos</summary><dl><dt>Desempenho e nota média</dt><dd>${note(p.points.performance)}</dd><dt>Gols e assistências</dt><dd>${note(p.points.production)}</dd><dt>Minutos e melhores em campo</dt><dd>${note(p.points.consistency)}</dd><dt>Contribuição para títulos</dt><dd>${note(p.points.titles)}</dd><dt>Atuações decisivas</dt><dd>${note(p.points.decisiveness || 0)}</dd>${awardsKind === "keeper" ? `<dt>Defesas, eficiência e jogos sem sofrer gol</dt><dd>${note(p.points.goalkeeping)}</dd>` : ""}</dl><p class="muted">${p.decisiveGoals || 0} gols da vitória · ${p.decisiveAssists || 0} assistências decisivas · ${p.knockoutMvp || 0} melhores em campo no mata-mata continental.</p></details>`;
 }
 function awardsView() {
   const data = E.performance.ensure(state),
@@ -3181,7 +3263,7 @@ function awardsView() {
     awardsKind === "competition"
       ? current.competitions[comp]?.closed
       : ["ballon", "keeper", "month"].includes(awardsKind) && current.closed;
-  return `<div class="hero awards-hero"><div><span class="badge">PRÊMIOS INDIVIDUAIS · ${E.seasonLabel(state)}</span><h2>Uma temporada para fazer história.</h2><p>O reconhecimento vem do que acontece em campo: notas, gols, assistências, defesas e contribuição para os títulos.</p></div><span class="awards-emblem" aria-hidden="true">✦</span></div><section class="card"><div class="awards-toolbar"><label>Premiação<select id="awards-kind">${options(kinds, awardsKind)}</select></label>${["competition", "month"].includes(awardsKind) ? `<label>Campeonato<select id="awards-competition">${options([...state.leagues.map((l) => [l.id, l.name]), ...state.cups.map((c) => [c.id, c.name])], awardsCompetition)}</select></label>` : ""}<label>Atletas<select id="awards-scope">${options(
+  return `<div class="hero awards-hero"><div><span class="badge">PRÊMIOS INDIVIDUAIS · ${E.seasonLabel(state)}</span><h2>Uma temporada para fazer história.</h2><p>O reconhecimento vem do que acontece em campo: notas, gols, assistências, defesas e contribuição para os títulos.</p><button data-action="show-award-criteria">Ver critérios e fontes →</button></div><span class="awards-emblem" aria-hidden="true">✦</span></div><section class="card"><div class="awards-toolbar"><label>Premiação<select id="awards-kind">${options(kinds, awardsKind)}</select></label>${["competition", "month"].includes(awardsKind) ? `<label>Campeonato<select id="awards-competition">${options([...state.leagues.map((l) => [l.id, l.name]), ...state.cups.map((c) => [c.id, c.name])], awardsCompetition)}</select></label>` : ""}<label>Atletas<select id="awards-scope">${options(
     [
       ["all", "Todos os clubes"],
       ["club", "Meu elenco"],
@@ -3197,7 +3279,7 @@ function awardsView() {
           '<section class="card awards-empty"><span class="award-symbol">☆</span><h3>As primeiras conquistas estão por vir.</h3><p>O melhor do mês é anunciado na mudança do mês; os demais vencedores, ao concluir a competição ou a temporada.</p></section>'
         }</div>${awards.length > 12 ? `<div class="row">${btn("← Anterior", "awards-page", "-1")}<span>${awards.length} premiações</span>${btn("Próxima →", "awards-page", "1")}</div>` : ""}`
       : `${winner ? `<div class="confirmed-award">${awardsKind === "month" ? '<p class="muted">Último mês premiado</p>' : ""}${awardCard(winner)}</div>` : ""}<section class="card"><div class="row"><h3>${esc(kinds.find((k) => k[0] === awardsKind)[1])} · ${ranked.length} atletas</h3><span class="pill">${awardsKind === "month" ? "Mínimo: 2 jogos e 120 min" : comp ? "Mínimo: 3 jogos e 180 min" : "Mínimo: 10 jogos e 900 min"}</span></div><div class="table-wrap"><table class="awards-table"><thead><tr><th>#</th><th>JOGADOR</th><th>J / MIN</th><th>NOTA MÉDIA</th>${gk ? "<th>DEFESAS</th><th>EFICIÊNCIA</th><th>SEM SOFRER GOL</th>" : "<th>GOLS</th><th>ASSIST.</th><th>MELHOR EM CAMPO</th>"}<th>PONTOS</th></tr></thead><tbody>${list.map((p, i) => `<tr class="${p.clubId === state.clubId ? "mine" : ""}"><td>${awardsPage * 12 + i + 1}</td><td><strong>${esc(p.name)}</strong><span class="sub">${teamLabel(p.clubId, "tiny")}</span>${p.eligible ? "" : '<small class="sub">Amostra ainda insuficiente</small>'}${performanceDetails(p)}</td><td data-stat="Jogos / minutos">${gk ? p.keeperMatches : p.appearances}<small class="sub">${gk ? p.keeperMinutes : p.minutes} min</small></td><td data-stat="Nota média"><span class="match-note ${(p.average || 0) >= 8 ? "excellent" : ""}">${note(p.average, 2)}</span></td>${gk ? `<td data-stat="Defesas">${p.saves}<small class="sub">${p.keeperMatches ? note(p.saves / p.keeperMatches, 2) : "—"} por jogo</small></td><td data-stat="Eficiência">${p.faced ? Math.round((p.saves / p.faced) * 100) + "%" : "—"}<small class="sub">${p.keeperConceded} sofridos</small></td><td data-stat="Sem sofrer gol">${p.keeperCleanSheets}</td>` : `<td data-stat="Gols">${p.goals}</td><td data-stat="Assistências">${p.assists}</td><td data-stat="Melhor em campo">${p.playerOfMatch}</td>`}<td data-stat="Pontos"><strong>${note(p.points.total, 2)}</strong></td></tr>`).join("") || '<tr><td colspan="8"><div class="awards-empty"><span class="award-symbol">☆</span><h3>A disputa começa em campo.</h3><p>Dispute partidas oficiais para acompanhar os candidatos. Amistosos recebem notas, mas ficam fora desta classificação.</p></div></td></tr>'}</tbody></table></div>${ranked.length ? `<div class="row">${btn("← Anterior", "awards-page", "-1")}<span>Página ${awardsPage + 1} de ${pages}</span>${btn("Próxima →", "awards-page", "1")}</div>` : ""}</section>`
-  }<details class="card award-rules"><summary>Critérios da premiação</summary><p>As notas vão de 1 a 10. Jogadores de linha são avaliados por gols, assistências, chances criadas, passe, recuperações, duelos e resultado. Defensores recebem peso maior pelo trabalho defensivo. Goleiros são avaliados principalmente por defesas, eficiência contra chutes no alvo, gols sofridos e jogos sem sofrer gol.</p><p>Na Bola de Ouro: desempenho = (nota média − 5) × 30; produção = gols × 2,2 + assistências × 1,6; regularidade considera minutos e melhores em campo. Títulos acrescentam pontos proporcionais aos minutos pelo clube vencedor: liga 30, Champions 40, Libertadores 35, Europa League 25 e Conference 18. Não basta pertencer ao elenco campeão.</p><p>No prêmio de goleiros, defesas, eficiência e jogos sem sofrer gol acrescentam pontos próprios; a taxa de gols sofridos por 90 minutos reduz a pontuação. Melhor do mês usa somente aquele mês e campeonato, sem bônus de título. Os prêmios anuais seguem o ciclo da temporada da carreira, e não uma votação oficial. Não há premiação em dinheiro.</p></details>${recentPerformancesView()}`;
+  }${realAwardCriteria()}<details class="card award-rules"><summary>Critérios da premiação</summary><p>As notas vão de 1 a 10. Jogadores de linha são avaliados por gols, assistências, chances criadas, passe, recuperações, duelos e resultado. Defensores recebem peso maior pelo trabalho defensivo. Goleiros são avaliados principalmente por defesas, eficiência contra chutes no alvo, gols sofridos e jogos sem sofrer gol.</p><p>Na Bola de Ouro: desempenho = (nota média − 5) × 30; produção = gols × 2,2 + assistências × 1,6; regularidade considera minutos e melhores em campo. Títulos acrescentam pontos proporcionais aos minutos pelo clube vencedor: liga 30, Champions 40, Libertadores 35, Europa League 25 e Conference 18. Não basta pertencer ao elenco campeão.</p><p>No prêmio de goleiros, defesas, eficiência e jogos sem sofrer gol acrescentam pontos próprios; a taxa de gols sofridos por 90 minutos reduz a pontuação. Melhor do mês usa somente aquele mês e campeonato, sem bônus de título. Os prêmios anuais seguem o ciclo da temporada da carreira, e não uma votação oficial. Não há premiação em dinheiro.</p></details>${recentPerformancesView()}`;
 }
 function recentPerformancesView() {
   const matches = (state.performance?.matches || []).slice(0, 8);

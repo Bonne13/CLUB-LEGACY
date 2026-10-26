@@ -34,13 +34,14 @@
     "keeperRatingSum",
     "keeperRatedMatches",
   ];
+  const extraKeys = ["decisiveGoals", "decisiveAssists", "knockoutMvp"];
   function emptyTotals(p) {
     return {
       id: p.id,
       name: p.name,
       pos: p.pos,
       clubId: p.clubId,
-      ...Object.fromEntries(totalKeys.map((k) => [k, 0])),
+      ...Object.fromEntries([...totalKeys, ...extraKeys].map((k) => [k, 0])),
       clubs: {},
     };
   }
@@ -66,6 +67,10 @@
         archives: [],
         matches: [],
       };
+    s.performance.criteriaStarted ??= {
+      season: s.season,
+      offset: s.today || 0,
+    };
     if (s.performance.current.season !== s.season) {
       const current = s.performance.current;
       s.performance.archives.unshift({
@@ -89,6 +94,10 @@
         playerOfMatch: null,
         final: false,
       };
+    if (!m.performance.goalEvents) {
+      m.performance.goalEvents = [];
+      m.performance.goalTrackingFrom = fromMinute;
+    }
     for (let side = 0; side < m.plans.length; side++)
       for (let i = 0; i < m.plans[side].starters.length; i++) {
         const p = m.plans[side].starters[i];
@@ -194,6 +203,14 @@
       g.faced++;
       if (saved) g.saves++;
     }
+    if (goal)
+      data.goalEvents.push({
+        minute: m.minute,
+        side,
+        ordinal: m.goals[side],
+        scorerId: actor?.id || null,
+        assistId: assist?.id || null,
+      });
     if (goal)
       for (const opponent of other.starters)
         data.players[opponent.id].conceded++;
@@ -302,6 +319,7 @@
     ])
       p[k] += line[k];
     p.cleanSheets += line.cleanSheet;
+    for (const key of extraKeys) p[key] = (p[key] || 0) + (line[key] || 0);
     if (line.keeper) {
       p.keeperMatches++;
       p.keeperMinutes += line.minutes;
@@ -373,6 +391,12 @@
       kind === "month"
         ? 0
         : round(credits ? credits[p.id] || 0 : titles(s, p, competition));
+    const decisiveness = Math.min(
+      20,
+      (p.decisiveGoals || 0) * 1.5 +
+        (p.decisiveAssists || 0) +
+        (p.knockoutMvp || 0) * 3,
+    );
     const goalkeeping =
       kind === "keeper"
         ? round(
@@ -387,13 +411,21 @@
     return {
       total: Math.max(
         0,
-        round(performance + production + consistency + team + goalkeeping),
+        round(
+          performance +
+            production +
+            consistency +
+            team +
+            goalkeeping +
+            decisiveness,
+        ),
       ),
       performance,
       production,
       consistency,
       titles: team,
       goalkeeping,
+      decisiveness,
     };
   }
   function rank(
@@ -469,6 +501,7 @@
       winner: list[0],
       podium: list.slice(0, 3),
       partial: data.current.startedOffset > 0,
+      criteriaRevision: 2,
     };
     data.awards.unshift(award);
     data.awards = data.awards.slice(0, 2000);
@@ -501,8 +534,27 @@
       offset = m.offset ?? s.today,
       key = [offset, m.competition, m.pair.join("|")].join(":");
     if (current.processed[key]) return m.performance.playerOfMatch;
+    for (const p of Object.values(m.performance.players))
+      for (const key of extraKeys) p[key] = 0;
+    const winSide =
+      m.goals[0] === m.goals[1] ? null : m.goals[0] > m.goals[1] ? 0 : 1;
+    const decisive =
+      winSide === null
+        ? null
+        : m.performance.goalEvents?.find(
+            (g) => g.side === winSide && g.ordinal === m.goals[1 - winSide] + 1,
+          );
+    if (decisive) {
+      const scorer = m.performance.players[decisive.scorerId],
+        assist = m.performance.players[decisive.assistId];
+      if (scorer) scorer.decisiveGoals = 1;
+      if (assist) assist.decisiveAssists = 1;
+    }
+    const top = best(m);
+    if (top && m.kind === "cup" && m.round >= 10 && m.round <= 12)
+      m.performance.players[top.id].knockoutMvp = 1;
     const stats = lines(m, true),
-      winner = best(m);
+      winner = stats.find((p) => p.id === top?.id) || null;
     m.performance.final = true;
     m.performance.playerOfMatch = winner;
     current.processed[key] = 1;
@@ -649,6 +701,8 @@
         fail();
       if (p.rating !== undefined && p.rating !== null) num(p.rating, 1, 10);
       if (p.cleanSheet !== undefined) num(p.cleanSheet, 0, 1, true);
+      for (const key of extraKeys)
+        if (p[key] !== undefined) num(p[key], 0, 1, true);
     }
     function totals(p) {
       base(p);
@@ -667,6 +721,10 @@
         p.duelsWon > p.duels
       )
         fail();
+      for (const key of extraKeys)
+        if (p[key] !== undefined) num(p[key], 0, 1000000, true);
+      if (p.points?.decisiveness !== undefined)
+        num(p.points.decisiveness, 0, 20);
       for (const [id, minutes] of Object.entries(p.clubs)) {
         club(id);
         num(minutes, 0, p.minutes, true);
@@ -693,6 +751,10 @@
     if (data.version !== 1) fail();
     num(data.started.season, 2025, 2200, true);
     num(data.started.offset, 0, 366, true);
+    if (data.criteriaStarted) {
+      num(data.criteriaStarted.season, 2025, 2200, true);
+      num(data.criteriaStarted.offset, 0, 366, true);
+    }
     const current = data.current;
     if (current.season !== s.season) fail();
     str(current.label);
@@ -770,6 +832,16 @@
       num(m.fromMinute, 0, 90, true);
       const ps = obj(m.players, 44);
       ps.forEach(line);
+      if (m.goalTrackingFrom !== undefined)
+        num(m.goalTrackingFrom, 0, 90, true);
+      if (m.goalEvents !== undefined)
+        for (const g of arr(m.goalEvents, 200)) {
+          num(g.minute, 0, 90, true);
+          num(g.side, 0, 1, true);
+          num(g.ordinal, 1, 99, true);
+          if (g.scorerId !== null) str(g.scorerId);
+          if (g.assistId !== null) str(g.assistId);
+        }
       if (m.playerOfMatch) line(m.playerOfMatch);
     }
   }
@@ -791,6 +863,7 @@
     closeSeason,
     official,
     totalKeys,
+    extraKeys,
     validate,
   };
   root.LegacyPerformance = api;
