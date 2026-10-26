@@ -27,7 +27,8 @@ def inline_script(match):
 html = re.sub(r'<script\s+src="([^"<>]+\.js)"\s*>\s*</script>', inline_script, html)
 assert not re.search(r'<script\s+src=', html), "Script externo não incorporado"
 html = html.replace('</head>', '<!-- Calendários: OpenFootball / football.json, CC0 1.0. -->\n</head>')
-license_text=(root / "vendor/LICENSE.lz-string.txt").read_text()
-html=html.replace("</head>", "<!-- LZ-String · licença MIT\n"+license_text.replace("--", "—")+"\n-->\n</head>")
+for dependency, filename in (("LZ-String", "LICENSE.lz-string.txt"), ("Three.js", "LICENSE.three.txt")):
+    license_text = (root / "vendor" / filename).read_text()
+    html = html.replace("</head>", "<!-- " + dependency + " · licença MIT\n" + license_text.replace("--", "—") + "\n-->\n</head>")
 output.write_text(html)
 print(f"Versão jogável atualizada: {output} ({output.stat().st_size} bytes)")

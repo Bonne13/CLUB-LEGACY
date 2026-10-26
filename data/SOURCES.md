@@ -94,3 +94,10 @@ O vínculo visual usa o nome do clube, sem depender apenas da posição na liga:
 `python3 scripts/import-badges.py` baixa arquivos ausentes, verifica os formatos e gera `badges-data.js`. `--refresh` baixa novamente as mesmas URLs. Os hashes versionados documentam a cópia distribuída, sem alegar que as URLs dos fornecedores sejam imutáveis. O build incorpora os arquivos locais sem depender dessas URLs.
 
 Energia, carga acumulada, recuperação, risco de lesão, observação de atletas, tolerância a propostas, convites de federações e papéis no elenco são regras da simulação. Números de uniforme são atribuídos pela carreira e podem ser editados; não constituem uma base oficial de camisas atuais. Janelas de transferência seguem os dias da temporada unificada, com datas explícitas na interface. A animação do campo deriva do autor e da trajetória de cada evento gerado, sem imagens reais de partidas.
+
+
+## Renderização 3D e regras de gestão (v0.9)
+
+[Three.js 0.160.1](https://github.com/mrdoob/three.js/tree/r160), licença MIT, distribuído em `vendor/three.min.js` com `vendor/LICENSE.three.txt`. Campo, arquibancadas, jogadores e bola são formas procedurais do próprio jogo; não são modelos, texturas ou animações extraídos de EA FC ou Football Manager. O renderizador acompanha eventos do motor local, sem pretender reproduzir física completa de futebol. A cópia local não exige CDN ou rede durante a partida.
+
+Focos e ganhos de treino, confiança dos relatórios, perfis de contratação e comparações de elenco são parâmetros da simulação. A lista de observação usa identidades reais já presentes no catálogo; não amplia a cobertura oficial dos dados nem inventa atletas. O custo do primeiro ano é uma estimativa de transferência, luvas e 52 salários semanais, não um balanço contábil oficial.

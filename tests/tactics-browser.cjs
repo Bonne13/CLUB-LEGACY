@@ -122,7 +122,9 @@ const { chromium } = require("playwright"),
     await p.locator("[data-action=reset-budget]").click();
     await p.locator(".budget-slider summary").click();
     await p.locator("#budget-share").fill("50");
-    const preview = Number(await p.locator("#budget-transfer").inputValue());
+    const preview = await p
+      .locator("#budget-transfer")
+      .evaluate((el) => LegacyMoney.parse(el.value));
     await p.locator("#apply-budget").click();
     assert.equal(
       await p.evaluate(() => team().finance.transferBudget),

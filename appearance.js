@@ -91,6 +91,21 @@
       return nationalColors(club.country || club.id.slice(3));
     if (!club) return { primary: "#2875c8", secondary: "#8ed7ff" };
     const updated = {
+      Barcelona: ["#a50044", "#004d98"],
+      Sevilla: ["#d71920", "#ffffff"],
+      "Real Madrid": ["#f5f7fb", "#c7a64a"],
+      "Manchester City": ["#6cabdd", "#1c2c5b"],
+      Liverpool: ["#c8102e", "#ffffff"],
+      Arsenal: ["#cf142b", "#ffffff"],
+      Chelsea: ["#034694", "#ffffff"],
+      Flamengo: ["#c8102e", "#171717"],
+      Palmeiras: ["#006437", "#ffffff"],
+      Corinthians: ["#171717", "#ffffff"],
+      Grêmio: ["#009bd6", "#171717"],
+      Santos: ["#f5f7fb", "#171717"],
+      Botafogo: ["#171717", "#ffffff"],
+      "Inter de Milão": ["#0068a8", "#171717"],
+      "Paris Saint-Germain": ["#004170", "#da291c"],
       "Athletico Paranaense": ["#cf102d", "#111111"],
       Chapecoense: ["#08783e", "#ffffff"],
       Coritiba: ["#087846", "#ffffff"],

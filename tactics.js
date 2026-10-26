@@ -402,7 +402,7 @@
         17,
       ),
       clamp = (n) => Math.max(25, Math.min(96, Math.round(n)));
-    return {
+    const result = {
       leadership: clamp(
         p.ovr * 0.55 + Math.min(37, p.age) * 0.85 + (seed % 13) - 5,
       ),
@@ -422,6 +422,15 @@
           5,
       ),
     };
+    const b = p.trainingBonuses || {};
+    result.crossing = clamp(
+      result.crossing + (b.technical || 0) + (b.balanced || 0) * 0.5,
+    );
+    result.leadership = clamp(result.leadership + (b.leadership || 0));
+    result.penalties = clamp(result.penalties + (b.setpieces || 0));
+    result.freeKicks = clamp(result.freeKicks + (b.setpieces || 0));
+    result.finishingBonus = b.finishing || 0;
+    return result;
   }
   function setAssignment(t, key, id) {
     if (
@@ -525,10 +534,26 @@
         attack += 0.3;
       if (r === "Ala" && plan.width === "Aberta") attack += 0.3;
     });
+    const trainedAttack =
+        ps.reduce(
+          (n, p) =>
+            n +
+            ((p?.trainingBonuses?.technical || 0) +
+              (p?.trainingBonuses?.balanced || 0) * 0.5),
+          0,
+        ) / 11,
+      trainedDefense =
+        ps.reduce(
+          (n, p) =>
+            n +
+            ((p?.trainingBonuses?.defending || 0) +
+              (p?.trainingBonuses?.balanced || 0) * 0.5),
+          0,
+        ) / 11;
     return {
       strength: total / 11,
-      attack: attack * 0.003,
-      defense: defense * 0.002,
+      attack: attack * 0.003 + trainedAttack * 0.001,
+      defense: defense * 0.002 + trainedDefense * 0.001,
       fatigue:
         (plan.pressing === "Alta" ? 3 : plan.pressing === "Baixa" ? -1 : 0) +
         (plan.tempo === "Rápido" ? 2 : plan.tempo === "Lento" ? -1 : 0),

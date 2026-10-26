@@ -23,6 +23,10 @@
     typeof module !== "undefined"
       ? require("./tactics.js")
       : root.LegacyTactics;
+  const TR =
+    typeof module !== "undefined"
+      ? require("./training.js")
+      : root.LegacyTraining;
   const P =
     typeof module !== "undefined"
       ? require("./physical.js")
@@ -455,6 +459,7 @@
     return result;
   }
   function prepareCareer(s) {
+    TR.ensure(s);
     SC.ensure(s);
     s.trophies ??= [];
     s.fixtureResults ??= [];
@@ -1112,7 +1117,7 @@
       ...copy(f),
       day: s.day,
       offset: s.today,
-      mode,
+      mode: ["text", "2d", "3d"].includes(mode) ? mode : "2d",
       minute: 0,
       goals: [0, 0],
       shots: [0, 0],
@@ -1458,6 +1463,11 @@
         type === "escanteio"
           ? `escanteio cobrado por ${taker?.name || own.name}`
           : type;
+      if (type === "jogada")
+        chance = Math.min(
+          0.9,
+          chance + (scorer?.skills.finishingBonus || 0) * 0.003,
+        );
       if (rng() < chance) {
         m.goals[side]++;
         if (!m.compact) recordPlay(m, "goal", side, scorer, detail);
@@ -1573,13 +1583,23 @@
     international = new Map(),
     playedMinutes = null,
   ) {
-    const mode = t.id === s.clubId ? s.training : "Técnica",
+    const nextTrainingMatch = t.id === s.clubId ? upcomingFixture(s) : null,
+      session =
+        t.id === s.clubId
+          ? TR.session(
+              s,
+              nextTrainingMatch ? nextTrainingMatch.offset - s.today : null,
+            )
+          : { key: "technical", mode: "Técnica", focus: "balanced" },
+      mode = session.mode,
       starters = played
         ? playedMinutes
           ? t.players.filter((p) => (playedMinutes[p.id] || 0) > 0)
           : lineup(t)
         : t.players.filter((p) => international.has(p.id)),
       fatigue = played ? T.ratings(t).fatigue : 0;
+    let trained = 0,
+      improved = 0;
     for (const p of t.players) {
       if (p.injury) p.injury--;
       const minutes = playedMinutes
@@ -1589,12 +1609,19 @@
           : 0;
       const internationalLoad = international.get(p.id);
       const loadMinutes = Math.max(minutes, internationalLoad?.minutes || 0);
+      if (session.key === "rest" && !loadMinutes)
+        p.restDays = Math.max(1, p.restDays || 0);
       const physical = P.apply(p, {
         minutes: loadMinutes,
         extra: internationalLoad?.fatigue ?? fatigue,
         globalMode: mode,
         facility: t.facility,
       });
+      const development = TR.process(s, t, p, physical, session);
+      if (development) {
+        trained++;
+        if (development.improved) improved++;
+      }
       if (t.id === s.clubId)
         p.lastPhysical = { ...physical, season: s.season, offset: s.today };
       if (
@@ -1627,9 +1654,33 @@
       )
         p.ovr = Math.min(p.potential, p.ovr + 1);
     }
+    if (t.id === s.clubId) {
+      for (const p of t.youth) {
+        if (session.key === "rest") p.restDays = Math.max(1, p.restDays || 0);
+        const physical = P.apply(p, { globalMode: mode, facility: t.facility });
+        p.lastPhysical = { ...physical, season: s.season, offset: s.today };
+        const development = TR.process(s, t, p, physical, session);
+        if (development) {
+          trained++;
+          if (development.improved) improved++;
+        }
+      }
+      TR.record(s, session, trained, improved);
+    }
     if ((s.today + 1) % 7 === 0)
       t.youth.forEach((p) => {
-        if (rng() < 0.3 + t.facility * 0.03)
+        if (
+          !p.injury &&
+          !(p.restDays > 0) &&
+          mode !== "Recuperação" &&
+          !(
+            p.lastPhysical?.offset === s.today &&
+            p.lastPhysical?.plan === "rest"
+          ) &&
+          session.key !== "rest" &&
+          session.key !== "recovery" &&
+          rng() < 0.3 + t.facility * 0.03
+        )
           p.ovr = Math.min(p.potential, p.ovr + 1);
       });
   }
@@ -3101,6 +3152,7 @@
     proposeRenewal,
     setShirtNumber,
     physical: P,
+    training: TR,
     setRecoveryPlan,
     NEGOTIATION_STAGES,
     negotiationActive,

@@ -106,8 +106,23 @@
         !["auto", "light", "normal", "intense"].includes(p.trainingPlan)
       )
         fail();
+      if (
+        p.trainingFocus !== undefined &&
+        !Object.hasOwn(E.training.focuses, p.trainingFocus)
+      )
+        fail();
+      for (const key of ["trainingXP", "trainingBonuses"])
+        if (p[key] !== undefined) {
+          if (!p[key] || typeof p[key] !== "object" || Array.isArray(p[key]))
+            fail();
+          for (const [focus, value] of Object.entries(p[key])) {
+            if (!Object.hasOwn(E.training.focuses, focus)) fail();
+            number(value, 0, key === "trainingXP" ? 99 : 8);
+            if (!Number.isInteger(value)) fail();
+          }
+        }
       if (p.stamina !== undefined) number(p.stamina, 1, 100);
-      if(p.marketSalary!==undefined)number(p.marketSalary,0,30000000);
+      if (p.marketSalary !== undefined) number(p.marketSalary, 0, 30000000);
       if (p.ratingBase !== undefined) number(p.ratingBase, 0, 100);
 
       for (const key of ["naturalPositions", "secondaryPositions"])
@@ -366,10 +381,35 @@
           fail();
       }
     }
+    if (s.trainingSchedule !== undefined) {
+      if (
+        array(s.trainingSchedule, 7).length !== 7 ||
+        s.trainingSchedule.some(
+          (key) => !Object.hasOwn(E.training.sessions, key),
+        )
+      )
+        fail();
+    }
+    if (s.trainingHistory !== undefined)
+      array(s.trainingHistory, 21).forEach((h) => {
+        number(h.season, 2025, 2200);
+        number(h.offset, 0, 366);
+        number(h.trained, 0, 600);
+        number(h.improved, 0, 600);
+        string(h.label);
+      });
     if (s.scouting !== undefined) {
       const c = s.scouting;
       number(c.sequence, 0);
       number(c.revision, 0);
+      if (c.shortlist !== undefined) {
+        const list = array(c.shortlist, 30);
+        if (
+          new Set(list).size !== list.length ||
+          list.some((id) => typeof id !== "string")
+        )
+          fail();
+      }
       array(c.missions, 30).forEach((m) => {
         string(m.id);
         if (
@@ -382,7 +422,7 @@
         number(m.started, 0, 366);
         number(m.due, 0, 800);
         number(m.maxFee, 0, 1e13);
-        number(m.maxAge, 15, 23);
+        number(m.maxAge, 15, m.scope === "youth" ? 23 : 45);
         string(m.position);
       });
       array(c.reports, 12).forEach((r) => {
@@ -447,7 +487,11 @@
       number(s.national.invitationRevision, 0);
       number(s.national.nextReview, 0, 800);
     }
-    if(s.matchPreferences!==undefined&&![120,400,900,1600].includes(s.matchPreferences.speed))fail();
+    if (
+      s.matchPreferences !== undefined &&
+      ![120, 400, 900, 1600].includes(s.matchPreferences.speed)
+    )
+      fail();
     if (s.live) {
       const m = s.live;
       if (
@@ -463,7 +507,7 @@
       array(m.events, 100);
       number(m.day, 0, 51);
       if (m.goals.length !== 2 || m.shots.length !== 2) fail();
-      if (!["text", "2d"].includes(m.mode)) fail();
+      if (!["text", "2d", "3d"].includes(m.mode)) fail();
       if (m.minutesPlayed)
         for (const [id, minutes] of Object.entries(m.minutesPlayed)) {
           string(id);
@@ -482,13 +526,21 @@
         if (!["goal", "shot", "build-up"].includes(p.type)) fail();
         number(p.minute, 0, 90);
         number(p.side, 0, 1);
-        if(p.playerId!==null)string(p.playerId);
+        if (p.playerId !== null) string(p.playerId);
         string(p.playerName);
         array(p.path, 4).forEach((point) => {
           number(point.x, 0, 100);
           number(point.y, 0, 100);
         });
-        if(p.positions)array(p.positions,22).forEach(point=>{string(point.id);string(point.name);number(point.side,0,1);number(point.index,0,10);number(point.x,0,100);number(point.y,0,100);});
+        if (p.positions)
+          array(p.positions, 22).forEach((point) => {
+            string(point.id);
+            string(point.name);
+            number(point.side, 0, 1);
+            number(point.index, 0, 10);
+            number(point.x, 0, 100);
+            number(point.y, 0, 100);
+          });
       };
       if (m.timeline) array(m.timeline, 40).forEach(play);
       if (m.goalReplays) array(m.goalReplays, 12).forEach(play);

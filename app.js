@@ -12,8 +12,73 @@ const esc = (v) =>
         c
       ],
   );
-const money = (v) =>
-  "R$ " + Number(v).toLocaleString("pt-BR", { maximumFractionDigits: 0 });
+const money = LegacyMoney.full;
+const moneyValue = (value, unit = "") =>
+  `<span class="money-value" title="${esc(money(value))}"><strong>${esc(LegacyMoney.compact(value))}</strong><small>${esc(money(value))}${unit ? " · " + esc(unit) : ""}</small></span>`;
+function decorateMoneyInputs(scope = document) {
+  for (const input of scope.querySelectorAll(
+    '#budget-transfer,#budget-wage,#test-funds-amount,#fund-budget-amount,#market-price-max,[name="maxFee"],[name="maxSalary"],[name="salary"],[name="fee"],[name="bonus"]',
+  )) {
+    if (input.dataset.moneyInput || input.hasAttribute("data-offer-money"))
+      continue;
+    input.dataset.moneyInput = "true";
+    input.type = "text";
+    input.inputMode = "decimal";
+    input.classList.add("money-edit");
+    const amount = LegacyMoney.parse(input.value);
+    if (Number.isSafeInteger(amount)) input.value = LegacyMoney.number(amount);
+    const hint = document.createElement("small");
+    hint.className = "money-live";
+    hint.setAttribute("aria-live", "polite");
+    input.after(hint);
+    hint.textContent = Number.isFinite(amount)
+      ? money(amount)
+      : "Valor em reais";
+  }
+}
+document.addEventListener("input", (event) => {
+  if (event.target.closest("#scouting-form")) {
+    const form = event.target.closest("form"),
+      depth = form.elements.depth.value,
+      cost =
+        (scoutScope === "youth" ? 5000 : 10000) *
+        (depth === "quick" ? 0.6 : depth === "deep" ? 2 : 1),
+      days =
+        depth === "quick"
+          ? 2
+          : depth === "deep"
+            ? 7
+            : scoutScope === "youth"
+              ? 5
+              : 3;
+    $("#mission-estimate").textContent =
+      money(cost) + " · resposta em " + days + " dias";
+  }
+  if (event.target.dataset.moneyInput) {
+    const input = event.target,
+      value = LegacyMoney.parse(input.value),
+      hint = input.nextElementSibling;
+    input.setCustomValidity(
+      input.value.trim() &&
+        (!Number.isSafeInteger(value) ||
+          value < Number(input.getAttribute("min") || 0) ||
+          value > Number(input.getAttribute("max") || 1e13))
+        ? "Informe um valor inteiro dentro dos limites, em reais."
+        : "",
+    );
+    if (hint?.classList.contains("money-live"))
+      hint.textContent = Number.isSafeInteger(value)
+        ? money(value)
+        : "Informe um valor inteiro em reais";
+  }
+});
+document.addEventListener("focusout", (event) => {
+  if (event.target.dataset.moneyInput) {
+    const value = LegacyMoney.parse(event.target.value);
+    if (Number.isSafeInteger(value))
+      event.target.value = LegacyMoney.number(value);
+  }
+});
 let state,
   loadError = false;
 const encodeSave = (s) =>
@@ -120,6 +185,11 @@ function toggleTheme() {
 let advancing = false,
   cancelAdvance = false;
 let squadTab = "tactics";
+let rosterQuery = "",
+  rosterPosition = "all",
+  rosterStatus = "all",
+  rosterSort = "overall",
+  rosterView = "table";
 let tacticalScope = "club",
   tacticalSlot = 0,
   squadQuery = "",
@@ -142,7 +212,7 @@ let page = state.rosterRecovery ? "Carreira" : "Visão geral",
     sort: "reference",
   },
   marketPage = 0,
-  matchMode = state.live?.mode || "2d",
+  matchMode = state.live?.mode || state.matchPreferences?.mode || "2d",
   timer = null,
   speed = state.matchPreferences?.speed || 900,
   paused = false;
@@ -337,12 +407,16 @@ function render() {
   $("#time-controls").innerHTML = page === "Visão geral" ? timeControls() : "";
   renderNavigation();
   $("#title").textContent = page;
+  match3D?.dispose();
+  match3D = null;
   $("#content").innerHTML = views[page]();
+  decorateMoneyInputs();
   $("#context").textContent =
     `${appearanceTeam().name} · ${E.date(state)}${state.mode === "test" ? " · MODO TESTE" : ""}`;
   if (page === "Financeiro") updateBudgetPreview();
   if (page === "Dia de jogo" && state.live) draw();
   showCelebration();
+  if (page === "Treinamento") decorateMoneyInputs();
 }
 function setup() {
   const chosen = team(setupClub),
@@ -440,7 +514,9 @@ function readMarketFilters() {
     overallMax: $("#market-overall-max").value,
     ageMin: $("#market-age-min").value,
     ageMax: $("#market-age-max").value,
-    priceMax: $("#market-price-max").value,
+    priceMax: $("#market-price-max").value.trim()
+      ? LegacyMoney.parse($("#market-price-max").value)
+      : "",
   };
   for (const key of ["overall", "age"])
     if (
@@ -507,7 +583,7 @@ function timeControls() {
   )}</select></label><button class="primary" ${advancing ? "disabled" : ""}>Simular período</button></form>${advancing ? '<div class="advance-status" id="simulation-progress" role="status">Avançando um dia de cada vez…</div><button data-action="stop-advance">Parar avanço</button>' : ""}${todayMatch ? '<button data-page="Dia de jogo">Jogar hoje →</button>' : ""}</div>`;
 }
 const metric = (title, value, subtitle) =>
-  `<div class="card"><small>${title}</small><div class="metric">${value}</div><span class="muted">${subtitle}</span></div>`;
+  `<div class="card metric-card"><small>${title}</small><div class="metric">${/^-?R\$/.test(String(value)) ? moneyValue(LegacyMoney.parse(value)) : value}</div><span class="muted">${subtitle}</span></div>`;
 function standings(rows) {
   return `<div class="table-wrap"><table><thead><tr><th>#</th><th>CLUBE</th><th>PTS</th><th>J</th><th>V</th><th>E</th><th>D</th><th>SG</th></tr></thead><tbody>${E.rank(
     rows,
@@ -519,7 +595,7 @@ function standings(rows) {
     .join("")}</tbody></table></div>`;
 }
 function playersTable(ps, context = "squad") {
-  return `<div class="table-wrap"><table><thead><tr><th>JOGADOR</th><th>POS.</th><th>IDADE</th><th>GERAL</th><th>VALOR</th><th title="Preparo físico: varia com minutos, intensidade e recuperação">CONDIÇÃO ⓘ</th><th>SALÁRIO EST./SEM.</th><th>CONTRATO</th><th>AÇÕES</th></tr></thead><tbody>${ps.map((p) => `<tr><td>${p.shirtNumber ? `<span class="shirt-number" title="Número do uniforme na carreira">${p.shirtNumber}</span>` : ""}<strong>${esc(p.name)}</strong><span class="sub">${esc(playerReference(p))}<span class="sub">${esc((p.nationalities?.length ? p.nationalities : [p.nationality]).map(countryLabel).filter(Boolean).join(" / ") || "Nacionalidade indisponível")}</span>${context === "market" ? " · " + esc(p.sellerName) : ""}</span></td><td>${esc(p.naturalPositions?.length ? p.naturalPositions.join(" / ") : p.pos)}${p.secondaryPositions?.length ? `<small class="sub">Também: ${esc(p.secondaryPositions.join(" / "))}</small>` : ""}${p.positionEstimated ? " · est." : ""}</td><td>${playerAge(p)}</td><td><span class="rating" title="${esc(p.ratingSource || "Estimativa do jogo")}">${p.ovr}</span></td><td>${money(p.price)}</td><td>${p.injury ? `Lesão · ${p.injury} dias` : `<span class="condition-meter ${p.fitness < 75 ? "tired" : p.fitness < 90 ? "wear" : "ready"}"><strong>${p.fitness}%</strong><i style="width:${p.fitness}%"></i><small>${p.fitness >= 90 ? "Pronto" : p.fitness >= 75 ? "Desgastado" : "Cansado"}</small></span>`}</td><td>${money(p.salary)}</td><td>${p.contract}${p.contractEstimated ? " · est." : ""}<small class="sub">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")}</small></td><td>${context === "squad" ? btn("Renovar", "renew", p.id) + btn("Vender", "sell", p.id) + btn("Camisa " + p.shirtNumber, "edit-shirt", p.id) : context === "youth" ? btn("Promover · R$ 100 mil", "promote", p.id) : btn("Negociar", "buy", p.id)}</td></tr>`).join("")}</tbody></table></div>${ps.length ? "" : '<p class="muted">Nenhum jogador encontrado.</p>'}`;
+  return `<div class="table-wrap"><table><thead><tr><th>JOGADOR</th><th>POS.</th><th>IDADE</th><th>GERAL</th><th>VALOR</th><th title="Preparo físico: varia com minutos, intensidade e recuperação">CONDIÇÃO ⓘ</th><th>SALÁRIO EST./SEM.</th><th>CONTRATO</th><th>AÇÕES</th></tr></thead><tbody>${ps.map((p) => `<tr><td>${p.shirtNumber ? `<span class="shirt-number" title="Número do uniforme na carreira">${p.shirtNumber}</span>` : ""}<strong>${esc(p.name)}</strong><span class="sub">${esc(playerReference(p))}<span class="sub">${esc((p.nationalities?.length ? p.nationalities : [p.nationality]).map(countryLabel).filter(Boolean).join(" / ") || "Nacionalidade indisponível")}</span>${context === "market" ? " · " + esc(p.sellerName) : ""}</span></td><td>${esc(p.naturalPositions?.length ? p.naturalPositions.join(" / ") : p.pos)}${p.secondaryPositions?.length ? `<small class="sub">Também: ${esc(p.secondaryPositions.join(" / "))}</small>` : ""}${p.positionEstimated ? " · est." : ""}</td><td>${playerAge(p)}</td><td><span class="rating" title="${esc(p.ratingSource || "Estimativa do jogo")}">${p.ovr}</span></td><td>${moneyValue(p.price)}</td><td>${p.injury ? `Lesão · ${p.injury} dias` : `<span class="condition-meter ${p.fitness < 75 ? "tired" : p.fitness < 90 ? "wear" : "ready"}"><strong>${p.fitness}%</strong><i style="width:${p.fitness}%"></i><small>${p.fitness >= 90 ? "Pronto" : p.fitness >= 75 ? "Desgastado" : "Cansado"}</small></span>`}</td><td>${moneyValue(p.salary, "por semana")}</td><td>${p.contract}${p.contractEstimated ? " · est." : ""}<small class="sub">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")}</small></td><td>${context === "squad" ? btn("Renovar", "renew", p.id) + btn("Vender", "sell", p.id) + btn("Camisa " + p.shirtNumber, "edit-shirt", p.id) : context === "youth" ? btn("Promover · R$ 100 mil", "promote", p.id) : btn("Negociar", "buy", p.id)}</td></tr>`).join("")}</tbody></table></div>${ps.length ? "" : '<p class="muted">Nenhum jogador encontrado.</p>'}`;
 }
 function matchup(f, goals) {
   return `<span class="matchup">${teamLabel(f.pair[0])}<strong>${goals ? goals.join(" × ") : "×"}</strong>${teamLabel(f.pair[1])}</span>`;
@@ -710,12 +786,13 @@ function updateBudgetPreview(source) {
   if (source === "slider") {
     const percent = Number($("#budget-share").value),
       transfer = Math.round((c.allocated * percent) / 100);
-    $("#budget-transfer").value = transfer;
-    $("#budget-wage").value =
-      c.committed + Math.floor((c.allocated - transfer) / 52);
+    $("#budget-transfer").value = LegacyMoney.number(transfer);
+    $("#budget-wage").value = LegacyMoney.number(
+      c.committed + Math.floor((c.allocated - transfer) / 52),
+    );
   }
-  const transfer = Number($("#budget-transfer").value),
-    wage = Number($("#budget-wage").value),
+  const transfer = LegacyMoney.parse($("#budget-transfer").value),
+    wage = LegacyMoney.parse($("#budget-wage").value),
     requested = transfer + Math.max(0, wage - c.committed) * 52;
   const valid =
     Number.isSafeInteger(transfer) &&
@@ -733,6 +810,19 @@ function updateBudgetPreview(source) {
   $("#budget-simulation").innerHTML =
     `<div class="budget-summary preview"><div><small>Transferências após aplicar</small><strong>${money(transfer)}</strong><span>${delta(transfer, f.transferBudget)}</span></div><div><small>Teto semanal após aplicar</small><strong>${money(wage)}</strong><span>${delta(wage, f.wageBudget)}</span></div><div><small>Espaço para novos salários / semana</small><strong>${money(Math.max(0, wage - c.committed))}</strong></div><div><small>Caixa do clube após distribuir</small><strong>${money(t.money)}</strong><span>Saldo bancário preservado</span></div></div><p class="${valid ? "muted" : "error"}">${wage < c.committed ? "O teto precisa cobrir os salários já contratados." : requested > c.maximum ? "Os valores excedem os recursos disponíveis em " + money(requested - c.maximum) + "." : valid ? (requested > c.allocated ? "Serão reservados " + money(requested - c.allocated) + " do caixa livre." : requested < c.allocated ? "Serão liberados " + money(c.allocated - requested) + " das reservas." : "Redistribuição dentro da verba já aprovada.") : "Informe valores inteiros válidos em reais."}</p>`;
   $("#apply-budget").disabled = !valid;
+  for (const id of ["#budget-transfer", "#budget-wage"]) {
+    const input = $(id),
+      hint = input.nextElementSibling;
+    if (hint?.classList.contains("money-live"))
+      hint.textContent = money(LegacyMoney.parse(input.value));
+    const value = LegacyMoney.parse(input.value);
+    input.setCustomValidity(
+      Number.isSafeInteger(value) &&
+        value >= Number(input.getAttribute("min") || 0)
+        ? ""
+        : "Informe um valor inteiro válido em reais.",
+    );
+  }
 }
 
 function tacticalTeam() {
@@ -772,7 +862,53 @@ function squadPlayersView() {
     const t = team(state.national.job);
     return `<div class="hero"><span class="badge">GRUPO CONVOCADO</span><h2 class="identity-title">${badge(t, "large")}<span>${esc(t.name)} · ${t.players.length} atletas</span></h2><p>Acompanhe os jogadores chamados para defender a seleção.</p><button data-page="Seleções">Gerenciar convocação →</button></div><div class="card"><h3>Convocados</h3><div class="table-wrap"><table><thead><tr><th>JOGADOR</th><th>POSIÇÃO</th><th>IDADE</th><th>GERAL</th><th>CONDIÇÃO</th></tr></thead><tbody>${t.players.map((p) => `<tr><td><strong>${esc(p.name)}</strong></td><td>${esc(p.naturalPositions?.join(" / ") || p.pos)}</td><td>${playerAge(p)}</td><td><span class="rating">${p.ovr}</span></td><td>${p.injury ? "Lesionado" : p.fitness + "%"}</td></tr>`).join("")}</tbody></table></div></div>`;
   }
-  return `<div class="hero"><span class="badge">PLANTEL PROFISSIONAL</span><h2>${esc(team().name)} · ${team().players.length} jogadores</h2><p>Consulte posições, preparo físico, valores e salários. Condição é a energia para jogar: 90–100% indica boa recuperação, 75–89% indica desgaste e abaixo de 75% pede atenção ao descanso. Ela varia com minutos, resistência, idade e intensidade.</p></div><div class="card"><h3>Jogadores e contratos</h3>${rosterReferenceView(team())}<p class="muted">Renovações têm resposta do empresário, contrapropostas e assinatura. Negocie salário, luvas, duração e importância; o contrato vigente só muda após o acordo.</p>${playersTable(team().players)}</div>`;
+  const t = team(),
+    lineup = new Set(T.positions(t).map((p) => p?.id));
+  const normalize = (x) =>
+    x
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+  const players = t.players.filter(
+    (p) =>
+      normalize(p.name).includes(normalize(rosterQuery)) &&
+      (rosterPosition === "all" || T.positionMatches(p, rosterPosition)) &&
+      (rosterStatus === "all" ||
+        (rosterStatus === "starting" && lineup.has(p.id)) ||
+        (rosterStatus === "injured" && p.injury) ||
+        (rosterStatus === "tired" &&
+          (p.fitness < 85 || (p.fatigue || 0) > 50)) ||
+        (rosterStatus === "expiring" && p.contract <= state.season + 1)),
+  );
+  const sorting = {
+    overall: (a, b) => b.ovr - a.ovr,
+    name: (a, b) => a.name.localeCompare(b.name, "pt-BR"),
+    age: (a, b) => a.age - b.age,
+    salary: (a, b) => b.salary - a.salary,
+    value: (a, b) => b.price - a.price,
+  };
+  players.sort(sorting[rosterSort] || sorting.overall);
+  const cards = () =>
+    `<div class="roster-grid">${players.map((p) => `<article class="roster-player"><div class="row"><button class="player-jersey" data-action="edit-shirt" data-id="${esc(p.id)}" aria-label="Mudar camisa de ${esc(p.name)}">${p.shirtNumber}</button><div><h3>${esc(p.name)}</h3><small>${esc([...(p.naturalPositions || []), ...(p.secondaryPositions || [])].join(" / ") || p.pos)} · ${playerAge(p)} anos</small></div><span class="rating">${p.ovr}</span></div><div class="roster-player-state"><span>${p.injury ? "Lesionado" : lineup.has(p.id) ? "No onze titular" : "Opção de elenco"}</span><strong>${p.fitness}% energia</strong></div><div class="money-pair"><div><small>Valor</small>${moneyValue(p.price)}</div><div><small>Salário / semana</small>${moneyValue(p.salary)}</div></div><p class="muted">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")} · contrato ${p.contract}</p><div class="row">${btn("Renovar", "renew", p.id)}${btn("Vender", "sell", p.id)}${btn("Camisa " + p.shirtNumber, "edit-shirt", p.id)}</div></article>`).join("") || "<p>Nenhum jogador corresponde aos filtros.</p>"}</div>`;
+  return `<div class="hero roster-hero"><span class="badge">GESTÃO DO ELENCO</span><h2 class="identity-title">${badge(t, "large")}<span>${esc(t.name)}</span></h2><p>${t.players.length} profissionais · ${t.players.filter((p) => !p.injury).length} disponíveis · ${t.players.filter((p) => p.injury).length} no departamento médico</p><div class="row">${btn("Numeração do elenco", "shirt-squad", t.players[0]?.id || "")}<button data-page="Treinamento">Preparação física →</button></div></div><section class="card"><div class="row"><h3>Jogadores e contratos</h3><div class="segmented">${btn("Tabela", "roster-view", "table", rosterView === "table" ? "active" : "")}${btn("Cartões", "roster-view", "cards", rosterView === "cards" ? "active" : "")}</div></div><form id="roster-search" class="roster-filters"><label>Buscar jogador<input id="roster-query" value="${esc(rosterQuery)}" placeholder="Nome do atleta"></label><label>Posição<select id="roster-position">${options([["all", "Todas"], ...["GOL", "LAT", "ZAG", "VOL", "MEI", "ATA"].map((x) => [x, x])], rosterPosition)}</select></label><label>Situação<select id="roster-status">${options(
+    [
+      ["all", "Todos"],
+      ["starting", "Titulares"],
+      ["injured", "Lesionados"],
+      ["tired", "Desgastados"],
+      ["expiring", "Contrato perto do fim"],
+    ],
+    rosterStatus,
+  )}</select></label><label>Ordenar<select id="roster-sort">${options(
+    [
+      ["overall", "Overall"],
+      ["name", "Nome"],
+      ["age", "Idade"],
+      ["salary", "Salário"],
+      ["value", "Valor de mercado"],
+    ],
+    rosterSort,
+  )}</select></label><button>Buscar</button></form><p class="muted">${players.length} atletas encontrados. Valores em reais; salários apresentados por semana.</p>${rosterView === "cards" ? cards() : playersTable(players)}<details class="source-details"><summary>Referência do elenco e contratos</summary>${rosterReferenceView(t)}<p>Renovações são negociadas com o empresário. As condições mudam apenas após o aceite e a assinatura.</p></details></section>`;
 }
 function squadTacticsView() {
   const T = E.tactics,
@@ -975,10 +1111,15 @@ function referenceCalendar() {
     )
     .join("")}</tbody></table></div></div>`;
 }
+let match3D = null,
+  matchCamera = state.matchPreferences?.camera || "broadcast";
 let activeReplay = null;
 let animatingPlay = false,
   visualGeneration = 0,
   liveScoreHold = null;
+function scoreboard(f, goals = [0, 0]) {
+  return `<div class="match-scoreboard"><div class="score-team home"><div><strong>${esc(name(f.pair[0]))}</strong><small>MANDANTE</small></div>${badge(team(f.pair[0]), "large")}</div><div class="score-centre"><strong>${goals[0]} <span>×</span> ${goals[1]}</strong></div><div class="score-team away">${badge(team(f.pair[1]), "large")}<div><strong>${esc(name(f.pair[1]))}</strong><small>VISITANTE</small></div></div></div>`;
+}
 function matchView() {
   const m = state.live,
     f = E.nextFixture(state) || m;
@@ -1013,13 +1154,21 @@ function matchView() {
     t?.players.filter(
       (p) => !p.injury && !starters.has(p.id) && !used.has(p.id),
     ) || [];
-  return `<section class="match-centre"><header class="match-heading"><span class="badge">${esc(f.name)}</span><div id="match-minute">${m ? m.minute + "’" : "PRÉ-JOGO"} · ${half ? "INTERVALO" : m?.done ? "ENCERRADO" : m?.secondHalfStarted || m?.minute > 45 ? "SEGUNDO TEMPO" : "PRIMEIRO TEMPO"}</div><div class="score">${matchup(f, m?.goals || [0, 0])}</div><div class="match-progress"><i style="width:${m?.minute || 0}%"></i></div></header><div class="match-controls">${controls}<label>Visualização<select id="mode">${options(
+  return `<section class="match-centre"><header class="match-heading"><span class="badge">${esc(f.name)}</span><div id="match-minute">${m ? m.minute + "’" : "PRÉ-JOGO"} · ${half ? "INTERVALO" : m?.done ? "ENCERRADO" : m?.secondHalfStarted || m?.minute > 45 ? "SEGUNDO TEMPO" : "PRIMEIRO TEMPO"}</div><div class="score">${scoreboard(f, m?.goals || [0, 0])}</div><div class="match-progress"><i style="width:${((m?.minute || 0) / 90) * 100}%"></i></div></header><div class="match-controls">${controls}<label>Visualização<select id="mode">${options(
     [
       ["2d", "Campo 2D"],
+      ["3d", "Campo 3D"],
       ["text", "Relato e estatísticas"],
     ],
     matchMode,
-  )}</select></label></div><div class="match-workspace"><div><div id="event-announcement" class="goal-announcement" aria-live="assertive"></div><div class="play-caption" id="play-caption" aria-live="polite">${half ? "Intervalo: faça os ajustes e inicie o segundo tempo." : m?.done ? "Fim de jogo. Confira os melhores momentos." : "Acompanhe a bola e a construção das jogadas."}</div><div id="field"></div><p class="muted">${half ? "O relógio está parado no intervalo." : playing && paused ? "Partida pausada." : "O lance desacelera nas finalizações; o placar atualiza quando a bola chega ao gol."}</p><div class="match-stats" id="stats"></div>${m?.goalReplays?.length ? `<div class="card"><h3>Gols e replays</h3><div class="row">${m.goalReplays.map((p, i) => btn(`${p.minute}’ · ${esc(p.playerName)}`, "replay-goal", String(i))).join("")}</div></div>` : ""}</div><aside><section class="card"><h3>Relato da partida</h3><div class="log" id="log" aria-live="off"></div></section></aside></div>${
+  )}</select></label><label class="camera-control">Câmera 3D<select id="match-camera">${options(
+    [
+      ["broadcast", "Transmissão"],
+      ["tactical", "Tática aérea"],
+      ["goal", "Atrás do gol"],
+    ],
+    matchCamera,
+  )}</select></label></div><div class="match-workspace"><div><div id="event-announcement" class="goal-announcement" aria-live="assertive"></div><div class="play-caption" id="play-caption" aria-live="polite">${half ? "Intervalo: faça os ajustes e inicie o segundo tempo." : m?.done ? "Fim de jogo. Confira os melhores momentos." : "Acompanhe a bola e a construção das jogadas."}</div><div id="field"><div class="match-empty-field"><strong>Prepare o seu time.</strong><span>Inicie a partida para acompanhar a bola em 2D ou 3D.</span></div></div><p class="muted">${half ? "O relógio está parado no intervalo." : playing && paused ? "Partida pausada." : "O lance desacelera nas finalizações; o placar atualiza quando a bola chega ao gol."}</p><div class="match-stats" id="stats"></div>${m?.goalReplays?.length ? `<div class="card"><h3>Gols e replays</h3><div class="row">${m.goalReplays.map((p, i) => btn(`${p.minute}’ · ${esc(p.playerName)}`, "replay-goal", String(i))).join("")}</div></div>` : ""}</div><aside><section class="card"><h3>Relato da partida</h3><div class="log" id="log" aria-live="off"></div></section></aside></div>${
     plan && playing
       ? `<section class="card"><h3>Banco do treinador</h3><p>${(m.substitutions || []).filter((x) => x.side === side).length} de 5 substituições. Pause para escolher a troca.</p><form id="substitution-form" class="substitution-form"><label>Sai<select name="out">${options(
           plan.starters.map((p) => [
@@ -1045,7 +1194,7 @@ function draw() {
   if ($("#match-minute"))
     $("#match-minute").textContent =
       `${m.minute}’ · ${m.done ? "ENCERRADO" : m.minute === 45 && !m.secondHalfStarted ? "INTERVALO" : m.secondHalfStarted || m.minute > 45 ? "SEGUNDO TEMPO" : "PRIMEIRO TEMPO"}`;
-  if ($(".score")) $(".score").innerHTML = matchup(m, hold);
+  if ($(".score")) $(".score").innerHTML = scoreboard(m, hold);
   const possession = m.possession || [0, 0],
     sum = Math.max(1, possession[0] + possession[1]);
   if ($("#stats"))
@@ -1074,16 +1223,9 @@ function draw() {
   if ($(".match-progress i"))
     $(".match-progress i").style.width = (m.minute / 90) * 100 + "%";
   if (!$("#field")) return;
-  if (m.mode !== "2d") {
-    $("#field").innerHTML = "";
-    return;
-  }
-  const newPitch = !$("#pitch");
-  if (newPitch)
-    $("#field").innerHTML =
-      `<div class="pitch match-pitch" id="pitch"><div class="half"></div><div class="goal-net left"></div><div class="goal-net right"></div><svg class="play-trail" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline id="ball-trail" points=""/></svg>${Array.from({ length: 22 }, (_, i) => `<span class="dot ${i >= 11 ? "away" : ""}" id="dot-${i}">${(i % 11) + 1}</span>`).join("")}<span class="dot ball" id="ball" aria-label="Bola"></span></div>`;
-  const shownPlay = activeReplay || m.lastPlay;
-  const view = E.matchVisual(m, shownPlay);
+  const shownPlay = activeReplay || m.lastPlay,
+    view = E.matchVisual(m, shownPlay);
+  view.activeId = shownPlay?.playerId;
   const kits = m.pair.map((id) => A.clubColors(team(id)));
   if (A.contrast(kits[0].primary, kits[1].primary) < 1.8)
     kits[1] = {
@@ -1092,6 +1234,47 @@ function draw() {
           ? kits[1].secondary
           : A.readable(kits[0].primary),
     };
+  document
+    .querySelector(".camera-control")
+    ?.classList.toggle("camera-visible", m.mode === "3d");
+  if (m.mode === "text") {
+    match3D?.dispose();
+    match3D = null;
+    $("#field").innerHTML = "";
+    return;
+  }
+  if (m.mode === "3d") {
+    if (!$("#three-stage")) {
+      match3D?.dispose();
+      $("#field").innerHTML =
+        '<div id="three-stage" class="three-stage"></div>';
+      match3D = null;
+    }
+    try {
+      if (!match3D) {
+        match3D = LegacyMatch3D.create($("#three-stage"));
+        match3D.setCamera(matchCamera);
+      }
+      match3D.update(view, kits, m.ballPosition || view.ball);
+      return;
+    } catch (error) {
+      match3D?.dispose();
+      match3D = null;
+      m.mode = "2d";
+      matchMode = "2d";
+      $("#mode").value = "2d";
+      document
+        .querySelector(".camera-control")
+        ?.classList.remove("camera-visible");
+      notify("O 3D não está disponível neste navegador. Campo 2D ativado.");
+    }
+  }
+  match3D?.dispose();
+  match3D = null;
+  const newPitch = !$("#pitch");
+  if (newPitch)
+    $("#field").innerHTML =
+      `<div class="pitch match-pitch" id="pitch"><svg class="pitch-markings" viewBox="0 0 105 68" preserveAspectRatio="none" aria-hidden="true"><path d="M1 1H104V67H1ZM52.5 1V67M1 13.84H17.5V54.16H1M104 13.84H87.5V54.16H104M1 24.84H6.5V43.16H1M104 24.84H98.5V43.16H104"/><circle cx="52.5" cy="34" r="9.15"/><circle cx="52.5" cy="34" r=".35"/><circle cx="12" cy="34" r=".35"/><circle cx="93" cy="34" r=".35"/></svg><div class="goal-net left"></div><div class="goal-net right"></div><svg class="play-trail" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline id="ball-trail" points=""/></svg>${Array.from({ length: 22 }, (_, i) => `<span class="dot ${i >= 11 ? "away" : ""}" id="dot-${i}">${(i % 11) + 1}</span>`).join("")}<span class="dot ball" id="ball" aria-label="Bola"></span><span class="pitch-label">AO VIVO · 2D</span></div>`;
   for (let i = 0; i < 22; i++)
     $("#dot-" + i).hidden = !view.positions.some(
       (p) => p.side * 11 + p.index === i,
@@ -1154,6 +1337,52 @@ async function animatePlay(m, play, replay = false) {
             ? `${play.playerName} recebe e mantém a jogada.`
             : `${play.playerName} finaliza em ${play.detail}…`
           : `${point.name || play.playerName} ${i ? "recebe e prepara o passe." : "inicia a construção da jogada."}`;
+    const duration =
+      i === path.length - 1 && play.type !== "build-up"
+        ? Math.max(900, step)
+        : step;
+    if (match3D)
+      match3D.moveBall(
+        point,
+        duration,
+        i === path.length - 1 && play.type !== "build-up",
+      );
+    const base = E.matchVisual(m, play);
+    const moving = {
+      ...base,
+      activeId: point.playerId || play.playerId,
+      positions: base.positions.map((p) => {
+        const receiver = p.id === point.playerId;
+        const shooter = p.id === play.playerId;
+        return {
+          ...p,
+          x: receiver
+            ? point.x
+            : shooter
+              ? p.x
+              : Math.max(3, Math.min(97, p.x + (point.x - 50) * 0.045)),
+          y: receiver
+            ? point.y
+            : Math.max(4, Math.min(96, p.y + (point.y - 50) * 0.04)),
+        };
+      }),
+    };
+    if (match3D)
+      match3D.update(
+        moving,
+        m.pair.map((id) => A.clubColors(team(id))),
+        point,
+      );
+    else
+      for (const p of moving.positions) {
+        const dot = $("#dot-" + (p.side * 11 + p.index));
+        if (dot) {
+          dot.style.transitionDuration = duration + "ms";
+          dot.style.left = p.x + "%";
+          dot.style.top = p.y + "%";
+          dot.classList.toggle("receiving", p.id === point.playerId);
+        }
+      }
     if (ball) {
       ball.style.transitionDuration =
         (i === path.length - 1 && play.type !== "build-up"
@@ -1276,12 +1505,7 @@ function negotiationsView() {
     `<article class="negotiation-card" data-negotiation="${esc(n.id)}"><div class="row"><h4>${esc(n.playerName)}</h4><span class="pill">${negotiationLabels[n.stage]}</span></div><p class="muted">${n.kind === "renewal" ? "Renovação com seu clube" : esc(n.sellerId ? name(n.sellerId) : "Sem clube") + " → " + esc(name(n.buyerId))}</p><ol class="negotiation-steps"><li class="${n.stage.startsWith("club-") ? "current" : ""}">1. Clube</li><li class="${["contract-ready", "player-pending", "player-counter"].includes(n.stage) ? "current" : ""}">2. Jogador</li><li class="${["medical-pending", "signature-pending", "blocked", "completed"].includes(n.stage) ? "current" : ""}">3. Assinatura</li></ol><p>${esc(n.message)}</p><p>Transferência: <strong>${money(n.fee)}</strong>${n.salary ? ` · ${money(n.salary)}/semana · ${n.years} temporadas · luvas ${money(n.bonus)}` : ""}</p>${n.dueOn ? `<p class="muted">Resposta prevista: <strong>${format(n.dueOn)}</strong>. Avance os dias em Visão geral.</p>` : n.expiresOn ? `<p class="muted">Prazo para responder: ${format(n.expiresOn)}.</p>` : ""}<div class="row">${n.stage === "club-counter" ? btn("Revisar proposta ao clube", "counter-club", n.id, "primary") : ""}${["contract-ready", "player-counter"].includes(n.stage) ? btn(n.stage === "contract-ready" ? "Negociar contrato" : "Revisar contrato", "offer-contract", n.id, "primary") : ""}${n.stage === "blocked" ? btn("Reavaliar recursos", "retry-negotiation", n.id, "primary") : ""}${E.negotiationActive(n) ? btn("Encerrar negociação", "cancel-negotiation", n.id) : ""}</div><details><summary>Histórico da negociação</summary>${n.history.map((h) => `<p><small>${format(h.date)}</small> · ${esc(h.message)}</p>`).join("")}</details></article>`;
   return `<section class="card" id="negotiations"><div class="row"><h3>Central de negociações</h3><span class="pill">${active.length} em andamento</span></div><p>Primeiro o clube, depois o jogador e o empresário. Cada resposta leva dois dias da carreira; após o acordo, exames e documentação levam mais um dia. A simulação para quando chega uma resposta.</p><p class="muted">O dinheiro só sai na assinatura. As propostas não reservam verba: mantenha caixa, limite de transferências e espaço salarial até a conclusão. O papel no elenco influencia as exigências do jogador. Não há contratação automática ao enviar a primeira oferta.</p>${active.length ? `<div class="negotiation-grid">${active.map(card).join("")}</div>` : '<p class="muted">Procure um jogador no mercado e envie sua primeira proposta.</p>'}${closed.length ? `<details><summary>Negociações encerradas (${closed.length})</summary>${closed.slice(0, 8).map(card).join("")}</details>` : ""}</section>`;
 }
-function parseOfferMoney(value) {
-  let text = String(value ?? "").replace(/R\$|\s/g, "");
-  if (text.includes(",")) text = text.replace(/\./g, "").replace(",", ".");
-  else if (/^\d{1,3}(\.\d{3})+$/.test(text)) text = text.replace(/\./g, "");
-  return Number(text);
-}
+const parseOfferMoney = LegacyMoney.parse;
 function openNegotiation(kind, id) {
   if (state.live && !state.live.done)
     throw Error("Conclua a partida antes de negociar.");
@@ -1392,16 +1616,52 @@ function openNegotiation(kind, id) {
     }
   };
   preview();
+  decorateMoneyInputs($("#deal"));
   $("#deal").showModal();
 }
 function openShirtDialog(id) {
   const players = [...team().players, ...team().youth],
     p = players.find((p) => p.id === id);
   if (!p) throw Error("Jogador indisponível.");
+  const used = new Map(
+      players.filter((x) => x.id !== id).map((x) => [x.shirtNumber, x]),
+    ),
+    free = 99 - used.size;
   $("#deal-form").innerHTML =
-    `<header class="offer-heading"><div><span class="badge">IDENTIDADE DO ELENCO</span><h2>${esc(p.name)}</h2><p>Número do uniforme na carreira</p></div><span class="shirt-preview">${p.shirtNumber || "—"}</span></header><label>Novo número<input name="shirt" type="number" min="1" max="99" step="1" value="${p.shirtNumber || 1}" required></label><p class="muted">Um número só pode pertencer a um atleta do profissional ou da base.</p><p id="deal-error" class="error" role="alert"></p><div class="row"><button type="button" data-action="close-dialog">Cancelar</button><button class="primary">Confirmar número</button></div>`;
-  $("#deal-form").oninput = null;
-  $("#deal-form").onclick = null;
+    `<section class="shirt-editor"><header class="offer-heading"><div><span class="badge">NUMERAÇÃO DO ELENCO</span><h2>${esc(p.name)}</h2><p>Escolha uma camisa disponível para esta temporada.</p></div></header><label>Jogador<select id="shirt-player">${options(
+      players.map((x) => [x.id, x.shirtNumber + " · " + x.name]),
+      id,
+    )}</select></label><div class="jersey-workspace"><aside class="jersey-preview"><div class="jersey-shape"><small>${esc(team().name)}</small><strong class="shirt-preview-number">${p.shirtNumber || "—"}</strong><span>${esc(p.name.split(" ").slice(-1)[0])}</span></div><span class="pill">${free} números disponíveis</span><label>Novo número<input name="shirt" type="number" min="1" max="99" step="1" value="${p.shirtNumber || 1}" required></label></aside><div><div class="row shirt-legend"><span>Disponível</span><span>Ocupado</span><span>Atual</span></div><div class="shirt-grid" role="group" aria-label="Números de camisa">${Array.from(
+      { length: 99 },
+      (_, i) => {
+        const n = i + 1,
+          owner = used.get(n);
+        return `<button type="button" data-shirt-choice="${n}" aria-pressed="${n === p.shirtNumber}" ${owner ? "disabled" : ""} title="${owner ? esc(owner.name) : "Número disponível"}" aria-label="Camisa ${n}${owner ? " · ocupada por " + esc(owner.name) : " disponível"}"><strong>${n}</strong>${owner ? `<small>${esc(owner.name.split(" ").slice(-1)[0])}</small>` : ""}</button>`;
+      },
+    ).join(
+      "",
+    )}</div></div></div><p class="muted">Profissional e base compartilham a numeração. Os números ocupados ficam identificados pelo jogador.</p><p id="deal-error" class="error" role="alert"></p><div class="dialog-footer"><button type="button" data-action="close-dialog">Cancelar</button><button class="primary">Confirmar número</button></div></section>`;
+  const preview = () => {
+    const value = Number($("#deal [name=shirt]").value);
+    $(".shirt-preview-number").textContent =
+      Number.isInteger(value) && value >= 1 && value <= 99 ? value : "—";
+    $("#deal")
+      .querySelectorAll("[data-shirt-choice]")
+      .forEach((b) =>
+        b.setAttribute(
+          "aria-pressed",
+          String(Number(b.dataset.shirtChoice) === value),
+        ),
+      );
+  };
+  $("#deal-form").oninput = preview;
+  $("#deal-form").onclick = (e) => {
+    const b = e.target.closest("[data-shirt-choice]");
+    if (b && !b.disabled) {
+      $("#deal [name=shirt]").value = b.dataset.shirtChoice;
+      preview();
+    }
+  };
   $("#deal-form").onsubmit = (e) => {
     e.preventDefault();
     try {
@@ -1418,7 +1678,7 @@ function openShirtDialog(id) {
       $("#deal-error").textContent = error.message;
     }
   };
-  $("#deal").showModal();
+  if (!$("#deal").open) $("#deal").showModal();
 }
 function openDeal(kind, id) {
   if (kind === "renew") return openNegotiation("renew", id);
@@ -1450,15 +1710,21 @@ function openDeal(kind, id) {
   $("#deal-form").innerHTML =
     html +
     `<p id="deal-error" class="error" role="alert"></p><div class="row"><button type="button" data-action="close-dialog">Cancelar</button><button class="primary">${kind === "sell" ? "Aceitar venda" : "Enviar proposta"}</button></div>`;
+  decorateMoneyInputs($("#deal"));
   $("#deal").showModal();
   $("#deal-form").onsubmit = (e) => {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     try {
       if (kind === "renew")
-        E.renew(state, id, Number(f.get("years")), Number(f.get("salary")));
+        E.renew(
+          state,
+          id,
+          Number(f.get("years")),
+          LegacyMoney.parse(f.get("salary")),
+        );
       if (kind === "sell")
-        E.sell(state, id, f.get("buyer"), Number(f.get("fee")));
+        E.sell(state, id, f.get("buyer"), LegacyMoney.parse(f.get("fee")));
       $("#deal").close();
       scheduleSave();
       render();
@@ -1533,6 +1799,31 @@ document.addEventListener("click", (event) => {
   if (!b) return;
   const a = b.dataset.action,
     id = b.dataset.id;
+  if (a === "shirt-squad") {
+    openShirtDialog(id);
+    return;
+  }
+  if (a === "roster-view") {
+    rosterView = id;
+    render();
+    return;
+  }
+  if (a === "scout-compare") {
+    if (scoutCompare.includes(id))
+      scoutCompare = scoutCompare.filter((x) => x !== id);
+    else if (scoutCompare.length < 3) scoutCompare.push(id);
+    else {
+      notify("Compare até três atletas por vez.");
+      return;
+    }
+    render();
+    return;
+  }
+  if (a === "scout-shortlist") {
+    act(() => E.scouting.toggleShortlist(state, id));
+    return;
+  }
+
   if (a === "workspace") {
     if (id === "national" && state.national.job) {
       managerScope = "national";
@@ -1576,7 +1867,11 @@ document.addEventListener("click", (event) => {
       ).getUTCMonth();
       calendarSelected = state.today;
     }
-    if (a === "scout-scope") scoutScope = id;
+    if (a === "scout-scope") {
+      scoutScope = id;
+      scoutReport = "";
+      scoutCompare = [];
+    }
     render();
     return;
   }
@@ -1944,8 +2239,47 @@ document.addEventListener("change", (event) => {
     render();
     return;
   }
+  if (el.id === "match-camera") {
+    matchCamera = el.value;
+    state.matchPreferences = { ...state.matchPreferences, camera: matchCamera };
+    match3D?.setCamera(matchCamera);
+    scheduleSave();
+    return;
+  }
+  if (el.id === "shirt-player") {
+    openShirtDialog(el.value);
+    return;
+  }
+  if (el.dataset.trainingDay !== undefined) {
+    act(() =>
+      E.training.setDay(state, Number(el.dataset.trainingDay), el.value),
+    );
+    return;
+  }
+  if (el.dataset.trainingFocus) {
+    act(() => E.training.setFocus(state, el.dataset.trainingFocus, el.value));
+    return;
+  }
+  if (el.id === "training-filter") {
+    trainingFilter = el.value;
+    render();
+    return;
+  }
+  if (["roster-position", "roster-status", "roster-sort"].includes(el.id)) {
+    rosterPosition = $("#roster-position").value;
+    rosterStatus = $("#roster-status").value;
+    rosterSort = $("#roster-sort").value;
+    render();
+    return;
+  }
+  if (el.id === "scout-report") {
+    scoutReport = el.value;
+    render();
+    return;
+  }
   if (el.id === "mode") {
     matchMode = el.value;
+    state.matchPreferences = { ...state.matchPreferences, mode: matchMode };
     if (state.live) {
       state.live.mode = el.value;
       scheduleSave();
@@ -1955,7 +2289,7 @@ document.addEventListener("change", (event) => {
   }
   if (el.id === "speed") {
     speed = Number(el.value);
-    state.matchPreferences = { speed };
+    state.matchPreferences = { ...state.matchPreferences, speed };
     scheduleSave();
     runTimer();
     return;
@@ -2055,6 +2389,12 @@ document.addEventListener("submit", (event) => {
     });
     return;
   }
+  if (event.target.id === "roster-search") {
+    event.preventDefault();
+    rosterQuery = $("#roster-query").value.trim();
+    render();
+    return;
+  }
   if (event.target.id === "scouting-form") {
     event.preventDefault();
     const form = new FormData(event.target);
@@ -2062,8 +2402,18 @@ document.addEventListener("submit", (event) => {
       E.scouting.start(state, {
         scope: scoutScope,
         position: form.get("position"),
-        maxFee: Number(form.get("maxFee")),
-        maxAge: Number(form.get("maxAge") || 21),
+        maxFee: LegacyMoney.parse(form.get("maxFee")),
+        maxAge: Number(
+          form.get("maxAge") || (scoutScope === "youth" ? 21 : 45),
+        ),
+        minAge: Number(form.get("minAge") || 15),
+        minOverall: Number(form.get("minOverall") || 0),
+        maxSalary: LegacyMoney.parse(form.get("maxSalary")),
+        profile: form.get("profile"),
+        depth: form.get("depth"),
+        region: form.get("region"),
+        league: form.get("league"),
+        nationality: form.get("nationality"),
       });
       notify("Olheiro enviado. Avance os dias para receber o relatório.");
     });
@@ -2074,7 +2424,7 @@ document.addEventListener("submit", (event) => {
     act(() => {
       const amount = E.addTestFunds(
         state,
-        Number($("#test-funds-amount").value),
+        LegacyMoney.parse($("#test-funds-amount").value),
         $("#test-funds-destination").value,
       );
       notify(money(amount) + " adicionados. Aporte registrado no modo teste.");
@@ -2116,7 +2466,7 @@ document.addEventListener("submit", (event) => {
       E.finance.fundBudget(
         team(),
         state,
-        Number($("#fund-budget-amount").value),
+        LegacyMoney.parse($("#fund-budget-amount").value),
       );
       notify("Caixa destinado ao orçamento. O saldo bancário não mudou.");
     });
@@ -2128,8 +2478,8 @@ document.addEventListener("submit", (event) => {
       E.finance.setBudgets(
         team(),
         state,
-        Number($("#budget-transfer").value),
-        Number($("#budget-wage").value),
+        LegacyMoney.parse($("#budget-transfer").value),
+        LegacyMoney.parse($("#budget-wage").value),
       );
       notify(
         "Novos limites aplicados: transferências " +
@@ -2174,82 +2524,192 @@ function readProfile(prefix) {
     nationality: $("#" + prefix + "-coach-nationality").value,
   };
 }
+let trainingFilter = "all";
 function trainingView() {
   const t = team(),
-    players = [...t.players, ...t.youth],
+    all = [...t.players, ...t.youth],
     next = E.upcomingFixture(state),
+    remaining = next ? next.offset - state.today : null,
+    session = E.training.session(state, remaining),
+    schedule = E.training.ensure(state),
+    today = E.training.weekday(state),
     average = Math.round(
-      players.reduce((sum, p) => sum + p.fitness, 0) /
-        Math.max(1, players.length),
+      all.reduce((n, p) => n + p.fitness, 0) / Math.max(1, all.length),
     ),
     fatigue = Math.round(
-      players.reduce((sum, p) => sum + (p.fatigue || 0), 0) /
-        Math.max(1, players.length),
+      all.reduce((n, p) => n + (p.fatigue || 0), 0) / Math.max(1, all.length),
     );
-  return `<div class="hero"><span class="badge">CIÊNCIA DO ESPORTE · CT NÍVEL ${t.facility}</span><h2>Treinar, competir, recuperar.</h2><p>Energia é o preparo físico disponível agora. Desgaste é a carga acumulada: demora mais para desaparecer e aumenta o risco de lesão. Minutos, resistência, idade e intensidade afetam cada jogador de forma diferente.</p><label>Plano geral de treino<select id="training">${options(
+  const players = all.filter(
+    (p) =>
+      trainingFilter === "all" ||
+      (trainingFilter === "tired" &&
+        (p.fitness < 85 || (p.fatigue || 0) > 50)) ||
+      (trainingFilter === "youth" && t.youth.includes(p)) ||
+      (trainingFilter === "injured" && p.injury),
+  );
+  return `<div class="hero"><span class="badge">CENTRO DE TREINAMENTO · NÍVEL ${t.facility}</span><h2>Um plano para cada fase da temporada.</h2><p>Distribua a carga, recupere os titulares e trabalhe os fundamentos. O planejamento automático alivia a véspera dos jogos.</p><div class="row"><span class="pill">Hoje · ${esc(session.label)}</span><label>Plano geral<select id="training">${options(
     ["Técnica", "Intensivo", "Recuperação"].map((v) => [v, v]),
     state.training,
-  )}</select></label></div><div class="grid">${metric("ENERGIA MÉDIA", average + "%", "Recuperação e minutos jogados")}${metric("DESGASTE MÉDIO", fatigue + "%", "Quanto menor, melhor para suportar a sequência")}${metric("PRÓXIMO JOGO", next ? next.offset - state.today + " dia(s)" : "A confirmar", next ? E.formatDate(state, next.offset) : "Sem compromisso confirmado")}</div><section class="card"><div class="row"><div><h3>Plano individual de recuperação</h3><p class="muted">Descanso dispensa o treino, sem remover o jogador da escalação. Se ele jogar, o desgaste da partida continua valendo.</p></div>${btn("Descansar os desgastados por 2 dias", "recover-tired", "", "primary")}</div><div class="table-wrap"><table class="physical-table"><thead><tr><th>JOGADOR</th><th>ENERGIA</th><th>DESGASTE</th><th>RESISTÊNCIA</th><th>AMANHÃ, SEM JOGO</th><th>PLANO INDIVIDUAL</th><th>PREVISÃO COM DESCANSO</th></tr></thead><tbody>${players
-    .map((p) => {
-      const prediction = E.physical.preview(p, state.training, t.facility),
-        days = E.physical.restEstimate(p, t.facility),
-        selected = p.restDays ? "rest" + p.restDays : p.trainingPlan || "auto";
-      return `<tr><td><strong>${esc(p.name)}</strong><small class="sub">${p.pos}${t.youth.includes(p) ? " · base" : ""}${p.injury ? " · lesão: " + p.injury + " dia(s)" : ""}</small></td><td><strong class="${p.fitness < 75 ? "physical-warning" : ""}">${p.fitness}%</strong></td><td><span class="${(p.fatigue || 0) > 55 ? "physical-warning" : ""}">${p.fatigue || 0}%</span></td><td>${p.stamina || 70}</td><td><strong>${prediction.energyGain >= 0 ? "+" : ""}${prediction.energyGain} energia</strong><small class="sub">${prediction.fatigueChange >= 0 ? "+" : ""}${prediction.fatigueChange} desgaste</small></td><td><select data-recovery-player="${esc(p.id)}" aria-label="Plano de ${esc(p.name)}">${options([["auto", "Automático / equipe"], ["normal", "Carga normal"], ["light", "Treino leve"], ...(!p.injury ? [["intense", "Treino intenso"]] : []), ...Array.from({ length: 7 }, (_, i) => ["rest" + (i + 1), "Descanso · " + (i + 1) + " dia(s)"])], selected)}</select></td><td>${days === 0 ? "Recuperado" : days > 7 ? "Mais de 7 dias" : days + " dia(s)"}<small class="sub">Sem novos jogos${p.injury ? "; lesão exige alta médica" : ""}</small></td></tr>`;
-    })
-    .join(
-      "",
-    )}</tbody></table></div><p class="muted">A previsão é uma estimativa da simulação para dias sem partida. O plano automático reduz a carga quando a energia está baixa ou o desgaste está alto. As lesões impedem o treino intenso.</p></section><section class="card"><h3>Departamento médico</h3>${
+  )}</select></label></div></div><div class="grid">${metric("ENERGIA MÉDIA", average + "%", all.filter((p) => p.fitness >= 90 && !p.injury).length + " atletas prontos")}${metric("DESGASTE ACUMULADO", fatigue + "%", "A sequência de jogos afeta a recuperação")}${metric("PRÓXIMO COMPROMISSO", remaining === null ? "A confirmar" : remaining + " dia(s)", next ? E.formatDate(state, next.offset) : "Planejamento livre")}</div><section class="card"><div class="row"><div><span class="badge">MICROCICLO SEMANAL</span><h3>Treinar com propósito.</h3></div><span class="pill">${esc(E.date(state))}</span></div><div class="training-week">${["SEG", "TER", "QUA", "QUI", "SEX", "SÁB", "DOM"].map((day, i) => `<label class="training-day ${i === today ? "current" : ""}"><small>${day}${i === today ? " · HOJE" : ""}</small><select data-training-day="${i}" aria-label="Treino de ${day}">${options(Object.entries(E.training.sessions), schedule[i])}</select><span>${i === today ? esc(session.label) : schedule[i] === "auto" ? "Carga adaptada ao calendário" : esc(E.training.sessions[schedule[i]])}</span></label>`).join("")}</div><p class="muted">As sessões se repetem semanalmente. Dia de jogo tem prioridade; no automático, a véspera recebe ativação leve. Folga e recuperação não geram progresso técnico.</p></section><section class="card"><div class="row"><div><h3>Carga e desenvolvimento individual</h3><p class="muted">O foco acumula progresso nos dias treinados. Ao completar 100%, desenvolve o fundamento correspondente.</p></div>${btn("Descansar os desgastados por 2 dias", "recover-tired", "", "primary")}</div><label class="inline">Mostrar<select id="training-filter">${options(
+    [
+      ["all", "Todos os atletas"],
+      ["tired", "Precisam de recuperação"],
+      ["youth", "Categorias de base"],
+      ["injured", "Lesionados"],
+    ],
+    trainingFilter,
+  )}</select></label><div class="table-wrap"><table class="physical-table"><thead><tr><th>ATLETA</th><th>ENERGIA / CARGA</th><th>PLANO DE CARGA</th><th>FOCO DE DESENVOLVIMENTO</th><th>AMANHÃ SEM JOGO</th></tr></thead><tbody>${
     players
-      .filter((p) => p.injury)
+      .map((p) => {
+        const prediction = E.physical.preview(p, session.mode, t.facility),
+          days = E.physical.restEstimate(p, t.facility),
+          focus = p.trainingFocus || "balanced",
+          xp = p.trainingXP?.[focus] || 0,
+          selected = p.restDays
+            ? "rest" + p.restDays
+            : p.trainingPlan || "auto";
+        return `<tr><td><strong>${esc(p.name)}</strong><small class="sub">${p.pos} · ${playerAge(p)} anos${t.youth.includes(p) ? " · base" : ""}${p.injury ? " · lesão " + p.injury + " dias" : ""}</small><small class="sub">Resistência ${p.stamina || 70} · overall ${p.ovr}</small></td><td><div class="readiness-meter"><i style="--readiness:${p.fitness}%"></i><strong>${p.fitness}%</strong></div><small class="sub">Desgaste ${p.fatigue || 0}%</small></td><td><select data-recovery-player="${esc(p.id)}" aria-label="Plano de ${esc(p.name)}">${options([["auto", "Automático / equipe"], ["normal", "Carga normal"], ["light", "Treino leve"], ...(!p.injury ? [["intense", "Treino intenso"]] : []), ...Array.from({ length: 7 }, (_, i) => ["rest" + (i + 1), "Descanso · " + (i + 1) + " dia(s)"])], selected)}</select></td><td><select data-training-focus="${esc(p.id)}" aria-label="Foco de ${esc(p.name)}">${options(Object.entries(E.training.focuses), focus)}</select><div class="development-progress"><i style="width:${xp}%"></i></div><small class="sub">${xp}% do ciclo${p.trainingBonuses?.[focus] ? " · +" + p.trainingBonuses[focus] + " no fundamento" : ""}</small></td><td><strong>${prediction.energyGain >= 0 ? "+" : ""}${prediction.energyGain} energia</strong><small class="sub">${prediction.fatigueChange >= 0 ? "+" : ""}${prediction.fatigueChange} desgaste</small><small class="sub">${days === 0 ? "Recuperado" : days > 7 ? "Recuperação acima de 7 dias" : days + " dias para recuperar"}</small></td></tr>`;
+      })
+      .join("") || '<tr><td colspan="5">Nenhum atleta neste filtro.</td></tr>'
+  }</tbody></table></div><p class="muted">Projeções consideram um dia sem jogo. Descanso dispensa treino; jogar durante o descanso continua consumindo energia. Lesionados seguem recuperação.</p></section><section class="card"><h3>Diário do CT</h3><div class="training-history">${
+    (state.trainingHistory || [])
+      .slice(0, 7)
       .map(
-        (p) =>
-          `<p>${esc(p.name)} · ${p.injury} dia(s) restantes · treino ajustado para recuperação.</p>`,
+        (h) =>
+          `<article><small>${E.formatDate({ season: h.season }, h.offset)}</small><strong>${esc(h.label)}</strong><span>${h.trained} atletas treinaram · ${h.improved} fundamentos evoluíram</span></article>`,
       )
-      .join("") || '<p class="muted">Nenhum atleta lesionado.</p>'
-  }</section>`;
+      .join("") ||
+    '<p class="muted">As sessões aparecerão aqui quando você avançar os dias.</p>'
+  }</div></section>`;
 }
 function windowBanner() {
   const w = E.transferWindowInfo(state);
   return `<section class="window-banner ${w.open ? "open" : "closed"}"><div><span class="badge">MERCADO DE TRANSFERÊNCIAS</span><h3>${w.label}</h3><p>${w.open ? `${w.days === null ? "Planejamento da próxima temporada" : w.days + " dia(s) até o fechamento"}` : w.days === null ? "Próxima janela na temporada seguinte" : w.days + " dia(s) para abrir"}</p></div><div>${w.ranges.map(([a, b]) => `<span>${E.formatDate(state, a)} → ${E.formatDate(state, b)}</span>`).join("")}<small>Datas simuladas da carreira; regras unificadas entre ligas.</small></div></section>`;
 }
-let scoutScope = "market";
+let scoutScope = "market",
+  scoutReport = "",
+  scoutCompare = [];
 function scoutingView() {
   const data = E.scouting.ensure(state),
+    saved = scoutScope === "shortlist",
     missions = data.missions.filter(
       (m) => m.clubId === state.clubId && m.scope === scoutScope,
     ),
     reports = data.reports.filter(
       (r) => r.clubId === state.clubId && r.scope === scoutScope,
     ),
-    report = reports[0];
-  const lookup = new Map(
-    [
-      ...state.teams.flatMap((t) => [...t.players, ...t.youth]),
-      ...state.freeAgents,
-    ].map((p) => [p.id, p]),
-  );
-  const cards = (report?.players || [])
+    report = reports.find((r) => r.id === scoutReport) || reports[0],
+    club = team();
+  const lookup = new Map();
+  for (const t of state.teams) {
+    for (const p of t.players) lookup.set(p.id, { p, t, academy: false });
+    for (const p of t.youth) lookup.set(p.id, { p, t, academy: true });
+  }
+  for (const p of state.freeAgents)
+    lookup.set(p.id, { p, t: null, academy: false });
+  const list = saved
+    ? data.shortlist.map((playerId) => ({ playerId }))
+    : report?.players || [];
+  const cards = list
     .map((item) => {
-      const p = lookup.get(item.playerId);
-      if (!p) return "";
-      const seller = state.teams.find((t) =>
-        [...t.players, ...t.youth].some((x) => x.id === p.id),
-      );
-      if (seller?.id === state.clubId && !item.academy) return "";
-      const advice = E.scouting.advice(state, p, item.academy ? null : seller);
-      return `<article class="scout-player"><div class="row"><div><span class="badge">${item.academy ? "SUA ACADEMIA" : esc(advice.level)}</span><h3>${esc(p.name)}</h3><p>${esc(p.naturalPositions?.join("/") || p.pos)} · ${playerAge(p)}${p.ageUnknown ? "" : " anos"} · ${esc(seller?.name || "Sem clube")}</p></div><span class="scout-rating">${p.ovr}<small>pot. ${p.potential}</small></span></div><div class="offer-metrics"><div><small>${item.academy ? "Promoção" : "Pedido estimado"}</small><strong>${money(item.academy ? 100000 : advice.askingFee)}</strong></div><div><small>Salário recomendado</small><strong>${money(advice.salary)}/sem.</strong></div><div><small>Orçamento atual</small><strong>${item.academy || advice.affordable ? "Compatível" : "Precisa de ajuste"}</strong></div></div><p>${esc(advice.concerns[0] || "Combina qualidade, potencial e custo para o clube.")}</p>${item.academy ? btn("Promover · R$ 100 mil", "promote", p.id) : btn("Abrir negociação", "buy", p.id, "primary")}</article>`;
+      const located = lookup.get(item.playerId);
+      if (!located) return "";
+      const { p, t: seller } = located,
+        academy = located.academy && seller.id === state.clubId,
+        owned = seller?.id === state.clubId && !academy,
+        a = E.scouting.advice(state, p, academy ? null : seller),
+        favorite = data.shortlist.includes(p.id),
+        confidence = item.confidence,
+        fits =
+          owned ||
+          (academy
+            ? club.money >= 100000 && Math.max(p.salary, 3000) <= a.wageRoom
+            : a.affordable);
+      return `<article class="scout-player detailed"><div class="row"><div><span class="badge">${academy ? "DA SUA BASE" : owned ? "NO SEU ELENCO" : esc(a.level)}</span><h3>${esc(p.name)}</h3><p>${esc([...(p.naturalPositions || []), ...(p.secondaryPositions || [])].join(" / ") || p.pos)} · ${playerAge(p)}${p.ageUnknown ? "" : " anos"}</p><span class="scout-club">${seller ? teamLabel(seller.id, "tiny") : "Sem clube"}</span></div><span class="scout-rating">${p.ovr}<small>pot. ${p.potential}</small></span></div>${confidence ? `<div class="scout-confidence"><span>Confiança na análise · ${confidence}%</span><i style="width:${confidence}%"></i></div>` : '<p class="muted">Análise preliminar · use uma missão para aprofundar a observação.</p>'}<div class="offer-metrics"><div><small>${academy ? "Promoção" : "Taxa estimada"}</small>${moneyValue(academy ? 100000 : a.askingFee)}</div><div><small>Salário / semana</small>${moneyValue(a.salary)}</div><div><small>1º ano estimado</small>${moneyValue(academy ? 100000 + p.salary * 52 : a.annualTotal)}</div></div><div class="scout-verdict ${fits ? "positive" : "caution"}"><strong>${owned ? "No seu elenco" : fits ? "Cabe nas verbas atuais" : "Requer ajuste de orçamento"}</strong><span>${a.difference >= 0 ? "+" : ""}${a.difference} de overall frente às opções da posição</span></div><p>${esc(item.reason || a.strengths[0])}</p><details><summary>Relatório técnico e financeiro</summary><div class="scout-report-detail"><h4>Pontos de interesse</h4>${a.strengths.map((text) => `<p>✓ ${esc(text)}</p>`).join("")}<h4>O que observar</h4>${a.concerns.map((text) => `<p>• ${esc(text)}</p>`).join("") || "<p>Sem alertas adicionais nesta análise.</p>"}<dl><dt>Abertura prudente</dt><dd>${money(a.minimumOpening)}</dd><dt>Luvas estimadas</dt><dd>${money(a.bonus)}</dd><dt>Espaço salarial / semana</dt><dd>${money(a.wageRoom)}</dd></dl><small>Custos são estimativas; clube e jogador podem contrapropor.</small></div></details><div class="scout-actions">${owned ? '<button data-page="Elenco">Ver no elenco</button>' : academy ? btn("Promover · R$ 100 mil", "promote", p.id) : btn("Abrir negociação", "buy", p.id, "primary")}${btn(favorite ? "★ Observando" : "☆ Observar", "scout-shortlist", p.id)}${btn(scoutCompare.includes(p.id) ? "✓ Comparando" : "Comparar", "scout-compare", p.id)}</div></article>`;
     })
     .join("");
-  return `<div class="hero"><span class="badge">DEPARTAMENTO DE RECRUTAMENTO</span><h2>Olhos no próximo reforço.</h2><p>Os olheiros observam jogadores reais, comparam com seu elenco e procuram opções que respeitem caixa, transferências e salários.</p></div><div class="row scout-tabs">${btn("Mercado", "scout-scope", "market", scoutScope === "market" ? "primary" : "")}${btn("Base e jovens", "scout-scope", "youth", scoutScope === "youth" ? "primary" : "")}</div><div class="columns"><section class="card"><span class="badge">${scoutScope === "market" ? "CHEFE DE RECRUTAMENTO" : "COORDENAÇÃO DE CAPTAÇÃO"}</span><h3>Enviar olheiro</h3><p>${scoutScope === "market" ? "Observação de reforços em três dias. Custo: R$ 10 mil." : "Observação da sua base e de jovens até 21 anos em cinco dias. Custo: R$ 5 mil."}</p><form id="scouting-form"><label>Posição procurada<select name="position">${options([["all", "Qualquer posição"], ...Object.entries(T.positionNames).map(([key, label]) => [key, key + " · " + label])], "all")}</select></label><label>Limite de transferência (R$)<input name="maxFee" type="number" min="0" max="10000000000000" step="1" value="${team().finance.transferBudget}" required></label>${scoutScope === "youth" ? '<label>Idade máxima<input name="maxAge" type="number" min="15" max="23" value="21" required></label>' : ""}<button class="primary" ${missions.some((m) => m.status === "pending") ? "disabled" : ""}>Iniciar observação</button></form><p class="muted">Avance os dias na Visão geral. As recomendações consideram as verbas disponíveis na conclusão, sem garantir aceite do clube ou do jogador.</p></section><section class="card"><h3>Missões do departamento</h3>${
-    missions
-      .slice(0, 5)
-      .map(
-        (m) =>
-          `<div class="mission-row"><strong>${m.status === "pending" ? "Em observação" : m.status === "completed" ? "Relatório entregue" : "Encerrada"}</strong><span>${m.position === "all" ? "Todos os setores" : esc(m.position)} · ${E.formatDate({ season: m.season }, m.due)}</span></div>`,
-      )
-      .join("") ||
-    '<p class="muted">O departamento está pronto para receber uma missão.</p>'
-  }</section></div><section class="card"><div class="row"><h3>${scoutScope === "youth" ? "Relatório de jovens" : "Reforços recomendados"}</h3><span class="pill">${report ? E.formatDate({ season: report.season }, report.offset) : "Aguardando observação"}</span></div>${cards ? `<div class="scout-grid">${cards}</div>` : report ? "<p>Nenhum jogador observado coube nos critérios e nas verbas. Amplie a busca ou ajuste o orçamento.</p>" : '<p class="muted">O relatório trará opções, custos e alertas para ajudar a decidir.</p>'}</section>`;
+  const compared = scoutCompare.map((id) => lookup.get(id)?.p).filter(Boolean);
+  const comparison = compared.length
+    ? `<section class="card scout-comparison"><div class="row"><h3>Compare antes de decidir</h3><small>ATÉ 3 ATLETAS</small></div><div class="table-wrap"><table><thead><tr><th>CRITÉRIO</th>${compared.map((p) => `<th>${esc(p.name)}</th>`).join("")}</tr></thead><tbody>${[
+        ["Nível", (p) => p.ovr],
+        ["Potencial", (p) => p.potential],
+        ["Idade", (p) => playerAge(p)],
+        [
+          "Posições",
+          (p) =>
+            [
+              ...(p.naturalPositions || []),
+              ...(p.secondaryPositions || []),
+            ].join(" / ") || p.pos,
+        ],
+        ["Valor", (p) => money(p.price)],
+        ["Salário / semana", (p) => money(p.salary)],
+        ["Energia", (p) => p.fitness + "%"],
+      ]
+        .map(
+          ([label, value]) =>
+            `<tr><td>${label}</td>${compared.map((p) => `<td>${esc(value(p))}</td>`).join("")}</tr>`,
+        )
+        .join("")}</tbody></table></div></section>`
+    : "";
+  return `<div class="hero"><span class="badge">INTELIGÊNCIA DE MERCADO</span><h2>O reforço certo para o seu projeto.</h2><p>Compare custo, encaixe no elenco e margem de evolução. A observação considera transferências, caixa e teto salarial separadamente.</p><div class="scout-budget-strip"><span>Transferências <strong>${money(club.finance.transferBudget)}</strong></span><span>Espaço salarial / semana <strong>${money(Math.max(0, club.finance.wageBudget - E.finance.payroll(club)))}</strong></span><span>Em observação <strong>${data.shortlist.length} / 30</strong></span></div></div><div class="segmented scout-tabs">${btn("Mercado", "scout-scope", "market", scoutScope === "market" ? "active" : "")}${btn("Base e jovens", "scout-scope", "youth", scoutScope === "youth" ? "active" : "")}${btn("Lista de observação", "scout-scope", "shortlist", saved ? "active" : "")}</div>${
+    saved
+      ? ""
+      : `<div class="columns scouting-workspace"><section class="card"><span class="badge">NOVA MISSÃO</span><h3>Defina quem procurar.</h3><form id="scouting-form"><div class="columns"><label>Perfil<select name="profile">${options(
+          [
+            ["balanced", "Equilíbrio do elenco"],
+            ["starter", "Impacto no time titular"],
+            ["potential", "Desenvolvimento e revenda"],
+            ["value", "Custo e benefício"],
+          ],
+          "balanced",
+        )}</select></label><label>Profundidade<select name="depth">${options(
+          [
+            ["quick", "Triagem · 2 dias"],
+            [
+              "standard",
+              "Padrão · " + (scoutScope === "youth" ? 5 : 3) + " dias",
+            ],
+            ["deep", "Detalhada · 7 dias"],
+          ],
+          "standard",
+        )}</select></label></div><div class="columns"><label>Posição<select name="position">${options([["all", "Qualquer posição"], ...Object.entries(T.positionNames).map(([key, label]) => [key, key + " · " + label])], "all")}</select></label><label>Overall mínimo<input name="minOverall" type="number" min="0" max="99" value="0"></label></div><div class="columns"><label>Idade mínima<input name="minAge" type="number" min="15" max="45" value="15"></label><label>Idade máxima<input name="maxAge" type="number" min="15" max="${scoutScope === "youth" ? 23 : 45}" value="${scoutScope === "youth" ? 21 : 45}"></label></div><div class="columns"><label>Região<select name="region">${options(
+          [
+            ["all", "Mundo"],
+            ["eu", "Europa"],
+            ["sa", "América do Sul"],
+            ["na", "América do Norte"],
+            ["as", "Ásia"],
+          ],
+          "all",
+        )}</select></label><label>Liga<select name="league">${options([["all", "Todas"], ["free", "Sem clube"], ...state.leagues.map((l) => [l.id, l.name])], "all")}</select></label></div><label>Nacionalidade<select name="nationality">${options([["all", "Todas"], ...E.national.countries], "all")}</select></label><div class="columns"><label>Máximo de transferência (R$)<input name="maxFee" type="text" value="${club.finance.transferBudget}" required></label><label>Máximo de salário / semana (R$)<input name="maxSalary" type="text" value="${Math.min(30000000, Math.max(0, club.finance.wageBudget - E.finance.payroll(club)))}" required></label></div><div class="mission-estimate" id="mission-estimate">Missão padrão · ${money(scoutScope === "youth" ? 5000 : 10000)} · ${scoutScope === "youth" ? 5 : 3} dias</div><button class="primary" ${missions.some((m) => m.status === "pending") ? "disabled" : ""}>Iniciar observação</button></form><p class="muted">Avance os dias na Visão geral. O relatório usa as verbas da data de conclusão; não garante aceite do clube ou do jogador.</p></section><section class="card"><span class="badge">AGENDA DO DEPARTAMENTO</span><h3>Do pedido ao relatório.</h3>${
+          missions
+            .slice(0, 5)
+            .map((m) => {
+              const total = m.due - m.started,
+                done = Math.max(
+                  0,
+                  Math.min(100, ((state.today - m.started) / total) * 100),
+                );
+              return `<article class="mission-card"><div class="row"><strong>${m.status === "pending" ? "Em observação" : m.status === "completed" ? "Relatório entregue" : "Encerrada"}</strong><span>${m.depth === "deep" ? "Detalhada" : m.depth === "quick" ? "Triagem" : "Padrão"}</span></div><p>${m.position === "all" ? "Todos os setores" : esc(m.position)} · ${m.minAge || 15}–${m.maxAge} anos</p><div class="development-progress"><i style="width:${m.status === "completed" ? 100 : done}%"></i></div><small>${m.status === "pending" ? Math.max(0, m.due - state.today) + " dias restantes · " : ""}${E.formatDate({ season: m.season }, m.due)}</small></article>`;
+            })
+            .join("") ||
+          '<div class="department-empty"><h3>Seu próximo reforço começa aqui.</h3><p>Envie uma missão para receber análise de encaixe, custos e riscos.</p></div>'
+        }<div class="scout-principles"><h4>O que o relatório considera</h4><p>✓ Posições habituais e nível do elenco</p><p>✓ Caixa, taxa e salário semanal</p><p>✓ Idade, potencial e condição física</p><p>✓ Disponibilidade no clube de origem</p></div></section></div>`
+  }${comparison}<section class="card"><div class="row"><h3>${saved ? "Jogadores em observação" : scoutScope === "youth" ? "Relatórios da base" : "Relatórios de recrutamento"}</h3>${
+    reports.length
+      ? `<label>Consultar relatório<select id="scout-report">${options(
+          reports.map((r) => [
+            r.id,
+            E.formatDate({ season: r.season }, r.offset) +
+              " · " +
+              r.players.length +
+              " jogadores",
+          ]),
+          report?.id,
+        )}</select></label>`
+      : ""
+  }</div>${cards ? `<div class="scout-grid">${cards}</div>` : report ? "<p>Nenhum atleta coube nos critérios e nas verbas. Amplie a busca ou ajuste o orçamento.</p>" : saved ? '<p class="muted">Use ☆ Observar em um relatório para acompanhar até 30 nomes.</p>' : '<p class="muted">Os relatórios aparecerão após a conclusão das missões.</p>'}</section>`;
 }
 let calendarMonth = null,
   calendarSelected = null,
