@@ -2405,48 +2405,47 @@ button.calendar-day {
 /* Identidade e navegação: uma estrutura estável, compartilhada por clube e seleção. */
 .team-badge {
   --badge-size: 38px;
-  display: inline-grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   vertical-align: middle;
   width: var(--badge-size);
   height: var(--badge-size);
   min-width: var(--badge-size);
   flex: 0 0 var(--badge-size);
-  border-radius: 10px;
-  background: #fff;
-  border: 1px solid #d9e1ec;
-  overflow: hidden;
-  padding: 5px;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  overflow: visible;
+  padding: 2px;
 }
 .team-badge img,
 .badge-fallback {
+  display: block;
+  min-width: 0;
+  min-height: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  object-position: center;
 }
 .team-badge[data-loaded="true"] .badge-fallback {
   display: none;
 }
 .badge-tiny {
   --badge-size: 23px;
-  padding: 2px;
-  border-radius: 5px;
+  padding: 1px;
 }
 .badge-small {
   --badge-size: 29px;
-  padding: 3px;
-  border-radius: 6px;
+  padding: 1px;
 }
 .badge-large {
   --badge-size: 68px;
-  padding: 7px;
-  border-radius: 15px;
 }
 .badge-identity {
   --badge-size: 56px;
-  padding: 6px;
-  border-radius: 13px;
 }
 .team-label {
   display: inline-flex;
@@ -2718,7 +2717,6 @@ tr.mine {
 }
 .match-heading .team-badge {
   --badge-size: 48px;
-  padding: 5px;
 }
 .fixture-card .matchup {
   justify-content: flex-start;
@@ -2776,8 +2774,7 @@ tr.mine {
   }
   .badge-identity {
     --badge-size: 43px;
-    border-radius: 10px;
-    padding: 4px;
+    padding: 1px;
   }
   .sidebar-club strong {
     font-size: 12px;
@@ -2843,8 +2840,6 @@ tr.mine {
   }
   .identity-title .badge-large {
     --badge-size: 54px;
-    padding: 5px;
-    border-radius: 12px;
   }
   .match-heading .team-label {
     flex-direction: column !important;

@@ -1,6 +1,6 @@
 {
   "name": "club-legacy",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "private": true,
   "scripts": {
     "start": "python3 -m http.server 3000",
