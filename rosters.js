@@ -1,5 +1,6 @@
 "use strict";
 (function (root) {
+  const POSITION_REVISION = "positions-2026-10-v2";
   const DATA =
     typeof module !== "undefined"
       ? require("./roster-data.js")
@@ -144,6 +145,7 @@
       secondaryPositions: secondary,
       preferredFoot: positionProfile?.foot || bio?.foot || null,
       positionSource: positionProfile?.source || null,
+      positionRevision: POSITION_REVISION,
       contractEstimated: Boolean(detail.sourceKey),
       membershipReference: detail.reference || null,
       membershipKind: detail.membership || null,
@@ -193,7 +195,7 @@
       median = values[Math.floor(values.length / 2)] || 250000;
     return rows.map((r) => make(r, season, id.split("-")[0], median));
   }
-  const api = { DATA, roster, ageOn, make };
+  const api = { DATA, roster, ageOn, make, POSITION_REVISION };
   root.LegacyRosters = api;
   if (typeof module !== "undefined") module.exports = api;
 })(globalThis);

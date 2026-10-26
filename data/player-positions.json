@@ -17309,9 +17309,18 @@
       "natural": [
         "PE"
       ],
-      "secondary": [],
+      "secondary": [
+        "PD"
+      ],
       "foot": "left",
-      "source": "transfermarkt-2025"
+      "source": "transfermarkt-2025",
+      "secondarySources": {
+        "PD": {
+          "url": "https://www.fcbarcelona.com/en/football/first-team/players/24156/raphael-dias-belloli",
+          "evidence": "Perfil oficial: jobTitle Right Winger, nome Raphael Dias Belloli e nascimento 14 December 1996.",
+          "retrievedOn": "2026-10-26"
+        }
+      }
     },
     "tm-411537": {
       "natural": [
@@ -40833,5 +40842,6 @@
       "foot": null,
       "source": "transfermarkt-2025"
     }
-  }
+  },
+  "revision": "positions-2026-10-v2"
 }

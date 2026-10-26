@@ -125,8 +125,25 @@
       };
     return t.tactics;
   }
+  const slotCache = new WeakMap();
   function slots(t) {
-    return formations[t.tactics?.formation] || formations["4-3-3"];
+    const formation = t.tactics?.formation || "4-3-3",
+      template = formations[formation] || formations["4-3-3"],
+      roleKey = template
+        .filter((s) => ["st", "rst", "lst"].includes(s.id))
+        .map((s) => t.tactics?.roles?.[s.id]?.role || "Atacante")
+        .join("|"),
+      saved = slotCache.get(t);
+    if (saved?.formation === formation && saved.roleKey === roleKey)
+      return saved.slots;
+    const result = template.map((s) =>
+      ["st", "rst", "lst"].includes(s.id) &&
+      t.tactics?.roles?.[s.id]?.role !== "Centroavante"
+        ? { ...s, label: s.label.replace("CA", "ATA"), target: "ATA" }
+        : s,
+    );
+    slotCache.set(t, { formation, roleKey, slots: result });
+    return result;
   }
   const positionNames = {
     GOL: "Goleiro",
@@ -144,9 +161,11 @@
     PE: "Ponta esquerda",
     CA: "Centroavante",
     SA: "Segundo atacante",
+    ATA: "Atacante",
   };
   const targetPosition = (s) =>
-    ({
+    s.target ||
+    {
       gk: "GOL",
       rb: "LD",
       lb: "LE",
@@ -168,11 +187,52 @@
       st: "CA",
       rst: "CA",
       lst: "CA",
-    })[s.id] || null;
-  const positionMatches = (p, code) =>
-    p.pos === code ||
-    p.naturalPositions?.includes(code) ||
-    p.secondaryPositions?.includes(code);
+    }[s.id] ||
+    null;
+  const positionGroups = {
+    GOL: "GOL",
+    LD: "LAT",
+    LE: "LAT",
+    AD: "LAT",
+    AE: "LAT",
+    ZAG: "ZAG",
+    VOL: "VOL",
+    MC: "MEI",
+    MEI: "MEI",
+    MD: "MEI",
+    ME: "MEI",
+    PD: "ATA",
+    PE: "ATA",
+    CA: "ATA",
+    SA: "ATA",
+  };
+  const positionGroup = (code) => positionGroups[code];
+  const equivalentPositions = {
+    PD: "MD",
+    MD: "PD",
+    PE: "ME",
+    ME: "PE",
+    LD: "AD",
+    AD: "LD",
+    LE: "AE",
+    AE: "LE",
+  };
+  function positionMatches(p, code) {
+    const known = [
+      ...(p.naturalPositions || []),
+      ...(p.secondaryPositions || []),
+    ];
+    return known.length
+      ? known.some(
+          (position) =>
+            position === code ||
+            equivalentPositions[position] === code ||
+            positionGroup(position) === code ||
+            positionGroup(equivalentPositions[position]) === code ||
+            (code === "ATA" && position === "MEI"),
+        )
+      : p.pos === code;
+  }
   function generalFit(p, s) {
     if (p.pos === s.pos) return 1;
     if (p.pos === "GOL" || s.pos === "GOL") return 0.25;
@@ -206,10 +266,21 @@
     const target = targetPosition(s),
       natural = p.naturalPositions || [],
       secondary = p.secondaryPositions || [];
-    if (!target || !natural.length) return generalFit(p, s);
-    if (natural.includes(target)) return 1;
+    if (!target) return generalFit(p, s);
+    if (target === "ATA") {
+      if (positionMatches(p, "ATA")) return 1;
+      const primary = positionGroup(natural[0] || secondary[0]) || p.pos;
+      return generalFit({ ...p, pos: primary }, s);
+    }
+    if (natural.includes(target) || secondary.includes(target)) return 1;
+    const equivalent = equivalentPositions[target];
+    if (
+      equivalent &&
+      (natural.includes(equivalent) || secondary.includes(equivalent))
+    )
+      return 1;
+    if (!natural.length) return generalFit(p, s);
     if (natural.includes("GOL") || target === "GOL") return 0.25;
-    if (secondary.includes(target)) return 0.92;
     return Math.max(
       ...natural.map(
         (code) => related[code]?.[target] || Math.min(0.78, generalFit(p, s)),
@@ -223,13 +294,18 @@
       factor,
       effective: Math.round(p.ovr * factor),
       penalty: Math.round((1 - factor) * 100),
-      label:
-        factor === 1
-          ? p.naturalPositions?.length
-            ? "Natural"
-            : "Posição geral"
-          : p.secondaryPositions?.includes(target)
-            ? "Secundária"
+      label: p.naturalPositions?.includes(target)
+        ? "Natural"
+        : p.secondaryPositions?.includes(target) ||
+            (equivalentPositions[target] &&
+              (p.naturalPositions?.includes(equivalentPositions[target]) ||
+                p.secondaryPositions?.includes(equivalentPositions[target])))
+          ? "Habitual"
+          : factor === 1
+            ? target === "ATA" &&
+              (p.naturalPositions?.length || p.secondaryPositions?.length)
+              ? "Habitual"
+              : "Posição geral"
             : factor >= 0.85
               ? "Adaptado"
               : "Fora da posição",
@@ -502,6 +578,7 @@
     fit,
     adaptation,
     positionNames,
+    targetPosition,
     positionMatches,
     positions,
     select,

@@ -309,11 +309,14 @@ test("lado natural, alternativa confirmada, goleiro e posição geral têm regra
     secondaryPositions: ["LD"],
   };
   assert.equal(T.fit(p, left), 1);
-  assert.equal(T.fit(p, right), 0.92);
-  assert.equal(T.adaptation(p, right).label, "Secundária");
+  assert.equal(T.fit(p, right), 1);
+  assert.equal(T.adaptation(p, right).label, "Habitual");
+  assert.equal(T.adaptation(p, right).effective, p.ovr);
   assert.equal(T.fit(p, slots[0]), 0.25);
   delete p.naturalPositions;
   assert.equal(T.fit(p, right), 1);
+  assert.equal(T.adaptation(p, right).label, "Habitual");
+  delete p.secondaryPositions;
   assert.equal(T.adaptation(p, right).label, "Posição geral");
 });
 test("virada de temporada não conclui proposta pendente de meses atrás", () => {

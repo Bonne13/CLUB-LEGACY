@@ -179,6 +179,220 @@ test("titulares de seleção recebem desgaste do plano sem duplicar seus registr
   assert.equal(player.fitness, before - E.fatigueLoss(player, 90, 5));
 });
 
+test("Raphinha atua nas duas pontas; todas as posições confirmadas preservam o overall posicional", () => {
+  const s = E.fresh(),
+    all = [
+      ...s.teams.flatMap((t) => [...t.players, ...t.youth]),
+      ...s.freeAgents,
+    ];
+  const available = new Map(
+    Object.values(T.formations)
+      .flat()
+      .map((slot) => [T.targetPosition(slot), slot]),
+  );
+  let checked = 0;
+  for (const p of all)
+    for (const code of [
+      ...(p.naturalPositions || []),
+      ...(p.secondaryPositions || []),
+    ]) {
+      const slot = available.get(code);
+      if (!slot) continue;
+      const fit = T.adaptation(p, slot);
+      assert.equal(fit.factor, 1, `${p.name} em ${code}`);
+      assert.equal(fit.effective, p.ovr, `${p.name} em ${code}`);
+      assert.equal(fit.penalty, 0);
+      checked++;
+    }
+  assert(checked > 10000);
+  const raphinha = E.team(s, "es-1").players.find((p) => p.id === "tm-411295");
+  for (const code of ["PE", "PD"])
+    assert.equal(T.fit(raphinha, available.get(code)), 1);
+  assert(T.fit(raphinha, available.get("CA")) < 1);
+  for (const [id, code] of [
+    ["tm-288230", "CA"],
+    ["tm-406635", "MC"],
+    ["tm-369081", "VOL"],
+    ["tm-342229", "PE"],
+  ]) {
+    const p = all.find((p) => p.id === id);
+    assert.equal(T.adaptation(p, available.get(code)).effective, p.ovr, p.name);
+  }
+});
+test("Raphinha atua como ATA sem perda; a função Centroavante mantém a distinção de CA e os lados continuam específicos", () => {
+  const s = E.fresh();
+  E.start(s, "es-1");
+  const t = E.team(s),
+    p = t.players.find((p) => p.id === "tm-411295");
+  T.select(t, 9, p.id);
+  const lineup = [...t.lineup];
+  assert(T.positionMatches(p, "ATA"));
+  assert.equal(T.targetPosition(T.slots(t)[9]), "ATA");
+  assert.equal(T.adaptation(p, T.slots(t)[9]).effective, p.ovr);
+  T.setRole(t, 9, "Centroavante", "Atacar");
+  assert.equal(T.targetPosition(T.slots(t)[9]), "CA");
+  assert(T.fit(p, T.slots(t)[9]) < 1);
+  T.setRole(t, 9, "Atacante", "Atacar");
+  assert.equal(T.fit(p, T.slots(t)[9]), 1);
+  assert.deepEqual(t.lineup, lineup);
+  const m = E.makeMatch(s),
+    plan = m.plans[m.pair.indexOf(t.id)];
+  assert.equal(T.fit(plan.starters[9], plan.slots[9]), 1);
+  const real = E.team(s, "es-0"),
+    vini = real.players.find((p) => p.id === "tm-371998");
+  assert.equal(T.fit(vini, T.slots(real)[8]), 0.68);
+  delete plan.positionRevision;
+  plan.slots[9] = { ...T.formations["4-3-3"][9] };
+  const re = S.parse(S.serialize(s));
+  assert.equal(
+    T.fit(
+      E.team(re).players.find((x) => x.id === p.id),
+      T.slots(E.team(re))[9],
+    ),
+    1,
+  );
+  const restored = re.live.plans[re.live.pair.indexOf(re.clubId)];
+  assert.equal(T.targetPosition(restored.slots[9]), "ATA");
+  assert.equal(T.fit(restored.starters[9], restored.slots[9]), 1);
+});
+test("atualiza posições parciais de um atleta transferido sem desfazer evolução, contrato ou escalação", () => {
+  const s = career(),
+    t = E.team(s),
+    origin = E.team(s, "es-1"),
+    p = origin.players.find((p) => p.id === "tm-411295");
+  origin.players = origin.players.filter((x) => x.id !== p.id);
+  t.players.push(p);
+  p.ovr += 2;
+  p.salary += 37;
+  p.fitness = 81;
+  p.fatigue = 28;
+  T.select(t, 8, p.id);
+  const lineup = [...t.lineup],
+    original = {
+      ovr: p.ovr,
+      salary: p.salary,
+      contract: p.contract,
+      fitness: p.fitness,
+      fatigue: p.fatigue,
+      money: t.money,
+    };
+  p.secondaryPositions = ["ME"];
+  delete p.positionRevision;
+  E.prepareCareer(s);
+  assert(p.secondaryPositions.includes("PD"));
+  assert.equal(T.fit(p, T.slots(t)[8]), 1);
+  assert.deepEqual(t.lineup, lineup);
+  assert.deepEqual(
+    {
+      ovr: p.ovr,
+      salary: p.salary,
+      contract: p.contract,
+      fitness: p.fitness,
+      fatigue: p.fatigue,
+      money: t.money,
+    },
+    original,
+  );
+  const once = JSON.stringify(s);
+  E.prepareCareer(s);
+  assert.equal(JSON.stringify(s), once);
+  const re = S.parse(S.serialize(s));
+  assert.equal(
+    T.adaptation(
+      E.team(re).players.find((x) => x.id === p.id),
+      T.slots(E.team(re))[8],
+    ).effective,
+    original.ovr,
+  );
+});
+test("filtro reconhece famílias das posições detalhadas mesmo com categoria antiga diferente", () => {
+  const s = E.fresh(),
+    messi = E.team(s, "us-0").players.find((p) => p.name === "Leo Messi");
+  assert.equal(messi.pos, "MEI");
+  assert(T.positionMatches(messi, "ATA"));
+  assert(T.positionMatches(messi, "PD"));
+  assert(!T.positionMatches(messi, "ZAG"));
+  const v = E.team(s, "es-0").players.find((p) => p.id === "tm-371998");
+  assert(!T.positionMatches(v, "PD"));
+  assert.equal(T.fit(v, T.formations["4-3-3"][8]), 0.68);
+});
+test("corredores compatíveis consideram alternativas do atleta sem liberar o lado oposto", () => {
+  const s = E.fresh(),
+    all = s.teams.flatMap((t) => t.players),
+    right = T.formations["4-3-3"][8],
+    left = T.formations["4-3-3"][10];
+  for (const id of ["tm-243714", "tm-568177"]) {
+    const p = all.find((p) => p.id === id);
+    assert(p.secondaryPositions.includes("MD"));
+    assert.equal(T.fit(p, right), 1, p.name);
+    assert.equal(T.adaptation(p, right).label, "Habitual");
+    assert(T.positionMatches(p, "PD"));
+  }
+  const fullback = {
+    id: "lateral",
+    pos: "LAT",
+    ovr: 80,
+    naturalPositions: ["LE"],
+    secondaryPositions: [],
+  };
+  assert.equal(T.fit(fullback, T.formations["3-5-2"][8]), 1);
+  assert(T.fit(fullback, T.formations["3-5-2"][4]) < 1);
+  const winger = {
+    id: "ponta",
+    pos: "MEI",
+    ovr: 80,
+    naturalPositions: ["ME"],
+    secondaryPositions: [],
+  };
+  assert.equal(T.fit(winger, left), 1);
+  assert(T.fit(winger, right) < 1);
+});
+test("partida salva atualiza posições e força sem reiniciar relógio, placar ou relatos", () => {
+  const s = E.fresh();
+  E.start(s, "es-1");
+  const t = E.team(s),
+    p = t.players.find((p) => p.id === "tm-411295");
+  T.select(t, 8, p.id);
+  const m = E.makeMatch(s),
+    side = m.pair.indexOf(t.id),
+    plan = m.plans[side];
+  m.minute = 12;
+  m.goals[side] = 1;
+  m.events.unshift("12' — Gol registrado antes da atualização.");
+  p.secondaryPositions = ["ME"];
+  delete p.positionRevision;
+  plan.starters.find((x) => x.id === p.id).secondaryPositions = ["ME"];
+  delete plan.positionRevision;
+  const before =
+    plan.starters.reduce(
+      (sum, x, i) =>
+        sum +
+        x.ovr *
+          (0.65 + (0.35 * x.fitness) / 100) *
+          (1 - (x.fatigue || 0) * 0.001) *
+          T.fit(x, plan.slots[i]),
+      0,
+    ) / 11;
+  plan.strength = before;
+  plan.baseStrength = before;
+  const score = [...m.goals],
+    events = [...m.events],
+    lineup = [...t.lineup];
+  E.prepareCareer(s);
+  assert.equal(m.minute, 12);
+  assert.deepEqual(m.goals, score);
+  assert.deepEqual(m.events, events);
+  assert.deepEqual(t.lineup, lineup);
+  assert.equal(
+    T.fit(
+      plan.starters.find((x) => x.id === p.id),
+      plan.slots[8],
+    ),
+    1,
+  );
+  assert(plan.baseStrength > before);
+});
+
 function invite(s, id) {
   s.national.invites.push({
     id: "test-" + id,

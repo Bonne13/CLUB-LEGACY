@@ -11,7 +11,7 @@ rows=list(csv.DictReader(open(a.players,encoding='utf-8-sig')));bydob=collection
 for r in rows:
  if not r['overall'] or not r['dob']:continue
  bydob[r['dob']].append(r);byid[r['player_id']]=r
-mapped={};positions={'GK':'GOL','RB':'LD','LB':'LE','CB':'ZAG','RWB':'AD','LWB':'AE','CDM':'VOL','CM':'MC','CAM':'MEI','RM':'MD','LM':'ME','RW':'PD','LW':'PE','ST':'CA','CF':'SA'}
+mapped={};positions={'GK':'GOL','RB':'LD','LB':'LE','CB':'ZAG','RWB':'AD','LWB':'AE','CDM':'VOL','CM':'MC','CAM':'MEI','RM':'MD','LM':'ME','RW':'PD','LW':'PE','ST':'CA','CF':'SA','LS':'CA','RS':'CA','LF':'SA','RF':'SA','LCM':'MC','RCM':'MC','LDM':'VOL','RDM':'VOL','LAM':'MEI','RAM':'MEI','LCB':'ZAG','RCB':'ZAG'}
 for team in data['teams'].values():
  for r in team['players']:
   id='tm-'+r[0] if r[0].isdigit()else r[0];bio=data.get('playerBios',{}).get('players',{}).get(id,{})
@@ -28,8 +28,8 @@ for team in data['teams'].values():
   if len(candidates)!=1:continue
   e=next(iter(candidates.values()))
   if dob and e['dob']!=dob:continue
-  mapped[id]={'overall':int(e['overall']),'potential':int(e['potential']),'stamina':int(float(e['power_stamina']))if e['power_stamina']else 65,'positions':list(dict.fromkeys(positions[p.strip()]for p in e['player_positions'].split(',')if p.strip()in positions)),'sourceId':e['player_id'],'reference':e['fifa_update_date'],'url':'https://sofifa.com'+e['player_url']}
-source={'revision':'ratings-fc26-2025-09','source':'https://github.com/ismailoksuz/EAFC26-DataHub','commit':'8724af5803a787c9c262eee2ac8f942651b0e4b9','reference':'FC26 / 19-09-2025; referência histórica, não avaliação oficial atualizada em 2026.','players':mapped}
+  mapped[id]={'overall':int(e['overall']),'potential':int(e['potential']),'stamina':int(float(e['power_stamina']))if e['power_stamina']else 65,'positions':list(dict.fromkeys(positions[p.strip()]for p in (e['player_positions'].split(',')+[e.get('club_position',''),e.get('nation_position','')])if p.strip()in positions)),'sourceId':e['player_id'],'reference':e['fifa_update_date'],'url':'https://sofifa.com'+e['player_url']}
+source={'positionRevision':'positions-fc26-lineups-v1','revision':'ratings-fc26-2025-09','source':'https://github.com/ismailoksuz/EAFC26-DataHub','commit':'8724af5803a787c9c262eee2ac8f942651b0e4b9','reference':'FC26 / 19-09-2025; referência histórica, não avaliação oficial atualizada em 2026.','players':mapped}
 (root/'data/player-ratings.json').write_text(json.dumps(source,ensure_ascii=False,indent=2)+'\n')
 print('AVALIAÇÕES CONCILIADAS',len(mapped))
 for id in ['tm-371998','tm-342229','tm-418560','tm-68290','mls-MLS-OBJ-000396','tm-8198']:print(id,mapped.get(id))

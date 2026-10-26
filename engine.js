@@ -524,14 +524,17 @@
         }
         p.stamina ??= ref.stamina;
         p.marketSalary = Math.max(p.salary, ref.marketSalary);
-        if (ref.secondaryPositions?.length && !p.secondaryPositions?.length)
-          p.secondaryPositions = [...ref.secondaryPositions];
-
-        if (!p.naturalPositions?.length && ref.naturalPositions.length) {
-          p.naturalPositions = [...ref.naturalPositions];
-          p.secondaryPositions = [...ref.secondaryPositions];
-          p.preferredFoot = ref.preferredFoot;
-          p.positionSource = ref.positionSource;
+        if (
+          p.positionRevision !== ref.positionRevision ||
+          (!p.naturalPositions?.length && ref.naturalPositions.length)
+        ) {
+          if (ref.naturalPositions.length || ref.secondaryPositions.length) {
+            p.naturalPositions = [...ref.naturalPositions];
+            p.secondaryPositions = [...ref.secondaryPositions];
+            p.preferredFoot = ref.preferredFoot;
+            p.positionSource = ref.positionSource;
+          }
+          p.positionRevision = ref.positionRevision;
         }
         if (!p.nationalities) {
           p.nationalities = ref.nationalities;
@@ -610,7 +613,9 @@
       m.goalReplays ??= [];
       m.timeline ??= [];
       m.secondHalfStarted ??= m.minute > 45;
-      for (let side = 0; side < m.plans.length; side++)
+      for (let side = 0; side < m.plans.length; side++) {
+        const plan = m.plans[side],
+          refreshPositions = plan.positionRevision !== R.POSITION_REVISION;
         for (let index = 0; index < m.plans[side].starters.length; index++) {
           const p = m.plans[side].starters[index],
             reference = existing.find((x) => x.id === p.id);
@@ -621,10 +626,39 @@
             p.fatigue ??= reference.fatigue;
             p.naturalPositions ??= reference.naturalPositions;
             p.secondaryPositions ??= reference.secondaryPositions;
+            if (refreshPositions) {
+              p.naturalPositions = [...(reference.naturalPositions || [])];
+              p.secondaryPositions = [...(reference.secondaryPositions || [])];
+            }
             p.shirtNumber ??=
               m.kind === "national" ? index + 1 : reference.shirtNumber;
           }
         }
+        if (refreshPositions) {
+          const slots = new Map(
+            T.slots({ tactics: plan.instructions }).map((slot) => [
+              slot.id,
+              slot,
+            ]),
+          );
+          plan.slots = plan.slots.map((slot) => {
+            const updated = slots.get(slot.id);
+            return updated
+              ? { ...slot, label: updated.label, target: updated.target }
+              : slot;
+          });
+          plan.baseStrength = matchPlanStrength(plan);
+          const condition =
+            plan.starters.reduce(
+              (sum, p) => sum + matchFitness(p, m, plan.fatigue),
+              0,
+            ) / 11;
+          plan.strength =
+            plan.baseStrength *
+            (m.minute ? 0.85 + (0.15 * condition) / 100 : 1);
+          plan.positionRevision = R.POSITION_REVISION;
+        }
+      }
     }
     return s;
   }
@@ -868,6 +902,7 @@
       if (id === s.clubId && m.kind !== "national") plan.mentality = s.tactic;
       return {
         name: t.name,
+        positionRevision: R.POSITION_REVISION,
         ...T.ratings(t),
         instructions: plan,
         slots: copy(T.slots(t)),
@@ -1262,16 +1297,7 @@
     m.minutesPlayed[inId] ??= 0;
     m.substitutions ??= [];
     m.substitutions.push({ side, outId, inId, minute: m.minute });
-    plan.baseStrength =
-      plan.starters.reduce(
-        (sum, p, i) =>
-          sum +
-          p.ovr *
-            (0.65 + (0.35 * (p.fitness || 100)) / 100) *
-            (1 - (p.fatigue || 0) * 0.001) *
-            T.fit(p, plan.slots[i]),
-        0,
-      ) / 11;
+    plan.baseStrength = matchPlanStrength(plan);
     plan.strength = plan.baseStrength;
     const valid = new Set(plan.starters.map((p) => p.id));
     if (
@@ -1301,6 +1327,19 @@
       `${m.minute}' — Substituição: sai ${outgoing.name}, entra ${incoming.name}.`,
     );
     return m.substitutions.at(-1);
+  }
+  function matchPlanStrength(plan) {
+    return (
+      plan.starters.reduce(
+        (sum, p, i) =>
+          sum +
+          p.ovr *
+            (0.65 + (0.35 * (p.fitness ?? 100)) / 100) *
+            (1 - (p.fatigue || 0) * 0.001) *
+            T.fit(p, plan.slots[i]),
+        0,
+      ) / 11
+    );
   }
   function minute(s, m, rng = Math.random) {
     if (m.done || m.minute >= 90) return;
