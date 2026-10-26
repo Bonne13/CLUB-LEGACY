@@ -39,6 +39,10 @@
     typeof module !== "undefined"
       ? require("./schedule.js")
       : root.LegacySchedule;
+  const PF =
+    typeof module !== "undefined"
+      ? require("./performance.js")
+      : root.LegacyPerformance;
   const LEAGUES = WORLD.leagues;
   const CUP_DEFS = [
     {
@@ -451,6 +455,7 @@
     return result;
   }
   function prepareCareer(s) {
+    PF.ensure(s);
     ensureFriendlies(s);
     TR.ensure(s);
     SC.ensure(s);
@@ -602,6 +607,7 @@
     if (s.live && !s.live.done) {
       const m = s.live;
       m.plans ??= matchPlans(s, m);
+      PF.begin(m);
       if (!m.minutesPlayed)
         m.minutesPlayed = Object.fromEntries(
           m.plans.flatMap((plan) => plan.starters.map((p) => [p.id, m.minute])),
@@ -736,6 +742,7 @@
     s.clubId = id;
     if (settings.calendar === "regional")
       D.configure(s, league(s, t.leagueId).region);
+    PF.ensure(s).current.label = D.label(s);
     news(s, `Você assumiu o comando de ${t.name}.`, {
       category: "coaches",
       body: `O novo treinador assume o elenco e a gestão do clube, com contrato até ${coach.contract}.`,
@@ -1344,6 +1351,7 @@
       );
     s.live = {
       ...copy(f),
+      season: s.season,
       day: s.day,
       offset: s.today,
       mode: ["text", "2d", "3d"].includes(mode) ? mode : "2d",
@@ -1360,6 +1368,7 @@
       done: false,
     };
     s.live.plans = matchPlans(s, s.live);
+    PF.begin(s.live);
     s.live.events.push(
       ...s.live.plans.map(
         (p) =>
@@ -1443,7 +1452,11 @@
               y: detail === "pênalti" ? 50 : 36 + ((m.minute * 7) % 28),
             };
     const passer1 = players[5] || players[1] || shooter,
-      passer2 = players[7] || players[6] || shooter;
+      passer2 =
+        players.find((p) => p.id === m.lastShot?.assistId) ||
+        players[7] ||
+        players[6] ||
+        shooter;
     const target =
       type === "goal"
         ? { x: side ? 1 : 99, y: 46 + (m.minute % 9) }
@@ -1463,6 +1476,8 @@
       side,
       playerId: shooter.id,
       playerName: actor?.name || shooter.name,
+      assistId: type === "goal" ? m.lastShot?.assistId || null : null,
+      assistName: type === "goal" ? m.lastShot?.assistName || null : null,
       from,
       target,
       path,
@@ -1608,6 +1623,7 @@
       50 + (m.plans[0].strength - m.plans[1].strength) * 0.3
         ? 0
         : 1;
+    PF.tick(m);
     let producedPlay = false;
     const pace = (p) =>
       p.instructions.tempo === "Rápido"
@@ -1709,14 +1725,17 @@
         );
       if (rng() < chance) {
         m.goals[side]++;
+        PF.shot(m, side, scorer, type, { goal: true, taker });
         if (!m.compact) recordPlay(m, "goal", side, scorer, detail);
         m.events.unshift(
           `${m.minute}' — GOL de ${scorer?.name || own.name} (${own.name}) · ${detail}!`,
         );
       } else {
+        const saved = rng() >= 0.5;
+        PF.shot(m, side, scorer, type, { saved, taker });
         if (!m.compact) recordPlay(m, "shot", side, scorer, detail);
         m.events.unshift(
-          `${m.minute}' — ${own.name}: ${type === "jogada" ? scorer?.name || "o ataque" : taker?.name || "o cobrador"} tenta ${detail}; ${rng() < 0.5 ? "a bola sai" : "o goleiro defende"}.`,
+          `${m.minute}' — ${own.name}: ${type === "jogada" ? scorer?.name || "o ataque" : taker?.name || "o cobrador"} tenta ${detail}; ${saved ? "o goleiro defende" : "a bola sai"}.`,
         );
       }
     }
@@ -1732,6 +1751,7 @@
   function score(s, f, rng) {
     const m = {
       ...f,
+      season: s.season,
       compact: true,
       minute: 0,
       goals: [0, 0],
@@ -1739,7 +1759,7 @@
       events: [],
     };
     while (m.minute < 90) minute(s, m, rng);
-    return m.goals;
+    return m;
   }
   function record(table, pair, g) {
     const [a, b] = pair.map((id) => table.find((t) => t.id === id));
@@ -1957,15 +1977,27 @@
       international = new Map();
     for (const f of allFixtures(s)) {
       if (f.kind !== "national") f.pair.forEach((id) => participants.add(id));
-      const g = managed(s, f) ? [...m.goals] : score(s, f, rng);
-      const entry = { ...copy(f), goals: g, winner: null, penalties: null };
+      const controlled =
+        managed(s, f) &&
+        m?.pair.join("|") === f.pair.join("|") &&
+        m?.competition === f.competition;
+      const played = controlled ? m : score(s, f, rng);
+      const g = [...played.goals];
+      const playerOfMatch = PF.commit(s, played, { managed: controlled });
+      const entry = {
+        ...copy(f),
+        goals: g,
+        winner: null,
+        penalties: null,
+        playerOfMatch,
+      };
       if (f.kind === "national") {
-        const plans = managed(s, f) && m.plans ? m.plans : matchPlans(s, f);
+        const plans = played.plans || matchPlans(s, f);
         for (const plan of plans)
           for (const p of plan.starters)
             international.set(p.id, {
               fatigue: plan.fatigue,
-              minutes: m?.minutesPlayed?.[p.id] ?? 90,
+              minutes: played.minutesPlayed?.[p.id] ?? 90,
             });
         s.national.results.push({
           ...entry,
@@ -2110,6 +2142,15 @@
     const ownResult = results.find((r) => managed(s, r));
     if (ownResult) {
       s.last = ownResult;
+      if (ownResult.playerOfMatch) {
+        const p = ownResult.playerOfMatch;
+        news(s, `${p.name} é o melhor em campo.`, {
+          category: "results",
+          clubIds: ownResult.pair,
+          competitionId: ownResult.competition,
+          body: `${team(s, p.clubId).name}: nota ${p.rating.toFixed(1).replace(".", ",")}, ${p.goals} gol${p.goals === 1 ? "" : "s"}, ${p.assists} assistência${p.assists === 1 ? "" : "s"}${p.keeper ? `, ${p.saves} defesas e ${p.conceded} gols sofridos` : ""}. O prêmio considera o desempenho nesta partida.`,
+        });
+      }
       s.news.unshift(
         `${team(s, ownResult.pair[0]).name} ${ownResult.goals[0]} × ${ownResult.goals[1]} ${team(s, ownResult.pair[1]).name}${ownResult.penalties ? " · pênaltis " + ownResult.penalties.join("–") : ""}.`,
       );
@@ -2118,6 +2159,10 @@
         m.done = true;
         m.penalties = ownResult.penalties;
         m.events.unshift("Fim de jogo. Resultado e calendário salvos.");
+        if (ownResult.playerOfMatch)
+          m.events.unshift(
+            `Melhor em campo: ${ownResult.playerOfMatch.name} · nota ${ownResult.playerOfMatch.rating.toFixed(1).replace(".", ",")}.`,
+          );
       }
     }
     if (results.length)
@@ -2130,6 +2175,7 @@
     s.history = s.history.filter((h) => h.season === s.season).slice(-6);
     if (d.kind !== "rest") s.day++;
     s.today = (s.today ?? d.offset) + 1;
+    announcePlayerAwards(s, PF.closeMonth(s));
     processNegotiations(s);
     const invitation = N.review(s);
     if (invitation)
@@ -2205,6 +2251,35 @@
       celebrated: clubId !== s.clubId,
     });
     s.trophies = s.trophies.slice(0, 1000);
+    if (kind !== "preseason")
+      announcePlayerAwards(
+        s,
+        [PF.closeCompetition(s, competitionId)].filter(Boolean),
+      );
+  }
+  function announcePlayerAwards(s, awards) {
+    const ownLeague = team(s)?.leagueId;
+    for (const a of awards) {
+      if (
+        !["ballon", "keeper"].includes(a.type) &&
+        a.competition !== ownLeague &&
+        a.winner.clubId !== s.clubId &&
+        !s.cups.some(
+          (c) => c.id === a.competition && c.entrants.includes(s.clubId),
+        )
+      )
+        continue;
+      news(
+        s,
+        `${a.winner.name} conquista ${a.name}${a.competitionName ? " · " + a.competitionName : ""}.`,
+        {
+          category: "competitions",
+          clubIds: [a.winner.clubId],
+          competitionId: a.competition,
+          body: `${a.month ? "Referência: " + a.month + ". " : ""}Nota média ${a.winner.average?.toFixed(2).replace(".", ",")}; ${a.winner.goals} gols e ${a.winner.assists} assistências${a.winner.pos === "GOL" ? `; ${a.winner.saves} defesas e ${a.winner.cleanSheets} jogos sem sofrer gol` : ""}. A premiação usa o desempenho acompanhado na carreira.`,
+        },
+      );
+    }
   }
   function seasonEnd(s, rng) {
     const my = team(s);
@@ -2239,6 +2314,7 @@
         },
       );
     });
+    announcePlayerAwards(s, PF.closeSeason(s));
     const invitation = N.review(s, true);
     if (invitation)
       news(s, `Convite para treinar ${invitation.name}.`, {
@@ -3219,6 +3295,7 @@
     s.preseasonTournaments = [];
     s.day = 0;
     s.today = 0;
+    PF.ensure(s);
     s.live = null;
     s.last = null;
     s.offers = [];
@@ -3456,6 +3533,7 @@
     setShirtNumber,
     physical: P,
     training: TR,
+    performance: PF,
     setRecoveryPlan,
     NEGOTIATION_STAGES,
     negotiationActive,

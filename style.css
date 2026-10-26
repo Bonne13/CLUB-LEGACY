@@ -4391,3 +4391,418 @@ body.compact-navigation #game {
     overflow-wrap: anywhere;
   }
 }
+
+/* Desempenho e prêmios individuais. */
+.awards-hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, #dcb65a 12%, var(--panel)),
+    var(--panel)
+  );
+}
+.awards-hero > div {
+  min-width: 0;
+  flex: 1;
+}
+.awards-emblem {
+  font-size: 94px;
+  line-height: 1;
+  color: #dfbb68;
+  text-shadow: 0 5px 30px #dfbb6826;
+  flex: none;
+}
+.awards-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 18px;
+}
+.awards-toolbar label {
+  margin: 0;
+  min-width: 180px;
+  flex: 1;
+}
+.award-status {
+  color: var(--accent);
+  font-weight: 600;
+  margin: 20px 0 8px;
+}
+.match-note {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  background: color-mix(in srgb, var(--info) 15%, var(--soft));
+  border: 1px solid color-mix(in srgb, var(--info) 30%, var(--border));
+  color: var(--text);
+  min-width: 44px;
+  padding: 7px 8px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+.match-note.excellent {
+  background: color-mix(in srgb, var(--success) 20%, var(--panel));
+  border-color: color-mix(in srgb, var(--success) 55%, var(--border));
+  color: var(--success);
+}
+.match-note.poor {
+  background: color-mix(in srgb, var(--error) 12%, var(--soft));
+  border-color: color-mix(in srgb, var(--error) 35%, var(--border));
+}
+.match-ratings-card {
+  margin: 24px 0;
+}
+.match-ratings-teams {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 25px;
+}
+.match-ratings-teams > section {
+  min-width: 0;
+}
+.match-ratings-teams h4 {
+  margin: 8px 0 16px;
+}
+.match-rating-line {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 8px;
+  border-bottom: 1px solid var(--border);
+}
+.match-rating-line > div {
+  min-width: 0;
+}
+.match-rating-line strong {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.match-rating-line small {
+  display: block;
+  font-size: 10px;
+  line-height: 1.7;
+  letter-spacing: 0;
+  margin-top: 4px;
+}
+.match-rating-line.best {
+  background: color-mix(in srgb, #dcb65a 9%, var(--panel));
+  border-radius: 7px;
+}
+.match-best-player {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 22px;
+  border: 1px solid color-mix(in srgb, #dfbb68 45%, var(--border));
+  background: color-mix(in srgb, #dfbb68 7%, var(--panel));
+  border-radius: 12px;
+  margin-bottom: 22px;
+}
+.match-best-player > div {
+  flex: 1;
+  min-width: 0;
+}
+.match-best-player h3 {
+  font-size: 23px;
+  margin: 8px 0 5px;
+}
+.match-best-player p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.match-best-player .match-note {
+  font-size: 25px;
+  min-width: 64px;
+  padding: 14px;
+}
+.award-symbol {
+  display: block;
+  font-size: 42px;
+  color: #dfbb68;
+  line-height: 1.3;
+}
+.ratings-explanation {
+  font-size: 11px;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+.awards-table {
+  min-width: 850px !important;
+}
+.awards-table td {
+  font-variant-numeric: tabular-nums;
+  vertical-align: top;
+}
+.awards-table td:nth-child(2) {
+  min-width: 230px;
+}
+.awards-table .team-label {
+  margin-top: 6px;
+  font-size: 10px;
+}
+.awards-table > tbody > tr > td > strong {
+  font-size: 14px;
+}
+.performance-breakdown {
+  font-size: 10px;
+  max-width: 300px;
+  margin-top: 10px;
+}
+.performance-breakdown summary {
+  color: var(--muted);
+  cursor: pointer;
+  line-height: 1.6;
+}
+.performance-breakdown dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 18px;
+  background: var(--soft);
+  border-radius: 8px;
+  padding: 12px;
+}
+.performance-breakdown dt {
+  color: var(--muted);
+}
+.performance-breakdown dd {
+  text-align: right;
+  margin: 0;
+}
+.individual-awards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.individual-awards-grid .card {
+  margin: 0;
+}
+.individual-award {
+  min-width: 0;
+  border-top: 2px solid #dfbb68;
+}
+.individual-award .award-symbol {
+  margin-bottom: 16px;
+}
+.individual-award h3 {
+  font-size: 23px;
+  line-height: 1.3;
+  margin: 12px 0;
+}
+.individual-award .badge {
+  letter-spacing: 1px;
+  font-size: 9px;
+}
+.award-period {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+.award-card-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-block: 1px solid var(--border);
+  padding: 14px 0;
+  font-size: 11px;
+  margin: 18px 0;
+}
+.individual-award details {
+  font-size: 11px;
+  line-height: 1.7;
+}
+.individual-award details > small {
+  letter-spacing: 0;
+  line-height: 1.8;
+}
+.confirmed-award {
+  margin: 20px 0;
+  max-width: 650px;
+}
+.awards-empty {
+  padding: 35px 20px;
+  text-align: center;
+}
+.awards-empty p {
+  color: var(--muted);
+  font-size: 12px;
+  max-width: 60ch;
+  margin-inline: auto;
+}
+.awards-empty .award-symbol {
+  margin-bottom: 16px;
+}
+.award-rules {
+  margin-top: 24px;
+}
+.award-rules summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.award-rules p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.9;
+}
+.match-report {
+  border: 1px solid var(--border);
+  padding: 16px;
+  border-radius: 10px;
+  margin-top: 12px;
+}
+.match-report > summary {
+  cursor: pointer;
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.match-report > summary > span {
+  color: var(--muted);
+  font-size: 10px;
+}
+.report-best {
+  margin: 15px 0;
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.season-stat {
+  color: var(--accent);
+  margin-top: 5px;
+  line-height: 1.6;
+}
+@media (max-width: 1150px) {
+  .individual-awards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  .match-ratings-teams,
+  .individual-awards-grid {
+    grid-template-columns: 1fr;
+  }
+  .match-best-player {
+    padding: 17px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .match-best-player .award-symbol {
+    font-size: 30px;
+  }
+  .match-best-player h3 {
+    font-size: 20px;
+  }
+  .awards-emblem {
+    font-size: 60px;
+  }
+  .awards-toolbar label {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+  .match-best-player .match-note {
+    font-size: 21px;
+    min-width: 50px;
+  }
+  .individual-award h3 {
+    font-size: 21px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .match-best-player {
+    animation: award-reveal 0.35s ease-out;
+  }
+  @keyframes award-reveal {
+    from {
+      opacity: 0.3;
+      transform: translateY(7px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+.gold-ball {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 23%,
+    #fff0ad,
+    #dfb54c 42%,
+    #a3721d 76%,
+    #75521f
+  );
+  box-shadow:
+    inset -5px -5px 10px #6a451f60,
+    0 8px 22px #0002;
+}
+.gold-ball::before {
+  content: "";
+  position: absolute;
+  inset: 22% 28% 30% 23%;
+  background: #92651699;
+  clip-path: polygon(50% 0, 100% 38%, 80% 100%, 20% 100%, 0 38%);
+}
+@media (max-width: 700px) {
+  .awards-table {
+    min-width: 0 !important;
+    display: block;
+  }
+  .awards-table thead {
+    display: none;
+  }
+  .awards-table tbody {
+    display: grid;
+    gap: 16px;
+  }
+  .awards-table tbody > tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+  }
+  .awards-table tbody > tr.mine {
+    background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  }
+  .awards-table td {
+    border: 0;
+    padding: 0;
+    min-width: 0;
+    white-space: normal;
+  }
+  .awards-table td:first-child {
+    color: var(--muted);
+    font-size: 11px;
+  }
+  .awards-table td:nth-child(2) {
+    grid-column: 1/-1;
+    grid-row: 2;
+    min-width: 0;
+  }
+  .awards-table td[data-stat]::before {
+    content: attr(data-stat);
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    margin-bottom: 6px;
+  }
+  .awards-table td[colspan] {
+    grid-column: 1/-1;
+  }
+  .awards-table .performance-breakdown {
+    max-width: none;
+  }
+}

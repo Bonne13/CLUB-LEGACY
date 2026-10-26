@@ -110,3 +110,11 @@ Focos e ganhos de treino, confiança dos relatórios, perfis de contratação e 
 A liderança atribuída (de 84 a 94 antes do treino) é uma regra da simulação, orientada pelo posto da referência. Não é uma nota extraída de Football Manager, EA FC ou da fonte de capitania. Capitães conhecidos mantêm essa referência pessoal se transferidos, mas a braçadeira automática do destino usa a hierarquia do próprio clube ou a escolha do treinador. As fontes não são consultadas ao carregar a carreira; o pacote é local e pode ser reproduzido com `scripts/build-captains.py`.
 
 O novo eixo de calendário usa início regional e preparação em 2026/27, com datas simuladas. Não há importação de calendários oficiais 2026/27 completos. Amistosos e quadrangulares são compromissos criados pelo usuário, com atletas reais já existentes; nomes de torneios personalizados não representam competições reais licenciadas.
+
+## Avaliações e premiações da simulação (v0.11)
+
+Notas de partidas, gols, assistências, chutes no alvo, defesas, eficiência, jogos sem sofrer gol, ações defensivas e passes são produzidos pelo motor local a partir dos jogos da carreira. Não são dados esportivos históricos importados nem notas oficiais de EA FC ou Football Manager. Os candidatos usam as identidades reais já presentes no catálogo, inclusive quando são transferidos; o sistema não gera atletas para premiações.
+
+A Bola de Ouro, os prêmios de goleiro, de melhor em campo, do mês e do campeonato usam fórmulas próprias de desempenho e amostra mínima, documentadas no README e na interface. Não representam votações reais, resultados oficiais da France Football ou um serviço de dados ao vivo. A temporada europeia pode atravessar o ano civil; a premiação anual do jogo encerra o ciclo da carreira. Títulos de preparação e amistosos não pontuam para os rankings oficiais.
+
+Não se atribuem estatísticas a jogos anteriores à implantação. Em saves atualizados, apenas novos lances observados são contabilizados, inclusive no restante de uma partida recuperada. O sistema usa os mesmos eventos para texto, 2D, 3D e jogos simulados da IA.

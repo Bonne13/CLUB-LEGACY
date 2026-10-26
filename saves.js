@@ -595,6 +595,11 @@
       if (m.timeline) array(m.timeline, 40).forEach(play);
       if (m.goalReplays) array(m.goalReplays, 12).forEach(play);
     }
+    try {
+      E.performance.validate(s, { clubIds: known, nationalIds: nationalIDs });
+    } catch {
+      fail();
+    }
     return s;
   }
   function parse(raw) {
