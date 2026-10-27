@@ -1,7 +1,7 @@
 "use strict";
 (function (root) {
   const data = {
-    revision: "original-1",
+    revision: "original-2",
     assets: {
       "flag-ar.png": "assets/badges/flag-ar.png",
       "flag-at.png": "assets/badges/flag-at.png",

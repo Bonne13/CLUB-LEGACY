@@ -38,11 +38,8 @@ const { chromium } = require("playwright"),
     await page.locator("#start-coach-name").fill("Marina Costa");
     await page.locator("[data-action=begin]").click();
     await nav("Jornal");
-    assert(
-      (await page.locator(".press-disclosure").innerText()).includes(
-        "Jornais e jornalistas são personagens",
-      ),
-    );
+    assert.equal(await page.locator(".press-disclosure").count(), 0);
+    assert(!/fict[ií]ci/i.test(await page.locator(".newspaper").innerText()));
     assert.equal(await page.locator("#news-outlet option").count(), 10);
     assert.equal(await page.locator("#news-journalist option").count(), 9);
     assert((await page.locator(".news-article").count()) > 0);
@@ -206,11 +203,7 @@ const { chromium } = require("playwright"),
       ),
     );
     await nav("Jornal");
-    assert(
-      (await page.locator(".press-disclosure").innerText()).includes(
-        "IMPRENSA FICTÍCIA",
-      ),
-    );
+    assert(!/fict[ií]ci/i.test(await page.locator(".newspaper").innerText()));
     assert.deepEqual(errors, []);
     console.log(
       "PASS: jornais e jornalistas fictícios, autoria simulada identificada, diretório sem links reais, fontes dos critérios HTTPS, filtros combinados, pesquisa, mundo, crédito por decisão, critérios oficiais explicados, celular, claro/escuro e persistência.",

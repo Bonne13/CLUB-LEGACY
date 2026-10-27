@@ -32,7 +32,7 @@ test("catálogo visual usa arquivos locais íntegros, sem baixar imagens durante
     );
     if (e.name) {
       assert(e.file.startsWith("original-") && e.file.endsWith(".svg"), e.file);
-      assert.equal(e.design, "geometric-v1");
+      assert.equal(e.design, "heraldic-v2");
       const svg = bytes.toString("utf8");
       assert(svg.includes('viewBox="0 0 96 96"'));
       assert(svg.includes("emblema original Dinastia FC"));
@@ -105,4 +105,16 @@ test("temas mantêm contraste de leitura em todas as cores dos clubes e seleçõ
     A.nationalColors("Brazil"),
     A.clubColors({ id: "br-0", name: "Flamengo" }),
   );
+});
+
+test("emblemas possuem desenhos distintos mesmo desconsiderando o título de identificação", () => {
+  const entries = require("../data/badges.json").entries.filter((e) => e.name),
+    body = new Set();
+  for (const e of entries) {
+    const text = fs
+      .readFileSync(path.resolve(__dirname, "../assets/badges", e.file), "utf8")
+      .replace(/<title>[\s\S]*?<\/title>/, "");
+    body.add(crypto.createHash("sha256").update(text).digest("hex"));
+  }
+  assert.equal(body.size, entries.length);
 });

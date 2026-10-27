@@ -43,6 +43,14 @@
     typeof module !== "undefined"
       ? require("./discipline.js")
       : root.LegacyDiscipline;
+  const MOTION =
+    typeof module !== "undefined"
+      ? require("./match-motion.js")
+      : root.LegacyMatchMotion;
+  const HONOURS =
+    typeof module !== "undefined"
+      ? require("./honours.js")
+      : root.LegacyHonours;
   const PF =
     typeof module !== "undefined"
       ? require("./performance.js")
@@ -1447,6 +1455,7 @@
           id: p.id,
           name: p.name,
           shirtNumber: p.shirtNumber,
+          keeper: i === 0,
           side: teamSide,
           index: i,
           x: Math.max(3, Math.min(97, x)),
@@ -1482,7 +1491,14 @@
         type === "build-up"
           ? { x: shooter.x, y: shooter.y }
           : {
-              x: side ? 16 + (m.minute % 5) : 84 - (m.minute % 5),
+              x:
+                detail === "pênalti"
+                  ? side
+                    ? 10.5
+                    : 89.5
+                  : side
+                    ? 16 + (m.minute % 5)
+                    : 84 - (m.minute % 5),
               y: detail === "pênalti" ? 50 : 36 + ((m.minute * 7) % 28),
             };
     const passer1 = players[5] || players[1] || shooter,
@@ -1495,7 +1511,9 @@
       type === "goal"
         ? { x: side ? 1 : 99, y: 46 + (m.minute % 9) }
         : type === "shot"
-          ? { x: side ? 3 : 97, y: m.minute % 2 ? 26 : 74 }
+          ? m.lastShot?.saved
+            ? { x: side ? 5 : 95, y: 44 + (m.minute % 13) }
+            : { x: side ? 3 : 97, y: m.minute % 2 ? 26 : 74 }
           : { x: shooter.x, y: shooter.y };
     const path = [
       { x: passer1.x, y: passer1.y, playerId: passer1.id, name: passer1.name },
@@ -1516,6 +1534,7 @@
       target,
       path,
       detail,
+      initialPositions: view.positions.map((p) => ({ ...p })),
       positions: view.positions.map((p) =>
         p.id === shooter.id ? { ...p, ...from } : p,
       ),
@@ -3662,6 +3681,8 @@
     makeMatch,
     minute,
     matchVisual,
+    matchFrame: MOTION.frame,
+    honours: HONOURS,
     matchFitness,
     fatigueLoss,
     startSecondHalf,

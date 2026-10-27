@@ -5302,3 +5302,671 @@ body.compact-navigation #game {
   font-family: Georgia, serif;
   font-size: 18px;
 }
+
+/* Reading room and competition almanac. */
+.news-article h3 {
+  font-family: Georgia, serif;
+  font-size: 21px;
+  line-height: 1.35;
+  letter-spacing: -0.3px;
+}
+.news-featured h3 {
+  font-size: clamp(25px, 3vw, 36px);
+  max-width: 26ch;
+}
+.news-featured {
+  border-top: 3px solid var(--accent);
+}
+.news-article .read-news-button {
+  margin-top: 16px;
+  align-self: flex-start;
+  background: transparent;
+  border-color: var(--border);
+  color: var(--accent);
+}
+.article-reference span {
+  font-size: 11px;
+  letter-spacing: 0;
+}
+#news-reader {
+  width: min(760px, calc(100vw - 24px));
+  max-height: 90dvh;
+  padding: 28px;
+  overflow: auto;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+.reader-toolbar,
+.reader-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.reader-toolbar {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.reader-toolbar > strong {
+  font-family: Georgia, serif;
+  font-size: 23px;
+}
+.reader-toolbar button {
+  font-size: 24px;
+  padding: 5px 14px;
+}
+.reader-article {
+  padding: 26px 0;
+}
+.reader-article h2 {
+  font-family: Georgia, serif;
+  font-size: clamp(26px, 4vw, 40px);
+  line-height: 1.15;
+  margin: 14px 0 20px;
+}
+.reader-byline {
+  color: var(--muted);
+  font-size: 13px;
+}
+.reader-clubs {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  padding: 15px 0;
+  border-block: 1px solid var(--border);
+  margin: 22px 0;
+}
+.reader-body {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  line-height: 1.85;
+  max-width: 65ch;
+}
+.reader-pagination {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+  flex-wrap: wrap;
+}
+.history-filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+  align-items: end;
+  margin-top: 22px;
+}
+.history-filters label {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.history-filters select,
+.history-filters input {
+  width: 100%;
+  margin: 7px 0 0;
+}
+.history-filters button {
+  align-self: end;
+  min-height: 44px;
+}
+.history-filters .history-preseason {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+  color: var(--text);
+}
+.history-preseason input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--club-primary);
+}
+.history-records {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.history-champion {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin: 0;
+}
+.history-champion > div:last-child {
+  min-width: 0;
+}
+.history-champion h3 {
+  margin: 8px 0;
+  font-size: 19px;
+}
+.history-champion small {
+  letter-spacing: 0;
+  line-height: 1.6;
+}
+.history-champion .team-label {
+  font-size: 17px;
+}
+.history-trophy {
+  width: 75px;
+  flex: 0 0 75px;
+}
+.history-trophy svg {
+  width: 100%;
+  height: 95px;
+}
+.history-empty {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 35px;
+}
+.history-pagination {
+  margin: 22px 0;
+  justify-content: center;
+}
+.save-explanation dl {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.7fr) minmax(0, 1.3fr);
+  gap: 12px 22px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--soft);
+}
+.save-explanation dt {
+  color: var(--muted);
+}
+.save-explanation dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+#mobile-nav {
+  display: none;
+}
+.field-shell {
+  position: relative;
+  min-width: 0;
+}
+.expanded-field-toolbar {
+  display: none;
+}
+.field-expand {
+  display: block;
+  margin: 10px 0 0 auto;
+  background: var(--soft);
+  font-size: 12px;
+}
+body.pitch-expanded {
+  overflow: hidden;
+}
+.field-shell.is-expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  padding: 12px max(12px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom));
+  overflow: auto;
+}
+.is-expanded .expanded-field-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 10px;
+  padding-top: env(safe-area-inset-top);
+}
+.expanded-field-toolbar > div {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.is-expanded > #field {
+  flex: 1;
+  min-height: 200px;
+  display: grid;
+  align-items: center;
+}
+.is-expanded .field-expand {
+  display: none;
+}
+.is-expanded .three-stage,
+.is-expanded .pitch.match-pitch {
+  height: min(80dvh, calc(100dvh - 90px));
+  min-height: 200px;
+}
+.is-expanded .pitch.match-pitch {
+  max-height: calc(100dvh - 90px);
+}
+.match-pitch .dot.ball {
+  box-shadow:
+    0 1px 4px #000,
+    0 0 0 3px #ffffff55;
+}
+.match-pitch .dot.ball.is-shooting {
+  box-shadow:
+    0 0 0 4px #ffdc6766,
+    0 0 17px #fff;
+}
+.quality-control {
+  display: none;
+}
+.quality-control.camera-visible {
+  display: flex;
+}
+@media (max-width: 850px) {
+  .history-records {
+    grid-template-columns: 1fr;
+  }
+  .history-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  html {
+    scroll-padding-bottom: 90px;
+  }
+  body:not(.entry-mode) {
+    padding-bottom: calc(78px + env(safe-area-inset-bottom));
+  }
+  button,
+  input,
+  select,
+  textarea {
+    touch-action: manipulation;
+  }
+  button,
+  select,
+  input:not([type="checkbox"]),
+  summary {
+    min-height: 44px;
+  }
+  input:not([type="checkbox"]),
+  select,
+  textarea {
+    font-size: 16px !important;
+    min-width: 0;
+    max-width: 100%;
+  }
+  #sidebar {
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+    width: 100%;
+    position: relative;
+  }
+  #sidebar > h1 {
+    font-size: 21px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  #sidebar > small,
+  #sidebar > .foot,
+  #sidebar #nav {
+    display: none;
+  }
+  #sidebar .sidebar-identity {
+    margin: 0 0 0 auto;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    max-width: 58%;
+    min-width: 0;
+    gap: 4px;
+  }
+  .sidebar-club {
+    gap: 8px;
+  }
+  .sidebar-club .badge-identity {
+    --badge-size: 36px;
+  }
+  .sidebar-club small,
+  .sidebar-club > div > span {
+    display: none;
+  }
+  .sidebar-club strong {
+    font-size: 12px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+  #game {
+    padding: 16px 14px 24px;
+  }
+  #game > header {
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    gap: 10px;
+  }
+  #game > header h2 {
+    font-size: 25px;
+    margin: 4px 0;
+  }
+  #context {
+    font-size: 9px;
+    letter-spacing: 0.5px;
+  }
+  .header-actions {
+    gap: 6px;
+    flex-basis: 100%;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .header-actions button {
+    min-height: 44px;
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+  .header-actions #export {
+    display: none;
+  }
+  #navigation-search {
+    font-size: 0;
+    width: 44px;
+    padding: 0;
+  }
+  #navigation-search:before {
+    content: "⌕";
+    font-size: 27px;
+    line-height: 1;
+  }
+  .header-actions #save-status {
+    font-size: 10px;
+    min-width: 0;
+    width: auto;
+    flex-basis: auto;
+    margin-left: auto;
+  }
+  #mobile-nav {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    gap: 2px;
+    background: var(--nav-bg);
+    border-top: 1px solid var(--border);
+    padding: 7px 6px calc(7px + env(safe-area-inset-bottom));
+    box-shadow: 0 -5px 25px #0001;
+  }
+  #mobile-nav button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: transparent;
+    border-color: transparent;
+    padding: 5px 2px;
+    border-radius: 10px;
+    color: var(--muted);
+    min-width: 0;
+    min-height: 54px;
+    font-size: 10px;
+  }
+  #mobile-nav button svg {
+    width: 21px;
+    height: 21px;
+  }
+  #mobile-nav button[aria-current="page"] {
+    background: var(--soft);
+    color: var(--accent);
+  }
+  #mobile-nav button:focus-visible {
+    outline-offset: -3px;
+  }
+  body.pitch-expanded #mobile-nav {
+    display: none;
+  }
+  .workspace-tabs {
+    margin-bottom: 18px;
+    scroll-padding-inline: 6px;
+  }
+  .workspace-tabs button {
+    font-size: 13px;
+    min-height: 44px;
+  }
+  #content .card {
+    padding: 18px 15px;
+  }
+  #content .table-wrap {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .news-toolbar {
+    align-items: stretch;
+    gap: 14px;
+  }
+  .scope-filters {
+    overflow: auto;
+    flex-wrap: nowrap;
+    max-width: 100%;
+    padding-bottom: 4px;
+  }
+  .scope-filters button {
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+  .press-filters {
+    grid-template-columns: 1fr;
+  }
+  .press-filters button {
+    width: 100%;
+  }
+  .paper-masthead h2 {
+    font-size: 31px;
+  }
+  .paper-masthead {
+    gap: 12px;
+  }
+  .paper-masthead > span {
+    font-size: 10px;
+  }
+  .news-article h3 {
+    font-size: 23px;
+  }
+  .news-featured h3 {
+    font-size: 27px;
+  }
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+  #news-reader {
+    padding: 19px 16px;
+    max-height: calc(100dvh - 24px);
+    width: calc(100vw - 16px);
+  }
+  .reader-body {
+    font-size: 19px;
+    line-height: 1.75;
+  }
+  .reader-pagination button {
+    width: 100%;
+  }
+  .reader-article {
+    padding-top: 19px;
+  }
+  .history-filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .history-filters button {
+    width: 100%;
+  }
+  .history-champion {
+    gap: 12px;
+  }
+  .history-trophy {
+    flex-basis: 52px;
+    width: 52px;
+  }
+  .history-champion h3 {
+    font-size: 17px;
+  }
+  .save-explanation dl {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px;
+  }
+  .save-explanation dd {
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+  .save-explanation + div .row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .match-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 12px;
+  }
+  .match-controls label {
+    min-width: 0;
+  }
+  .match-controls select {
+    width: 100%;
+    margin: 6px 0 0;
+  }
+  .match-controls button {
+    min-height: 44px;
+    font-size: 12px;
+  }
+  .match-controls .camera-control.camera-visible {
+    display: block;
+    grid-column: auto;
+    flex-basis: auto;
+  }
+  .pitch.match-pitch {
+    min-height: 205px;
+  }
+  .three-stage {
+    height: 300px;
+    min-height: 260px;
+  }
+  .match-workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .match-workspace aside .log {
+    max-height: 230px;
+  }
+  .match-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .substitution-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .substitution-form label,
+  .substitution-form button {
+    width: 100%;
+    min-width: 0;
+  }
+  .expanded-field-toolbar {
+    flex-wrap: wrap;
+  }
+  .expanded-field-toolbar strong {
+    font-size: 12px;
+  }
+  .expanded-field-toolbar > div {
+    margin-left: auto;
+  }
+  .expanded-field-toolbar button {
+    padding: 8px 12px;
+  }
+  dialog {
+    max-width: calc(100vw - 16px);
+    max-height: calc(100dvh - 20px);
+    overflow: auto;
+  }
+  .entry-layout,
+  .career-card,
+  .entry-copy {
+    min-width: 0;
+  }
+}
+@media (max-width: 360px) {
+  #sidebar > h1 {
+    font-size: 18px;
+  }
+  .sidebar-club .badge-identity {
+    --badge-size: 30px;
+  }
+  .sidebar-club strong {
+    font-size: 11px;
+  }
+  .header-actions button {
+    padding: 9px;
+    font-size: 11px;
+  }
+  .score-centre {
+    min-width: 72px !important;
+  }
+  .match-heading .score-centre strong {
+    font-size: 29px;
+  }
+}
+@media (max-width: 700px) {
+  .shirt-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .shirt-grid button {
+    min-height: 44px;
+    min-width: 0;
+  }
+  .field-expand {
+    font-size: 13px;
+    min-height: 44px;
+  }
+}
+.article-lead-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin: 20px 0;
+  padding: 25px 18px;
+  border-radius: 12px;
+  background: linear-gradient(125deg, var(--soft), var(--surface));
+  border: 1px solid var(--border);
+}
+.article-lead-art .team-badge {
+  --badge-size: 76px;
+}
+.article-lead-art > span:not(.team-badge) {
+  font-size: 26px;
+  color: var(--muted);
+}
+.awards-hero > div > button {
+  margin: 5px 8px 0 0;
+}
+.match-text-scene {
+  padding: 25px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  min-height: 190px;
+  background: linear-gradient(145deg, var(--soft), var(--panel));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+.match-text-scene h3 {
+  font-size: clamp(19px, 2.4vw, 28px);
+  margin: 0;
+  line-height: 1.4;
+  letter-spacing: -0.4px;
+}
+.match-text-scene p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.expanded-field-toolbar>div{flex-wrap:wrap;max-width:100%}

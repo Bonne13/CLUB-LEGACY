@@ -322,3 +322,30 @@ Foram substituídas as 415 identidades de escudos, incluindo clubes de saves ant
 O arquivo `netlify.toml` configura o comando `npm run build:pages`, pasta `dist` e Node 22. No painel do Netlify, o projeto deve estar conectado a Bonne13/CLUB-LEGACY, com produção na branch main e publicações automáticas habilitadas. Após essa conexão, os pushes para main geram o mesmo site em https://dinastiafc.netlify.app/ . A versão GitHub Pages mantém o endereço anterior.
 
 `npm run test:navigation-browser` verifica os oito menus, agrupamentos, teclado, busca, identidade original, redações fictícias, temas, telas pequenas e continuidade do save. `LEGACY_STANDALONE=1` faz a mesma verificação com rede bloqueada.
+
+
+## Jornal, partidas, emblemas e almanaque (v0.15)
+
+O Jornal ganhou uma capa com arte dos clubes, hierarquia de manchetes e botão **Ler reportagem**. O leitor permite avançar entre matérias sem sair da página. Os avisos repetidos sobre ficção foram retirados da apresentação; o catálogo continua usando os nove veículos e oito colunistas criados para o jogo, sem atribuir matérias a pessoas reais. Filtros por região, assunto, jornal, jornalista e busca continuam disponíveis.
+
+Os 415 emblemas agora têm formas, faixas, símbolos e códigos de identificação próprios. Perfis específicos aproximam as cores e a linguagem visual dos clubes de referência, preservando desenhos originais e o fundo exterior transparente. `scripts/badge-designs.cjs` define os motivos e os perfis, e `npm run build:badges` regenera os SVGs. A associação por nome e os arquivos estáveis mantêm compatibilidade com saves anteriores. Todos os desenhos permanecem distintos mesmo desconsiderando o título interno do SVG.
+
+A coreografia das partidas é compartilhada pelo 2D e 3D: recebedores acompanham os passes, atacantes se aproximam da finalização e a defesa reage ao lance. Defesas visuais vão para o alcance do goleiro. No 3D há uniformes com peças e cores de goleiro, sombras de contato, arquibancadas com assentos, seleção de jogadores por toque, comemoração e câmera para seguir a bola. Câmeras se ajustam ao tamanho da tela. A qualidade **Automática** usa um perfil mais leve em telas pequenas; **Leve** e **Detalhada** podem ser escolhidas e ficam no save. Os modelos são avatares estilizados, não reproduções fotográficas ou um motor completo de física.
+
+**Ampliar campo** funciona em 2D/3D por uma área que ocupa a tela e preserva controles de pausa, retorno e acompanhamento da bola. Não depende de permissão de tela cheia do navegador. O relato textual ganhou um painel com o último lance. Intervalo, gols, substituições, cartões e notas continuam ligados ao mesmo motor.
+
+Em **Competições → Histórico**, o almanaque reúne os campeões e prêmios registrados na carreira, com filtros por temporada, competição, clube, tipo de prêmio e texto. A pré-temporada pode ser incluída. Também há atalhos em Prêmios e Troféus. Os dados vêm dos registros existentes no save; não são inventados campeões reais de antes da carreira. Os limites de retenção continuam sendo 1.000 troféus e 2.000 premiações individuais.
+
+## Uso no celular e funcionamento dos saves
+
+Até 700 px, há navegação inferior, cabeçalho compacto e acesso aos oito menus pela busca/Menu. Botões e controles têm altura mínima de toque, inputs usam 16 px para reduzir zoom involuntário, abas podem deslizar, tabelas largas mantêm rolagem própria e os diálogos respeitam a altura disponível. A grade de camisas usa cinco colunas. O campo ampliado se adapta à rotação do aparelho.
+
+A carreira ativa é guardada em **localStorage**, por endereço/origem, no navegador e aparelho da pessoa. A chave de compatibilidade é `club-legacy-v2`; os dados usam o prefixo `CL3:` e compressão LZ-String. Há uma carreira ativa por navegador para aquele endereço. As cópias antigas de migração/importação podem continuar como recuperação, mas não são um sistema de perfis simultâneos.
+
+Após ações que alteram a carreira, o salvamento é agendado com atraso de cerca de 350 ms e usa um worker quando disponível. Durante uma partida, os minutos são marcados como alterações pendentes e há gravações periódicas. **Salvar carreira** força a gravação. Eventos `visibilitychange`, `pagehide` e `beforeunload` tentam preservar alterações ao colocar o site em segundo plano ou sair; encerramentos forçados pelo sistema podem impedir esses eventos. A tela Salvamentos exibe endereço, última gravação e tamanho aproximado.
+
+Não há conta ou sincronização de saves em servidor. GitHub Pages e Netlify hospedam os arquivos do jogo, sem receber a carreira por uma API. Assim, o dono do site não recebe os saves dos visitantes. Outro aparelho, navegador, modo privado ou endereço tem armazenamento independente. Apagar dados do site/navegador ou encerrar uma sessão privada pode remover o progresso. Atualizações no mesmo endereço mantêm a chave do save e não apagam a carreira automaticamente.
+
+Para backup ou troca de aparelho: **Carreira → Salvamentos → Baixar arquivo do save** e, no destino, **Importar arquivo**. A exportação é um JSON local; não faz upload. A importação valida o arquivo e pede confirmação antes de substituir a carreira ativa.
+
+`npm run test:experience-browser` verifica jornal, leitor, histórico, isolamento entre contextos, backup/importação, gravação ao sair, telas de 320 a 768 px, toque no 3D, qualidade, câmeras, campo ampliado, rotação, 2D/texto e persistência. `LEGACY_STANDALONE=1` executa o mesmo fluxo com a rede externa bloqueada.

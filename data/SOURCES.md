@@ -83,9 +83,9 @@ LZ-String 1.5.0, MIT, em `vendor/lz-string.js`; licença em `vendor/LICENSE.lz-s
 
 Avaliações ausentes são estimadas, com calibrações explícitas para alguns atletas, e marcadas **Estimativa do jogo**. Não se declara cobertura oficial de todos os brasileiros ou atualização completa de 2026. A nova revisão preserva o crescimento acumulado ao migrar saves e não sobrescreve salários/contratos vigentes. Pretensões de negociação têm um piso modelado por habilidade, contexto e referências salariais; não são demandas contratuais reais verificadas.
 
-## Emblemas originais e bandeiras (v0.14)
+## Emblemas originais e bandeiras (v0.15)
 
-O catálogo `data/badges.json` contém 415 identidades de clubes com emblemas geométricos originais do Dinastia FC, cobrindo os 397 participantes atuais e 18 nomes anteriores. Os SVGs são gerados por `scripts/build-badges.cjs` a partir de uma família de formas e símbolos próprios, com identificação por nome normalizado, cores de referência e SHA-256. Não são transformações dos escudos oficiais: as miniaturas anteriores de Transfermarkt, ESPN e Wikipedia foram removidas dos ativos, do manifesto e do build.
+O catálogo `data/badges.json` contém 415 identidades de clubes com emblemas geométricos originais do Dinastia FC, cobrindo os 397 participantes atuais e 18 nomes anteriores. Os SVGs são gerados por `scripts/build-badges.cjs` a partir de uma família de formas e símbolos próprios, complementada por faixas, monogramas e perfis em `scripts/badge-designs.cjs`, com identificação por nome normalizado, cores de referência e SHA-256. Não são transformações dos escudos oficiais: as miniaturas anteriores de Transfermarkt, ESPN e Wikipedia foram removidas dos ativos, do manifesto e do build.
 
 Os emblemas ficam em `assets/badges/original-*.svg`, com área exterior transparente, sem elementos externos ou scripts. A identidade por nome mantém os clubes de saves antigos associados ao seu próprio emblema. Não se afirma licença de nomes ou marcas pelo uso de um desenho original.
 
@@ -128,3 +128,10 @@ A [página oficial do Ballon d’Or](https://ballondor.com/pt/the-ballon-dor), c
 Referência conceitual: IFAB, Lei 12 — faltas e conduta, https://www.theifab.com/laws/latest/fouls-and-misconduct/ ; Lei 3 — número de jogadores, https://www.theifab.com/laws/latest/the-players/ . Amarelos, expulsões e incidentes desta carreira são simulados, sem alegar acontecimentos reais ou sanções reais a esses atletas.
 
 Limites por competição e duração das penas são regras simplificadas próprias, descritas em Disciplina e no README, não uma base integral de regulamentos das federações. Desde a v0.13 o pilar de fair play inspirado no Ballon d’Or usa os cartões oficiais efetivamente acompanhados, com pesos próprios e teto de desconto. Resultados históricos são preservados. Nenhum voto é atribuído a jornalista real.
+
+
+## Histórico da carreira e apresentação (v0.15)
+
+O almanaque consulta somente `career.trophies` e `career.performance.awards`, com os registros retidos no save. Não há uma base nova de campeões reais anteriores à carreira nem preenchimento de temporadas sem dados. Os emblemas continuam sendo desenhos próprios, com cores e linguagem de identificação como referência. Os modelos do campo são avatares geométricos gerados localmente, sem rostos, fotografias ou ativos de jogos comerciais.
+
+A imprensa mantém veículos e colunistas inventados no catálogo. A interface removeu os avisos repetidos de ficção por preferência de apresentação do usuário; isso não altera a origem dos nomes nem converte as matérias em notícias de veículos reais.

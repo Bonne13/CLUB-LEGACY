@@ -71,6 +71,7 @@
       sections: [
         { key: "competitions", page: "Competições", label: "Campeonatos" },
         { key: "awards", page: "Prêmios", label: "Prêmios e estatísticas" },
+        { key: "history", page: "Histórico", label: "Histórico" },
       ],
     },
     {

@@ -542,6 +542,11 @@
       ![120, 400, 900, 1600].includes(s.matchPreferences.speed)
     )
       fail();
+    if (
+      s.matchPreferences?.quality !== undefined &&
+      !["auto", "low", "high"].includes(s.matchPreferences.quality)
+    )
+      fail();
     if (s.live) {
       const m = s.live;
       if (
@@ -582,8 +587,10 @@
           number(point.x, 0, 100);
           number(point.y, 0, 100);
         });
-        if (p.positions)
-          array(p.positions, 22).forEach((point) => {
+        for (const positions of [p.positions, p.initialPositions].filter(
+          Boolean,
+        ))
+          array(positions, 22).forEach((point) => {
             string(point.id);
             string(point.name);
             number(point.side, 0, 1);

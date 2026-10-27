@@ -1,14 +1,35 @@
 "use strict";
 (function (root) {
-  function create(element) {
+  function create(element, options = {}) {
+    const requested = options.quality || "auto",
+      mobile = root.matchMedia?.("(max-width:700px)").matches;
+    const quality =
+      requested === "auto" ? (mobile ? "low" : "medium") : requested;
+    const frameTime =
+      quality === "low"
+        ? 1000 / 24
+        : quality === "high"
+          ? 1000 / 45
+          : 1000 / 32;
     const T = root.THREE;
     if (!T) throw Error("Visualização 3D indisponível.");
     const renderer = new T.WebGLRenderer({
-      antialias: true,
+      antialias: quality !== "low" || requested === "auto",
       alpha: false,
       powerPreference: "low-power",
     });
-    renderer.setPixelRatio(Math.min(root.devicePixelRatio || 1, 1.5));
+    renderer.setPixelRatio(
+      Math.min(
+        root.devicePixelRatio || 1,
+        quality === "low"
+          ? requested === "auto"
+            ? 1.25
+            : 1
+          : quality === "high"
+            ? 2
+            : 1.5,
+      ),
+    );
     renderer.setClearColor(0x14233a);
     renderer.outputColorSpace = T.SRGBColorSpace;
     element.append(renderer.domElement);
@@ -19,12 +40,13 @@
     renderer.domElement.setAttribute("role", "img");
     const scene = new T.Scene();
     scene.fog = new T.Fog(0x14233a, 120, 240);
-    const camera = new T.PerspectiveCamera(42, 1, 0.1, 300),
+    const camera = new T.PerspectiveCamera(42, 1, 0.1, 1200),
       players = new Map(),
       geometries = [],
       materials = [],
-      textures = [];
-    scene.add(new T.HemisphereLight(0xe9f5ff, 0x253624, 2.4));
+      textures = [],
+      goalNets = [];
+    scene.add(new T.HemisphereLight(0xe9f5ff, 0x314531, 2.4));
     const sun = new T.DirectionalLight(0xffffff, 2.1);
     sun.position.set(-35, 70, 20);
     scene.add(sun);
@@ -54,6 +76,32 @@
       box(120, 2, 6, 0x243b56, 0, 1 + i * 1.5, -45 - i * 5);
       box(6, 2, 78, 0x243b56, 64 + i * 5, 1 + i * 1.5, 0);
       box(6, 2, 78, 0x243b56, -64 - i * 5, 1 + i * 1.5, 0);
+    }
+    const seatCount = quality === "low" ? 240 : 400,
+      seatGeometry = geometry(new T.BoxGeometry(0.72, 0.7, 0.8)),
+      crowds = [];
+    for (const side of [-1, 1]) {
+      const seatMaterial = material(0xffffff),
+        seats = new T.InstancedMesh(seatGeometry, seatMaterial, seatCount),
+        matrix = new T.Matrix4();
+      for (let i = 0; i < seatCount; i++) {
+        const row = Math.floor(i / 80);
+        matrix.makeTranslation(
+          -55 + (i % 80) * 1.4,
+          2.2 + row * 1.5,
+          side * (45 + row * 5),
+        );
+        seats.setMatrixAt(i, matrix);
+        seats.setColorAt(
+          i,
+          new T.Color(
+            i % 3 === 0 ? 0xf3f5ef : i % 3 === 1 ? 0x456c8b : 0x263a54,
+          ),
+        );
+      }
+      seats.instanceMatrix.needsUpdate = true;
+      scene.add(seats);
+      crowds.push(seats);
     }
     function line(points, color = 0xdceee0) {
       const g = geometry(
@@ -113,6 +161,7 @@
       net.rotation.y = Math.PI / 2;
       net.position.set(side * 54.4, 1.25, 0);
       scene.add(net);
+      goalNets.push({ mesh: net, x: side * 54.4 });
       for (const edge of [-3.66, 3.66]) {
         const wall = new T.Mesh(
           geometry(new T.PlaneGeometry(2, 2.5, 5, 5)),
@@ -122,11 +171,13 @@
         scene.add(wall);
       }
     }
-    const head = geometry(new T.SphereGeometry(0.36, 8, 6)),
-      torso = geometry(new T.CylinderGeometry(0.38, 0.32, 0.95, 8)),
-      limb = geometry(new T.BoxGeometry(0.19, 0.65, 0.21));
+    const head = geometry(
+        new T.SphereGeometry(0.32, quality === "high" ? 12 : 8, 8),
+      ),
+      torso = geometry(new T.CylinderGeometry(0.35, 0.31, 0.82, 10)),
+      limb = geometry(new T.BoxGeometry(0.18, 0.61, 0.2));
     const ball = new T.Mesh(
-      geometry(new T.IcosahedronGeometry(0.32, 1)),
+      geometry(new T.IcosahedronGeometry(0.37, 1)),
       material(0xffffff),
     );
     scene.add(ball);
@@ -152,13 +203,30 @@
     shadow.rotation.x = -Math.PI / 2;
     shadow.position.y = 0.15;
     scene.add(shadow);
+    const markerMaterial = new T.MeshBasicMaterial({
+      color: 0xffdf82,
+      transparent: true,
+      opacity: 0.75,
+      depthWrite: false,
+    });
+    materials.push(markerMaterial);
+    const ballMarker = new T.Mesh(
+      geometry(new T.RingGeometry(0.65, 0.9, 20)),
+      markerMaterial,
+    );
+    ballMarker.rotation.x = -Math.PI / 2;
+    ballMarker.position.y = 0.16;
+    scene.add(ballMarker);
     let disposed = false,
       frame = null,
       previous = 0,
       motionUntil = 0,
       ballMotion = null,
       cameraMode = "broadcast",
-      zoom = 1;
+      zoom = 1,
+      selectedId = null,
+      celebrateUntil = 0,
+      celebrateSide = 0;
     const coordinate = (p) =>
       new T.Vector3(
         p.x >= 98 ? 53.6 : p.x <= 2 ? -53.6 : (p.x - 50) * 1.05,
@@ -179,16 +247,35 @@
     function setCamera(mode = "broadcast", scale = 1) {
       cameraMode = mode;
       zoom = scale;
-      const narrow = element.clientWidth < 500,
-        extra = narrow ? 1.35 : 1;
       const p =
         mode === "goal"
           ? [112, 60, 10]
           : mode === "tactical"
-            ? [0, 105, 5]
-            : [10, 85, 112];
-      camera.position.set(...p.map((n) => (n * extra) / scale));
+            ? [0, 110, 8]
+            : mode === "follow"
+              ? [12, 75, 95]
+              : [10, 85, 112];
+      camera.position.set(...p.map((n) => n / scale));
       camera.lookAt(0, 0, 0);
+      camera.updateMatrixWorld();
+      if (mode !== "goal" && mode !== "follow")
+        for (let pass = 0; pass < 12; pass++) {
+          const fits = [
+            [-53, -35],
+            [-53, 35],
+            [53, -35],
+            [53, 35],
+          ].every(([x, z]) => {
+            const point = new T.Vector3(x, 0, z).project(camera);
+            return Math.abs(point.x) <= 0.94 && Math.abs(point.y) <= 0.94;
+          });
+          if (fits) break;
+          camera.position.multiplyScalar(1.08);
+          camera.lookAt(0, 0, 0);
+          camera.updateMatrixWorld();
+        }
+      scene.fog.near = camera.position.length() + 40;
+      scene.fog.far = camera.position.length() + 240;
       render();
     }
     function render() {
@@ -205,21 +292,59 @@
         dispose();
         return;
       }
-      if (now - previous < 28) {
+      if (now - previous < frameTime) {
         frame = requestAnimationFrame(animate);
         return;
       }
       previous = now;
       for (const player of players.values()) {
-        const t = Math.min(1, (now - player.started) / 650),
+        const t = Math.min(1, (now - player.started) / player.duration),
           e = t * t * (3 - 2 * t);
         player.group.position.lerpVectors(player.from, player.to, e);
         player.legs.forEach(
           (leg, i) =>
             (leg.rotation.x =
-              t < 1 ? Math.sin(now * 0.015 + i * Math.PI) * 0.5 : 0),
+              now - player.kickAt < 350
+                ? (i ? -0.1 : -1) *
+                  Math.sin(Math.min(1, (now - player.kickAt) / 350) * Math.PI)
+                : player.distance > 0.1 && t < 1
+                  ? Math.sin(now * 0.015 + i * Math.PI) * 0.48
+                  : 0),
         );
       }
+      for (const player of players.values()) {
+        const cheering = now < celebrateUntil && player.side === celebrateSide;
+        player.group.position.y = cheering
+          ? Math.abs(Math.sin(now * 0.008 + player.phase)) * 0.25
+          : 0;
+        player.arms.forEach(
+          (arm, i) =>
+            (arm.rotation.z = cheering ? (i ? -2.5 : 2.5) : i ? 0.18 : -0.18),
+        );
+        const dive = (now - player.diveAt) / 750;
+        player.body.rotation.z =
+          dive >= 0 && dive < 1
+            ? Math.sin(dive * Math.PI) * 1.1 * player.diveDirection
+            : 0;
+      }
+      if (cameraMode === "follow") {
+        camera.position.lerp(
+          new T.Vector3(
+            12 + ball.position.x * 0.6,
+            75,
+            95 + ball.position.z * 0.2,
+          ),
+          0.05,
+        );
+        camera.lookAt(ball.position.x * 0.5, 0, ball.position.z * 0.35);
+      }
+      if (now < celebrateUntil)
+        for (const net of goalNets)
+          net.mesh.position.x =
+            net.x +
+            (net.x * (celebrateSide === 0 ? 1 : -1) > 0
+              ? Math.sin(now * 0.025) * 0.12
+              : 0);
       if (ballMotion) {
         const t = Math.min(1, (now - ballMotion.start) / ballMotion.duration);
         ball.position.lerpVectors(ballMotion.from, ballMotion.to, t);
@@ -229,8 +354,9 @@
         shadow.position.z = ball.position.z;
         if (t >= 1) ballMotion = null;
       }
+      ballMarker.position.set(ball.position.x, 0.16, ball.position.z);
       render();
-      if (now < motionUntil || ballMotion)
+      if (now < motionUntil || ballMotion || now < celebrateUntil)
         frame = requestAnimationFrame(animate);
     }
     function label(name, number) {
@@ -249,7 +375,7 @@
       const mat = new T.SpriteMaterial({ map: texture, depthTest: false });
       materials.push(mat);
       const sprite = new T.Sprite(mat);
-      sprite.position.y = 3.1;
+      sprite.position.y = 3.0;
       sprite.scale.set(7, 1.75, 1);
       return sprite;
     }
@@ -261,27 +387,66 @@
         let player = players.get(key);
         if (!player) {
           const group = new T.Group(),
-            kit = material(kits[p.side].primary),
-            skin = material(0xb88562),
+            body = new T.Group(),
+            code = [...p.id].reduce((n, c) => n + c.charCodeAt(0), 0),
+            keeper = p.keeper || p.index === 0,
+            kit = material(
+              keeper ? (p.side ? 0x32be97 : 0xe3a93e) : kits[p.side].primary,
+            ),
+            secondary = material(kits[p.side].secondary || 0xe9eff4),
+            skin = material(
+              [0xc29270, 0x965e43, 0x754a36, 0xd9ad89, 0xb67a56][code % 5],
+            ),
             dark = material(0x15283c);
+          group.add(body);
           const shirt = new T.Mesh(torso, kit);
-          shirt.position.y = 1.3;
-          group.add(shirt);
+          shirt.position.y = 1.25;
+          body.add(shirt);
           const skull = new T.Mesh(head, skin);
-          skull.position.y = 2.1;
-          group.add(skull);
-          const legs = [-0.19, 0.19].map((x) => {
+          skull.position.y = 1.98;
+          body.add(skull);
+          const hair = new T.Mesh(head, dark);
+          hair.scale.set(1.02, 0.38, 1.02);
+          hair.position.y = 2.2;
+          body.add(hair);
+          const shorts = new T.Mesh(
+            geometry(new T.BoxGeometry(0.61, 0.35, 0.42)),
+            keeper ? kit : secondary,
+          );
+          shorts.position.y = 0.86;
+          body.add(shorts);
+          const legs = [-0.18, 0.18].map((x) => {
             const leg = new T.Mesh(limb, dark);
-            leg.position.set(x, 0.55, 0);
-            group.add(leg);
+            leg.position.set(x, 0.48, 0);
+            body.add(leg);
+            const sock = new T.Mesh(
+              geometry(new T.BoxGeometry(0.2, 0.24, 0.22)),
+              secondary,
+            );
+            sock.position.y = -0.17;
+            leg.add(sock);
+            const boot = new T.Mesh(
+              geometry(new T.BoxGeometry(0.25, 0.13, 0.37)),
+              dark,
+            );
+            boot.position.set(0, -0.29, 0.09);
+            leg.add(boot);
             return leg;
           });
-          for (const x of [-0.5, 0.5]) {
+          const arms = [-0.45, 0.45].map((x) => {
             const arm = new T.Mesh(limb, kit);
-            arm.position.set(x, 1.3, 0);
+            arm.position.set(x, 1.18, 0);
             arm.rotation.z = x < 0 ? -0.18 : 0.18;
-            group.add(arm);
-          }
+            body.add(arm);
+            return arm;
+          });
+          const contact = new T.Mesh(
+            geometry(new T.CircleGeometry(0.66, 12)),
+            shadowMaterial,
+          );
+          contact.rotation.x = -Math.PI / 2;
+          contact.position.y = 0.12;
+          group.add(contact);
           const ringGeometry = geometry(new T.RingGeometry(0.65, 0.8, 16)),
             ringMaterial = new T.MeshBasicMaterial({
               color: 0xffd263,
@@ -292,10 +457,22 @@
           ring.rotation.x = -Math.PI / 2;
           ring.position.y = 0.16;
           group.add(ring);
-          group.add(label(p.name, p.shirtNumber || p.index + 1));
+          const nameTag = label(p.name, p.shirtNumber || p.index + 1);
+          group.add(nameTag);
           scene.add(group);
           player = {
             group,
+            body,
+            arms,
+            nameTag,
+            side: p.side,
+            phase: code % 10,
+            kickAt: -1000,
+            diveAt: -1000,
+            diveDirection: 1,
+            distance: 0,
+            duration: 650,
+            keeper,
             legs,
             kit,
             ring,
@@ -308,12 +485,25 @@
           pos.y = 0;
           group.position.copy(pos);
         }
-        player.kit.color.set(kits[p.side].primary);
-        player.ring.visible = p.id === view.activeId;
+        player.keeper = Boolean(p.keeper || p.index === 0);
+        player.kit.color.set(
+          player.keeper ? (p.side ? 0x32be97 : 0xe3a93e) : kits[p.side].primary,
+        );
+        player.nameTag.visible = p.id === view.activeId || p.id === selectedId;
+        player.ring.visible = p.id === view.activeId || p.id === selectedId;
         player.from.copy(player.group.position);
         player.to.copy(coordinate(p));
         player.to.y = 0;
+        player.distance = player.from.distanceTo(player.to);
+        player.duration = view.duration || 650;
         player.started = performance.now();
+        if (view.action?.shot && view.action.shooterId === p.id)
+          player.kickAt = player.started;
+        if (view.action?.shot && view.action.keeperId === p.id) {
+          player.diveAt = player.started;
+          player.diveDirection =
+            ((view.action.target?.y || 50) > 50 ? 1 : -1) * (p.side ? -1 : 1);
+        }
         player.group.rotation.y = p.side ? -Math.PI / 2 : Math.PI / 2;
       }
       for (const [key, player] of players)
@@ -321,12 +511,12 @@
           scene.remove(player.group);
           players.delete(key);
         }
-      if (!ballMotion) {
-        ball.position.copy(coordinate(point || view.ball));
+      if (!ballMotion && point) {
+        ball.position.copy(coordinate(point));
         shadow.position.x = ball.position.x;
         shadow.position.z = ball.position.z;
       }
-      queue();
+      queue((view.duration || 650) + 100);
     }
     function moveBall(point, duration, shot = false) {
       ballMotion = {
@@ -334,15 +524,75 @@
         to: coordinate(point),
         start: performance.now(),
         duration: Math.max(100, duration),
-        arc: shot ? 2.7 : 0.25,
+        arc:
+          ball.position.distanceTo(coordinate(point)) < 0.1
+            ? 0
+            : shot
+              ? 2.2
+              : 0.16,
       };
       queue(duration + 100);
     }
+    function celebrate(side, duration = 1700) {
+      celebrateSide = side;
+      celebrateUntil = performance.now() + duration;
+      queue(duration + 100);
+    }
+    const raycaster = new T.Raycaster(),
+      pointer = new T.Vector2();
+    function pick(event) {
+      const rect = renderer.domElement.getBoundingClientRect();
+      pointer.set(
+        ((event.clientX - rect.left) / rect.width) * 2 - 1,
+        -((event.clientY - rect.top) / rect.height) * 2 + 1,
+      );
+      raycaster.setFromCamera(pointer, camera);
+      const hit = raycaster
+        .intersectObjects(
+          [...players.values()].map((p) => p.group),
+          true,
+        )
+        .find((h) => !h.object.isSprite);
+      let found = null;
+      if (hit) {
+        let item = hit.object;
+        while (
+          item.parent &&
+          ![...players.values()].some((p) => p.group === item)
+        )
+          item = item.parent;
+        found = [...players.entries()].find(([, p]) => p.group === item);
+      }
+      if (!found) {
+        let nearest = event.pointerType === "touch" ? 22 : 12;
+        for (const entry of players.entries()) {
+          const v = entry[1].group.position.clone();
+          v.y += 1.25;
+          v.project(camera);
+          const distance = Math.hypot(
+            (v.x + 1) * 0.5 * rect.width + rect.left - event.clientX,
+            (1 - v.y) * 0.5 * rect.height + rect.top - event.clientY,
+          );
+          if (distance < nearest) {
+            nearest = distance;
+            found = entry;
+          }
+        }
+      }
+      selectedId = found?.[0] || null;
+      for (const [id, p] of players) {
+        p.nameTag.visible = id === selectedId;
+        p.ring.visible = id === selectedId;
+      }
+      render();
+    }
+    renderer.domElement.addEventListener("pointerup", pick);
     function dispose() {
       if (disposed) return;
       disposed = true;
       if (frame !== null) cancelAnimationFrame(frame);
       observer.disconnect();
+      renderer.domElement.removeEventListener("pointerup", pick);
       for (const g of geometries) g.dispose();
       for (const m of materials) m.dispose();
       for (const t of textures) t.dispose();
@@ -355,6 +605,7 @@
       element,
       update,
       moveBall,
+      celebrate,
       setCamera,
       dispose,
       get available() {
@@ -365,6 +616,27 @@
           players: players.size,
           ball: { x: ball.position.x, y: ball.position.y, z: ball.position.z },
           camera: cameraMode,
+          quality,
+          selectedId,
+          screenPlayers: [...players.entries()].map(([id, p]) => {
+            const v = p.group.position.clone();
+            v.y += 1.25;
+            v.project(camera);
+            return { id, x: (v.x + 1) / 2, y: (1 - v.y) / 2 };
+          }),
+          labels: [...players.values()].filter((p) => p.nameTag.visible).length,
+          aspect: camera.aspect,
+          visiblePitch: [
+            [-52.5, -34],
+            [-52.5, 34],
+            [52.5, -34],
+            [52.5, 34],
+          ].every(([x, z]) => {
+            const p = new T.Vector3(x, 0, z).project(camera);
+            return (
+              Math.abs(p.x) <= 1 && Math.abs(p.y) <= 1 && p.z >= -1 && p.z <= 1
+            );
+          }),
           triangles: renderer.info.render.triangles,
         };
       },

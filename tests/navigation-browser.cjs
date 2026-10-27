@@ -110,11 +110,7 @@ const { chromium } = require("playwright"),
     await page.locator(".press-directory summary").click();
     assert.equal(await page.locator(".fictional-outlet").count(), 9);
     assert.equal(await page.locator(".press-directory a").count(), 0);
-    assert(
-      (await page.locator(".press-disclosure").innerText()).includes(
-        "FICTÍCIA",
-      ),
-    );
+    assert.equal(await page.locator(".press-disclosure").count(), 0);
     const artwork = await page.evaluate(async () => {
       const E = Legacy,
         ids = [

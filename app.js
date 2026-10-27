@@ -3,6 +3,7 @@ const A = LegacyAppearance;
 const NAV = LegacyNavigation;
 const sectionMemory = new Map();
 const workspaceScroll = new Map();
+const liveFrames = new WeakMap();
 const E = Legacy,
   T = E.tactics,
   KEY = "club-legacy-v2";
@@ -235,6 +236,7 @@ const pages = [
   "Competições",
   "Troféus",
   "Prêmios",
+  "Histórico",
   "Calendário",
   "Carreira",
   "Clube",
@@ -349,7 +351,15 @@ function notify(message, error = false) {
 const autosaver = LegacyAutosave.create({
   getState: () => state,
   write: (encoded) => {
-    if (!loadError && state.clubId) localStorage.setItem(KEY, encoded);
+    if (!loadError && state.clubId) {
+      localStorage.setItem(KEY, encoded);
+      try {
+        localStorage.setItem(
+          "dinastia-save-meta",
+          JSON.stringify({ savedAt: new Date().toISOString() }),
+        );
+      } catch {}
+    }
   },
   onStatus: (value) => {
     if ($("#save-status")) $("#save-status").textContent = value;
@@ -386,6 +396,8 @@ function act(fn, save = true) {
   }
 }
 const pageDescriptions = {
+  Histórico:
+    "Campeões das competições e vencedores dos prêmios ao longo da carreira.",
   Disciplina: "Cartões, pendurados e suspensões por competição.",
   Prêmios:
     "Notas, estatísticas e os protagonistas de cada partida e temporada.",
@@ -457,6 +469,8 @@ function render() {
   const hasCareer = Boolean(state.clubId);
   if (hasCareer) E.refreshAvailability(state);
   $("#sidebar").hidden = !hasCareer;
+  $("#mobile-nav").hidden = !hasCareer;
+  document.body.classList.remove("pitch-expanded");
   $("#game").hidden = !hasCareer;
   $("#career-entry").hidden = hasCareer;
   document.body.classList.toggle("entry-mode", !hasCareer);
@@ -477,6 +491,7 @@ function render() {
   $("#time-controls").hidden = page !== "Visão geral" || match.active;
   $("#time-controls").innerHTML = page === "Visão geral" ? timeControls() : "";
   renderNavigation();
+  renderMobileNavigation();
   const group = NAV.groupFor(page),
     section = NAV.sectionFor(page, squadTab);
   if (group && section) sectionMemory.set(group.id, section.key);
@@ -497,6 +512,7 @@ function render() {
   if ($("#content .workspace-tabs"))
     $("#content .workspace-tabs").scrollLeft =
       workspaceScroll.get(group.id) || 0;
+  alignWorkspaceTabs();
   decorateMoneyInputs();
   $("#context").textContent =
     `${appearanceTeam().name} · ${E.seasonLabel(state)} · ${E.date(state)}${state.mode === "test" ? " · MODO TESTE" : ""}`;
@@ -776,6 +792,7 @@ const views = {
   Seleções: () => nationalView(),
   Salvamentos: () => saveView(),
   Prêmios: () => awardsView(),
+  Histórico: () => honoursView(),
   Disciplina: () => disciplineView(),
   Financeiro: () => financialView(),
   Clube: () =>
@@ -1149,7 +1166,7 @@ const newsCategories = {
 };
 function pressDirectory() {
   const data = E.press.data;
-  return `<details class="card press-directory"><summary>Conheça a imprensa do jogo</summary><p class="muted">Os jornais e os jornalistas abaixo são fictícios. Cada redação acompanha regiões e assuntos diferentes do universo da sua carreira.</p><h3>Jornais</h3><div class="press-outlets">${data.outlets.map((o) => `<article class="fictional-outlet"><span class="badge">JORNAL FICTÍCIO</span><strong>${esc(o.name)}</strong><small>${esc(o.focus)}</small></article>`).join("")}</div><h3>Jornalistas</h3><div class="press-profiles">${data.journalists
+  return `<details class="card press-directory"><summary>Redações e colunistas</summary><p class="muted">Conheça as redações e os colunistas que acompanham seu clube, sua liga e o mercado da bola.</p><h3>Jornais</h3><div class="press-outlets">${data.outlets.map((o) => `<article class="fictional-outlet"><span class="badge">REDAÇÃO</span><strong>${esc(o.name)}</strong><small>${esc(o.focus)}</small></article>`).join("")}</div><h3>Jornalistas</h3><div class="press-profiles">${data.journalists
     .map(
       (p) =>
         `<article><span class="press-initials" aria-hidden="true">${esc(
@@ -1158,7 +1175,7 @@ function pressDirectory() {
             .slice(0, 2)
             .map((n) => n[0])
             .join(""),
-        )}</span><div><h4>${esc(p.name)}</h4><p>${esc(p.focus)}</p><small>${esc(data.outlets.find((o) => o.id === p.outletId).name)} · personagem fictício</small></div><button data-action="press-follow" data-id="${p.id}">Ver reportagens</button></article>`,
+        )}</span><div><h4>${esc(p.name)}</h4><p>${esc(p.focus)}</p><small>${esc(data.outlets.find((o) => o.id === p.outletId).name)}</small></div><button data-action="press-follow" data-id="${p.id}">Ver reportagens</button></article>`,
     )
     .join("")}</div></details>`;
 }
@@ -1189,7 +1206,7 @@ function newspaper() {
         : newsScope === "world"
           ? "Futebol mundial"
           : regions[ownLeague.region];
-  return `<section class="newspaper"><div class="paper-masthead"><div><span class="badge">O FUTEBOL ACONTECE AQUI</span><h2>DINASTIA <em>Jornal</em></h2></div><span>${esc(E.date(state))}<br>Temporada ${E.seasonLabel(state)}</span></div><div class="paper-edition"><strong>${esc(scopeLabel)}</strong><span>Notícias do universo da sua carreira</span></div><div class="press-disclosure"><strong>IMPRENSA FICTÍCIA · NOTÍCIAS DA CARREIRA</strong><p>Jornais e jornalistas são personagens do Dinastia FC. As matérias acompanham os acontecimentos da sua simulação.</p></div><div class="news-toolbar"><div class="scope-filters" role="group" aria-label="Abrangência das notícias">${[
+  return `<section class="newspaper"><div class="paper-masthead"><div><span class="badge">O FUTEBOL ACONTECE AQUI</span><h2>DINASTIA <em>Jornal</em></h2></div><span>${esc(E.date(state))}<br>Temporada ${E.seasonLabel(state)}</span></div><div class="paper-edition"><strong>${esc(scopeLabel)}</strong><span>Notícias do universo da sua carreira</span></div><div class="news-toolbar"><div class="scope-filters" role="group" aria-label="Abrangência das notícias">${[
     ["club", "Meu clube"],
     ["league", "Minha liga"],
     ["continent", "Meu continente"],
@@ -1201,8 +1218,27 @@ function newspaper() {
     )
     .join(
       "",
-    )}</div><label class="inline">Editoria<select id="news-category">${options(Object.entries(newsCategories), newsCategory)}</select></label></div><form id="press-search" class="press-filters"><label>Jornal<select id="news-outlet">${options([["all", "Todos os jornais"], ...E.press.data.outlets.map((o) => [o.id, o.name])], newsOutlet)}</select></label><label>Jornalista<select id="news-journalist">${options([["all", "Todos os jornalistas"], ...E.press.data.journalists.filter((p) => newsOutlet === "all" || p.outletId === newsOutlet).map((p) => [p.id, p.name])], newsJournalist)}</select></label><label>Buscar no jornal<input id="news-query" type="search" value="${esc(newsQuery)}" placeholder="Jogador, treinador, clube…"></label><button class="primary">Filtrar</button>${btn("Limpar", "press-clear").replace("<button ", '<button type="button" ')}</form><p class="muted press-results">${articles.length} matérias nesta seleção · imprensa fictícia</p>
-    <div class="news-grid">${articles.map((a, i) => `<article class="news-article ${i === 0 ? "news-featured" : ""}" data-article="${esc(a.id)}" data-clubs="${esc(a.clubIds.join(" "))}"><div class="press-source"><strong>${esc(a.press.outlet.name)}</strong><small>Simulação</small></div><div class="article-meta"><span>${newsCategories[a.category] || "Clube"}</span><time>${esc(E.formatDate({ ...state, season: a.season }, a.offset ?? E.calendar(state)[a.day]?.offset ?? 0))}</time></div><h3>${esc(a.title)}</h3>${a.body ? `<p>${esc(a.body)}</p>` : ""}<div class="article-clubs">${a.clubIds.map((id) => teamLabel(id, "tiny")).join("")}</div><footer class="article-reference"><strong>${a.press.byline}</strong><span>${a.press.journalist ? "Jornalista fictício" : "Redação fictícia"} · notícia da carreira</span></footer></article>`).join("") || '<div class="news-empty"><h3>Nenhuma notícia nesta seleção</h3><p class="muted">Amplie a abrangência ou limpe os filtros para acompanhar outras coberturas da carreira.</p><button data-action="news-scope" data-id="world">Ver o mundo</button></div>'}</div>${pressDirectory()}</section>`;
+    )}</div><label class="inline">Editoria<select id="news-category">${options(Object.entries(newsCategories), newsCategory)}</select></label></div><form id="press-search" class="press-filters"><label>Jornal<select id="news-outlet">${options([["all", "Todos os jornais"], ...E.press.data.outlets.map((o) => [o.id, o.name])], newsOutlet)}</select></label><label>Jornalista<select id="news-journalist">${options([["all", "Todos os jornalistas"], ...E.press.data.journalists.filter((p) => newsOutlet === "all" || p.outletId === newsOutlet).map((p) => [p.id, p.name])], newsJournalist)}</select></label><label>Buscar no jornal<input id="news-query" type="search" value="${esc(newsQuery)}" placeholder="Jogador, treinador, clube…"></label><button class="primary">Filtrar</button>${btn("Limpar", "press-clear").replace("<button ", '<button type="button" ')}</form><p class="muted press-results">${articles.length} matérias nesta edição</p>
+    <div class="news-grid">${
+      articles
+        .map(
+          (a, i) =>
+            `<article class="news-article ${i === 0 ? "news-featured" : ""}" data-article="${esc(a.id)}" data-clubs="${esc(a.clubIds.join(" "))}"><div class="press-source"><strong>${esc(a.press.outlet.name)}</strong><small>${esc(newsCategories[a.category] || "Futebol")}</small></div><div class="article-meta"><span>${newsCategories[a.category] || "Clube"}</span><time>${esc(E.formatDate({ ...state, season: a.season }, a.offset ?? E.calendar(state)[a.day]?.offset ?? 0))}</time></div><h3>${esc(a.title)}</h3>${
+              i === 0 && a.clubIds.length
+                ? `<div class="article-lead-art">${a.clubIds
+                    .slice(0, 2)
+                    .map(
+                      (id, j) =>
+                        (j ? '<span aria-hidden="true">×</span>' : "") +
+                        badge(team(id), "large"),
+                    )
+                    .join("")}</div>`
+                : ""
+            }${a.body ? `<p>${esc(a.body)}</p>` : ""}<div class="article-clubs">${a.clubIds.map((id) => teamLabel(id, "tiny")).join("")}</div><footer class="article-reference"><strong>${a.press.byline}</strong><span>${esc(a.press.outlet.name)}</span></footer>${btn("Ler reportagem →", "read-news", a.id, "read-news-button")}</article>`,
+        )
+        .join("") ||
+      '<div class="news-empty"><h3>Nenhuma notícia nesta seleção</h3><p class="muted">Amplie a abrangência ou limpe os filtros para acompanhar outras coberturas da carreira.</p><button data-action="news-scope" data-id="world">Ver o mundo</button></div>'
+    }</div>${pressDirectory()}</section>`;
 }
 function referenceClubName(id) {
   const [code, index] = id.split("-"),
@@ -1297,9 +1333,17 @@ function matchView() {
       ["broadcast", "Transmissão"],
       ["tactical", "Tática aérea"],
       ["goal", "Atrás do gol"],
+      ["follow", "Acompanhar a bola"],
     ],
     matchCamera,
-  )}</select></label></div><div class="match-workspace"><div><div id="event-announcement" class="goal-announcement" aria-live="assertive"></div><div class="play-caption" id="play-caption" aria-live="polite">${half ? "Intervalo: faça os ajustes e inicie o segundo tempo." : m?.done ? "Fim de jogo. Confira os melhores momentos." : "Acompanhe a bola e a construção das jogadas."}</div><div id="field"><div class="match-empty-field"><strong>Prepare o seu time.</strong><span>Inicie a partida para acompanhar a bola em 2D ou 3D.</span></div></div><p class="muted">${half ? "O relógio está parado no intervalo." : playing && paused ? "Partida pausada." : "O lance desacelera nas finalizações; o placar atualiza quando a bola chega ao gol."}</p><div class="match-stats" id="stats"></div>${m?.goalReplays?.length ? `<div class="card"><h3>Gols e replays</h3><div class="row">${m.goalReplays.map((p, i) => btn(`${p.minute}’ · ${esc(p.playerName)}`, "replay-goal", String(i))).join("")}</div></div>` : ""}</div><aside><section class="card"><h3>Relato da partida</h3><div class="log" id="log" aria-live="off"></div></section></aside></div>${
+  )}</select></label><label class="camera-control quality-control">Qualidade 3D<select id="match-quality">${options(
+    [
+      ["auto", "Automática"],
+      ["low", "Leve"],
+      ["high", "Detalhada"],
+    ],
+    state.matchPreferences?.quality || "auto",
+  )}</select></label></div><div class="match-workspace"><div><div id="event-announcement" class="goal-announcement" aria-live="assertive"></div><div class="play-caption" id="play-caption" aria-live="polite">${half ? "Intervalo: faça os ajustes e inicie o segundo tempo." : m?.done ? "Fim de jogo. Confira os melhores momentos." : "Acompanhe a bola e a construção das jogadas."}</div><div id="field-shell" class="field-shell"><div class="expanded-field-toolbar"><strong>${esc(name(f.pair[0]))} × ${esc(name(f.pair[1]))}</strong><div><button data-action="field-follow" ${m?.mode === "3d" ? "" : "hidden"}>${matchCamera === "follow" ? "Campo inteiro" : "Seguir bola"}</button><button data-action="field-pause" ${!m || m.done ? "disabled" : ""}>${m?.minute === 45 && !m.secondHalfStarted ? "Iniciar 2º tempo" : paused ? "Retomar" : "Pausar"}</button><button data-action="match-expand">Voltar</button></div></div><div id="field"><div class="match-empty-field"><strong>Prepare o seu time.</strong><span>Inicie a partida para acompanhar a bola em 2D ou 3D.</span></div></div><button class="field-expand" data-action="match-expand" ${m?.plans ? "" : "disabled"}>Ampliar campo ↗</button></div><p id="field-help" class="muted" ${m?.mode === "3d" ? "" : "hidden"}>Toque em um jogador para ver seu nome. Amplie o campo para acompanhar os detalhes.</p><p class="muted">${half ? "O relógio está parado no intervalo." : playing && paused ? "Partida pausada." : "O lance desacelera nas finalizações; o placar atualiza quando a bola chega ao gol."}</p><div class="match-stats" id="stats"></div>${m?.goalReplays?.length ? `<div class="card"><h3>Gols e replays</h3><div class="row">${m.goalReplays.map((p, i) => btn(`${p.minute}’ · ${esc(p.playerName)}`, "replay-goal", String(i))).join("")}</div></div>` : ""}</div><aside><section class="card"><h3>Relato da partida</h3><div class="log" id="log" aria-live="off"></div></section></aside></div>${
     plan && playing
       ? `<section class="card"><h3>Banco do treinador</h3><p>${(m.substitutions || []).filter((x) => x.side === side).length} de 5 substituições. Pause para escolher a troca.</p><form id="substitution-form" class="substitution-form"><label>Sai<select name="out">${options(
           E.discipline
@@ -1322,6 +1366,9 @@ function matchView() {
 function draw() {
   const m = state.live;
   if (!m) return;
+  if ($("#field-help")) $("#field-help").hidden = m.mode !== "3d";
+  const followControl = document.querySelector('[data-action="field-follow"]');
+  if (followControl) followControl.hidden = m.mode !== "3d";
   if (!m.plans) m.plans = E.matchPlans(state, m);
   const hold = liveScoreHold?.match === m ? liveScoreHold.goals : m.goals;
   if ($("#match-ratings") && !animatingPlay)
@@ -1341,7 +1388,9 @@ function draw() {
     sum = Math.max(1, possession[0] + possession[1]);
   const matchLines = E.performance.lines(m);
   const statFor = (side, key) =>
-    matchLines.filter((p) => p.side === side).reduce((n, p) => n + p[key], 0);
+    matchLines
+      .filter((p) => p.side === side)
+      .reduce((n, p) => n + (p[key] || 0), 0);
   if ($("#stats"))
     $("#stats").innerHTML =
       `<div><small>Finalizações</small><strong>${m.shots.join(" × ")}</strong></div><div><small>Chutes no alvo</small><strong>${statFor(0, "onTarget")} × ${statFor(1, "onTarget")}</strong></div><div><small>Defesas</small><strong>${statFor(0, "saves")} × ${statFor(1, "saves")}</strong></div><div><small>Posse de bola</small><strong>${Math.round((possession[0] / sum) * 100)}% × ${Math.round((possession[1] / sum) * 100)}%</strong></div><div><small>Faltas</small><strong>${(m.discipline?.fouls || [0, 0]).join(" × ")}</strong></div><div><small>Amarelos</small><strong>${statFor(0, "yellowCards")} × ${statFor(1, "yellowCards")}</strong></div><div><small>Expulsões</small><strong>${statFor(0, "redCards")} × ${statFor(1, "redCards")}</strong></div>${m.penalties ? `<div><small>Pênaltis</small><strong>${m.penalties.join(" × ")}</strong></div>` : ""}`;
@@ -1369,25 +1418,47 @@ function draw() {
     $(".match-progress i").style.width = (m.minute / 90) * 100 + "%";
   if (!$("#field")) return;
   const shownPlay = activeReplay || m.lastPlay,
-    view = E.matchVisual(m, shownPlay);
-  view.activeId = shownPlay?.playerId;
-  const kits = m.pair.map((id) => A.clubColors(team(id)));
-  if (A.contrast(kits[0].primary, kits[1].primary) < 1.8)
-    kits[1] = {
-      primary:
-        A.contrast(kits[0].primary, kits[1].secondary) >= 1.8
-          ? kits[1].secondary
-          : A.readable(kits[0].primary),
-    };
+    cached = liveFrames.get(m),
+    valid = new Set(
+      m.plans.flatMap((p) => E.discipline.active(p).map((p) => p.id)),
+    );
+  let view =
+    cached && cached.playId === shownPlay?.id
+      ? cached.view
+      : shownPlay
+        ? E.matchFrame(m, shownPlay, 0)
+        : E.matchVisual(m, null);
+  if (!activeReplay && view.positions.some((p) => !valid.has(p.id)))
+    view = E.matchVisual(m, null);
+  view = {
+    ...view,
+    positions: view.positions.filter((p) => !m.discipline?.reds.includes(p.id)),
+  };
+  view.activeId ||= shownPlay?.playerId;
+  const kits = matchKits(m);
   document
     .querySelector(".camera-control")
+    ?.classList.toggle("camera-visible", m.mode === "3d");
+  document
+    .querySelector(".quality-control")
     ?.classList.toggle("camera-visible", m.mode === "3d");
   if (m.mode === "text") {
     match3D?.dispose();
     match3D = null;
-    $("#field").innerHTML = "";
+    if ($(".field-expand")) $(".field-expand").hidden = true;
+    const latest = m.events.find(
+      (e) =>
+        !(
+          liveScoreHold?.match === m &&
+          e.startsWith(m.minute + "'") &&
+          e.includes("GOL")
+        ),
+    );
+    $("#field").innerHTML =
+      `<div class="match-text-scene"><span class="badge">RELATO AO VIVO · ${m.minute} MIN</span><h3>${esc(latest || "A bola está rolando.")}</h3><p>${teamLabel(m.pair[m.possessionSide || 0], "small")} · acompanhe os lances e as estatísticas</p></div>`;
     return;
   }
+  if ($(".field-expand")) $(".field-expand").hidden = false;
   if (m.mode === "3d") {
     if (!$("#three-stage")) {
       match3D?.dispose();
@@ -1397,7 +1468,9 @@ function draw() {
     }
     try {
       if (!match3D) {
-        match3D = LegacyMatch3D.create($("#three-stage"));
+        match3D = LegacyMatch3D.create($("#three-stage"), {
+          quality: state.matchPreferences?.quality || "auto",
+        });
         match3D.setCamera(matchCamera);
       }
       match3D.update(view, kits, m.ballPosition || view.ball);
@@ -1409,8 +1482,8 @@ function draw() {
       matchMode = "2d";
       $("#mode").value = "2d";
       document
-        .querySelector(".camera-control")
-        ?.classList.remove("camera-visible");
+        .querySelectorAll(".camera-control")
+        .forEach((el) => el.classList.remove("camera-visible"));
       notify("O 3D não está disponível neste navegador. Campo 2D ativado.");
     }
   }
@@ -1457,6 +1530,9 @@ async function animatePlay(m, play, replay = false) {
       match: m,
       goals: m.goals.map((n, i) => (i === play.side ? n - 1 : n)),
     };
+  const first = E.matchFrame(m, play, 0);
+  liveFrames.set(m, { playId: play.id, view: first });
+  m.ballPosition = { x: play.path[0].x, y: play.path[0].y };
   draw();
   const step =
     play.type === "build-up"
@@ -1486,38 +1562,10 @@ async function animatePlay(m, play, replay = false) {
       i === path.length - 1 && play.type !== "build-up"
         ? Math.max(900, step)
         : step;
-    if (match3D)
-      match3D.moveBall(
-        point,
-        duration,
-        i === path.length - 1 && play.type !== "build-up",
-      );
-    const base = E.matchVisual(m, play);
-    const moving = {
-      ...base,
-      activeId: point.playerId || play.playerId,
-      positions: base.positions.map((p) => {
-        const receiver = p.id === point.playerId;
-        const shooter = p.id === play.playerId;
-        return {
-          ...p,
-          x: receiver
-            ? point.x
-            : shooter
-              ? p.x
-              : Math.max(3, Math.min(97, p.x + (point.x - 50) * 0.045)),
-          y: receiver
-            ? point.y
-            : Math.max(4, Math.min(96, p.y + (point.y - 50) * 0.04)),
-        };
-      }),
-    };
-    if (match3D)
-      match3D.update(
-        moving,
-        m.pair.map((id) => A.clubColors(team(id))),
-        point,
-      );
+    const moving = E.matchFrame(m, play, i);
+    moving.duration = duration;
+    liveFrames.set(m, { playId: play.id, view: moving });
+    if (match3D) match3D.update(moving, matchKits(m), i ? null : point);
     else
       for (const p of moving.positions) {
         const dot = $("#dot-" + (p.side * 11 + p.index));
@@ -1528,11 +1576,21 @@ async function animatePlay(m, play, replay = false) {
           dot.classList.toggle("receiving", p.id === point.playerId);
         }
       }
+    if (match3D)
+      match3D.moveBall(
+        point,
+        duration,
+        i === path.length - 1 && play.type !== "build-up",
+      );
     if (ball) {
       ball.style.transitionDuration =
         (i === path.length - 1 && play.type !== "build-up"
           ? Math.max(900, step)
           : step) + "ms";
+      ball.classList.toggle(
+        "is-shooting",
+        i === path.length - 1 && play.type !== "build-up",
+      );
       ball.style.left = point.x + "%";
       ball.style.top = point.y + "%";
     }
@@ -1551,6 +1609,7 @@ async function animatePlay(m, play, replay = false) {
   liveScoreHold = null;
   draw();
   if (play.type === "goal") {
+    match3D?.celebrate(play.side);
     const banner = $("#event-announcement");
     if (banner) {
       banner.className = "goal-announcement visible";
@@ -1585,6 +1644,10 @@ async function tick() {
   activeReplay = null;
   E.minute(state, m);
   autosaver.markDirty();
+  if (m.discipline?.forfeit) {
+    act(() => E.advance(state));
+    return;
+  }
   await animatePlay(m, m.lastPlay);
   if (token !== visualGeneration || state.live !== m) return;
   if (m.minute >= 90) {
@@ -1917,15 +1980,17 @@ document.addEventListener("click", (event) => {
       (x) => x.key === sectionMemory.get(group.id),
     );
     const targetPage = remembered?.page || nav.dataset.page,
-      targetSquad = remembered?.squadTab || nav.dataset.squadTab || squadTab;
+      targetSquad =
+        targetPage === "Elenco"
+          ? remembered?.squadTab || nav.dataset.squadTab || squadTab
+          : squadTab;
     if (targetPage === page && targetSquad === squadTab) {
       if (!nav.dataset.section)
         window.scrollTo({ top: 0, behavior: "instant" });
       return;
     }
     page = targetPage;
-    if (remembered?.squadTab || nav.dataset.squadTab)
-      squadTab = remembered?.squadTab || nav.dataset.squadTab;
+    squadTab = targetSquad;
     if (
       [
         "Visão geral",
@@ -1972,6 +2037,73 @@ document.addEventListener("click", (event) => {
   if (!b) return;
   const a = b.dataset.action,
     id = b.dataset.id;
+  if (a === "read-news") {
+    openNews(id);
+    return;
+  }
+  if (a === "close-news-reader") {
+    $("#news-reader").close();
+    return;
+  }
+  if (a === "history-type") {
+    honourFilters.type = id;
+    honourFilters.competition = "all";
+    honourFilters.award = "all";
+    honourPage = 0;
+    render();
+    return;
+  }
+  if (a === "history-page") {
+    honourPage = Math.max(0, honourPage + Number(id));
+    render();
+    return;
+  }
+  if (a === "history-clear") {
+    honourFilters = {
+      ...honourFilters,
+      competition: "all",
+      season: "all",
+      club: "all",
+      award: "all",
+      query: "",
+      preseason: false,
+    };
+    honourPage = 0;
+    render();
+    return;
+  }
+  if (a === "match-expand") {
+    const shell = $("#field-shell"),
+      expanded = shell.classList.toggle("is-expanded");
+    document.body.classList.toggle("pitch-expanded", expanded);
+    match3D?.setCamera(matchCamera);
+    return;
+  }
+  if (a === "field-follow") {
+    matchCamera = matchCamera === "follow" ? "broadcast" : "follow";
+    match3D?.setCamera(matchCamera);
+    if ($("#match-camera")) $("#match-camera").value = matchCamera;
+    state.matchPreferences = {
+      speed,
+      ...state.matchPreferences,
+      camera: matchCamera,
+    };
+    scheduleSave();
+    b.textContent = matchCamera === "follow" ? "Campo inteiro" : "Seguir bola";
+    return;
+  }
+  if (a === "field-pause") {
+    if (state.live && !state.live.done) {
+      if (state.live.minute === 45 && !state.live.secondHalfStarted) {
+        E.startSecondHalf(state);
+        paused = false;
+        scheduleSave();
+      } else paused = !paused;
+      runTimer();
+      b.textContent = paused ? "Retomar" : "Pausar";
+    }
+    return;
+  }
   if (a === "quick-menu") {
     openQuickMenu();
     return;
@@ -2453,6 +2585,29 @@ document.addEventListener("input", (event) => {
 });
 document.addEventListener("change", (event) => {
   const el = event.target;
+  if (el.id.startsWith("history-")) {
+    const key = el.id.slice(8);
+    if (["season", "competition", "club", "award", "preseason"].includes(key)) {
+      honourFilters[key] = key === "preseason" ? el.checked : el.value;
+      honourPage = 0;
+      render();
+      return;
+    }
+  }
+  if (el.id === "match-quality") {
+    state.matchPreferences = {
+      speed,
+      mode: matchMode,
+      camera: matchCamera,
+      ...state.matchPreferences,
+      quality: el.value,
+    };
+    match3D?.dispose();
+    match3D = null;
+    scheduleSave();
+    draw();
+    return;
+  }
   if (el.id.startsWith("start-coach-")) {
     setupProfile = readProfile("start");
     return;
@@ -2676,6 +2831,13 @@ document.addEventListener("change", (event) => {
     });
 });
 document.addEventListener("submit", (event) => {
+  if (event.target.id === "history-search") {
+    event.preventDefault();
+    honourFilters.query = $("#history-query").value.trim();
+    honourPage = 0;
+    render();
+    return;
+  }
   if (event.target.id === "substitution-form") {
     event.preventDefault();
     const f = new FormData(event.target);
@@ -2805,6 +2967,13 @@ $("#save").onclick = () => {
   if (persist()) notify("Carreira salva neste navegador.");
 };
 $("#export").onclick = exportCareer;
+const preserveOnExit = () => {
+  if (!loadError && autosaver.dirty) persist();
+};
+window.addEventListener("pagehide", preserveOnExit);
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") preserveOnExit();
+});
 window.addEventListener("beforeunload", () => {
   if (!loadError && autosaver.dirty) persist();
 });
@@ -3311,7 +3480,7 @@ function awardsView() {
     awardsKind === "competition"
       ? current.competitions[comp]?.closed
       : ["ballon", "keeper", "month"].includes(awardsKind) && current.closed;
-  return `<div class="hero awards-hero"><div><span class="badge">PRÊMIOS INDIVIDUAIS · ${E.seasonLabel(state)}</span><h2>Uma temporada para fazer história.</h2><p>O reconhecimento vem do que acontece em campo: notas, gols, assistências, defesas e contribuição para os títulos.</p><button data-action="show-award-criteria">Ver critérios e fontes →</button></div><span class="awards-emblem" aria-hidden="true">✦</span></div><section class="card"><div class="awards-toolbar"><label>Premiação<select id="awards-kind">${options(kinds, awardsKind)}</select></label>${["competition", "month"].includes(awardsKind) ? `<label>Campeonato<select id="awards-competition">${options([...state.leagues.map((l) => [l.id, l.name]), ...state.cups.map((c) => [c.id, c.name])], awardsCompetition)}</select></label>` : ""}<label>Atletas<select id="awards-scope">${options(
+  return `<div class="hero awards-hero"><div><span class="badge">PRÊMIOS INDIVIDUAIS · ${E.seasonLabel(state)}</span><h2>Uma temporada para fazer história.</h2><p>O reconhecimento vem do que acontece em campo: notas, gols, assistências, defesas e contribuição para os títulos.</p><button data-action="show-award-criteria">Ver critérios e fontes →</button><button data-page="Histórico">Vencedores anteriores →</button></div><span class="awards-emblem" aria-hidden="true">✦</span></div><section class="card"><div class="awards-toolbar"><label>Premiação<select id="awards-kind">${options(kinds, awardsKind)}</select></label>${["competition", "month"].includes(awardsKind) ? `<label>Campeonato<select id="awards-competition">${options([...state.leagues.map((l) => [l.id, l.name]), ...state.cups.map((c) => [c.id, c.name])], awardsCompetition)}</select></label>` : ""}<label>Atletas<select id="awards-scope">${options(
     [
       ["all", "Todos os clubes"],
       ["club", "Meu elenco"],
@@ -3338,7 +3507,7 @@ function trophyRoom() {
   const trophies = (state.trophies || []).filter(
     (t) => t.clubId === state.clubId || t.coachId === "you",
   );
-  return `<div class="hero"><span class="badge">SALA DE TROFÉUS</span><h2>As conquistas ficam para a história.</h2><p>Títulos confirmados do seu clube e das equipes que você levou ao topo.</p><button data-page="Prêmios">Prêmios dos jogadores →</button></div><div class="trophy-grid">${trophies.map((t) => `<article class="card trophy-card">${trophySvg()}<span class="badge">${E.seasonLabel({ ...state, season: t.season }, E.league(state, team(t.clubId).leagueId)?.region)}</span><h3>${esc(t.name)}</h3><p>${teamLabel(t.clubId)}</p><small>${t.coachId === "you" ? "Conquistado durante sua gestão" : "Histórico do clube"}</small></article>`).join("") || `<div class="card trophy-empty">${trophySvg()}<h3>O primeiro capítulo ainda será escrito.</h3><p>Os títulos de liga e das competições continentais aparecem aqui após a confirmação do campeão.</p></div>`}</div>`;
+  return `<div class="hero"><span class="badge">SALA DE TROFÉUS</span><h2>As conquistas ficam para a história.</h2><p>Títulos confirmados do seu clube e das equipes que você levou ao topo.</p><button data-page="Prêmios">Prêmios dos jogadores →</button><button data-page="Histórico">Histórico de campeões →</button></div><div class="trophy-grid">${trophies.map((t) => `<article class="card trophy-card">${trophySvg()}<span class="badge">${E.seasonLabel({ ...state, season: t.season }, E.league(state, team(t.clubId).leagueId)?.region)}</span><h3>${esc(t.name)}</h3><p>${teamLabel(t.clubId)}</p><small>${t.coachId === "you" ? "Conquistado durante sua gestão" : "Histórico do clube"}</small></article>`).join("") || `<div class="card trophy-empty">${trophySvg()}<h3>O primeiro capítulo ainda será escrito.</h3><p>Os títulos de liga e das competições continentais aparecem aqui após a confirmação do campeão.</p></div>`}</div>`;
 }
 function showCelebration() {
   const title = (state.trophies || []).find(
@@ -3496,7 +3665,15 @@ function nationalView() {
   return html;
 }
 function saveView() {
-  return `<div class="hero"><span class="badge">SUA CARREIRA, SEU ARQUIVO</span><h2>Salvamentos</h2><p>${esc(state.profile.name)} · ${esc(team().name)} · ${esc(E.date(state))}</p></div><div class="card"><h3>Continuar de onde parou</h3><p>As ações são salvas automaticamente neste navegador. Para guardar fora dele ou jogar em outro dispositivo, baixe o arquivo do save e importe-o depois.</p><div class="row">${btn("Salvar neste navegador", "save-now", "", "primary")}${btn("Baixar arquivo do save", "export-save")}${btn("Importar arquivo", "import-save")}</div><p class="muted">A importação mostra uma confirmação antes de substituir a carreira. Arquivos inválidos não alteram seu progresso.</p></div><div class="card"><h3>Excluir carreira</h3><p>Apaga a carreira e as cópias de recuperação deste navegador. Os arquivos que você já baixou continuam disponíveis.</p>${btn("Excluir carreira", "delete-save", "", "danger")}</div>`;
+  let size = 0,
+    savedAt = null;
+  try {
+    size = (localStorage.getItem(KEY) || "").length * 2;
+    savedAt = JSON.parse(
+      localStorage.getItem("dinastia-save-meta") || "null",
+    )?.savedAt;
+  } catch {}
+  return `<div class="hero"><span class="badge">SUA CARREIRA, SEU ARQUIVO</span><h2>Salvamentos</h2><p>${esc(state.profile.name)} · ${esc(team().name)} · ${esc(E.date(state))}</p></div><section class="card save-explanation"><h3>Onde fica a minha carreira?</h3><p><strong>Neste navegador e neste aparelho.</strong> O salvamento automático guarda uma cópia comprimida da sua carreira nos dados locais deste site.</p><dl><dt>Endereço do save</dt><dd>${esc(location.origin)}</dd><dt>Última gravação registrada</dt><dd>${savedAt ? esc(new Date(savedAt).toLocaleString("pt-BR")) : "Use Salvar para registrar a gravação"}</dd><dt>Tamanho aproximado</dt><dd>${(size / 1024 / 1024).toLocaleString("pt-BR", { maximumFractionDigits: 2 })} MB</dd></dl><p>Não há conta nem sincronização na nuvem. O Netlify e o GitHub hospedam o jogo; eles não recebem os saves das pessoas. Há uma carreira ativa por navegador neste endereço. Arquivos exportados permitem guardar outras carreiras e alternar entre elas pela importação.</p><p>Trocar de celular, navegador ou endereço do site não leva esse save junto. Limpar os dados do site, usar uma aba anônima ou desinstalar o navegador pode apagar o progresso. Para guardar uma cópia ou continuar em outro aparelho, baixe o arquivo e depois importe-o.</p></section><div class="card"><h3>Continuar de onde parou</h3><p>O jogo salva suas ações automaticamente e tenta preservar a partida quando você coloca o aplicativo em segundo plano. O indicador “Salvo” confirma a gravação no navegador.</p><div class="row">${btn("Salvar neste navegador", "save-now", "", "primary")}${btn("Baixar arquivo do save", "export-save")}${btn("Importar arquivo", "import-save")}</div><p class="muted">No celular, o arquivo fica na pasta escolhida para downloads. Envie-o para seu armazenamento pessoal se quiser manter uma cópia fora do aparelho.</p></div><div class="card"><h3>Excluir carreira</h3><p>Apaga a carreira e as cópias de recuperação deste navegador. Os arquivos que você já baixou continuam disponíveis.</p>${btn("Excluir carreira", "delete-save", "", "danger")}</div>`;
 }
 function exportCareer() {
   try {
@@ -3538,6 +3715,7 @@ function deleteCareer() {
     // Invalida todas as chaves que poderiam restaurar a carreira no próximo carregamento.
     for (const key of [
       KEY,
+      "dinastia-save-meta",
       "club-legacy-v1",
       "club-legacy-v1-backup",
       "club-legacy-v2-backup",
@@ -3576,6 +3754,12 @@ function importCareer() {
       encoded = encodeSave(pendingImport);
     if (old) localStorage.setItem("club-legacy-import-backup", old);
     localStorage.setItem(KEY, encoded);
+    try {
+      localStorage.setItem(
+        "dinastia-save-meta",
+        JSON.stringify({ savedAt: new Date().toISOString() }),
+      );
+    } catch {}
   } catch {
     notify(
       "Não houve espaço para importar e preservar uma cópia do save atual. Exporte sua carreira antes de liberar espaço.",
@@ -3703,3 +3887,118 @@ function disciplineView() {
     '<tr><td colspan="6">Nenhum cartão oficial registrado nesta temporada.</td></tr>'
   }</tbody></table></div></section><section class="card"><h3>Histórico de sanções do clube</h3><div class="discipline-history">${history.map((e) => `<article><time>${esc(E.formatDate({ ...state, season: e.season }, e.offset))}</time><div><strong>${esc(e.name)}</strong><p>${e.action === "suspended" ? `Suspensão: ${e.matches} jogo(s)` : e.action === "served" ? (e.matches ? `Pena cumprida nesta rodada · restam ${e.matches} jogo(s)` : "Suspensão cumprida · liberado") : "Cartão registrado"} · ${esc(e.reason)}</p><small>${esc(compName(e.competition))}</small></div></article>`).join("") || '<p class="muted">Os próximos cartões e cumprimentos de suspensão aparecerão aqui.</p>'}</div></section><details class="card discipline-rules"><summary>Regras disciplinares da simulação</summary><p>Brasileirão: suspensão a cada 3 amarelos. Demais ligas: a cada 5. Copas continentais: a cada 3. O acúmulo é separado por competição e reinicia na temporada seguinte; penas pendentes continuam.</p><p>Dois amarelos no jogo expulsam e geram 1 jogo de suspensão. Vermelho direto: 2 jogos; conduta violenta: 3 jogos. Se o amarelo também completar o limite acumulado, as penas se somam. Os amarelos do segundo cartão contam no acumulado deste regulamento.</p><p>A pena começa no próximo jogo oficial da mesma competição, incluindo quando o atleta ficaria no banco. Dias sem jogo, outras competições e amistosos não cumprem essa pena. Cartões em amistosos afetam só a partida. Em uma transferência, as penas acompanham o atleta.</p><p>Uma equipe com menos de sete jogadores perde por resultado administrativo, sem criar gols individuais. Pressão alta aumenta o risco de advertências. Goleiro expulso é coberto por um atleta de linha até você colocar um goleiro disponível.</p><p>Estas são regras simplificadas do jogo, não uma reprodução integral dos regulamentos de cada federação. Fair play considera os cartões oficiais acompanhados desde a atualização; o histórico anterior é preservado.</p><a href="https://www.theifab.com/laws/latest/fouls-and-misconduct/" target="_blank" rel="noopener noreferrer">Referência: IFAB · faltas e conduta ↗</a></details>`;
 }
+
+let honourFilters = {
+    type: "titles",
+    competition: "all",
+    season: "all",
+    club: "all",
+    award: "all",
+    query: "",
+    preseason: false,
+  },
+  honourPage = 0;
+function honoursView() {
+  const H = E.honours,
+    f = honourFilters,
+    all = H.records(state, f),
+    pageSize = 12,
+    pages = Math.max(1, Math.ceil(all.length / pageSize));
+  honourPage = Math.min(honourPage, pages - 1);
+  const compMap = new Map(
+    [...state.leagues, ...state.cups].map((c) => [c.id, c.name]),
+  );
+  if (f.preseason)
+    for (const t of state.trophies || []) compMap.set(t.competitionId, t.name);
+  const list = all.slice(honourPage * pageSize, (honourPage + 1) * pageSize),
+    hasAny =
+      f.type === "awards"
+        ? (state.performance?.awards || []).length
+        : f.preseason
+          ? (state.trophies || []).length
+          : H.official(state).length;
+  return `<div class="hero history-hero"><span class="badge">ALMANAQUE DO FUTEBOL</span><h2>Os campeões ficam para a história.</h2><p>Consulte os títulos e os vencedores das premiações registrados na sua carreira.</p></div><section class="card"><div class="segmented" role="group" aria-label="Tipo de histórico">${btn("Campeões das competições", "history-type", "titles", f.type === "titles" ? "active" : "")}${btn("Prêmios individuais", "history-type", "awards", f.type === "awards" ? "active" : "")}</div><form id="history-search" class="history-filters"><label>Temporada<select id="history-season">${options([["all", "Todas as temporadas"], ...H.seasons(state).map((y) => [String(y), E.seasonLabel({ ...state, season: y })])], f.season)}</select></label><label>Competição<select id="history-competition">${options([["all", "Todas as competições"], ...(f.type === "awards" ? [["world", "Prêmios mundiais"]] : []), ...compMap.entries()], f.competition)}</select></label><label>Clube<select id="history-club">${options(
+    [
+      ["all", "Todos os clubes"],
+      [state.clubId, "Meu clube · " + team().name],
+      ...state.teams
+        .filter((t) => t.id !== state.clubId)
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((t) => [t.id, t.name]),
+    ],
+    f.club,
+  )}</select></label>${
+    f.type === "awards"
+      ? `<label>Prêmio<select id="history-award">${options(
+          [
+            ["all", "Todos os prêmios"],
+            ["ballon", "Bola de Ouro"],
+            ["keeper", "Melhor goleiro"],
+            ["competition", "Melhor do campeonato"],
+            ["month", "Melhor do mês"],
+          ],
+          f.award,
+        )}</select></label>`
+      : `<label class="history-preseason"><input id="history-preseason" type="checkbox" ${f.preseason ? "checked" : ""}>Incluir pré-temporada</label>`
+  }<label>Buscar<input id="history-query" type="search" value="${esc(f.query)}" placeholder="Clube, jogador ou competição"></label><button class="primary">Filtrar</button>${btn("Limpar", "history-clear").replace("<button ", '<button type="button" ')}</form><p class="muted">${all.length} registros nesta consulta · ${H.seasons(state).length} temporadas com conquistas</p></section><div class="history-records">${list.map((r) => (f.type === "awards" ? awardCard(r.source) : `<article class="card history-champion"><div class="history-trophy" aria-hidden="true">${trophySvg()}</div><div><span class="badge">${esc(E.seasonLabel({ ...state, season: r.season }, E.league(state, team(r.clubId).leagueId)?.region))}</span><h3>${esc(r.name)}</h3><p>${teamLabel(r.clubId, "medium")}</p><small>${r.source.coachId === "you" ? "Conquistado sob seu comando" : "Campeão da competição"} · ${esc(E.formatDate({ ...state, season: r.season }, r.offset || 0))}</small></div></article>`)).join("") || `<section class="card history-empty"><span class="award-symbol" aria-hidden="true">☆</span><h3>${hasAny ? "Nenhum resultado para estes filtros." : f.type === "awards" ? "Os primeiros prêmios ainda serão entregues." : "O primeiro campeão ainda vai levantar a taça."}</h3><p>${hasAny ? "Amplie a temporada, a competição ou o clube selecionado." : "Os títulos e prêmios passam a aparecer assim que forem confirmados durante a carreira."}</p></section>`}</div>${all.length ? `<div class="row history-pagination">${btn("← Anterior", "history-page", "-1")}<span>Página ${honourPage + 1} de ${pages}</span>${btn("Próxima →", "history-page", "1")}</div>` : ""}<details class="card"><summary>Sobre estes registros</summary><p>Este almanaque usa as conquistas confirmadas no seu save. Não adiciona resultados de anos anteriores ao início da carreira. As premiações mantêm a pontuação e o pódio da data em que foram entregues.</p></details>`;
+}
+function renderMobileNavigation() {
+  const nav = $("#mobile-nav"),
+    g = NAV.groupFor(page),
+    match = E.currentMatch(state).available;
+  const entries = [
+    ["Visão geral", "Início"],
+    ["Elenco", "Elenco"],
+    [match ? "Dia de jogo" : "Calendário", match ? "Jogar" : "Agenda"],
+    ["Transferências", "Mercado"],
+  ];
+  nav.innerHTML =
+    entries
+      .map(
+        ([p, label]) =>
+          `<button data-page="${p}" ${NAV.groupFor(p) ? `data-workspace="${NAV.groupFor(p).id}"` : ""} aria-label="${label}" ${g?.page === p || page === p ? 'aria-current="page"' : ""}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">${navigationPaths[p] || '<circle cx="12" cy="12" r="8"/><path d="m12 7 5 5-5 5-5-5Z"/>'}</svg><span>${label}</span></button>`,
+      )
+      .join("") +
+    `<button data-action="quick-menu" aria-label="Todos os menus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Menu</span></button>`;
+}
+function openNews(id) {
+  const articles = E.journal(state, newsScope, newsCategory, {
+      outlet: newsOutlet,
+      journalist: newsJournalist,
+      query: newsQuery,
+    }),
+    index = articles.findIndex((a) => a.id === id),
+    a = articles[index];
+  if (!a) return;
+  const dialog = $("#news-reader");
+  dialog.innerHTML = `<div class="reader-toolbar"><strong>${esc(a.press.outlet.name)}</strong><button data-action="close-news-reader" aria-label="Fechar reportagem">×</button></div><article class="reader-article"><span class="badge">${esc(newsCategories[a.category] || "Futebol")} · ${esc(E.formatDate({ ...state, season: a.season }, a.offset || 0))}</span><h2 tabindex="-1">${esc(a.title)}</h2><p class="reader-byline">Por <strong>${esc(a.press.byline)}</strong></p><div class="reader-clubs">${a.clubIds.map((id) => teamLabel(id, "small")).join("")}</div><p class="reader-body">${esc(a.body || "Acompanhe os próximos acontecimentos e os resultados da temporada nas páginas do jornal.")}</p></article><div class="reader-pagination">${index > 0 ? btn("← Reportagem anterior", "read-news", articles[index - 1].id) : "<span></span>"}${index < articles.length - 1 ? btn("Próxima reportagem →", "read-news", articles[index + 1].id) : ""}</div>`;
+  if (!dialog.open) dialog.showModal();
+  dialog.querySelector("h2").focus({ preventScroll: true });
+  dialog.scrollTop = 0;
+}
+
+function matchKits(m) {
+  const kits = m.pair.map((id) => ({ ...A.clubColors(team(id)) }));
+  if (A.contrast(kits[0].primary, kits[1].primary) < 1.8)
+    kits[1] = {
+      primary:
+        A.contrast(kits[0].primary, kits[1].secondary) >= 1.8
+          ? kits[1].secondary
+          : A.readable(kits[0].primary),
+      secondary: kits[1].primary,
+    };
+  return kits;
+}
+
+function alignWorkspaceTabs() {
+  const bar = $(".workspace-tabs"),
+    selected = bar?.querySelector('[aria-selected="true"]');
+  if (!selected) return;
+  const a = bar.getBoundingClientRect(),
+    b = selected.getBoundingClientRect();
+  if (b.left < a.left + 6) bar.scrollLeft -= a.left + 6 - b.left;
+  else if (b.right > a.right - 6) bar.scrollLeft += b.right - a.right + 6;
+}
+window.addEventListener("resize", () =>
+  requestAnimationFrame(alignWorkspaceTabs),
+);

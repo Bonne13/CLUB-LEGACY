@@ -26,47 +26,109 @@ const oldColors = {
   Sport: ["#c6283d", "#171717"],
   "Vasco da Gama": ["#171717", "#ffffff"],
 };
-const shapes = [
-  "M48 8 78 20 85 53Q82 75 48 89 14 75 11 53L18 20Z",
-  "M24 10H72L86 30V67L67 86H29L10 67V30Z",
-  "M48 8Q72 8 83 25V61Q72 80 48 89 24 80 13 61V25Q24 8 48 8Z",
-  "M48 7 84 29 79 72 48 89 17 72 12 29Z",
-  "M24 10H72Q85 10 85 23V61L48 88 11 61V23Q11 10 24 10Z",
-  "M48 8 82 19V53Q80 77 48 88 16 77 14 53V19Z",
-];
-const marks = [
-  '<path d="m26 52 22-22 22 22-10 10-12-13-12 13Z"/><path d="m37 66 11-12 11 12-11 10Z"/>',
-  '<path d="m27 35 20 11-9 28-11-7 5-17-12-7Zm42 26L49 50l9-28 11 7-5 17 12 7Z"/>',
-  '<path d="m48 24 10 13-10 13-10-13Zm-20 20 13 10-13 10-9-10Zm40 0 9 10-9 10-13-10ZM48 57l10 13-10 10-10-10Z"/>',
-  '<path d="M25 63V41l12-12h21l13 12v22H57V45l-9-8-9 8v18Z"/><path d="M42 51h12v23H42Z"/>',
-  '<path d="m27 33 15-8 4 20-7 8Zm42 0-12-8-7 20 7 8ZM27 64l15 8 4-20-7-8Zm42 0-12 8-7-20 7-8Z"/>',
-  '<path d="m24 39 24-14 24 14-8 12-16-10-16 10Zm5 19 19-11 19 11-8 13-11-7-11 7Z"/>',
-];
+const DESIGNS = require("./badge-designs.cjs");
+const shapes = Object.values(DESIGNS.shapes),
+  patterns = [
+    "plain",
+    "stripes",
+    "hoops",
+    "sash",
+    "halves",
+    "thirds",
+    "diagonal",
+    "diamonds",
+  ],
+  motifs = Object.keys(DESIGNS.motifs);
+const profileMap = new Map(
+  Object.entries(DESIGNS.profiles).map(([name, profile]) => [
+    normalize(name),
+    profile,
+  ]),
+);
+function abbreviation(name) {
+  const words = name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z ]/g, "")
+    .split(/\s+/)
+    .filter(
+      (w) =>
+        w.length > 2 &&
+        ![
+          "clube",
+          "club",
+          "futebol",
+          "football",
+          "atletico",
+          "de",
+          "del",
+          "sport",
+          "real",
+        ].includes(w.toLowerCase()),
+    );
+  return (words.length > 1 ? words.map((w) => w[0]).join("") : words[0] || name)
+    .slice(0, 3)
+    .toUpperCase();
+}
+function pattern(kind, a, b) {
+  if (kind === "stripes")
+    return Array.from(
+      { length: 7 },
+      (_, i) =>
+        `<path d="M${12 + i * 12} 8v80" stroke="${i % 2 ? a : b}" stroke-width="12"/>`,
+    ).join("");
+  if (kind === "hoops")
+    return `<path d="M7 31h82M7 57h82" stroke="${b}" stroke-width="13"/>`;
+  if (kind === "sash")
+    return `<path d="m12 84 73-73" stroke="${b}" stroke-width="21"/>`;
+  if (kind === "diagonal")
+    return `<path d="m-8 48 64-64M8 81 88 1M32 105l80-80" stroke="${b}" stroke-width="12"/>`;
+  if (kind === "halves") return `<path d="M48 7h42v84H48Z" fill="${b}"/>`;
+  if (kind === "thirds")
+    return `<path d="M8 35h80v26H8Z" fill="${b}"/><path d="M8 64h80v24H8Z" fill="${a}"/>`;
+  if (kind === "diamonds")
+    return Array.from(
+      { length: 12 },
+      (_, i) =>
+        `<path d="m${15 + (i % 4) * 22} ${20 + Math.floor(i / 4) * 24} 10-14 10 14-10 14Z" fill="${b}" opacity=".8"/>`,
+    ).join("");
+  return `<path d="M18 77Q48 61 78 77" fill="none" stroke="${b}" stroke-width="3" opacity=".5"/>`;
+}
 const escape = (s) =>
   s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll('"', "&quot;");
 function original(name) {
   const identity = identities.get(normalize(name)),
+    profile = profileMap.get(normalize(name)) || {},
     colors =
+      profile.colors ||
       oldColors[name] ||
       Object.values(A.clubColors(identity || { name, id: "unknown-0" })),
     [primary, secondary] = colors;
   const digest = crypto.createHash("sha256").update(normalize(name)).digest(),
     seed = digest.readUInt32BE(0),
+    shape = DESIGNS.shapes[profile.shape] || shapes[seed % shapes.length],
     ink = A.readable(primary),
-    shape = shapes[seed % shapes.length];
-  const dots = Array.from(
-    { length: 5 },
+    accent = profile.accent || secondary,
+    kind = profile.pattern || patterns[(seed >>> 5) % patterns.length],
+    symbol = profile.motif || motifs[(seed >>> 10) % motifs.length],
+    code = profile.code || abbreviation(name),
+    clip = "crest";
+  const signature = Array.from(
+    { length: 8 },
     (_, i) =>
-      `<circle cx="${32 + i * 8}" cy="${78 + (digest[i + 4] % 3)}" r="${(digest[i + 9] % 2) + 1}"/>`,
+      `<path d="M${29 + i * 5} 81v${-2 - (digest[i + 15] % 5)}" stroke="${ink}" stroke-width="${1 + (digest[i + 6] % 2)}"/>`,
   ).join("");
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img"><title>${escape(name)} · emblema original Dinastia FC</title><path d="${shape}" fill="${primary}" stroke="${ink}" stroke-width="2.5"/><path d="M23 22h50l-8 8H31Z" fill="${secondary}"/><g fill="${ink}" transform="rotate(${((seed >>> 8) % 4) * 90} 48 48)">${marks[(seed >>> 5) % marks.length]}</g><g fill="${secondary}">${dots}</g><path d="M21 32v26" stroke="${secondary}" stroke-width="2" opacity=".7"/></svg>\n`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img"><title>${escape(name)} · emblema original Dinastia FC</title><defs><clipPath id="${clip}"><path d="${shape}"/></clipPath></defs><path d="${shape}" fill="${primary}" stroke="${ink}" stroke-width="2.5"/><g clip-path="url(#${clip})">${pattern(kind, primary, secondary)}<path d="M22 12H74" stroke="${accent}" stroke-width="4"/><circle cx="48" cy="32" r="20" fill="${primary}" opacity=".94"/><g style="color:${ink}" fill="${ink}" stroke-linejoin="round">${DESIGNS.motifs[symbol]}</g><path d="M21 51H75V76H21Z" fill="${primary}" opacity=".96"/><text x="48" y="70" fill="${ink}" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="${code.length > 2 ? 19 : 23}" font-weight="900" letter-spacing="1.4">${escape(code)}</text><g>${signature}</g></g><path d="${shape}" fill="none" stroke="${ink}" stroke-width="2.5"/></svg>\n`;
   const file = "original-" + digest.toString("hex").slice(0, 14) + ".svg";
   fs.writeFileSync(path.join(folder, file), svg);
   return {
     name,
     file,
     provider: "Dinastia FC · desenho original",
-    design: "geometric-v1",
+    design: "heraldic-v2",
+    pattern: kind,
+    motif: symbol,
+    code,
     colors: { primary, secondary },
     sha256: crypto.createHash("sha256").update(svg).digest("hex"),
   };
@@ -80,7 +142,7 @@ const clubNames = [
   flags = prior.entries.filter((e) => e.country),
   entries = [...clubNames.map(original), ...flags];
 const manifest = {
-  revision: "original-1",
+  revision: "original-2",
   createdOn: "2026-10-27",
   note: "Emblemas de clubes originais do Dinastia FC, com geometria própria e cores de identificação. Não são os escudos oficiais nem indicam parceria. Bandeiras identificam países.",
   entries,
