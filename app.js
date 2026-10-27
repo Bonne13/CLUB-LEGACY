@@ -1276,7 +1276,35 @@ function referenceCalendar() {
     .join("")}</tbody></table></div></div>`;
 }
 let match3D = null,
-  matchCamera = state.matchPreferences?.camera || "broadcast";
+  matchCamera = state.matchPreferences?.camera || "broadcast",
+  matchZoom = state.matchPreferences?.zoom || 1;
+function syncFieldControls() {
+  if ($("#match-camera")) $("#match-camera").value = matchCamera;
+  document
+    .querySelectorAll(
+      '[data-action="field-follow"], [data-action="view-follow"]',
+    )
+    .forEach((el) => {
+      el.textContent =
+        matchCamera === "follow" ? "Campo inteiro" : "Seguir bola";
+      el.setAttribute("aria-pressed", String(matchCamera === "follow"));
+    });
+  if ($("#field-zoom-value"))
+    $("#field-zoom-value").textContent = Math.round(matchZoom * 100) + "%";
+  const minus = document.querySelector('[data-action="zoom-out"]'),
+    plus = document.querySelector('[data-action="zoom-in"]');
+  if (minus) minus.disabled = matchZoom <= 0.75;
+  if (plus) plus.disabled = matchZoom >= 2.25;
+}
+function saveFieldPreferences() {
+  state.matchPreferences = {
+    speed,
+    ...state.matchPreferences,
+    camera: matchCamera,
+    zoom: matchZoom,
+  };
+  scheduleSave();
+}
 let activeReplay = null;
 let animatingPlay = false,
   visualGeneration = 0,
@@ -1343,7 +1371,7 @@ function matchView() {
       ["high", "Detalhada"],
     ],
     state.matchPreferences?.quality || "auto",
-  )}</select></label></div><div class="match-workspace"><div><div id="event-announcement" class="goal-announcement" aria-live="assertive"></div><div class="play-caption" id="play-caption" aria-live="polite">${half ? "Intervalo: faça os ajustes e inicie o segundo tempo." : m?.done ? "Fim de jogo. Confira os melhores momentos." : "Acompanhe a bola e a construção das jogadas."}</div><div id="field-shell" class="field-shell"><div class="expanded-field-toolbar"><strong>${esc(name(f.pair[0]))} × ${esc(name(f.pair[1]))}</strong><div><button data-action="field-follow" ${m?.mode === "3d" ? "" : "hidden"}>${matchCamera === "follow" ? "Campo inteiro" : "Seguir bola"}</button><button data-action="field-pause" ${!m || m.done ? "disabled" : ""}>${m?.minute === 45 && !m.secondHalfStarted ? "Iniciar 2º tempo" : paused ? "Retomar" : "Pausar"}</button><button data-action="match-expand">Voltar</button></div></div><div id="field"><div class="match-empty-field"><strong>Prepare o seu time.</strong><span>Inicie a partida para acompanhar a bola em 2D ou 3D.</span></div></div><button class="field-expand" data-action="match-expand" ${m?.plans ? "" : "disabled"}>Ampliar campo ↗</button></div><p id="field-help" class="muted" ${m?.mode === "3d" ? "" : "hidden"}>Toque em um jogador para ver seu nome. Amplie o campo para acompanhar os detalhes.</p><p class="muted">${half ? "O relógio está parado no intervalo." : playing && paused ? "Partida pausada." : "O lance desacelera nas finalizações; o placar atualiza quando a bola chega ao gol."}</p><div class="match-stats" id="stats"></div>${m?.goalReplays?.length ? `<div class="card"><h3>Gols e replays</h3><div class="row">${m.goalReplays.map((p, i) => btn(`${p.minute}’ · ${esc(p.playerName)}`, "replay-goal", String(i))).join("")}</div></div>` : ""}</div><aside><section class="card"><h3>Relato da partida</h3><div class="log" id="log" aria-live="off"></div></section></aside></div>${
+  )}</select></label></div><div class="match-workspace"><div><div id="event-announcement" class="goal-announcement" aria-live="assertive"></div><div class="play-caption" id="play-caption" aria-live="polite">${half ? "Intervalo: faça os ajustes e inicie o segundo tempo." : m?.done ? "Fim de jogo. Confira os melhores momentos." : "Acompanhe a bola e a construção das jogadas."}</div><div id="field-shell" class="field-shell"><div class="expanded-field-toolbar"><strong>${esc(name(f.pair[0]))} × ${esc(name(f.pair[1]))}</strong><div><button data-action="field-follow" ${m?.mode === "3d" ? "" : "hidden"}>${matchCamera === "follow" ? "Campo inteiro" : "Seguir bola"}</button><button data-action="field-pause" ${!m || m.done ? "disabled" : ""}>${m?.minute === 45 && !m.secondHalfStarted ? "Iniciar 2º tempo" : paused ? "Retomar" : "Pausar"}</button><button data-action="match-expand">Voltar</button></div></div><div id="field"><div class="match-empty-field"><strong>Prepare o seu time.</strong><span>Inicie a partida para acompanhar a bola em 2D ou 3D.</span></div></div><div class="field-view-controls" ${m?.mode === "3d" ? "" : "hidden"} role="group" aria-label="Visualização do campo 3D"><button data-action="view-follow" aria-pressed="${matchCamera === "follow"}">${matchCamera === "follow" ? "Campo inteiro" : "Seguir bola"}</button><div class="field-zoom" role="group" aria-label="Zoom do campo"><button data-action="zoom-out" aria-label="Afastar campo" ${matchZoom <= 0.75 ? "disabled" : ""}>−</button><button data-action="zoom-reset" aria-label="Restaurar enquadramento"><output id="field-zoom-value">${Math.round(matchZoom * 100)}%</output></button><button data-action="zoom-in" aria-label="Aproximar campo" ${matchZoom >= 2.25 ? "disabled" : ""}>+</button></div></div><button class="field-expand" data-action="match-expand" ${m?.plans ? "" : "disabled"}>Ampliar campo ↗</button></div><p id="field-help" class="muted" ${m?.mode === "3d" ? "" : "hidden"}>Use + e − para aproximar ou afastar. Seguir bola acompanha o lance de perto; toque em um jogador para ver seu nome.</p><p class="muted">${half ? "O relógio está parado no intervalo." : playing && paused ? "Partida pausada." : "O lance desacelera nas finalizações; o placar atualiza quando a bola chega ao gol."}</p><div class="match-stats" id="stats"></div>${m?.goalReplays?.length ? `<div class="card"><h3>Gols e replays</h3><div class="row">${m.goalReplays.map((p, i) => btn(`${p.minute}’ · ${esc(p.playerName)}`, "replay-goal", String(i))).join("")}</div></div>` : ""}</div><aside><section class="card"><h3>Relato da partida</h3><div class="log" id="log" aria-live="off"></div></section></aside></div>${
     plan && playing
       ? `<section class="card"><h3>Banco do treinador</h3><p>${(m.substitutions || []).filter((x) => x.side === side).length} de 5 substituições. Pause para escolher a troca.</p><form id="substitution-form" class="substitution-form"><label>Sai<select name="out">${options(
           E.discipline
@@ -1367,6 +1395,8 @@ function draw() {
   const m = state.live;
   if (!m) return;
   if ($("#field-help")) $("#field-help").hidden = m.mode !== "3d";
+  if ($(".field-view-controls"))
+    $(".field-view-controls").hidden = m.mode !== "3d";
   const followControl = document.querySelector('[data-action="field-follow"]');
   if (followControl) followControl.hidden = m.mode !== "3d";
   if (!m.plans) m.plans = E.matchPlans(state, m);
@@ -1471,7 +1501,7 @@ function draw() {
         match3D = LegacyMatch3D.create($("#three-stage"), {
           quality: state.matchPreferences?.quality || "auto",
         });
-        match3D.setCamera(matchCamera);
+        match3D.setCamera(matchCamera, matchZoom);
       }
       match3D.update(view, kits, m.ballPosition || view.ball);
       return;
@@ -1481,6 +1511,9 @@ function draw() {
       m.mode = "2d";
       matchMode = "2d";
       $("#mode").value = "2d";
+      if ($(".field-view-controls")) $(".field-view-controls").hidden = true;
+      if ($("#field-help")) $("#field-help").hidden = true;
+      if (followControl) followControl.hidden = true;
       document
         .querySelectorAll(".camera-control")
         .forEach((el) => el.classList.remove("camera-visible"));
@@ -2075,20 +2108,30 @@ document.addEventListener("click", (event) => {
     const shell = $("#field-shell"),
       expanded = shell.classList.toggle("is-expanded");
     document.body.classList.toggle("pitch-expanded", expanded);
-    match3D?.setCamera(matchCamera);
+    match3D?.setCamera(matchCamera, matchZoom);
     return;
   }
-  if (a === "field-follow") {
+  if (["zoom-in", "zoom-out", "zoom-reset"].includes(a)) {
+    matchZoom =
+      a === "zoom-reset"
+        ? 1
+        : Math.max(
+            0.75,
+            Math.min(2.25, matchZoom + (a === "zoom-in" ? 0.25 : -0.25)),
+          );
+    if (a === "zoom-reset") matchCamera = "broadcast";
+    match3D?.setCamera(matchCamera, matchZoom);
+    syncFieldControls();
+    saveFieldPreferences();
+    return;
+  }
+  if (a === "field-follow" || a === "view-follow") {
     matchCamera = matchCamera === "follow" ? "broadcast" : "follow";
-    match3D?.setCamera(matchCamera);
+    if (matchCamera === "broadcast") matchZoom = 1;
+    match3D?.setCamera(matchCamera, matchZoom);
     if ($("#match-camera")) $("#match-camera").value = matchCamera;
-    state.matchPreferences = {
-      speed,
-      ...state.matchPreferences,
-      camera: matchCamera,
-    };
-    scheduleSave();
-    b.textContent = matchCamera === "follow" ? "Campo inteiro" : "Seguir bola";
+    syncFieldControls();
+    saveFieldPreferences();
     return;
   }
   if (a === "field-pause") {
@@ -2684,9 +2727,9 @@ document.addEventListener("change", (event) => {
   }
   if (el.id === "match-camera") {
     matchCamera = el.value;
-    state.matchPreferences = { ...state.matchPreferences, camera: matchCamera };
-    match3D?.setCamera(matchCamera);
-    scheduleSave();
+    match3D?.setCamera(matchCamera, matchZoom);
+    syncFieldControls();
+    saveFieldPreferences();
     return;
   }
   if (el.id === "shirt-player") {

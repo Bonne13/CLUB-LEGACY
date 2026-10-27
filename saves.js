@@ -547,6 +547,8 @@
       !["auto", "low", "high"].includes(s.matchPreferences.quality)
     )
       fail();
+    if (s.matchPreferences?.zoom !== undefined)
+      number(s.matchPreferences.zoom, 0.75, 2.25);
     if (s.live) {
       const m = s.live;
       if (

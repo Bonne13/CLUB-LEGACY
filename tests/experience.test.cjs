@@ -111,3 +111,13 @@ test("qualidade gráfica opcional e posições iniciais antigas são compatívei
   assert(E.matchFrame(s.live, s.live.lastPlay, 1).positions.length > 0);
   S.validate(s);
 });
+
+test("camera zoom survives save export and rejects invalid values", () => {
+  const s = career();
+  s.matchPreferences = { speed: 900, mode: "3d", camera: "follow", zoom: 1.75 };
+  assert.equal(S.parse(S.serialize(s)).matchPreferences.zoom, 1.75);
+  for (const zoom of [0.5, 3, Infinity, "1.5"]) {
+    s.matchPreferences.zoom = zoom;
+    assert.throws(() => S.validate(s));
+  }
+});

@@ -352,3 +352,12 @@ Para backup ou troca de aparelho: **Carreira → Salvamentos → Baixar arquivo 
 
 
 Quando a hospedagem adiciona o selo do Netlify, o layout em telas pequenas reserva uma faixa própria para ele. A área do jogo tem rolagem independente e a navegação inferior fica acima dessa faixa, mantendo o selo visível e evitando que ele intercepte os controles. O teste de experiência também reproduz esse cenário antes da publicação.
+
+
+## Legibilidade dos emblemas e câmeras da partida (v0.16)
+
+As letras dos 415 emblemas ficam em uma área segura do escudo, com largura definida no SVG para não depender da métrica da fonte instalada. As siglas foram elevadas para evitar as pontas estreitas; os motivos próprios e o fundo transparente foram preservados. Os identificadores de recorte são únicos por arquivo. `npm run test:field-view-browser` mede a caixa tipográfica com margem contra o contorno de cada emblema e verifica a transparência dos cantos no Chromium.
+
+O 3D ajusta a distância ao campo e ao formato da tela. Em telas altas, a transmissão usa um ângulo longitudinal para aproveitar a altura. Os botões **+**, **−** e **100%** controlam o zoom de 75% a 225%; restaurar o enquadramento retorna à transmissão com o campo inteiro. **Seguir bola** aproxima a câmera da jogada e mantém a bola visível nas finalizações. Os controles também ficam disponíveis no campo ampliado, acima do espaço reservado à hospedagem. Zoom e câmera são guardados junto às preferências da carreira, sem mudar a chave ou o formato dos saves anteriores.
+
+Os testes de visualização verificam zoom real, persistência ao redimensionar, enquadramento em retrato e acompanhamento da finalização. O teste de experiência verifica os botões dentro da interface no celular e no campo ampliado.

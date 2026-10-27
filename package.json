@@ -1,6 +1,6 @@
 {
   "name": "dinastia-fc",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "private": true,
   "scripts": {
     "start": "python3 -m http.server 3000",
@@ -24,6 +24,7 @@
     "test:discipline-browser": "node tests/discipline-browser.cjs",
     "build:badges": "node scripts/build-badges.cjs",
     "test:navigation-browser": "node tests/navigation-browser.cjs",
-    "test:experience-browser": "node tests/experience-browser.cjs"
+    "test:experience-browser": "node tests/experience-browser.cjs",
+    "test:field-view-browser": "node tests/field-view-browser.cjs"
   }
 }

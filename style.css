@@ -6037,3 +6037,54 @@ body.has-hosting-badge {
     padding-bottom: 6px;
   }
 }
+
+/* Keep camera tools reachable in both the embedded and expanded match view. */
+.field-view-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 0 0 12px 12px;
+}
+.field-view-controls[hidden] {
+  display: none;
+}
+.field-zoom {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+.field-view-controls button {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 12px;
+}
+.field-zoom output {
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+}
+.field-view-controls [aria-pressed="true"] {
+  background: var(--soft);
+  color: var(--text);
+  border-color: var(--accent);
+}
+.is-expanded .field-view-controls {
+  flex: 0 0 auto;
+  margin-top: 8px;
+}
+.is-expanded .three-stage {
+  height: min(74dvh, calc(100dvh - 170px - var(--hosting-footer)));
+}
+@media (max-width: 700px) {
+  .is-expanded > #field {
+    min-height: 120px;
+  }
+  .is-expanded .three-stage {
+    min-height: 120px;
+  }
+}

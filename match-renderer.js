@@ -244,39 +244,77 @@
       camera.updateProjectionMatrix();
       setCamera(cameraMode, zoom);
     }
-    function setCamera(mode = "broadcast", scale = 1) {
-      cameraMode = mode;
-      zoom = scale;
-      const p =
-        mode === "goal"
-          ? [112, 60, 10]
-          : mode === "tactical"
-            ? [0, 110, 8]
-            : mode === "follow"
-              ? [12, 75, 95]
-              : [10, 85, 112];
-      camera.position.set(...p.map((n) => n / scale));
-      camera.lookAt(0, 0, 0);
+    const followTarget = new T.Vector3(),
+      followPosition = new T.Vector3();
+    function followCamera(immediate = false) {
+      const target = new T.Vector3(ball.position.x, 0, ball.position.z);
+      followTarget.lerp(target, immediate ? 1 : 0.22);
+      const portrait = camera.aspect < 0.9;
+      const distance =
+        1 / (zoom * Math.sqrt(Math.min(1, Math.max(0.5, camera.aspect))));
+      followPosition
+        .set(portrait ? 34 : 10, 42, portrait ? 22 : 55)
+        .multiplyScalar(distance)
+        .add(followTarget);
+      camera.position.lerp(followPosition, immediate ? 1 : 0.18);
+      camera.lookAt(followTarget);
       camera.updateMatrixWorld();
-      if (mode !== "goal" && mode !== "follow")
-        for (let pass = 0; pass < 12; pass++) {
-          const fits = [
-            [-53, -35],
-            [-53, 35],
-            [53, -35],
-            [53, 35],
-          ].every(([x, z]) => {
-            const point = new T.Vector3(x, 0, z).project(camera);
-            return Math.abs(point.x) <= 0.94 && Math.abs(point.y) <= 0.94;
-          });
-          if (fits) break;
-          camera.position.multiplyScalar(1.08);
+    }
+    function setCamera(mode = "broadcast", scale = zoom) {
+      cameraMode = ["broadcast", "tactical", "goal", "follow"].includes(mode)
+        ? mode
+        : "broadcast";
+      zoom = Number.isFinite(scale) ? Math.max(0.75, Math.min(2.25, scale)) : 1;
+      if (cameraMode === "follow") followCamera(true);
+      else {
+        const portrait = camera.aspect < 0.9;
+        const direction = new T.Vector3(
+          ...(cameraMode === "goal"
+            ? [112, 60, 10]
+            : cameraMode === "tactical"
+              ? portrait
+                ? [8, 110, 0]
+                : [0, 110, 8]
+              : portrait
+                ? [105, 100, 8]
+                : [10, 85, 112]),
+        ).normalize();
+        // Fit once at 100%; an explicit zoom must be allowed to move closer.
+        let near = 35,
+          far = 800;
+        for (let pass = 0; pass < 24; pass++) {
+          const distance = (near + far) / 2;
+          camera.position.copy(direction).multiplyScalar(distance);
           camera.lookAt(0, 0, 0);
           camera.updateMatrixWorld();
+          const fits = [
+            [-54, -35],
+            [-54, 35],
+            [54, -35],
+            [54, 35],
+          ].every(([x, z]) => {
+            const point = new T.Vector3(x, 0, z).project(camera);
+            return (
+              Math.abs(point.x) <= 0.92 &&
+              Math.abs(point.y) <= 0.92 &&
+              point.z >= -1 &&
+              point.z <= 1
+            );
+          });
+          if (fits) far = distance;
+          else near = distance;
         }
+        camera.position.copy(direction).multiplyScalar(far / zoom);
+        camera.lookAt(0, 0, 0);
+        camera.updateMatrixWorld();
+      }
       scene.fog.near = camera.position.length() + 40;
       scene.fog.far = camera.position.length() + 240;
       render();
+    }
+    function setZoom(value) {
+      setCamera(cameraMode, value);
+      return zoom;
     }
     function render() {
       if (!disposed) renderer.render(scene, camera);
@@ -327,17 +365,6 @@
             ? Math.sin(dive * Math.PI) * 1.1 * player.diveDirection
             : 0;
       }
-      if (cameraMode === "follow") {
-        camera.position.lerp(
-          new T.Vector3(
-            12 + ball.position.x * 0.6,
-            75,
-            95 + ball.position.z * 0.2,
-          ),
-          0.05,
-        );
-        camera.lookAt(ball.position.x * 0.5, 0, ball.position.z * 0.35);
-      }
       if (now < celebrateUntil)
         for (const net of goalNets)
           net.mesh.position.x =
@@ -353,6 +380,12 @@
         shadow.position.x = ball.position.x;
         shadow.position.z = ball.position.z;
         if (t >= 1) ballMotion = null;
+      }
+      if (cameraMode === "follow") {
+        followCamera(!ballMotion);
+        const screen = ball.position.clone().project(camera);
+        if (Math.abs(screen.x) > 0.8 || Math.abs(screen.y) > 0.8)
+          followCamera(true);
       }
       ballMarker.position.set(ball.position.x, 0.16, ball.position.z);
       render();
@@ -607,6 +640,7 @@
       moveBall,
       celebrate,
       setCamera,
+      setZoom,
       dispose,
       get available() {
         return !disposed;
@@ -616,6 +650,14 @@
           players: players.size,
           ball: { x: ball.position.x, y: ball.position.y, z: ball.position.z },
           camera: cameraMode,
+          zoom,
+          cameraDistance: camera.position.distanceTo(
+            cameraMode === "follow" ? followTarget : new T.Vector3(),
+          ),
+          screenBall: (() => {
+            const p = ball.position.clone().project(camera);
+            return { x: (p.x + 1) / 2, y: (1 - p.y) / 2 };
+          })(),
           quality,
           selectedId,
           screenPlayers: [...players.entries()].map(([id, p]) => {

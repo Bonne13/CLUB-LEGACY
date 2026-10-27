@@ -32,7 +32,7 @@ test("catálogo visual usa arquivos locais íntegros, sem baixar imagens durante
     );
     if (e.name) {
       assert(e.file.startsWith("original-") && e.file.endsWith(".svg"), e.file);
-      assert.equal(e.design, "heraldic-v2");
+      assert.equal(e.design, "heraldic-v3");
       const svg = bytes.toString("utf8");
       assert(svg.includes('viewBox="0 0 96 96"'));
       assert(svg.includes("emblema original Dinastia FC"));

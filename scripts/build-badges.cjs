@@ -112,20 +112,20 @@ function original(name) {
     kind = profile.pattern || patterns[(seed >>> 5) % patterns.length],
     symbol = profile.motif || motifs[(seed >>> 10) % motifs.length],
     code = profile.code || abbreviation(name),
-    clip = "crest";
+    clip = "crest-" + digest.toString("hex").slice(0, 14);
   const signature = Array.from(
     { length: 8 },
     (_, i) =>
       `<path d="M${29 + i * 5} 81v${-2 - (digest[i + 15] % 5)}" stroke="${ink}" stroke-width="${1 + (digest[i + 6] % 2)}"/>`,
   ).join("");
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img"><title>${escape(name)} · emblema original Dinastia FC</title><defs><clipPath id="${clip}"><path d="${shape}"/></clipPath></defs><path d="${shape}" fill="${primary}" stroke="${ink}" stroke-width="2.5"/><g clip-path="url(#${clip})">${pattern(kind, primary, secondary)}<path d="M22 12H74" stroke="${accent}" stroke-width="4"/><circle cx="48" cy="32" r="20" fill="${primary}" opacity=".94"/><g style="color:${ink}" fill="${ink}" stroke-linejoin="round">${DESIGNS.motifs[symbol]}</g><path d="M21 51H75V76H21Z" fill="${primary}" opacity=".96"/><text x="48" y="70" fill="${ink}" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="${code.length > 2 ? 19 : 23}" font-weight="900" letter-spacing="1.4">${escape(code)}</text><g>${signature}</g></g><path d="${shape}" fill="none" stroke="${ink}" stroke-width="2.5"/></svg>\n`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img"><title>${escape(name)} · emblema original Dinastia FC</title><defs><clipPath id="${clip}"><path d="${shape}"/></clipPath></defs><path d="${shape}" fill="${primary}" stroke="${ink}" stroke-width="2.5"/><g clip-path="url(#${clip})">${pattern(kind, primary, secondary)}<path d="M22 12H74" stroke="${accent}" stroke-width="4"/><circle cx="48" cy="32" r="20" fill="${primary}" opacity=".94"/><g style="color:${ink}" fill="${ink}" stroke-linejoin="round">${DESIGNS.motifs[symbol]}</g><path d="M21 48H75V73H21Z" fill="${primary}" opacity=".96"/><text x="48" y="65" fill="${ink}" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="${code.length > 2 ? 19 : 23}" font-weight="900" textLength="${code.length > 2 ? 43 : code.length === 2 ? 32 : 22}" lengthAdjust="spacingAndGlyphs">${escape(code)}</text><g>${signature}</g></g><path d="${shape}" fill="none" stroke="${ink}" stroke-width="2.5"/></svg>\n`;
   const file = "original-" + digest.toString("hex").slice(0, 14) + ".svg";
   fs.writeFileSync(path.join(folder, file), svg);
   return {
     name,
     file,
     provider: "Dinastia FC · desenho original",
-    design: "heraldic-v2",
+    design: "heraldic-v3",
     pattern: kind,
     motif: symbol,
     code,
@@ -142,7 +142,7 @@ const clubNames = [
   flags = prior.entries.filter((e) => e.country),
   entries = [...clubNames.map(original), ...flags];
 const manifest = {
-  revision: "original-2",
+  revision: "original-3",
   createdOn: "2026-10-27",
   note: "Emblemas de clubes originais do Dinastia FC, com geometria própria e cores de identificação. Não são os escudos oficiais nem indicam parceria. Bandeiras identificam países.",
   entries,

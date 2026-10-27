@@ -239,6 +239,25 @@ const { chromium } = require("playwright"),
       canvas.y + target.y * canvas.height,
     );
     assert(await mobile.evaluate(() => Boolean(match3D.snapshot().selectedId)));
+    const neutralDistance = await mobile.evaluate(
+      () => match3D.snapshot().cameraDistance,
+    );
+    await mobile.locator('[data-action="zoom-in"]').click();
+    assert.equal(await mobile.evaluate(() => match3D.snapshot().zoom), 1.25);
+    assert(
+      (await mobile.evaluate(() => match3D.snapshot().cameraDistance)) <
+        neutralDistance,
+    );
+    await mobile.locator('[data-action="view-follow"]').click();
+    assert.equal(
+      await mobile
+        .locator('[data-action="view-follow"]')
+        .getAttribute("aria-pressed"),
+      "true",
+    );
+    await mobile.locator('[data-action="zoom-reset"]').click();
+    assert.equal(await mobile.evaluate(() => match3D.snapshot().zoom), 1);
+    assert(await mobile.evaluate(() => match3D.snapshot().visiblePitch));
     await mobile.locator(".field-expand").click();
     assert(
       await mobile
@@ -257,6 +276,9 @@ const { chromium } = require("playwright"),
     await mobile.screenshot({
       path: "/tmp/dinastia-v15-mobile-expanded-3d.png",
     });
+    await mobile.locator('[data-action="zoom-in"]').click();
+    assert.equal(await mobile.evaluate(() => match3D.snapshot().zoom), 1.25);
+    await mobile.locator('[data-action="zoom-reset"]').click();
     await mobile.setViewportSize({ width: 844, height: 390 });
     await mobile.waitForFunction(() => match3D.snapshot().aspect > 2);
     assert(
@@ -273,8 +295,10 @@ const { chromium } = require("playwright"),
       await mobile.evaluate(() => match3D.snapshot().camera),
       "follow",
     );
+    await mobile.locator('[data-action="zoom-in"]').click();
     await mobile.locator("#match-quality").selectOption("high");
     await mobile.waitForFunction(() => match3D.snapshot().quality === "high");
+    assert.equal(await mobile.evaluate(() => match3D.snapshot().zoom), 1.25);
     await mobile.locator("#mode").selectOption("2d");
     assert.equal(
       await mobile.locator("#pitch .dot:not(.ball):visible").count(),
@@ -314,6 +338,10 @@ const { chromium } = require("playwright"),
             .length,
       ),
       2,
+    );
+    assert.equal(
+      await mobile.evaluate(() => state.matchPreferences.zoom),
+      1.25,
     );
     assert.deepEqual(errors, []);
     console.log(
