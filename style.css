@@ -5969,4 +5969,71 @@ body.pitch-expanded {
   color: var(--muted);
   font-size: 12px;
 }
-.expanded-field-toolbar>div{flex-wrap:wrap;max-width:100%}
+.expanded-field-toolbar > div {
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+/* Reserve a hosting footer so provider branding never covers game controls. */
+body {
+  --hosting-footer: 0px;
+}
+body.has-hosting-badge {
+  --hosting-footer: 64px;
+}
+@media (max-width: 850px) {
+  body:not(.entry-mode) {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+    padding-bottom: var(--hosting-footer);
+  }
+  #sidebar {
+    flex: 0 0 auto;
+  }
+  #game {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-block: 12px;
+  }
+  body.entry-mode {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0;
+  }
+  body.entry-mode #career-entry {
+    height: calc(100dvh - var(--hosting-footer));
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .field-shell.is-expanded {
+    bottom: var(--hosting-footer);
+  }
+  .is-expanded .three-stage,
+  .is-expanded .pitch.match-pitch {
+    height: min(80dvh, calc(100dvh - 100px - var(--hosting-footer)));
+  }
+}
+@media (max-width: 700px) {
+  #mobile-nav {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    flex: 0 0 auto;
+  }
+  .expanded-field-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background: var(--bg);
+    padding-bottom: 6px;
+  }
+}

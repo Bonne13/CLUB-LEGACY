@@ -1985,8 +1985,7 @@ document.addEventListener("click", (event) => {
           ? remembered?.squadTab || nav.dataset.squadTab || squadTab
           : squadTab;
     if (targetPage === page && targetSquad === squadTab) {
-      if (!nav.dataset.section)
-        window.scrollTo({ top: 0, behavior: "instant" });
+      if (!nav.dataset.section) resetPageScroll();
       return;
     }
     page = targetPage;
@@ -2030,7 +2029,7 @@ document.addEventListener("click", (event) => {
         inline: "nearest",
         behavior: "instant",
       });
-    } else window.scrollTo({ top: 0, behavior: "instant" });
+    } else resetPageScroll();
     return;
   }
   const b = event.target.closest("[data-action]");
@@ -4002,3 +4001,26 @@ function alignWorkspaceTabs() {
 window.addEventListener("resize", () =>
   requestAnimationFrame(alignWorkspaceTabs),
 );
+
+function resetPageScroll() {
+  window.scrollTo({ top: 0, behavior: "instant" });
+  if (matchMedia("(max-width:850px)").matches)
+    $("#game")?.scrollTo({ top: 0, behavior: "instant" });
+}
+function syncHostingFooter() {
+  document.body.classList.toggle(
+    "has-hosting-badge",
+    Boolean(document.getElementById("nl-badge-frame")),
+  );
+}
+let hostingSyncQueued = false;
+const hostingObserver = new MutationObserver(() => {
+  if (hostingSyncQueued) return;
+  hostingSyncQueued = true;
+  requestAnimationFrame(() => {
+    hostingSyncQueued = false;
+    syncHostingFooter();
+  });
+});
+hostingObserver.observe(document.body, { childList: true, subtree: true });
+syncHostingFooter();

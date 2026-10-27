@@ -349,3 +349,6 @@ Não há conta ou sincronização de saves em servidor. GitHub Pages e Netlify h
 Para backup ou troca de aparelho: **Carreira → Salvamentos → Baixar arquivo do save** e, no destino, **Importar arquivo**. A exportação é um JSON local; não faz upload. A importação valida o arquivo e pede confirmação antes de substituir a carreira ativa.
 
 `npm run test:experience-browser` verifica jornal, leitor, histórico, isolamento entre contextos, backup/importação, gravação ao sair, telas de 320 a 768 px, toque no 3D, qualidade, câmeras, campo ampliado, rotação, 2D/texto e persistência. `LEGACY_STANDALONE=1` executa o mesmo fluxo com a rede externa bloqueada.
+
+
+Quando a hospedagem adiciona o selo do Netlify, o layout em telas pequenas reserva uma faixa própria para ele. A área do jogo tem rolagem independente e a navegação inferior fica acima dessa faixa, mantendo o selo visível e evitando que ele intercepte os controles. O teste de experiência também reproduz esse cenário antes da publicação.

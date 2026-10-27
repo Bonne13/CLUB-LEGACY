@@ -148,6 +148,24 @@ const { chromium } = require("playwright"),
       "Marina Costa",
     );
     nav = require("./navigation-helper.cjs").createNavigator(mobile);
+    await mobile.evaluate(() => {
+      if (!document.getElementById("nl-badge-frame")) {
+        const badge = document.createElement("iframe");
+        badge.id = "nl-badge-frame";
+        badge.title = "Hosting badge fixture";
+        badge.style =
+          "position:fixed;bottom:0;right:0;width:194px;height:64px;border:0;z-index:2147483645";
+        badge.srcdoc =
+          '<body style="margin:0;background:#132139;color:#fff;font:12px system-ui;display:flex;align-items:center;justify-content:center;height:64px">Powered by Netlify</body>';
+        document.body.append(badge);
+      }
+    });
+    await mobile.waitForFunction(() =>
+      document.body.classList.contains("has-hosting-badge"),
+    );
+    const footer = await mobile.locator("#mobile-nav").boundingBox(),
+      branding = await mobile.locator("#nl-badge-frame").boundingBox();
+    assert(footer.y + footer.height <= branding.y + 1);
     for (const width of [320, 360, 390, 768]) {
       await mobile.setViewportSize({ width, height: 844 });
       for (const name of [
@@ -199,7 +217,7 @@ const { chromium } = require("playwright"),
       };
     });
     await mobile.locator("[data-action=play]").click();
-    await mobile.waitForFunction(()=>state.live.minute>=1);
+    await mobile.waitForFunction(() => state.live.minute >= 1);
     await mobile.locator("[data-action=pause]").click();
     await mobile.waitForFunction(() => !animatingPlay);
     await mobile.evaluate(() => {
@@ -231,9 +249,14 @@ const { chromium } = require("playwright"),
       () => match3D.snapshot().aspect < 1 && match3D.snapshot().visiblePitch,
     );
     await mobile.locator('[data-action="field-follow"]').click();
-    assert.equal(await mobile.evaluate(()=>match3D.snapshot().camera),"follow");
+    assert.equal(
+      await mobile.evaluate(() => match3D.snapshot().camera),
+      "follow",
+    );
     await mobile.locator('[data-action="field-follow"]').click();
-    await mobile.screenshot({path:"/tmp/dinastia-v15-mobile-expanded-3d.png"});
+    await mobile.screenshot({
+      path: "/tmp/dinastia-v15-mobile-expanded-3d.png",
+    });
     await mobile.setViewportSize({ width: 844, height: 390 });
     await mobile.waitForFunction(() => match3D.snapshot().aspect > 2);
     assert(
