@@ -59,7 +59,7 @@ test("a coreografia usa os mesmos eventos, liga a bola ao recebedor e não alter
     before = JSON.stringify(m),
     first = E.matchFrame(m, play, 0),
     pass = E.matchFrame(m, play, 1),
-    last = E.matchFrame(m, play, 3);
+    last = E.matchFrame(m, play, play.path.length - 1);
   const receiver = pass.positions.find((p) => p.id === play.path[1].playerId);
   assert.equal(receiver.x, play.path[1].x);
   assert.equal(receiver.y, play.path[1].y);
@@ -82,7 +82,7 @@ test("defesa aparece no alcance do goleiro e a expulsão não reaparece na anima
     m = E.makeMatch(s, "3d");
   force(s, m, false);
   assert(m.lastShot.saved);
-  const last = E.matchFrame(m, m.lastPlay, 3),
+  const last = E.matchFrame(m, m.lastPlay, m.lastPlay.path.length - 1),
     keeper = last.positions.find((p) => p.id === last.action.keeperId);
   assert(last.action.saved);
   assert.equal(keeper.x, last.ball.x);

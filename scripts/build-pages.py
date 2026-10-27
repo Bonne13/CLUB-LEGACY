@@ -19,7 +19,7 @@ subprocess.run(
     check=True,
 )
 (output / ".nojekyll").write_text("", encoding="utf-8")
-for name in ("data/LICENSE.openfootball.txt", "vendor/LICENSE.lz-string.txt", "vendor/LICENSE.three.txt", "data/SOURCES.md", "data/badges.json", "data/captains.json", "data/press.json"):
+for name in ("data/LICENSE.openfootball.txt", "vendor/LICENSE.lz-string.txt", "vendor/LICENSE.three.txt", "data/SOURCES.md", "data/badges.json", "data/captains.json", "data/press.json", "data/shirt-numbers.json"):
     destination = output / name
     destination.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(root / name, destination)

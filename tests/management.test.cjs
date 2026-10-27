@@ -377,12 +377,11 @@ test("número de camisa é único por clube, pode ser editado e persiste no save
     new Set([...t.players, ...t.youth].map((p) => p.shirtNumber)).size,
     t.players.length + t.youth.length,
   );
-  const before = a.shirtNumber;
-  assert.throws(
-    () => E.setShirtNumber(s, a.id, b.shirtNumber),
-    /outro jogador/,
-  );
-  assert.equal(a.shirtNumber, before);
+  const occupied = b.shirtNumber;
+  const result = E.setShirtNumber(s, a.id, occupied);
+  assert.equal(a.shirtNumber, occupied);
+  assert.equal(b.shirtNumber, result.displacedNumber);
+  assert.notEqual(a.shirtNumber, b.shirtNumber);
   E.setShirtNumber(s, a.id, 99);
   assert.equal(a.shirtNumber, 99);
   const saved = S.parse(S.serialize(s));

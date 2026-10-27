@@ -169,7 +169,10 @@ const { chromium } = require("playwright"),
       id = await first.getAttribute("data-id");
     await first.click();
     assert.equal(await page.locator(".shirt-grid button").count(), 99);
-    assert((await page.locator(".shirt-grid button:disabled").count()) > 0);
+    assert(
+      (await page.locator('.shirt-grid button[data-occupied="true"]').count()) >
+        0,
+    );
     await page.locator('[data-shirt-choice="99"]').click();
     assert.equal(await page.locator(".shirt-preview-number").innerText(), "99");
     await page

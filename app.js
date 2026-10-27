@@ -1120,7 +1120,7 @@ function squadTacticsView() {
   )}</select></label><label>Tarefa<select id="slot-duty">${options(
     T.duties.map((v) => [v, v]),
     r.duty,
-  )}</select></label></div><form id="squad-search" class="squad-search"><label>Buscar atleta<input id="squad-query" placeholder="Nome do jogador" value="${esc(squadQuery)}"></label><label>Posição de origem<select id="squad-position">${options([["all", "Todas"], ...["GOL", "LAT", "ZAG", "VOL", "MEI", "ATA"].map((v) => [v, v])], squadPosition)}</select></label><button>Buscar</button></form><div class="candidate-list">${candidates.map((p) => `<div class="candidate ${chosen?.id === p.id ? "chosen" : ""}" draggable="${E.discipline.available(p, t.selectionCompetition)}" data-drag-player="${esc(p.id)}"><div><strong>${esc(p.name)}</strong>${disciplineStatus(p)}<small>${T.adaptation(p, target).natural} · overall ${p.ovr} → ${T.adaptation(p, target).effective} · ${T.adaptation(p, target).label} · adaptação ${Math.round(T.fit(p, target) * 100)}% · ${p.injury ? "lesão " + p.injury + " dias" : p.fitness + "%"}${assigned.has(p.id) ? " · titular " + assigned.get(p.id) : ""}</small></div><div>${btn(chosen?.id === p.id ? "Escalado aqui" : "Escalar", "place-player", p.id).replace("<button ", `<button ${!E.discipline.available(p, t.selectionCompetition) || chosen?.id === p.id ? "disabled" : ""} `)}${!assigned.has(p.id) && E.discipline.available(p, t.selectionCompetition) ? btn(plan.bench.includes(p.id) ? "Retirar prioridade" : "Priorizar banco", "toggle-bench", p.id) : ""}</div></div>`).join("") || "<p>Nenhum atleta neste filtro.</p>"}</div></section></div><p class="muted">Posições principais e habituais confirmadas mantêm o overall posicional. A perda por improvisação se aplica a locais sem confirmação, inclusive ao lado oposto quando ele não está entre as posições conhecidas do atleta. PE e PD são pontas. No centro, ATA permite um atacante móvel; escolha a função Centroavante para exigir a posição específica CA. A função não muda o lado no campo. Quando a fonte só informa uma posição geral, o lado fica identificado como não informado. As posições detalhadas são referências históricas e os percentuais de adaptação são parâmetros do jogo. A escalação automática prioriza condição física e adequação ao local. O banco completa automaticamente até nove atletas, respeitando suas prioridades.</p></div><div class="card"><span class="badge">IDENTIDADE DA EQUIPE</span><h3>Instruções táticas</h3><div class="tactic-instructions">${Object.entries(
+  )}</select></label></div><form id="squad-search" class="squad-search"><label>Buscar atleta<input id="squad-query" placeholder="Nome do jogador" value="${esc(squadQuery)}"></label><label>Posição de origem<select id="squad-position">${options([["all", "Todas"], ...["GOL", "LAT", "ZAG", "VOL", "MEI", "ATA"].map((v) => [v, v])], squadPosition)}</select></label><button>Buscar</button></form><div class="candidate-list">${candidates.map((p) => `<div class="candidate ${chosen?.id === p.id ? "chosen" : ""}" draggable="${E.discipline.available(p, t.selectionCompetition)}" data-drag-player="${esc(p.id)}"><div><strong>${esc(p.name)}</strong>${disciplineStatus(p)}<small>${T.adaptation(p, target).natural} · overall ${p.ovr} → ${T.adaptation(p, target).effective} · ${T.adaptation(p, target).label} · adaptação ${Math.round(T.fit(p, target) * 100)}% · ${p.injury ? "lesão " + p.injury + " dias" : p.fitness + "%"}${assigned.has(p.id) ? " · titular " + assigned.get(p.id) : ""}</small></div><div>${btn(chosen?.id === p.id ? "Escalado aqui" : "Escalar", "place-player", p.id).replace("<button ", `<button ${!E.discipline.available(p, t.selectionCompetition) || chosen?.id === p.id ? "disabled" : ""} `)}${!assigned.has(p.id) && E.discipline.available(p, t.selectionCompetition) ? btn(plan.bench.includes(p.id) ? "Retirar prioridade" : "Priorizar banco", "toggle-bench", p.id) : ""}</div></div>`).join("") || "<p>Nenhum atleta neste filtro.</p>"}</div></section></div><p class="muted">Posições principais e habituais confirmadas mantêm o overall posicional. A perda por improvisação se aplica a locais sem confirmação, inclusive ao lado oposto quando ele não está entre as posições conhecidas do atleta. PE e PD são pontas. No centro, ATA permite um atacante móvel; escolha a função Centroavante para exigir a posição específica CA. A função não muda o lado no campo. Quando a fonte só informa uma posição geral, o lado fica identificado como não informado. As posições detalhadas são referências históricas e os percentuais de adaptação são parâmetros do jogo. O onze definido é mantido entre partidas. Apenas atletas indisponíveis recebem cobertura temporária; use Escalação automática para reorganizar o time por condição física e adequação ao local. O banco completa automaticamente até nove atletas, respeitando suas prioridades.</p></div><div class="card"><span class="badge">IDENTIDADE DA EQUIPE</span><h3>Instruções táticas</h3><div class="tactic-instructions">${Object.entries(
     T.instructions,
   )
     .map(
@@ -1586,11 +1586,13 @@ async function animatePlay(m, play, replay = false) {
     m.ballPosition = { x: point.x, y: point.y };
     if ($("#play-caption"))
       $("#play-caption").textContent =
-        i === path.length - 1
-          ? play.type === "build-up"
-            ? `${play.playerName} recebe e mantém a jogada.`
-            : `${play.playerName} finaliza em ${play.detail}…`
-          : `${point.name || play.playerName} ${i ? "recebe e prepara o passe." : "inicia a construção da jogada."}`;
+        point.action === "shot"
+          ? `${play.playerName} finaliza em ${play.label || play.detail}…`
+          : point.caption
+            ? `${play.label || "Jogada"} · ${point.name || play.playerName} ${point.caption}`
+            : i === path.length - 1 && play.type !== "build-up"
+              ? `${play.playerName} finaliza em ${play.detail}…`
+              : `${point.name || play.playerName} ${i ? "recebe e prepara o passe." : "inicia a construção da jogada."}`;
     const duration =
       i === path.length - 1 && play.type !== "build-up"
         ? Math.max(900, step)
@@ -1654,7 +1656,7 @@ async function animatePlay(m, play, replay = false) {
     await visualWait(1600, token);
   } else if (play.type === "shot" && $("#play-caption"))
     $("#play-caption").textContent =
-      `${play.playerName} tentou a finalização. O placar segue ${m.goals.join(" a ")}.`;
+      `${play.outcome === "save" ? "O goleiro defende a finalização de " : "Finalização para fora de "}${play.playerName}. O placar segue ${m.goals.join(" a ")}.`;
   animatingPlay = false;
 }
 function stopTimer() {
@@ -1869,7 +1871,7 @@ function openShirtDialog(id) {
     ),
     free = 99 - used.size;
   $("#deal-form").innerHTML =
-    `<section class="shirt-editor"><header class="offer-heading"><div><span class="badge">NUMERAÇÃO DO ELENCO</span><h2>${esc(p.name)}</h2><p>Escolha uma camisa disponível para esta temporada.</p></div></header><label>Jogador<select id="shirt-player">${options(
+    `<section class="shirt-editor"><header class="offer-heading"><div><span class="badge">NUMERAÇÃO DO ELENCO</span><h2>${esc(p.name)}</h2><p>Escolha um número. Se estiver ocupado, o outro jogador receberá um número livre.</p></div></header><label>Jogador<select id="shirt-player">${options(
       players.map((x) => [x.id, x.shirtNumber + " · " + x.name]),
       id,
     )}</select></label><div class="jersey-workspace"><aside class="jersey-preview"><div class="jersey-shape"><small>${esc(team().name)}</small><strong class="shirt-preview-number">${p.shirtNumber || "—"}</strong><span>${esc(p.name.split(" ").slice(-1)[0])}</span></div><span class="pill">${free} números disponíveis</span><label>Novo número<input name="shirt" type="number" min="1" max="99" step="1" value="${p.shirtNumber || 1}" required></label></aside><div><div class="row shirt-legend"><span>Disponível</span><span>Ocupado</span><span>Atual</span></div><div class="shirt-grid" role="group" aria-label="Números de camisa">${Array.from(
@@ -1877,15 +1879,24 @@ function openShirtDialog(id) {
       (_, i) => {
         const n = i + 1,
           owner = used.get(n);
-        return `<button type="button" data-shirt-choice="${n}" aria-pressed="${n === p.shirtNumber}" ${owner ? "disabled" : ""} title="${owner ? esc(owner.name) : "Número disponível"}" aria-label="Camisa ${n}${owner ? " · ocupada por " + esc(owner.name) : " disponível"}"><strong>${n}</strong>${owner ? `<small>${esc(owner.name.split(" ").slice(-1)[0])}</small>` : ""}</button>`;
+        return `<button type="button" data-shirt-choice="${n}" aria-pressed="${n === p.shirtNumber}" data-occupied="${Boolean(owner)}" title="${owner ? esc(owner.name) + " · pode realocar" : "Número disponível"}" aria-label="Camisa ${n}${owner ? " · ocupada por " + esc(owner.name) : " disponível"}"><strong>${n}</strong>${owner ? `<small>${esc(owner.name.split(" ").slice(-1)[0])}</small>` : ""}</button>`;
       },
     ).join(
       "",
-    )}</div></div></div><p class="muted">Profissional e base compartilham a numeração. Os números ocupados ficam identificados pelo jogador.</p><p id="deal-error" class="error" role="alert"></p><div class="dialog-footer"><button type="button" data-action="close-dialog">Cancelar</button><button class="primary">Confirmar número</button></div></section>`;
+    )}</div></div></div><p class="muted">Profissional e base compartilham a numeração. Os números ocupados ficam identificados pelo jogador e também podem ser escolhidos.</p><p id="shirt-reassignment" class="shirt-reassignment" role="status" aria-live="polite"></p><p id="deal-error" class="error" role="alert"></p><div class="dialog-footer"><button type="button" data-action="close-dialog">Cancelar</button><button class="primary">Confirmar número</button></div></section>`;
   const preview = () => {
     const value = Number($("#deal [name=shirt]").value);
     $(".shirt-preview-number").textContent =
       Number.isInteger(value) && value >= 1 && value <= 99 ? value : "—";
+    const message = $("#shirt-reassignment");
+    try {
+      const change = E.shirtNumberChange(state, id, value);
+      message.textContent = change.displacedId
+        ? `${change.playerName} usará a camisa ${value}. ${change.displacedName} passará para a camisa ${change.displacedNumber}, que está livre.`
+        : `${p.name} usará a camisa ${value}. Nenhum outro número será alterado.`;
+    } catch (error) {
+      message.textContent = error.message;
+    }
     $("#deal")
       .querySelectorAll("[data-shirt-choice]")
       .forEach((b) =>
@@ -1906,7 +1917,7 @@ function openShirtDialog(id) {
   $("#deal-form").onsubmit = (e) => {
     e.preventDefault();
     try {
-      E.setShirtNumber(
+      const change = E.setShirtNumber(
         state,
         id,
         Number(new FormData(e.currentTarget).get("shirt")),
@@ -1914,11 +1925,16 @@ function openShirtDialog(id) {
       $("#deal").close();
       scheduleSave();
       render();
-      notify("Número do uniforme atualizado.");
+      notify(
+        change.displacedId
+          ? `Camisa ${change.number} para ${change.playerName}; ${change.displacedName} agora usa ${change.displacedNumber}.`
+          : "Número do uniforme atualizado.",
+      );
     } catch (error) {
       $("#deal-error").textContent = error.message;
     }
   };
+  preview();
   if (!$("#deal").open) $("#deal").showModal();
 }
 function openDeal(kind, id) {
@@ -2476,6 +2492,7 @@ document.addEventListener("click", (event) => {
         editTacticalTeam((t) => {
           t.lineup = [];
           t.tactics.bench = [];
+          E.tactics.remember(t);
         });
         break;
       case "change-club":

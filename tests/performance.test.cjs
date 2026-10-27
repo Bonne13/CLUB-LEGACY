@@ -68,7 +68,7 @@ test("gols, assistências e autoria do passe vêm do mesmo lance; pênaltis e fa
   const scorer = m.lastPlay.playerId,
     assist = m.lastPlay.assistId;
   assert(assist && assist !== scorer);
-  assert.equal(m.lastPlay.path[1].playerId, assist);
+  assert.equal(m.lastPlay.path.at(-3).playerId, assist);
   assert.equal(m.performance.players[scorer].goals, 1);
   assert.equal(m.performance.players[assist].assists, 1);
   forced(m, s, "goal", 0, "pênalti");

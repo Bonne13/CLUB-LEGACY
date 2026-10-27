@@ -43,6 +43,14 @@
     typeof module !== "undefined"
       ? require("./discipline.js")
       : root.LegacyDiscipline;
+  const NUMBERS =
+    typeof module !== "undefined"
+      ? require("./squad-numbers.js")
+      : root.LegacySquadNumbers;
+  const PLAYS =
+    typeof module !== "undefined"
+      ? require("./match-plays.js")
+      : root.LegacyMatchPlays;
   const MOTION =
     typeof module !== "undefined"
       ? require("./match-motion.js")
@@ -598,9 +606,25 @@
     }
     s.teams.forEach((t) => {
       T.ensure(t);
-      ensureSquadNumbers(t);
+      let baseline = [];
+      if (t.shirtNumberRevision !== NUMBERS.DATA.revision) {
+        const roster = (R.DATA.teams[t.id]?.players || [])
+          .map((row) =>
+            references.get(/^\d+$/.test(row[0]) ? "tm-" + row[0] : row[0]),
+          )
+          .filter(Boolean);
+        const youth = roster
+          .filter((p) => p.age < 20 && p.pos !== "GOL")
+          .slice(0, Math.max(0, Math.min(4, roster.length - 22)));
+        baseline = [...roster.filter((p) => !youth.includes(p)), ...youth];
+      }
+      ensureSquadNumbers(t, baseline);
     });
-    if (s.clubId) T.ensure(team(s)).mentality = s.tactic;
+    if (s.clubId) {
+      T.ensure(team(s)).mentality = s.tactic;
+      restoreManagedSelection(s);
+      T.remember(team(s));
+    }
     N.ensure(s);
     if (s.live && !s.live.done) {
       const fixture = nextFixture(s);
@@ -757,6 +781,7 @@
     s.coaches.push(coach);
     t.manager = "you";
     s.clubId = id;
+    T.remember(t);
     if (settings.calendar === "regional")
       D.configure(s, league(s, t.leagueId).region);
     PF.ensure(s).current.label = D.label(s);
@@ -942,6 +967,41 @@
       f = upcomingFixture(s);
     t.selectionCompetition =
       f?.kind !== "national" ? f?.competition || t.leagueId : t.leagueId;
+  }
+  function restoreManagedSelection(s) {
+    const t = team(s),
+      m = s.live;
+    if (!t || t.lineup.some(Boolean) || !m?.plans || m.kind === "national")
+      return;
+    const side = m.pair.indexOf(t.id),
+      plan = m.plans[side];
+    if (!plan || !Array.isArray(plan.starters) || !Array.isArray(plan.slots))
+      return;
+    const ids = plan.starters.map((p) => p.id);
+    for (const sub of [...(m.substitutions || [])]
+      .reverse()
+      .filter((sub) => sub.side === side)) {
+      let index = ids.indexOf(sub.inId);
+      if (index < 0) continue;
+      const incoming = t.players.find((p) => p.id === sub.inId),
+        outgoing = t.players.find((p) => p.id === sub.outId);
+      if (index === 0 && incoming?.pos === "GOL" && outgoing?.pos !== "GOL") {
+        const keeper = ids.findIndex(
+          (id, i) =>
+            i > 0 && t.players.some((p) => p.id === id && p.pos === "GOL"),
+        );
+        if (keeper > 0) {
+          [ids[0], ids[keeper]] = [ids[keeper], ids[0]];
+          index = keeper;
+        }
+      }
+      ids[index] = sub.outId;
+    }
+    const bySlot = new Map(plan.slots.map((slot, i) => [slot.id, ids[i]]));
+    t.lineup = T.slots(t).map((slot) => {
+      const id = bySlot.get(slot.id);
+      return t.players.some((p) => p.id === id) ? id : "";
+    });
   }
   function lineup(t) {
     return T.positions(t).filter(Boolean);
@@ -1387,6 +1447,15 @@
       fail(
         "Você precisa de pelo menos 7 jogadores disponíveis para iniciar a partida. Verifique lesões e suspensões.",
       );
+    const selectedTeam = team(
+      s,
+      f.kind === "national" ? s.national.job : s.clubId,
+    );
+    T.remember(selectedTeam);
+    if (selectedTeam.isNational) {
+      s.national.lineups ??= {};
+      s.national.lineups[selectedTeam.id] = [...selectedTeam.lineup];
+    }
     s.live = {
       ...copy(f),
       season: s.season,
@@ -1476,69 +1545,33 @@
     };
   }
   function recordPlay(m, type, side, actor = null, detail = "jogada") {
-    const view = matchVisual(m, null),
-      players = view.positions.filter((p) => p.side === side),
-      shooter = players.find((p) => p.id === actor?.id) ||
-        players[8] ||
-        players[0] || {
-          id: null,
-          name: "Autoria não disponível na base",
-          x: 50,
-          y: 50,
-        };
-    const direction = side ? -1 : 1,
-      from =
-        type === "build-up"
-          ? { x: shooter.x, y: shooter.y }
-          : {
-              x:
-                detail === "pênalti"
-                  ? side
-                    ? 10.5
-                    : 89.5
-                  : side
-                    ? 16 + (m.minute % 5)
-                    : 84 - (m.minute % 5),
-              y: detail === "pênalti" ? 50 : 36 + ((m.minute * 7) % 28),
-            };
-    const passer1 = players[5] || players[1] || shooter,
-      passer2 =
-        players.find((p) => p.id === m.lastShot?.assistId) ||
-        players[7] ||
-        players[6] ||
-        shooter;
-    const target =
-      type === "goal"
-        ? { x: side ? 1 : 99, y: 46 + (m.minute % 9) }
-        : type === "shot"
-          ? m.lastShot?.saved
-            ? { x: side ? 5 : 95, y: 44 + (m.minute % 13) }
-            : { x: side ? 3 : 97, y: m.minute % 2 ? 26 : 74 }
-          : { x: shooter.x, y: shooter.y };
-    const path = [
-      { x: passer1.x, y: passer1.y, playerId: passer1.id, name: passer1.name },
-      { x: passer2.x, y: passer2.y, playerId: passer2.id, name: passer2.name },
-      { ...from, playerId: shooter.id, name: shooter.name },
-      target,
-    ];
-    const play = {
-      id: `play-${m.minute}-${type}-${side}`,
-      minute: m.minute,
-      type,
-      side,
-      playerId: shooter.id,
-      playerName: actor?.name || shooter.name,
-      assistId: type === "goal" ? m.lastShot?.assistId || null : null,
-      assistName: type === "goal" ? m.lastShot?.assistName || null : null,
-      from,
-      target,
-      path,
-      detail,
-      initialPositions: view.positions.map((p) => ({ ...p })),
-      positions: view.positions.map((p) =>
-        p.id === shooter.id ? { ...p, ...from } : p,
-      ),
-    };
+    const view = matchVisual(m, null);
+    if (m.lastPlay?.path?.length) {
+      const previous = MOTION.frame(m, m.lastPlay, m.lastPlay.path.length - 1);
+      const positions = new Map(previous.positions.map((p) => [p.id, p]));
+      view.positions = view.positions.map((p) =>
+        positions.has(p.id)
+          ? { ...p, x: positions.get(p.id).x, y: positions.get(p.id).y }
+          : p,
+      );
+    }
+    const sequence = PLAYS.build(m, type, side, actor, detail, view),
+      play = {
+        id: `play-${m.minute}-${type}-${side}`,
+        minute: m.minute,
+        type,
+        side,
+        ...sequence,
+        assistId: type === "goal" ? m.lastShot?.assistId || null : null,
+        assistName: type === "goal" ? m.lastShot?.assistName || null : null,
+        detail,
+        initialPositions: view.positions.map((p) => ({ ...p })),
+        positions: view.positions.map((p) =>
+          p.id === sequence.playerId && type !== "build-up"
+            ? { ...p, ...sequence.from }
+            : p,
+        ),
+      };
     m.lastPlay = play;
     m.timeline ??= [];
     m.timeline.push(play);
@@ -1690,6 +1723,14 @@
       50 + (m.plans[0].strength - m.plans[1].strength) * 0.3
         ? 0
         : 1;
+    if (!m.compact && m.lastPlay) {
+      const previous = m.lastPlay;
+      if (previous.type === "goal") m.possessionSide = 1 - previous.side;
+      else if (previous.outcome === "turnover")
+        m.possessionSide = 1 - previous.side;
+      else if (previous.type === "build-up" && m.minute % 5 !== 0)
+        m.possessionSide = previous.side;
+    }
     PF.tick(m);
     DS.tick(s, m);
     if (m.discipline.forfeit) return;
@@ -1809,8 +1850,13 @@
       }
     }
     m.possession[m.possessionSide]++;
-    if (!producedPlay && !m.compact)
-      recordPlay(m, "build-up", m.possessionSide);
+    if (!producedPlay && !m.compact) {
+      const play = recordPlay(m, "build-up", m.possessionSide);
+      if (m.minute % 3 === 0 || play.outcome === "turnover")
+        m.events.unshift(
+          `${m.minute}' — ${play.label}: ${play.playerName} ${play.path.at(-1).caption}`,
+        );
+    }
     if (m.minute === 45)
       m.events.unshift(
         "45' — Intervalo. Prepare a equipe para o segundo tempo.",
@@ -2573,7 +2619,8 @@
     backup: "Reserva",
     prospect: "Promessa",
   };
-  function ensureSquadNumbers(t) {
+  function ensureSquadNumbers(t, baseline = []) {
+    NUMBERS.apply(t, baseline);
     const players = [...t.players, ...t.youth],
       used = new Set(),
       ranked = [...t.players].sort((a, b) => b.ovr - a.ovr);
@@ -2622,18 +2669,25 @@
         if (p.shirtNumber) used.add(p.shirtNumber);
       }
   }
-  function setShirtNumber(s, id, number) {
+  function shirtNumberChange(s, id, number) {
     if (!s.clubId) fail("Comece uma carreira primeiro.");
     if (s.live && !s.live.done)
       fail("Conclua a partida antes de mudar a numeração.");
-    const t = team(s),
-      players = [...t.players, ...t.youth],
-      p = players.find((p) => p.id === id);
-    if (!p || !Number.isInteger(number) || number < 1 || number > 99)
-      fail("Escolha um número de 1 a 99 para um atleta do clube.");
-    if (players.some((p) => p.id !== id && p.shirtNumber === number))
-      fail("Esse número já pertence a outro jogador do elenco ou da base.");
+    return NUMBERS.change(team(s), id, number);
+  }
+  function setShirtNumber(s, id, number) {
+    const change = shirtNumberChange(s, id, number),
+      t = team(s),
+      players = [...t.players, ...t.youth];
+    const p = players.find((p) => p.id === id);
+    if (change.displacedId) {
+      const owner = players.find((p) => p.id === change.displacedId);
+      owner.shirtNumber = change.displacedNumber;
+      owner.shirtNumberCustomized = true;
+    }
     p.shirtNumber = number;
+    p.shirtNumberCustomized = true;
+    return change;
   }
   function contractCapacity(s, n, p, salary, bonus) {
     if (n.kind !== "renewal")
@@ -3314,6 +3368,7 @@
       to: "Você",
     });
     s.clubId = id;
+    T.remember(next);
     processNegotiations(s);
     s.rosterRecovery = false;
     s.offers = [];
@@ -3624,6 +3679,7 @@
     SQUAD_ROLES,
     proposeRenewal,
     setShirtNumber,
+    shirtNumberChange,
     physical: P,
     training: TR,
     performance: PF,

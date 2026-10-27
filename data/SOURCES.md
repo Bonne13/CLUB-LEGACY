@@ -91,7 +91,7 @@ Os emblemas ficam em `assets/badges/original-*.svg`, com área exterior transpar
 
 As 53 bandeiras identificam países e foram mantidas a partir do Flagcdn; suas referências e hashes continuam no manifesto. O script `python3 scripts/import-badges.py` agora delega à geração local e não restaura nem baixa escudos oficiais. O build incorpora o catálogo uma única vez e funciona offline.
 
-Energia, carga acumulada, recuperação, risco de lesão, observação de atletas, tolerância a propostas, convites de federações e papéis no elenco são regras da simulação. Números de uniforme são atribuídos pela carreira e podem ser editados; não constituem uma base oficial de camisas atuais. Janelas de transferência seguem os dias da temporada unificada, com datas explícitas na interface. A animação do campo deriva do autor e da trajetória de cada evento gerado, sem imagens reais de partidas.
+Energia, carga acumulada, recuperação, risco de lesão, observação de atletas, tolerância a propostas, convites de federações e papéis no elenco são regras da simulação. Números de uniforme usam as referências de elenco descritas abaixo quando há correspondência confirmada; os demais são atribuídos pela carreira e todos podem ser editados. Janelas de transferência seguem os dias da temporada unificada, com datas explícitas na interface. A animação do campo deriva do autor e da trajetória de cada evento gerado, sem imagens reais de partidas.
 
 
 ## Renderização 3D e regras de gestão (v0.9)
@@ -135,3 +135,10 @@ Limites por competição e duração das penas são regras simplificadas própri
 O almanaque consulta somente `career.trophies` e `career.performance.awards`, com os registros retidos no save. Não há uma base nova de campeões reais anteriores à carreira nem preenchimento de temporadas sem dados. Os emblemas continuam sendo desenhos próprios, com cores e linguagem de identificação como referência. Os modelos do campo são avatares geométricos gerados localmente, sem rostos, fotografias ou ativos de jogos comerciais.
 
 A imprensa mantém veículos e colunistas inventados no catálogo. A interface removeu os avisos repetidos de ficção por preferência de apresentação do usuário; isso não altera a origem dos nomes nem converte as matérias em notícias de veículos reais.
+
+
+## Números de uniforme: consulta de 27/10/2026
+
+`data/shirt-numbers.json` contém 3.902 jogadores de 305 clubes do catálogo, com clube, identidade estável, número, identificador do provedor, temporada informada e URL de consulta. A fonte é a API pública de elencos da [ESPN](https://www.espn.com/soccer/teams), com rotas `site.api.espn.com/apis/site/v2/sports/soccer/{liga}/teams/{clube}/roster?season=2026`. No Barcelona, a resposta identifica explicitamente a temporada **2026–27 Spanish LALIGA**. O ano usa a convenção de temporadas do provedor; não deve ser interpretado como cobertura de todos os clubes de uma temporada oficial única.
+
+O importador associa nomes de clubes de forma restrita dentro da liga e jogadores por nomes normalizados inequívocos no próprio clube. Correspondências ausentes/ambíguas e números duplicados no elenco de origem são descartados. A associação de execução verifica nome e ID do clube para não reutilizar dados quando uma vaga de liga muda de identidade. Não foram importadas imagens, novos atletas ou transferências. Os dados descrevem a referência consultada e não comprovam licença ou vínculo com o provedor. Números editados durante a carreira têm prioridade sobre o snapshot; a fonte não é consultada em tempo de jogo.

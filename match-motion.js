@@ -2,6 +2,7 @@
 (function (root) {
   const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
   function frame(m, play, phase = 0) {
+    phase = clamp(phase, 0, play.path.length - 1);
     const path = play.path,
       point = path[clamp(phase, 0, path.length - 1)],
       last = phase === path.length - 1,
@@ -13,8 +14,8 @@
       ),
       isSaved =
         play.type === "shot" &&
-        m.lastShot?.minute === play.minute &&
-        m.lastShot?.saved;
+        (play.outcome === "save" ||
+          (m.lastShot?.minute === play.minute && m.lastShot?.saved));
     const positions = initial
       .filter((p) => !m.discipline?.reds.includes(p.id))
       .map((p) => {

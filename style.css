@@ -6088,3 +6088,22 @@ body.has-hosting-badge {
     min-height: 120px;
   }
 }
+
+.shirt-grid button[data-occupied="true"] {
+  background: var(--soft);
+  color: var(--muted);
+  border-style: dashed;
+}
+.shirt-grid button[data-occupied="true"]:hover,
+.shirt-grid button[data-occupied="true"][aria-pressed="true"] {
+  color: var(--text);
+  border-color: var(--accent);
+  border-style: solid;
+}
+.shirt-reassignment {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--soft);
+  line-height: 1.5;
+}

@@ -358,6 +358,14 @@
     });
     return chosen;
   }
+  function remember(t) {
+    const current = positions(t).map((p) => p?.id || ""),
+      previous = t.lineup || [];
+    t.lineup = current.map((id, i) =>
+      t.players.some((p) => p.id === previous[i]) ? previous[i] : id,
+    );
+    return t.lineup;
+  }
   function select(t, index, id) {
     if (!Number.isInteger(index) || index < 0 || index > 10)
       throw Error("Posição inválida.");
@@ -631,6 +639,7 @@
     targetPosition,
     positionMatches,
     positions,
+    remember,
     select,
     formation,
     update,

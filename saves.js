@@ -162,6 +162,12 @@
         .map((p) => p.shirtNumber)
         .filter((n) => n !== undefined);
       if (new Set(shirts).size !== shirts.length) fail();
+      for (const p of [...t.players, ...t.youth])
+        if (
+          p.shirtNumberCustomized !== undefined &&
+          typeof p.shirtNumberCustomized !== "boolean"
+        )
+          fail();
       array(t.lineup, 11);
       if (t.lineup.some((id) => id && !t.players.some((p) => p.id === id)))
         fail();
@@ -585,7 +591,7 @@
         number(p.side, 0, 1);
         if (p.playerId !== null) string(p.playerId);
         string(p.playerName);
-        array(p.path, 4).forEach((point) => {
+        array(p.path, 9).forEach((point) => {
           number(point.x, 0, 100);
           number(point.y, 0, 100);
         });
