@@ -32,7 +32,7 @@ function reconcile(t) {
 test("catálogo contém exclusivamente IDs reais, sem preenchimento de clubes incompletos", () => {
   const s = E.fresh(),
     all = s.teams.flatMap((t) => [...t.players, ...t.youth]);
-  assert.equal(all.length, 7815);
+  assert.equal(all.length, 10465);
   assert(
     all.every(
       (p) =>
@@ -42,7 +42,7 @@ test("catálogo contém exclusivamente IDs reais, sem preenchimento de clubes in
         (p.id === "tm-" + p.sourceId || p.id === p.sourceId),
     ),
   );
-  assert.equal(s.teams.filter((t) => t.players.length >= 11).length, 341);
+  assert.equal(s.teams.filter((t) => t.players.length >= 11).length, 351);
   assert(
     s.teams
       .filter(
@@ -52,7 +52,9 @@ test("catálogo contém exclusivamente IDs reais, sem preenchimento de clubes in
       )
       .every((t) => t.players.length >= 11),
   );
-  assert.throws(() => E.start(E.fresh(), "co-18"), /onze atletas/);
+  const unavailable = s.teams.find((t) => t.players.length < 11);
+  assert(unavailable);
+  assert.throws(() => E.start(E.fresh(), unavailable.id), /onze atletas/);
 });
 test("valores usam euros da referência e capitais variam por porte do clube", () => {
   const s = E.fresh(),

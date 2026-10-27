@@ -30,7 +30,11 @@ test("base nova inicia em 2026 e identifica snapshots por clube sem datas futura
   for (const t of s.teams)
     for (const p of [...t.players, ...t.youth]) {
       assert(p.real && p.sourceId);
-      assert(!p.membershipReference || p.membershipReference <= "2026-10-23");
+      assert(
+        !p.membershipReference ||
+          p.membershipReference <=
+            (p.dataSource === "espn-roster-2026" ? "2026-10-27" : "2026-10-23"),
+      );
       if (p.ageUnknown) assert(p.ageEstimated && !p.birthDate);
     }
   assert(E.team(s, "br-0").players.some((p) => p.name === "Lucas Paquetá"));

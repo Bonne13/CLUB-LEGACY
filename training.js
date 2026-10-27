@@ -113,7 +113,12 @@
             : physical.plan === "light"
               ? 0.6
               : 1) *
-          (1 + (t.facility - 1) * 0.12) *
+          (1 +
+            ((t.youth.includes(p)
+              ? t.infrastructure?.levels.academy || t.facility
+              : t.facility) -
+              1) *
+              0.12) *
           (1 - (p.fatigue || 0) * 0.004),
       ),
     );

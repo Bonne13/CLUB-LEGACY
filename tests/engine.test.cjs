@@ -162,10 +162,15 @@ test("renovação exige aumento e luvas; promoção e instalações descontam va
   assert.equal(t.players.length, count + 1);
   assert.equal(youth.contract, s.season + 3);
   assert(!t.youth.includes(youth));
-  const before = t.money;
-  E.upgrade(s, "facility");
-  assert.equal(t.facility, 2);
-  assert.equal(t.money, before - 1500000);
+  const before = t.money,
+    previousLevel = t.facility,
+    quote = E.facilities.quote(s, t, "facility");
+  const project = E.upgrade(s, "facility");
+  assert.equal(t.facility, previousLevel);
+  assert.equal(t.money, before - quote.cost);
+  s.today += project.days;
+  E.facilities.tick(s, t);
+  assert.equal(t.facility, previousLevel + 1);
 });
 test("escalação manual respeita posições, evita duplicações e exclui lesionados", () => {
   const s = career(),
@@ -232,8 +237,16 @@ test("temporada completa: ligas, grupos, playoffs, campeões e propostas de trei
   const L = require("../vendor/lz-string.js"),
     raw = JSON.stringify(s),
     packed = L.compressToUTF16(raw);
-  assert(packed.length < 1500000);
+  assert(
+    packed.length * 2 < 4600000,
+    `Save comprimido: ${packed.length * 2} bytes; JSON: ${raw.length} caracteres`,
+  );
   assert.equal(L.decompressFromUTF16(packed), raw);
+  require("../saves.js").validate(s);
+  assert(
+    Buffer.byteLength(raw, "utf8") < require("../saves.js").MAX_BYTES,
+    "O save da temporada completa precisa caber no limite de importação.",
+  );
   assert(
     s.teams.every(
       (t) =>

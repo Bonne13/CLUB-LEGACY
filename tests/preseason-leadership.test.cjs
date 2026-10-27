@@ -205,7 +205,11 @@ test("recuperação da base do próprio clube é aplicada uma vez por dia", () =
   t.youth.push(p);
   p.fitness = 60;
   p.fatigue = 20;
-  const prediction = E.physical.preview(p, "Técnica", t.facility);
+  const prediction = E.physical.preview(
+    p,
+    "Técnica",
+    E.facilities.recoveryLevel(t),
+  );
   E.advance(s, () => 0.99);
   assert.equal(p.fitness, prediction.energy);
   assert.equal(p.fatigue, prediction.fatigue);

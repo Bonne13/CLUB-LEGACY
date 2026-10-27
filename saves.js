@@ -156,6 +156,11 @@
       number(t.money);
       number(t.facility, 1, 5);
       number(t.stadium, 1, 5);
+      try {
+        E.facilities.validate(t);
+      } catch {
+        fail();
+      }
       array(t.players, 300).forEach(player);
       array(t.youth, 300).forEach(player);
       const shirts = [...t.players, ...t.youth]
@@ -328,6 +333,25 @@
       )
         fail();
       table(l.table, clubIds);
+      if (l.results !== undefined) {
+        const seen = new Map(),
+          scheduled = new Map();
+        for (const pair of l.fixtures.flat())
+          scheduled.set(
+            pair.join("|"),
+            (scheduled.get(pair.join("|")) || 0) + 1,
+          );
+        array(l.results, 2000).forEach((r) => {
+          pair(r.pair);
+          if (!r.pair.every((id) => clubIds.includes(id))) fail();
+          array(r.goals, 2).forEach((g) => number(g, 0, 99));
+          if (r.goals.length !== 2) fail();
+          const key = r.pair.join("|");
+          seen.set(key, (seen.get(key) || 0) + 1);
+          if (seen.get(key) > (scheduled.get(key) || 0)) fail();
+        });
+      }
+
       array(l.fixtures, 80).forEach((r) => array(r, 30).forEach(pair));
       array(l.ranking, 40);
     }

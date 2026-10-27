@@ -6107,3 +6107,194 @@ body.has-hosting-badge {
   background: var(--soft);
   line-height: 1.5;
 }
+
+/* Club estate and construction planning. */
+.estate-summary,
+.facility-quote {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
+.estate-summary > div,
+.facility-quote > div {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.estate-summary small,
+.facility-quote small {
+  color: var(--muted);
+  font-size: 11px;
+}
+.estate-summary strong {
+  font-size: 28px;
+}
+.stadium-profile {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1.5fr);
+  gap: 24px;
+  align-items: center;
+}
+.stadium-profile h2 {
+  overflow-wrap: anywhere;
+}
+.stadium-illustration {
+  min-height: 190px;
+  border-radius: 42%;
+  padding: 30px;
+  background: repeating-linear-gradient(
+    0deg,
+    var(--soft) 0 7px,
+    var(--border) 7px 10px
+  );
+  border: 10px solid var(--club-primary);
+  transform: perspective(600px) rotateX(16deg);
+}
+.stadium-illustration > div {
+  min-height: 125px;
+  background: repeating-linear-gradient(
+    90deg,
+    #256d46 0 20px,
+    #2e7c50 20px 40px
+  );
+  border: 3px solid #e7efde;
+  border-radius: 3px;
+  position: relative;
+}
+.stadium-illustration > div::before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #e7efde;
+  border-radius: 50%;
+  left: calc(50% - 16px);
+  top: calc(50% - 16px);
+}
+.stadium-illustration > div::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  border-left: 2px solid #e7efde;
+  left: 50%;
+}
+.facilities-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.facility-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.facility-card h3 {
+  margin: 0;
+}
+.facility-card > p {
+  flex: 1;
+  margin: 0;
+}
+.facility-card button {
+  min-height: 44px;
+  width: 100%;
+  white-space: normal;
+}
+.facility-level {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+.facility-level i {
+  height: 7px;
+  border-radius: 4px;
+  background: var(--border);
+}
+.facility-level .filled {
+  background: var(--accent);
+}
+.facility-quote {
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin: 8px 0;
+}
+.facility-project {
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--soft);
+}
+.facility-project button {
+  margin-top: 12px;
+}
+.construction-progress {
+  margin-top: 14px;
+  height: 8px;
+  border-radius: 5px;
+  background: var(--border);
+  overflow: hidden;
+}
+.construction-progress i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+.facility-history > div {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.league-rule-card {
+  border: 1px solid var(--border);
+  background: var(--soft);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 18px 0;
+}
+.league-rule-card summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+.rules-summary {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.league-rule-card li {
+  margin: 5px 0;
+}
+.match-venue {
+  margin: 12px 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 700px) {
+  .facilities-grid,
+  .stadium-profile {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .estate-summary {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+  .stadium-illustration {
+    min-height: 150px;
+  }
+  .stadium-illustration > div {
+    min-height: 95px;
+  }
+  .facility-quote {
+    gap: 12px;
+  }
+  .league-rule-card .row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

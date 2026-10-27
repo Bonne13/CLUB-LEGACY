@@ -43,6 +43,14 @@
     typeof module !== "undefined"
       ? require("./discipline.js")
       : root.LegacyDiscipline;
+  const RULES =
+    typeof module !== "undefined"
+      ? require("./league-rules.js")
+      : root.LegacyLeagueRules;
+  const FACILITIES =
+    typeof module !== "undefined"
+      ? require("./club-facilities.js")
+      : root.LegacyFacilities;
   const NUMBERS =
     typeof module !== "undefined"
       ? require("./squad-numbers.js")
@@ -251,6 +259,10 @@
         b.gf - a.gf ||
         a.id.localeCompare(b.id),
     );
+  function leagueRank(s, id) {
+    const l = league(s, id);
+    return RULES.rank(l.table, l);
+  }
   const lookupCache = new WeakMap();
   function lookups(s) {
     let cache = lookupCache.get(s);
@@ -431,6 +443,8 @@
     })).map((l) => ({
       ...l,
       table: blankTable(l.ids),
+      results: [],
+      disciplineComplete: true,
       ranking: [...l.ids],
       fixtures:
         (l.referenceCompatible !== false ? REFERENCES?.[l.id]?.rounds : null) ||
@@ -445,17 +459,39 @@
     }));
     s.teams.forEach((t) => {
       // A base contém somente atletas reais já associados ao clube na fonte.
-      const eligible = t.players
-        .filter((p) => p.age < 20 && p.pos !== "GOL")
-        .slice(0, Math.max(0, Math.min(4, t.players.length - 22)));
+      const academy = t.players.filter((p) => p.academyReference);
+      const eligible = [
+        ...academy,
+        ...t.players
+          .filter((p) => !p.academyReference && p.age < 20 && p.pos !== "GOL")
+          .slice(
+            0,
+            Math.max(
+              0,
+              Math.min(4, (R.DATA.teams[t.id]?.initialRosterCount || 0) - 22),
+            ),
+          ),
+      ];
+      while (
+        t.players.filter((p) => p.pos === "GOL" && !eligible.includes(p))
+          .length < 2
+      ) {
+        const reserve = eligible
+          .filter((p) => p.pos === "GOL")
+          .sort((a, b) => b.ovr - a.ovr)[0];
+        if (!reserve) break;
+        eligible.splice(eligible.indexOf(reserve), 1);
+      }
       t.youth = eligible;
       t.players = t.players.filter((p) => !eligible.includes(p));
       t.rosterCoverage = R.DATA.teams[t.id]?.players.length || 0;
       ensureSquadNumbers(t);
       F.init(t, s);
+      FACILITIES.ensure(t, s, false);
     });
     s.cups = selectCups(s);
     s.dataRevision = R.DATA.revision || "historical-1";
+    s.rosterSupplementRevision = R.SUPPLEMENTS.revision;
     N.ensure(s);
     SC.ensure(s);
     return s;
@@ -476,7 +512,67 @@
     if (coach) Object.assign(coach, result);
     return result;
   }
+  function recoverRosterSupplement(s) {
+    if (s.rosterSupplementRevision === R.SUPPLEMENTS.revision) return;
+    if (s.season === (R.DATA.initialSeason || 2025)) {
+      const present = new Set(
+        [
+          ...s.teams.flatMap((t) => [...t.players, ...t.youth]),
+          ...s.freeAgents,
+        ].map((p) => p.id),
+      );
+      for (const c of R.SUPPLEMENTS.clubs) {
+        const t = team(s, c.id);
+        if (!t || t.name !== c.name) continue;
+        const ids = new Set(
+          c.players.map((row) =>
+            /^\d+$/.test(row[0]) ? "tm-" + row[0] : row[0],
+          ),
+        );
+        for (const p of R.roster(c.id, s.season))
+          if (ids.has(p.id) && !present.has(p.id)) {
+            (p.academyReference &&
+            (p.pos !== "GOL" ||
+              t.players.filter((p) => p.pos === "GOL").length >= 2)
+              ? t.youth
+              : t.players
+            ).push(p);
+            present.add(p.id);
+          }
+        ensureSquadNumbers(t);
+        if (t.finance)
+          t.finance.wageBudget = Math.max(t.finance.wageBudget, F.payroll(t));
+      }
+    }
+    s.rosterSupplementRevision = R.SUPPLEMENTS.revision;
+  }
+  function processFacilities(s) {
+    for (const t of s.teams)
+      for (const p of FACILITIES.tick(s, t))
+        if (t.id === s.clubId)
+          news(s, `${FACILITIES.definitions[p.key].label}: obra concluída.`, {
+            category: "facilities",
+            body: `A instalação de ${t.name} chegou ao nível ${p.target}. O investimento foi registrado no início da obra.`,
+          });
+  }
   function prepareCareer(s) {
+    for (const l of s.leagues)
+      if (!l.results) {
+        l.results = [];
+        l.disciplineComplete = !l.table.some((r) => r.w + r.d + r.l);
+        const seen = new Set();
+        for (const h of s.history || [])
+          if (h.season === s.season)
+            for (const r of h.results || [])
+              if (
+                r.kind === "league" &&
+                r.competition === l.id &&
+                !seen.has(r.pair.join("|"))
+              ) {
+                l.results.push({ pair: [...r.pair], goals: [...r.goals] });
+                seen.add(r.pair.join("|"));
+              }
+      }
     PF.ensure(s);
     DS.ensure(s);
     ensureFriendlies(s);
@@ -490,6 +586,8 @@
     s.mode ??= "normal";
     s.rosterRevision ??= "legacy-preserved";
     s.testFundingTotal ??= 0;
+    recoverRosterSupplement(s);
+    for (const t of s.teams) FACILITIES.ensure(t, s);
     // Atualiza metadados de identidades existentes sem desfazer transferências ou evolução.
     const rows = new Map(
       Object.values(R.DATA.teams)
@@ -1044,6 +1142,7 @@
         ...T.ratings(t),
         instructions: plan,
         slots: copy(occupied.map((x) => x.slot)),
+        bench: T.bench(t).map((p) => p.id),
         starters: starters.map((p) => ({
           id: p.id,
           name: p.name,
@@ -1603,7 +1702,10 @@
     const changes = (m.substitutions || []).filter((x) => x.side === side),
       index = plan?.starters.findIndex((p) => p.id === outId),
       incoming = t.players.find(
-        (p) => p.id === inId && DS.available(p, m.competition),
+        (p) =>
+          p.id === inId &&
+          DS.available(p, m.competition) &&
+          (!plan?.bench || plan.bench.includes(p.id)),
       );
     if (
       index < 0 ||
@@ -1611,10 +1713,20 @@
       !incoming ||
       plan.starters.some((p) => p.id === inId) ||
       changes.some((x) => x.outId === inId) ||
-      changes.length >= 5
+      changes.length >=
+        RULES.get(m.kind === "league" ? m.competition : null).substitutions
     )
       fail(
         "Escolha um titular e um reserva disponível. São permitidas cinco substituições, sem reentrada.",
+      );
+    const timing = RULES.substitutionInfo(m, side);
+    if (
+      !timing.halftime &&
+      !timing.sameWindow &&
+      timing.windows >= timing.windowLimit
+    )
+      fail(
+        "Você já usou as três oportunidades de substituição. Ainda é possível trocar jogadores no intervalo, respeitando o limite de cinco.",
       );
     const outgoing = plan.starters[index];
     plan.starters[index] = {
@@ -1634,7 +1746,13 @@
     m.minutesPlayed ??= {};
     m.minutesPlayed[inId] ??= 0;
     m.substitutions ??= [];
-    m.substitutions.push({ side, outId, inId, minute: m.minute });
+    m.substitutions.push({
+      side,
+      outId,
+      inId,
+      minute: m.minute,
+      halftime: timing.halftime,
+    });
     if (
       incoming.pos === "GOL" &&
       plan.starters[0]?.pos !== "GOL" &&
@@ -1907,6 +2025,7 @@
     }
     for (const p of s.freeAgents) P.apply(p, { globalMode: "Recuperação" });
     s.today++;
+    processFacilities(s);
     processNegotiations(s);
     for (const report of SC.process(s))
       news(s, "Relatório do olheiro disponível.", {
@@ -1998,7 +2117,7 @@
         minutes: loadMinutes,
         extra: internationalLoad?.fatigue ?? fatigue,
         globalMode: mode,
-        facility: t.facility,
+        facility: FACILITIES.recoveryLevel(t),
       });
       const development = TR.process(s, t, p, physical, session);
       if (development) {
@@ -2012,6 +2131,7 @@
         !p.injury &&
         rng() <
           0.012 *
+            FACILITIES.injuryFactor(t) *
             (loadMinutes / 90) *
             (1 + Math.max(0, 85 - p.fitness) / 30 + (p.fatigue || 0) / 80)
       ) {
@@ -2040,7 +2160,10 @@
     if (t.id === s.clubId) {
       for (const p of t.youth) {
         if (session.key === "rest") p.restDays = Math.max(1, p.restDays || 0);
-        const physical = P.apply(p, { globalMode: mode, facility: t.facility });
+        const physical = P.apply(p, {
+          globalMode: mode,
+          facility: FACILITIES.recoveryLevel(t),
+        });
         p.lastPhysical = { ...physical, season: s.season, offset: s.today };
         const development = TR.process(s, t, p, physical, session);
         if (development) {
@@ -2062,7 +2185,7 @@
           ) &&
           session.key !== "rest" &&
           session.key !== "recovery" &&
-          rng() < 0.3 + t.facility * 0.03
+          rng() < 0.3 + FACILITIES.level(t, "academy") * 0.03
         )
           p.ovr = Math.min(p.potential, p.ovr + 1);
       });
@@ -2200,6 +2323,7 @@
         }
       } else if (f.kind === "league") {
         record(league(s, f.competition).table, f.pair, g);
+        RULES.record(league(s, f.competition), played);
         F.gate(team(s, f.pair[0]), s);
       } else if (f.kind === "group") {
         record(s.cups.find((c) => c.id === f.competition).table, f.pair, g);
@@ -2313,6 +2437,7 @@
     s.history = s.history.filter((h) => h.season === s.season).slice(-6);
     if (d.kind !== "rest") s.day++;
     s.today = (s.today ?? d.offset) + 1;
+    processFacilities(s);
     announcePlayerAwards(s, PF.closeMonth(s));
     processNegotiations(s);
     const invitation = N.review(s);
@@ -2423,7 +2548,7 @@
   function seasonEnd(s, rng) {
     const my = team(s);
     const position =
-      rank(league(s, my.leagueId).table).findIndex((t) => t.id === my.id) + 1;
+      leagueRank(s, my.leagueId).findIndex((t) => t.id === my.id) + 1;
     s.reputation = Math.max(
       15,
       Math.min(
@@ -2433,7 +2558,7 @@
       ),
     );
     s.leagues.forEach((l) => {
-      l.ranking = rank(l.table).map((t) => t.id);
+      l.ranking = leagueRank(s, l.id).map((t) => t.id);
       awardTrophy(s, l.ranking[0], l.id, l.name, "league");
       F.post(
         team(s, l.ranking[0]),
@@ -2449,7 +2574,7 @@
           category: "competitions",
           clubIds: [l.ranking[0]],
           competitionId: l.id,
-          body: `O título foi confirmado ao término da temporada, com ${rank(l.table)[0].p} pontos. A premiação é de R$ 3,5 milhões.`,
+          body: `O título foi confirmado ao término da temporada, com ${leagueRank(s, l.id)[0].p} pontos. A premiação é de R$ 3,5 milhões.`,
         },
       );
     });
@@ -2495,7 +2620,7 @@
       (t) =>
         t.id !== s.clubId &&
         t.players.length >= 11 &&
-        rank(league(s, t.leagueId).table).findIndex((r) => r.id === t.id) >=
+        leagueRank(s, t.leagueId).findIndex((r) => r.id === t.id) >=
           Math.max(0, 5 - Math.floor(s.reputation / 20)),
     );
     s.offers = options
@@ -3320,27 +3445,15 @@
     });
   }
   function upgrade(s, kind) {
-    if (!["stadium", "facility"].includes(kind)) fail("Instalação inválida.");
-    const t = team(s),
-      cost = t[kind] * 1500000;
-    if (t[kind] >= 5) fail("Instalação no nível máximo.");
-    if (t.money < cost) fail("Saldo insuficiente.");
-    F.post(
-      t,
-      s,
-      -cost,
-      "facilities",
-      `Investimento em ${kind === "stadium" ? "estádio" : "centro de treinamento"}`,
-    );
-    t[kind]++;
-    news(
-      s,
-      `${kind === "stadium" ? "Estádio" : "Centro de treinamento"} ampliado para o nível ${t[kind]}.`,
-      {
-        category: "facilities",
-        body: `${t.name} investiu R$ ${cost.toLocaleString("pt-BR")} na estrutura do clube.`,
-      },
-    );
+    const project = FACILITIES.start(s, team(s), kind);
+    news(s, `${FACILITIES.definitions[kind].label}: obra iniciada.`, {
+      category: "facilities",
+      body: `Investimento de R$ ${project.cost.toLocaleString("pt-BR")} em ${team(s).name}. Prazo: ${project.days} dias.`,
+    });
+    return project;
+  }
+  function cancelUpgrade(s, id) {
+    return FACILITIES.cancel(s, team(s), id);
   }
   function changeClub(s, id) {
     if (dayInfo(s) && !s.rosterRecovery)
@@ -3443,6 +3556,7 @@
     s.preseasonTournaments = [];
     s.day = 0;
     s.today = 0;
+    processFacilities(s);
     PF.ensure(s);
     s.live = null;
     s.last = null;
@@ -3504,7 +3618,11 @@
     });
     s.freeAgents = s.freeAgents.filter((p) => p.age < 40);
     N.ensure(s);
-    s.leagues.forEach((l) => (l.table = blankTable(l.ids)));
+    s.leagues.forEach((l) => {
+      l.table = blankTable(l.ids);
+      l.results = [];
+      l.disciplineComplete = true;
+    });
     s.cups = selectCups(s);
     const you = s.coaches.find((c) => c.id === "you");
     if (you.contract < s.season) {
@@ -3725,6 +3843,8 @@
     team,
     league,
     rank,
+    leagueRank,
+    leagueRules: RULES,
     fixtures,
     calendar,
     schedule: D,
@@ -3754,6 +3874,8 @@
     saleOffer,
     promote,
     upgrade,
+    cancelUpgrade,
+    facilities: FACILITIES,
     changeClub,
     nextSeason,
     migrate,

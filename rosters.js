@@ -5,6 +5,41 @@
     typeof module !== "undefined"
       ? require("./roster-data.js")
       : root.LegacyRosterData;
+  const SUPPLEMENTS =
+    typeof module !== "undefined"
+      ? require("./roster-supplements-data.js")
+      : root.LegacyRosterSupplements;
+  const WORLD =
+    typeof module !== "undefined" ? require("./world.js") : root.LegacyWorld;
+  const names = new Map(
+    WORLD.leagues.flatMap((l) =>
+      l.clubs.map((name, i) => [l.id + "-" + i, name]),
+    ),
+  );
+  for (const t of Object.values(DATA.teams))
+    t.initialRosterCount ??= t.players.length;
+  const existing = new Set(
+    Object.values(DATA.teams).flatMap((t) =>
+      t.players.map((row) => (/^\d+$/.test(row[0]) ? "tm-" + row[0] : row[0])),
+    ),
+  );
+  for (const c of SUPPLEMENTS.clubs) {
+    if (names.get(c.id) !== c.name || !DATA.teams[c.id]) continue;
+    for (const row of c.players) {
+      const id = /^\d+$/.test(row[0]) ? "tm-" + row[0] : row[0];
+      if (existing.has(id)) continue;
+      DATA.teams[c.id].players.push(row);
+      existing.add(id);
+    }
+    DATA.teams[c.id].rosterReference = {
+      ...DATA.teams[c.id].rosterReference,
+      supplement: {
+        source: "ESPN · listas de reservas e jovens",
+        date: SUPPLEMENTS.checkedAt,
+        url: c.url,
+      },
+    };
+  }
   const weeklyEuroEstimates = {
     "Kylian Mbappé": 600000,
     "Erling Haaland": 550000,
@@ -65,7 +100,13 @@
       age = dob ? ageOn(dob, season) : referenceAge + season - referenceYear,
       detail = row[11] || {},
       value =
-        euroValue > 0 ? euroValue : Math.max(25000, Math.round(median * 0.35));
+        euroValue > 0
+          ? euroValue
+          : detail.supplementaryPlayer
+            ? detail.academy
+              ? 100000
+              : 500000
+            : Math.max(25000, Math.round(median * 0.35));
     const legacyOverall = Math.min(
       94,
       Math.max(45, Math.round(40 + 10 * Math.log10(value / 1000))),
@@ -89,11 +130,17 @@
       50,
       Math.min(85, Math.round(46 + 8 * Math.log10(value / 1000) + mature)),
     );
-    const ovr = reference?.overall || benchmarks[id] || estimate;
+    const ovr =
+      reference?.overall ||
+      detail.overallEstimate ||
+      benchmarks[id] ||
+      estimate;
+    const seed = [...id].reduce((n, c) => (n * 31 + c.charCodeAt(0)) >>> 0, 7);
     const potential =
       reference?.potential ||
-      Math.min(90, ovr + (age < 20 ? 9 : age < 23 ? 6 : age < 27 ? 3 : 0));
-    const seed = [...id].reduce((n, c) => (n * 31 + c.charCodeAt(0)) >>> 0, 7);
+      (detail.supplementaryPlayer && age <= 21
+        ? Math.max(ovr, (age < 19 ? 75 : 72) + (seed % 12))
+        : Math.min(90, ovr + (age < 20 ? 9 : age < 23 ? 6 : age < 27 ? 3 : 0)));
     const stamina =
       reference?.stamina ||
       Math.max(
@@ -149,6 +196,8 @@
       contractEstimated: Boolean(detail.sourceKey),
       membershipReference: detail.reference || null,
       membershipKind: detail.membership || null,
+      academyReference: Boolean(detail.academy),
+      shirtNumber: detail.shirtNumber || undefined,
       nationalities: citizenship ? citizenship.split(/\s{2,}/) : [],
       nationality: citizenship?.split(/\s{2,}/)[0] || null,
       dataSource: historicalSource || "transfermarkt-2025",
@@ -172,7 +221,19 @@
       injury: 0,
       price: Math.round(value * DATA.eurBrl),
       salary: Math.round(salary),
-      marketSalary: Math.max(Math.round(salary),Math.round(Math.pow(Math.max(0,ovr-50),3)*(["en","es","it","de","fr"].includes(leagueId)?5:leagueId==="br"?4:["us","mx","sa","pt","nl"].includes(leagueId)?2.6:1.2))),
+      marketSalary: Math.max(
+        Math.round(salary),
+        Math.round(
+          Math.pow(Math.max(0, ovr - 50), 3) *
+            (["en", "es", "it", "de", "fr"].includes(leagueId)
+              ? 5
+              : leagueId === "br"
+                ? 4
+                : ["us", "mx", "sa", "pt", "nl"].includes(leagueId)
+                  ? 2.6
+                  : 1.2),
+        ),
+      ),
       contract: Math.max(season, Number(contract?.slice(0, 4)) || season + 2),
       real: true,
       referenceValueEuro: historicalSource?.startsWith("sofifa-")
@@ -195,7 +256,7 @@
       median = values[Math.floor(values.length / 2)] || 250000;
     return rows.map((r) => make(r, season, id.split("-")[0], median));
   }
-  const api = { DATA, roster, ageOn, make, POSITION_REVISION };
+  const api = { DATA, SUPPLEMENTS, roster, ageOn, make, POSITION_REVISION };
   root.LegacyRosters = api;
   if (typeof module !== "undefined") module.exports = api;
 })(globalThis);

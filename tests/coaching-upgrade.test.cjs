@@ -24,7 +24,7 @@ test("reais localizados aceitam agrupamento e preservam valores exatos nas apres
   assert(Number.isNaN(M.parse("2e9")));
   assert(Number.isNaN(M.parse("1; alert(1)")));
 });
-test("olheiros combinam idade, nível, perfil, liga e salário; missão detalhada cobra uma vez e entrega após sete dias", () => {
+test("olheiros combinam idade, nível, perfil, liga e salário; missão detalhada cobra uma vez e respeita o prazo da rede do clube", () => {
   const s = career(),
     club = E.team(s);
   E.addTestFunds(s, 1000000000);
@@ -44,10 +44,10 @@ test("olheiros combinam idade, nível, perfil, liga e salário; missão detalhad
       league: "all",
     });
   assert.equal(club.money, before - 20000);
-  assert.equal(m.due, s.today + 7);
-  s.today = 6;
+  assert(m.due >= s.today + 6 && m.due <= s.today + 7);
+  s.today = m.due - 1;
   assert.equal(E.scouting.process(s).length, 0);
-  s.today = 7;
+  s.today = m.due;
   const report = E.scouting.process(s)[0];
   assert(report);
   assert(report.players.length > 0);
@@ -60,7 +60,7 @@ test("olheiros combinam idade, nível, perfil, liga e salário; missão detalhad
     assert.equal(E.league(s, t.leagueId).region, "eu");
     assert(E.tactics.positionMatches(p, "ATA"));
     assert(item.observedSalary <= 5000000);
-    assert(item.confidence >= 45 && item.confidence <= 93);
+    assert(item.confidence >= 45 && item.confidence <= 99);
     assert(item.affordable);
   }
   assert.throws(() => E.scouting.start(s, { scope: "youth", maxAge: 40 }));

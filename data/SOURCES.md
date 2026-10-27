@@ -2,7 +2,7 @@
 
 ## Base atual: 2026 / 2026–27
 
-A revisão `current-2026-v1` contém **7.815 atletas reais** em 397 clubes. **341 clubes** têm pelo menos onze profissionais; 56 ficam indisponíveis para iniciar carreira. Não há preenchimento com nomes gerados. O relatório por clube está em `data/roster-coverage.json`. Consulta/importação em 23/10/2026; isso não significa que todos os vínculos representem essa data.
+O snapshot-base `current-2026-v1` contém 7.815 identidades. Com o complemento `reserves-youth-2026-10-v1`, o catálogo contém **10.465 atletas reais** em 397 clubes. **351 clubes** têm pelo menos onze profissionais; 46 ficam indisponíveis para iniciar carreira. Não há preenchimento com nomes gerados. O relatório por clube está em `data/roster-coverage.json`. Consulta/importação em 23/10/2026; isso não significa que todos os vínculos representem essa data.
 
 | Cobertura | Fonte pública e revisão fixa | Referência e limite |
 | --- | --- | --- |
@@ -142,3 +142,20 @@ A imprensa mantém veículos e colunistas inventados no catálogo. A interface r
 `data/shirt-numbers.json` contém 3.902 jogadores de 305 clubes do catálogo, com clube, identidade estável, número, identificador do provedor, temporada informada e URL de consulta. A fonte é a API pública de elencos da [ESPN](https://www.espn.com/soccer/teams), com rotas `site.api.espn.com/apis/site/v2/sports/soccer/{liga}/teams/{clube}/roster?season=2026`. No Barcelona, a resposta identifica explicitamente a temporada **2026–27 Spanish LALIGA**. O ano usa a convenção de temporadas do provedor; não deve ser interpretado como cobertura de todos os clubes de uma temporada oficial única.
 
 O importador associa nomes de clubes de forma restrita dentro da liga e jogadores por nomes normalizados inequívocos no próprio clube. Correspondências ausentes/ambíguas e números duplicados no elenco de origem são descartados. A associação de execução verifica nome e ID do clube para não reutilizar dados quando uma vaga de liga muda de identidade. Não foram importadas imagens, novos atletas ou transferências. Os dados descrevem a referência consultada e não comprovam licença ou vínculo com o provedor. Números editados durante a carreira têm prioridade sobre o snapshot; a fonte não é consultada em tempo de jogo.
+
+
+## Reservas e jovens: 27/10/2026
+
+`data/reserve-goalkeepers.json` e `data/young-player-references.json` guardam as listas de referência consultadas em endpoints públicos de elenco da ESPN, `site.api.espn.com/apis/site/v2/sports/soccer/{liga}/teams/{id}/roster?season=2026`. Cada clube registra o nome, a temporada informada pelo provedor e o endereço completo; cada atleta tem identificador, nascimento, nacionalidade quando publicada, posição e camisa. O filtro U21 exige nascimento confirmado e idade de 16 a 21 anos na consulta. Listas de primeira equipe podem conter reservas da formação, mas não representam cobertura completa de todas as academias.
+
+`data/roster-supplements.json` contém somente as 2.650 identidades ausentes do catálogo (648 goleiros e 2.002 jovens de linha). 2.256 delas são U21. `scripts/build-club-context.cjs` reutiliza IDs do catálogo/arquivo histórico quando nome normalizado e nascimento são compatíveis; dúvidas de identidade são descartadas. Novas identidades usam o ID publicado com prefixo `espn-`. Vínculos já existentes em outro clube não são movidos por esse complemento. A cópia local `roster-supplements-data.js` permite jogar offline. O histórico da fonte não confirma atributos de habilidade, preços ou salários atuais: esses campos continuam estimativas quando não há referência específica.
+
+## Estádios e instalações
+
+`data/club-infrastructure.json` registra nomes de estádios para os 397 clubes, com URL e ano/data da referência. As fontes são tabelas de clubes/estádios de temporadas na Wikipedia, infoboxes dos clubes e, onde necessário, sedes de partidas em calendários ESPN. O Barcelona usa **Spotify Camp Nou**, confirmado no calendário da partida de 25/10/2026, e capacidade de referência de **62.652**, sem substituir pela capacidade futura planejada de 105 mil. Algumas referências são de temporadas anteriores; isso fica registrado. Capacidades ausentes permanecem `null`, e a capacidade utilizada pelo jogo é identificada como estimativa. A capacidade da carreira pode mudar por obras sem alterar o dado histórico da fonte.
+
+Nomes de centros de treinamento conhecidos e níveis por porte são configurados em `club-facilities.js`. Níveis, custos, duração, capacidade acrescentada, efeito médico e retorno comercial são regras da simulação. Não são avaliações oficiais ou um orçamento de engenharia dos clubes.
+
+## Regulamentos nacionais
+
+`data/league-reference-research.json` conserva trechos de classificação das páginas consultadas; `data/league-rules.json` seleciona os critérios efetivamente implementados e explicita os formatos especiais ainda adaptados. A fonte primária da LaLiga é o [Reglamento de Competiciones RFEF, 12/11/2025](https://rfef.es/sites/default/files/2025-11/20251112_Reglamento_de_Competiciones_2025.pdf), artigo 29. A [Lei 3 da IFAB](https://www.theifab.com/laws/latest/the-players/) fundamenta o limite de substituições/oportunidades quando adotado pela competição. As regras completas incluem particularidades não cobertas pelo motor: inscrição, coeficientes de fair play, promoções/rebaixamentos, sorteios e fases decisivas. A interface não identifica esses formatos adaptados como reprodução integral do regulamento oficial.

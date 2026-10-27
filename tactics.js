@@ -8,6 +8,10 @@
     typeof module !== "undefined"
       ? require("./discipline.js")
       : root.LegacyDiscipline;
+  const RULES =
+    typeof module !== "undefined"
+      ? require("./league-rules.js")
+      : root.LegacyLeagueRules;
   const usable = (t, p) =>
     DS.available(p, t.selectionCompetition || t.leagueId);
   const slot = (id, label, pos, x, y) => ({ id, label, pos, x, y });
@@ -516,12 +520,19 @@
     const preferred = (t.tactics?.bench || [])
       .map((id) => available.find((p) => p.id === id))
       .filter(Boolean);
+    const goalkeeper = preferred.some((p) => p.pos === "GOL")
+      ? []
+      : available
+          .filter((p) => p.pos === "GOL" && !preferred.includes(p))
+          .sort((a, b) => b.ovr - a.ovr)
+          .slice(0, 1);
     return [
       ...preferred,
+      ...goalkeeper,
       ...available
-        .filter((p) => !preferred.includes(p))
+        .filter((p) => !preferred.includes(p) && !goalkeeper.includes(p))
         .sort((a, b) => b.ovr - a.ovr),
-    ].slice(0, 9);
+    ].slice(0, RULES.get(t.selectionCompetition || t.leagueId).bench);
   }
   function toggleBench(t, id) {
     if (!t.players.some((p) => p.id === id && usable(t, p)))
@@ -537,8 +548,9 @@
     if (plan.bench.includes(id))
       plan.bench = plan.bench.filter((p) => p !== id);
     else {
-      if (plan.bench.length >= 9)
-        throw Error("Escolha até nove reservas prioritários.");
+      const limit = RULES.get(t.selectionCompetition || t.leagueId).bench;
+      if (plan.bench.length >= limit)
+        throw Error(`Escolha até ${limit} reservas prioritários.`);
       plan.bench.push(id);
     }
   }
@@ -599,7 +611,7 @@
       !p.roles ||
       !p.assignments ||
       !Array.isArray(p.bench) ||
-      p.bench.length > 9 ||
+      p.bench.length > 15 ||
       new Set(p.bench).size !== p.bench.length
     )
       throw Error("Plano tático inválido.");

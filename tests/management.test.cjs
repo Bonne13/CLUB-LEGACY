@@ -125,13 +125,13 @@ test("olheiro entrega candidatos reais, sem lesionados, com salário e taxa dent
   }
   assert(S.parse(S.serialize(s)));
 });
-test("observação da base não fabrica atletas e responde depois de cinco dias", () => {
+test("observação da base não fabrica atletas e respeita a estrutura dos olheiros", () => {
   const s = career(),
     ids = new Set(
       s.teams.flatMap((t) => [...t.players, ...t.youth]).map((p) => p.id),
     );
   const m = E.scouting.start(s, { scope: "youth", maxAge: 21 });
-  days(s, 4);
+  days(s, m.due - s.today - 1);
   assert.equal(m.status, "pending");
   days(s, 1);
   assert.equal(m.status, "completed");

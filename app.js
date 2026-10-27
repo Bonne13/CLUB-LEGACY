@@ -577,7 +577,7 @@ function rosterReferenceView(t) {
           : "Elenco observado em " +
             d +
             ". Cobertura parcial das estatísticas disponíveis.";
-  return `<p class="muted">${esc(label)}${source ? ` <a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">Ver fonte</a>` : ""}</p>`;
+  return `<p class="muted">${esc(label)}${ref.supplement ? ` Goleiros reservas complementados em ${esc(ref.supplement.date.split("-").reverse().join("/"))}.` : ""}${source ? ` <a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">Ver fonte</a>` : ""}</p>`;
 }
 function marketFiltersView() {
   const nations = [
@@ -694,9 +694,9 @@ function timeControls() {
 const metric = (title, value, subtitle) =>
   `<div class="card metric-card"><small>${title}</small><div class="metric">${/^-?R\$/.test(String(value)) ? moneyValue(LegacyMoney.parse(value)) : value}</div><span class="muted">${subtitle}</span></div>`;
 function standings(rows) {
-  return `<div class="table-wrap"><table><thead><tr><th>#</th><th>CLUBE</th><th>PTS</th><th>J</th><th>V</th><th>E</th><th>D</th><th>SG</th></tr></thead><tbody>${E.rank(
-    rows,
-  )
+  const league = state.leagues.find((l) => l.table === rows),
+    ranked = league ? E.leagueRank(state, league.id) : E.rank(rows);
+  return `<div class="table-wrap"><table><thead><tr><th>#</th><th>CLUBE</th><th>PTS</th><th>J</th><th>V</th><th>E</th><th>D</th><th>SG</th></tr></thead><tbody>${ranked
     .map(
       (t, i) =>
         `<tr class="${t.id === state.clubId ? "mine" : ""}"><td>${i + 1}</td><td>${teamLabel(t.id)}</td><td><strong>${t.p}</strong></td><td>${t.w + t.d + t.l}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.gf - t.ga}</td></tr>`,
@@ -715,10 +715,7 @@ const views = {
     const t = team(),
       d = E.dayInfo(state),
       next = E.nextFixture(state),
-      pos =
-        E.rank(E.league(state, t.leagueId).table).findIndex(
-          (r) => r.id === t.id,
-        ) + 1;
+      pos = E.leagueRank(state, t.leagueId).findIndex((r) => r.id === t.id) + 1;
     return `<div class="hero"><span class="badge">TEMPORADA ${E.seasonLabel(state)} · ${esc(E.date(state))}</span><h2 class="identity-title">${badge(t, "large")}<span>${esc(t.name)}</span></h2><p>${next ? esc(next.name) + " · " + matchup(next) : d ? "Data sem partida do seu clube. Acompanhe os outros resultados." : "A temporada terminou. Confira os títulos e as propostas para sua carreira."}</p>${next || E.currentMatch(state).active ? '<button class="primary" data-page="Dia de jogo">Central da partida →</button>' : '<button data-page="Calendário">Ver calendário →</button>'}</div>${state.calendarProfile && state.today < state.calendarProfile.preseasonDays ? `<section class="preseason-banner"><div><span class="badge">PRÉ-TEMPORADA</span><h3>${state.calendarProfile.preseasonDays - state.today} dias para preparar a estreia</h3><p>Treine, negocie e organize jogos de preparação no calendário.</p></div><button data-page="Calendário">Organizar a pré-temporada →</button></section>` : ""}<div class="grid">${metric("CAIXA DO CLUBE", money(t.money), "Folha semanal estimada: " + money(t.players.reduce((a, p) => a + p.salary, 0)))}${metric("POSIÇÃO NA LIGA", pos + "º", esc(E.league(state, t.leagueId).name))}${metric("FORÇA DO TIME", Math.round(E.strength(t)), "Reputação do treinador: " + state.reputation)}</div><div class="columns"><div class="card"><div class="row"><h3>Notícias do clube e do mundo</h3><button data-page="Jornal">Abrir jornal →</button></div>${state.news
       .slice(0, 8)
       .map((n) => `<p>${esc(n)}</p>`)
@@ -760,7 +757,7 @@ const views = {
       c = state.cups.find((c) => c.id === id);
     return `<div class="card"><label>Acompanhar competição<select id="competition">${options([...state.leagues.map((l) => [l.id, l.name]), ...state.cups.map((c) => [c.id, c.name])], id)}</select></label>${
       l
-        ? `<h3>${esc(l.name)} · ${E.seasonLabel(state, l.region)}</h3><p class="muted">${l.ids.length} clubes · ${l.single ? "Turno único" : "Turno e returno"} · ${l.fixtures.length} rodadas. Pontos, saldo e gols marcados.</p>${standings(l.table)}<div class="row">${btn("Desempenho e prêmio do campeonato →", "awards-competition", l.id)}</div>`
+        ? `<h3>${esc(l.name)} · ${E.seasonLabel(state, l.region)}</h3><p class="muted">${l.ids.length} clubes · ${l.single ? "Turno único" : "Turno e returno"} · ${l.fixtures.length} rodadas.</p>${leagueRulesView(l)}${standings(l.table)}<div class="row">${btn("Desempenho e prêmio do campeonato →", "awards-competition", l.id)}</div>`
         : `<h3>${esc(c.name)}</h3><p class="muted">${c.entrants.length} clubes · ${c.region === "sa" ? "8 grupos de 4, seis jogos por clube. Os dois melhores de cada grupo avançam." : "Fase de liga com " + c.stageGames + " jogos por clube. Top 8 direto às oitavas; 9º a 24º disputam playoffs."} Mata-mata em jogo único.</p>${c.champion ? `<div class="hero"><span class="badge">CAMPEÃO</span><h2 class="identity-title">${teamLabel(c.champion, "large")}</h2></div>` : ""}${c.region === "sa" ? c.groups.map((g, i) => `<h3>Grupo ${String.fromCharCode(65 + i)}</h3>${standings(c.table.filter((t) => g.includes(t.id)))}`).join("") : standings(c.table)}${c.rounds
             .map(
               (r) =>
@@ -795,10 +792,55 @@ const views = {
   Histórico: () => honoursView(),
   Disciplina: () => disciplineView(),
   Financeiro: () => financialView(),
-  Clube: () =>
-    `<div class="grid">${metric("CAIXA", money(team().money), "Fluxo completo na página Financeiro")}${metric("FOLHA SEMANAL", money(E.finance.payroll(team())), "Pagamento a cada sete dias")}${metric("ELENCO REAL", team().players.length, team().youth.length + " jovens confirmados")}</div><div class="columns">${["stadium", "facility"].map((k) => `<div class="card"><h3>${k === "stadium" ? "Estádio" : "Centro de treinamento"} · nível ${team()[k]} / 5</h3><p class="muted">${k === "stadium" ? "Aumenta a receita em casa." : "Melhora as chances de desenvolvimento dos atletas."}</p>${btn("Ampliar · " + money(team()[k] * 1500000), "upgrade", k)}</div>`).join("")}</div><div class="card"><h3>Administração do clube</h3><p>Controle os limites de salários e transferências, acompanhe o extrato e negocie patrocínios.</p><button data-page="Financeiro">Abrir Financeiro →</button></div>`,
+  Clube: () => facilitiesView(),
   "Dia de jogo": () => matchView(),
 };
+function leagueRulesView(l) {
+  const r = E.leagueRules.get(l.id),
+    tracked = l.results?.length || 0;
+  return `<details class="league-rule-card"><summary>Regulamento e regras desta carreira</summary><div class="rules-summary"><span class="pill">Vitória ${r.winPoints} · empate ${r.drawPoints}</span><span class="pill">${r.substitutions} substituições · ${r.opportunities} oportunidades + intervalo</span></div><h4>Ordem de classificação</h4><ol>${r.criteria.map((k) => `<li>${esc(E.leagueRules.labels[k])}${k === "fairPlay" ? " · coeficiente oficial ainda não aplicado" : ""}</li>`).join("")}</ol><p class="muted">O confronto direto só é aplicado depois de todos os jogos entre os clubes empatados estarem registrados. Jogos acompanhados nesta temporada: ${tracked}. Em saves anteriores, resultados ausentes não são reconstruídos.</p><h4>Formato de referência</h4><p>${esc(r.format)}</p>${r.specialNotes ? `<p>${esc(r.specialNotes)}</p>` : ""}<p class="notice">${r.specialFormat ? "Esta liga usa fases na vida real; a carreira mantém um calendário adaptado. " : ""}${esc(r.limitations)} Empates ainda sem critério disponível aparecem em ordem provisória.</p><div class="row"><a href="${esc(r.referenceUrl)}" target="_blank" rel="noopener noreferrer">Consultar referência da liga ↗</a>${r.officialSources?.map((url) => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Regulamento oficial · ${esc(r.officialArticle || "")}</a>`).join("") || ""}<a href="${esc(r.substitutionSource)}" target="_blank" rel="noopener noreferrer">Regra de substituições · IFAB ↗</a></div></details>`;
+}
+let venueReferenceClub = null;
+function venueReferenceView(id) {
+  const t = team(id),
+    i = E.facilities.ensure(t, state);
+  return `<strong>${esc(t.name)} · ${esc(i.venue.name)}</strong><p>${i.gameCapacity.toLocaleString("pt-BR")} lugares${i.venue.capacity ? "" : " · estimativa da carreira"}${i.venue.city ? " · " + esc(i.venue.city) : ""}</p>${i.venue.url ? `<a href="${esc(i.venue.url)}" target="_blank" rel="noopener noreferrer">Consultar referência ↗</a>` : ""}`;
+}
+function facilitiesView() {
+  const t = team(),
+    C = E.facilities,
+    i = C.ensure(t, state),
+    pending = i.projects.filter((p) => p.status === "building"),
+    activeMatch = state.live && !state.live.done;
+  const integer = (n) => n.toLocaleString("pt-BR"),
+    date = (n) => new Date(n).toLocaleDateString("pt-BR", { timeZone: "UTC" });
+  return `<section class="hero club-estate"><span class="badge">PATRIMÔNIO DO CLUBE</span><h2 class="identity-title">${badge(t, "large")}<span>${esc(t.name)}</span></h2><p>Planeje os investimentos que sustentam o futebol.</p><div class="estate-summary"><div><small>CAIXA DISPONÍVEL</small>${moneyValue(t.money)}</div><div><small>OBRAS EM ANDAMENTO</small><strong>${pending.length}</strong></div><div><small>INVESTIMENTO ATIVO</small>${moneyValue(pending.reduce((n, p) => n + p.cost, 0))}</div></div></section><section class="card stadium-profile"><div class="stadium-illustration" aria-hidden="true"><div></div></div><div><span class="badge">CASA DO CLUBE</span><h2>${esc(i.venue.name)}</h2>${i.venue.city ? `<p>${esc(i.venue.city)}</p>` : ""}<div class="row"><span class="pill">${integer(i.gameCapacity)} lugares${i.venue.capacity ? "" : " · estimativa da carreira"}</span><span class="pill">Nível ${t.stadium}/5</span></div>${i.venue.capacity && i.gameCapacity !== i.venue.capacity ? `<p class="muted">Capacidade da referência: ${integer(i.venue.capacity)}. A diferença corresponde às obras da carreira.</p>` : ""}${i.venue.url ? `<a href="${esc(i.venue.url)}" target="_blank" rel="noopener noreferrer">Referência do estádio ↗</a>` : ""}<p class="muted">Treinamento: ${esc(i.trainingName)}</p></div></section><section class="card venue-catalog"><details><summary>Consultar os estádios dos outros clubes</summary><label>Clube<select id="venue-reference-club">${options(
+    [...state.teams]
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((t) => [t.id, t.name]),
+    venueReferenceClub || t.id,
+  )}</select></label><div id="venue-reference-result">${venueReferenceView(venueReferenceClub || t.id)}</div></details></section><div class="facilities-grid">${Object.entries(
+    C.definitions,
+  )
+    .map(([key, def]) => {
+      const q = C.quote(state, t, key),
+        disabled = q.max || q.active || t.money < q.cost || activeMatch;
+      return `<article class="card facility-card" data-facility="${key}"><div class="row"><h3>${esc(def.label)}</h3><span class="pill">${q.current}/5</span></div><div class="facility-level" aria-label="Nível ${q.current} de 5">${Array.from({ length: 5 }, (_, n) => `<i class="${n < q.current ? "filled" : ""}"></i>`).join("")}</div><p>${esc(def.benefit)}</p>${q.active ? `<div class="facility-project"><strong>Obra em andamento · nível ${q.active.target}</strong><div class="construction-progress" role="progressbar" aria-label="Progresso da obra" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(C.progress(state, q.active) * 100)}"><i style="width:${Math.round(C.progress(state, q.active) * 100)}%"></i></div><p>${Math.round(C.progress(state, q.active) * 100)}% · conclusão em ${date(q.active.dueAt)}</p><small>Investimento já pago: ${money(q.active.cost)}</small>${btn("Cancelar · restituição " + money(C.refund(state, q.active)), "cancel-upgrade", q.active.id)}</div>` : q.max ? '<p class="muted">Instalação no nível máximo.</p>' : `<div class="facility-quote"><div><small>INVESTIMENTO</small>${moneyValue(q.cost)}</div><div><small>PRAZO</small><strong>${q.days} dias</strong></div></div>${btn("Iniciar obra · nível " + q.target, "upgrade", key, "primary").replace("<button ", `<button ${disabled ? "disabled" : ""} `)}${t.money < q.cost ? '<small class="muted">Caixa insuficiente para esta obra.</small>' : ""}`}</article>`;
+    })
+    .join(
+      "",
+    )}</div><section class="card"><h3>Planejamento e histórico</h3><p>O investimento sai do caixa ao iniciar a obra. Os benefícios passam a valer na conclusão, conforme os dias avançam. Cancelar restitui 80% da parcela ainda não executada.</p><p class="muted">Os níveis iniciais e os custos são avaliações da simulação, de acordo com o porte do clube. Nomes e capacidades dos estádios têm referências próprias. Obras não alteram o orçamento de transferências automaticamente.</p>${
+    i.history.length
+      ? `<div class="facility-history">${i.history
+          .slice(0, 10)
+          .map(
+            (p) =>
+              `<div><strong>${esc(C.definitions[p.key].label)} · nível ${p.target}</strong><span>${date(p.closedAt)}</span>${moneyValue(p.cost)}</div>`,
+          )
+          .join("")}</div>`
+      : '<p class="muted">As obras concluídas aparecerão aqui.</p>'
+  }<button data-page="Financeiro">Abrir Financeiro →</button></section>`;
+}
 const financeLabels = {
   all: "Todas as categorias",
   wages: "Salários",
@@ -1084,7 +1126,7 @@ function squadTacticsView() {
     })
     .join(
       "",
-    )}</div><div class="bench-strip"><strong>Reservas · ${T.bench(t).length} / 9</strong>${T.bench(
+    )}</div><div class="bench-strip"><strong>Reservas · ${T.bench(t).length} / ${E.leagueRules.get(t.selectionCompetition || t.leagueId).bench}</strong>${T.bench(
     t,
   )
     .map(
@@ -1120,7 +1162,7 @@ function squadTacticsView() {
   )}</select></label><label>Tarefa<select id="slot-duty">${options(
     T.duties.map((v) => [v, v]),
     r.duty,
-  )}</select></label></div><form id="squad-search" class="squad-search"><label>Buscar atleta<input id="squad-query" placeholder="Nome do jogador" value="${esc(squadQuery)}"></label><label>Posição de origem<select id="squad-position">${options([["all", "Todas"], ...["GOL", "LAT", "ZAG", "VOL", "MEI", "ATA"].map((v) => [v, v])], squadPosition)}</select></label><button>Buscar</button></form><div class="candidate-list">${candidates.map((p) => `<div class="candidate ${chosen?.id === p.id ? "chosen" : ""}" draggable="${E.discipline.available(p, t.selectionCompetition)}" data-drag-player="${esc(p.id)}"><div><strong>${esc(p.name)}</strong>${disciplineStatus(p)}<small>${T.adaptation(p, target).natural} · overall ${p.ovr} → ${T.adaptation(p, target).effective} · ${T.adaptation(p, target).label} · adaptação ${Math.round(T.fit(p, target) * 100)}% · ${p.injury ? "lesão " + p.injury + " dias" : p.fitness + "%"}${assigned.has(p.id) ? " · titular " + assigned.get(p.id) : ""}</small></div><div>${btn(chosen?.id === p.id ? "Escalado aqui" : "Escalar", "place-player", p.id).replace("<button ", `<button ${!E.discipline.available(p, t.selectionCompetition) || chosen?.id === p.id ? "disabled" : ""} `)}${!assigned.has(p.id) && E.discipline.available(p, t.selectionCompetition) ? btn(plan.bench.includes(p.id) ? "Retirar prioridade" : "Priorizar banco", "toggle-bench", p.id) : ""}</div></div>`).join("") || "<p>Nenhum atleta neste filtro.</p>"}</div></section></div><p class="muted">Posições principais e habituais confirmadas mantêm o overall posicional. A perda por improvisação se aplica a locais sem confirmação, inclusive ao lado oposto quando ele não está entre as posições conhecidas do atleta. PE e PD são pontas. No centro, ATA permite um atacante móvel; escolha a função Centroavante para exigir a posição específica CA. A função não muda o lado no campo. Quando a fonte só informa uma posição geral, o lado fica identificado como não informado. As posições detalhadas são referências históricas e os percentuais de adaptação são parâmetros do jogo. O onze definido é mantido entre partidas. Apenas atletas indisponíveis recebem cobertura temporária; use Escalação automática para reorganizar o time por condição física e adequação ao local. O banco completa automaticamente até nove atletas, respeitando suas prioridades.</p></div><div class="card"><span class="badge">IDENTIDADE DA EQUIPE</span><h3>Instruções táticas</h3><div class="tactic-instructions">${Object.entries(
+  )}</select></label></div><form id="squad-search" class="squad-search"><label>Buscar atleta<input id="squad-query" placeholder="Nome do jogador" value="${esc(squadQuery)}"></label><label>Posição de origem<select id="squad-position">${options([["all", "Todas"], ...["GOL", "LAT", "ZAG", "VOL", "MEI", "ATA"].map((v) => [v, v])], squadPosition)}</select></label><button>Buscar</button></form><div class="candidate-list">${candidates.map((p) => `<div class="candidate ${chosen?.id === p.id ? "chosen" : ""}" draggable="${E.discipline.available(p, t.selectionCompetition)}" data-drag-player="${esc(p.id)}"><div><strong>${esc(p.name)}</strong>${disciplineStatus(p)}<small>${T.adaptation(p, target).natural} · overall ${p.ovr} → ${T.adaptation(p, target).effective} · ${T.adaptation(p, target).label} · adaptação ${Math.round(T.fit(p, target) * 100)}% · ${p.injury ? "lesão " + p.injury + " dias" : p.fitness + "%"}${assigned.has(p.id) ? " · titular " + assigned.get(p.id) : ""}</small></div><div>${btn(chosen?.id === p.id ? "Escalado aqui" : "Escalar", "place-player", p.id).replace("<button ", `<button ${!E.discipline.available(p, t.selectionCompetition) || chosen?.id === p.id ? "disabled" : ""} `)}${!assigned.has(p.id) && E.discipline.available(p, t.selectionCompetition) ? btn(plan.bench.includes(p.id) ? "Retirar prioridade" : "Priorizar banco", "toggle-bench", p.id) : ""}</div></div>`).join("") || "<p>Nenhum atleta neste filtro.</p>"}</div></section></div><p class="muted">Posições principais e habituais confirmadas mantêm o overall posicional. A perda por improvisação se aplica a locais sem confirmação, inclusive ao lado oposto quando ele não está entre as posições conhecidas do atleta. PE e PD são pontas. No centro, ATA permite um atacante móvel; escolha a função Centroavante para exigir a posição específica CA. A função não muda o lado no campo. Quando a fonte só informa uma posição geral, o lado fica identificado como não informado. As posições detalhadas são referências históricas e os percentuais de adaptação são parâmetros do jogo. O onze definido é mantido entre partidas. Apenas atletas indisponíveis recebem cobertura temporária; use Escalação automática para reorganizar o time por condição física e adequação ao local. O banco respeita o limite da competição e suas prioridades. A seleção automática inclui cobertura para o gol quando houver um reserva disponível.</p></div><div class="card"><span class="badge">IDENTIDADE DA EQUIPE</span><h3>Instruções táticas</h3><div class="tactic-instructions">${Object.entries(
     T.instructions,
   )
     .map(
@@ -1347,9 +1389,10 @@ function matchView() {
       (p) =>
         E.discipline.available(p, m.competition) &&
         !starters.has(p.id) &&
-        !used.has(p.id),
+        !used.has(p.id) &&
+        (!plan.bench || plan.bench.includes(p.id)),
     ) || [];
-  return `<section class="match-centre"><header class="match-heading"><span class="badge">${esc(f.name)}</span><div id="match-minute">${m ? m.minute + "’" : "PRÉ-JOGO"} · ${half ? "INTERVALO" : m?.done ? "ENCERRADO" : m?.secondHalfStarted || m?.minute > 45 ? "SEGUNDO TEMPO" : "PRIMEIRO TEMPO"}</div><div class="score">${scoreboard(f, m?.goals || [0, 0])}</div><div class="match-progress"><i style="width:${((m?.minute || 0) / 90) * 100}%"></i></div></header><div class="match-controls">${controls}<label>Visualização<select id="mode">${options(
+  return `<section class="match-centre"><header class="match-heading"><span class="badge">${esc(f.name)}</span><div id="match-minute">${m ? m.minute + "’" : "PRÉ-JOGO"} · ${half ? "INTERVALO" : m?.done ? "ENCERRADO" : m?.secondHalfStarted || m?.minute > 45 ? "SEGUNDO TEMPO" : "PRIMEIRO TEMPO"}</div><div class="score">${scoreboard(f, m?.goals || [0, 0])}</div><div class="match-progress"><i style="width:${((m?.minute || 0) / 90) * 100}%"></i></div></header><p class="match-venue">${esc(E.facilities.ensure(team(f.pair[0]), state).venue.name)} · ${E.facilities.ensure(team(f.pair[0]), state).gameCapacity.toLocaleString("pt-BR")} lugares</p><div class="match-controls">${controls}<label>Visualização<select id="mode">${options(
     [
       ["2d", "Campo 2D"],
       ["3d", "Campo 3D"],
@@ -1373,7 +1416,7 @@ function matchView() {
     state.matchPreferences?.quality || "auto",
   )}</select></label></div><div class="match-workspace"><div><div id="event-announcement" class="goal-announcement" aria-live="assertive"></div><div class="play-caption" id="play-caption" aria-live="polite">${half ? "Intervalo: faça os ajustes e inicie o segundo tempo." : m?.done ? "Fim de jogo. Confira os melhores momentos." : "Acompanhe a bola e a construção das jogadas."}</div><div id="field-shell" class="field-shell"><div class="expanded-field-toolbar"><strong>${esc(name(f.pair[0]))} × ${esc(name(f.pair[1]))}</strong><div><button data-action="field-follow" ${m?.mode === "3d" ? "" : "hidden"}>${matchCamera === "follow" ? "Campo inteiro" : "Seguir bola"}</button><button data-action="field-pause" ${!m || m.done ? "disabled" : ""}>${m?.minute === 45 && !m.secondHalfStarted ? "Iniciar 2º tempo" : paused ? "Retomar" : "Pausar"}</button><button data-action="match-expand">Voltar</button></div></div><div id="field"><div class="match-empty-field"><strong>Prepare o seu time.</strong><span>Inicie a partida para acompanhar a bola em 2D ou 3D.</span></div></div><div class="field-view-controls" ${m?.mode === "3d" ? "" : "hidden"} role="group" aria-label="Visualização do campo 3D"><button data-action="view-follow" aria-pressed="${matchCamera === "follow"}">${matchCamera === "follow" ? "Campo inteiro" : "Seguir bola"}</button><div class="field-zoom" role="group" aria-label="Zoom do campo"><button data-action="zoom-out" aria-label="Afastar campo" ${matchZoom <= 0.75 ? "disabled" : ""}>−</button><button data-action="zoom-reset" aria-label="Restaurar enquadramento"><output id="field-zoom-value">${Math.round(matchZoom * 100)}%</output></button><button data-action="zoom-in" aria-label="Aproximar campo" ${matchZoom >= 2.25 ? "disabled" : ""}>+</button></div></div><button class="field-expand" data-action="match-expand" ${m?.plans ? "" : "disabled"}>Ampliar campo ↗</button></div><p id="field-help" class="muted" ${m?.mode === "3d" ? "" : "hidden"}>Use + e − para aproximar ou afastar. Seguir bola acompanha o lance de perto; toque em um jogador para ver seu nome.</p><p class="muted">${half ? "O relógio está parado no intervalo." : playing && paused ? "Partida pausada." : "O lance desacelera nas finalizações; o placar atualiza quando a bola chega ao gol."}</p><div class="match-stats" id="stats"></div>${m?.goalReplays?.length ? `<div class="card"><h3>Gols e replays</h3><div class="row">${m.goalReplays.map((p, i) => btn(`${p.minute}’ · ${esc(p.playerName)}`, "replay-goal", String(i))).join("")}</div></div>` : ""}</div><aside><section class="card"><h3>Relato da partida</h3><div class="log" id="log" aria-live="off"></div></section></aside></div>${
     plan && playing
-      ? `<section class="card"><h3>Banco do treinador</h3><p>${(m.substitutions || []).filter((x) => x.side === side).length} de 5 substituições. Pause para escolher a troca.</p><form id="substitution-form" class="substitution-form"><label>Sai<select name="out">${options(
+      ? `<section class="card"><h3>Banco do treinador</h3><p>${E.leagueRules.substitutionInfo(m, side).used} de 5 substituições · ${E.leagueRules.substitutionInfo(m, side).windows} de 3 oportunidades usadas. Trocas no intervalo não consomem oportunidade.</p><form id="substitution-form" class="substitution-form"><label>Sai<select name="out">${options(
           E.discipline
             .active(plan)
             .map((p) => [
@@ -2467,6 +2510,16 @@ document.addEventListener("click", (event) => {
         break;
       case "upgrade":
         E.upgrade(state, id);
+        notify(
+          "Obra iniciada. Avance os dias da carreira para acompanhar a construção.",
+        );
+        break;
+      case "cancel-upgrade":
+        notify(
+          "Obra cancelada. Restituição de " +
+            money(E.cancelUpgrade(state, id)) +
+            " registrada no caixa.",
+        );
         break;
       case "enable-test-mode":
         if (
@@ -2652,6 +2705,11 @@ document.addEventListener("change", (event) => {
       render();
       return;
     }
+  }
+  if (el.id === "venue-reference-club") {
+    venueReferenceClub = el.value;
+    $("#venue-reference-result").innerHTML = venueReferenceView(el.value);
+    return;
   }
   if (el.id === "match-quality") {
     state.matchPreferences = {
@@ -3093,8 +3151,12 @@ function trainingView() {
   )}</select></label></div><div class="${trainingLayout === "cards" ? "training-athletes" : "table-wrap"}"><table class="physical-table ${trainingLayout === "cards" ? "training-cards" : ""}"><thead><tr><th>ATLETA</th><th>ENERGIA / CARGA</th><th>PLANO DE CARGA</th><th>FOCO DE DESENVOLVIMENTO</th><th>AMANHÃ SEM JOGO</th></tr></thead><tbody>${
     players
       .map((p) => {
-        const prediction = E.physical.preview(p, session.mode, t.facility),
-          days = E.physical.restEstimate(p, t.facility),
+        const prediction = E.physical.preview(
+            p,
+            session.mode,
+            E.facilities.recoveryLevel(t),
+          ),
+          days = E.physical.restEstimate(p, E.facilities.recoveryLevel(t)),
           focus = p.trainingFocus || "balanced",
           xp = p.trainingXP?.[focus] || 0,
           selected = p.restDays

@@ -121,7 +121,9 @@ const { chromium } = require("playwright"),
         plan = m.plans[m.pair.indexOf(state.clubId)],
         out = plan.starters[8],
         incoming = team().players.find(
-          (p) => !plan.starters.some((x) => x.id === p.id),
+          (p) =>
+            plan.bench.includes(p.id) &&
+            !plan.starters.some((x) => x.id === p.id),
         );
       return { out: out.id, incoming: incoming.id };
     });

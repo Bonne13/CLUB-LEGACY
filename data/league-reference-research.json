@@ -1,0 +1,3628 @@
+[
+  {
+    "id": "br",
+    "clubs": [
+      {
+        "name": "Athletico Paranaense",
+        "id": "br-16",
+        "venue": {
+          "name": "Arena da Baixada",
+          "capacity": 42372,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Atlético Mineiro",
+        "id": "br-10",
+        "venue": {
+          "name": "Arena MRV",
+          "capacity": 44892,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Bahia",
+        "id": "br-6",
+        "venue": {
+          "name": "Casa de Apostas Arena Fonte Nova",
+          "capacity": 50052,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Botafogo",
+        "id": "br-5",
+        "venue": {
+          "name": "Olímpico Nilton Santos",
+          "capacity": 44661,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Chapecoense",
+        "id": "br-17",
+        "venue": {
+          "name": "Arena Condá",
+          "capacity": 20089,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Corinthians",
+        "id": "br-12",
+        "venue": {
+          "name": "Neo Química Arena",
+          "capacity": 47252,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Coritiba",
+        "id": "br-18",
+        "venue": {
+          "name": "Couto Pereira",
+          "capacity": 40502,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Cruzeiro",
+        "id": "br-2",
+        "venue": {
+          "name": "Mineirão",
+          "capacity": 66658,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Flamengo",
+        "id": "br-0",
+        "venue": {
+          "name": "Maracanã",
+          "capacity": 78838,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Fluminense",
+        "id": "br-4",
+        "venue": {
+          "name": "Maracanã",
+          "capacity": 78838,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Grêmio",
+        "id": "br-8",
+        "venue": {
+          "name": "Arena do Grêmio",
+          "capacity": 60540,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Internacional",
+        "id": "br-15",
+        "venue": {
+          "name": "Beira-Rio",
+          "capacity": 49055,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Mirassol",
+        "id": "br-3",
+        "venue": {
+          "name": "Campos Maia",
+          "capacity": 14534,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Palmeiras",
+        "id": "br-1",
+        "venue": {
+          "name": "Nubank Parque",
+          "capacity": 43713,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Red Bull Bragantino",
+        "id": "br-9",
+        "venue": {
+          "name": "Cícero de Souza Marques",
+          "capacity": 12000,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Remo",
+        "id": "br-19",
+        "venue": {
+          "name": "Mangueirão",
+          "capacity": 53645,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Santos",
+        "id": "br-11",
+        "venue": {
+          "name": "Vila Belmiro",
+          "capacity": 16068,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "São Paulo",
+        "id": "br-7",
+        "venue": {
+          "name": "MorumBIS",
+          "capacity": 66671,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Vasco da Gama",
+        "id": "br-13",
+        "venue": {
+          "name": "São Januário",
+          "capacity": 24584,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Vitória",
+        "id": "br-14",
+        "venue": {
+          "name": "Barradão",
+          "capacity": 30793,
+          "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A",
+          "reference": "2026"
+        }
+      }
+    ],
+    "classification": "1) points; 2) wins; 3) goal difference; 4) goals scored; 5) head-to-head results (only between two teams); 6) fewest red cards; 7) fewest yellow cards; 8) drawing of lots. [ 81 ] (Q) Qualified for the phase indicated; (T) Qualified, but not yet for the particular phase indicated",
+    "page": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_Série_A"
+  },
+  {
+    "id": "ar",
+    "clubs": [
+      {
+        "name": "Aldosivi",
+        "id": "ar-29",
+        "venue": {
+          "name": "José María Minella",
+          "capacity": 35180,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Argentinos Juniors",
+        "id": "ar-13",
+        "venue": {
+          "name": "Diego Armando Maradona",
+          "capacity": 25000,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Atlético Tucumán",
+        "id": "ar-20",
+        "venue": {
+          "name": "Monumental José Fierro",
+          "capacity": 32700,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Banfield",
+        "id": "ar-19",
+        "venue": {
+          "name": "Florencio Sola",
+          "capacity": 21820,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Barracas Central",
+        "id": "ar-25",
+        "venue": {
+          "name": "Claudio \"Chiqui\" Tapia",
+          "capacity": 4400,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Belgrano",
+        "id": "ar-10",
+        "venue": {
+          "name": "Julio César Villagra",
+          "capacity": 38500,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Boca Juniors",
+        "id": "ar-1",
+        "venue": {
+          "name": "La Bombonera",
+          "capacity": 54000,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Central Córdoba",
+        "id": "ar-21",
+        "venue": {
+          "name": "Único Madre de Ciudades",
+          "capacity": 34000,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Defensa y Justicia",
+        "id": "ar-14",
+        "venue": {
+          "name": "Norberto \"Tito\" Tomaghello",
+          "capacity": 12000,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Deportivo Riestra",
+        "id": "ar-24",
+        "venue": {
+          "name": "Guillermo Laza",
+          "capacity": 3000,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Gimnasia La Plata",
+        "id": "ar-18",
+        "venue": {
+          "name": "Juan Carmelo Zerillo",
+          "capacity": 26544,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Huracán",
+        "id": "ar-12",
+        "venue": {
+          "name": "Tomás Adolfo Ducó",
+          "capacity": 48314,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Independiente",
+        "id": "ar-3",
+        "venue": {
+          "name": "Libertadores de América - Ricardo Enrique Bochini",
+          "capacity": 52853,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Independiente Rivadavia",
+        "id": "ar-23",
+        "venue": {
+          "name": "Bautista Gargantini",
+          "capacity": 24000,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Instituto",
+        "id": "ar-22",
+        "venue": {
+          "name": "Juan Domingo Perón",
+          "capacity": 26535,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Lanús",
+        "id": "ar-11",
+        "venue": {
+          "name": "Ciudad de Lanús - Néstor Díaz Pérez",
+          "capacity": 47090,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Newell’s Old Boys",
+        "id": "ar-8",
+        "venue": {
+          "name": "Marcelo Bielsa",
+          "capacity": 38095,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Platense",
+        "id": "ar-26",
+        "venue": {
+          "name": "Ciudad de Vicente López",
+          "capacity": 22530,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "River Plate",
+        "id": "ar-0",
+        "venue": {
+          "name": "Monumental",
+          "capacity": 83196,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Rosario Central",
+        "id": "ar-7",
+        "venue": {
+          "name": "Gigante de Arroyito",
+          "capacity": 41654,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "San Lorenzo",
+        "id": "ar-4",
+        "venue": {
+          "name": "Pedro Bidegain",
+          "capacity": 39494,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Sarmiento",
+        "id": "ar-27",
+        "venue": {
+          "name": "Eva Perón",
+          "capacity": 19000,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Talleres",
+        "id": "ar-9",
+        "venue": {
+          "name": "Mario Alberto Kempes",
+          "capacity": 57000,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Tigre",
+        "id": "ar-17",
+        "venue": {
+          "name": "José Dellagiovanna",
+          "capacity": 26282,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Vélez Sarsfield",
+        "id": "ar-6",
+        "venue": {
+          "name": "José Amalfitani",
+          "capacity": 49540,
+          "url": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Godoy Cruz",
+        "id": "ar-15",
+        "venue": {
+          "name": "Feliciano Gambarte",
+          "capacity": 14000,
+          "url": "https://en.wikipedia.org/wiki/2025_Argentine_Primera_División",
+          "reference": "2025"
+        }
+      }
+    ],
+    "classification": "1) points; 2) goal difference; 3) goals scored; 4) fair play ranking; 5) drawing of lots. (Q) Qualified for the phase indicated;",
+    "page": "https://en.wikipedia.org/wiki/2026_Argentine_Primera_División"
+  },
+  {
+    "id": "en",
+    "clubs": [
+      {
+        "name": "Arsenal",
+        "id": "en-0",
+        "venue": {
+          "name": "Emirates Stadium",
+          "capacity": 60704,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Aston Villa",
+        "id": "en-7",
+        "venue": {
+          "name": "Villa Park",
+          "capacity": 36887,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Bournemouth",
+        "id": "en-11",
+        "venue": {
+          "name": "Dean Court",
+          "capacity": 12357,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Brentford",
+        "id": "en-12",
+        "venue": {
+          "name": "Brentford Community Stadium",
+          "capacity": 17250,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Brighton & Hove Albion",
+        "id": "en-8",
+        "venue": {
+          "name": "Falmer Stadium",
+          "capacity": 32176,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Chelsea",
+        "id": "en-3",
+        "venue": {
+          "name": "Stamford Bridge",
+          "capacity": 40044,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Coventry City",
+        "id": "en-14",
+        "venue": {
+          "name": "Coventry Building Society Arena",
+          "capacity": 32609,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Crystal Palace",
+        "id": "en-10",
+        "venue": {
+          "name": "Selhurst Park",
+          "capacity": 25194,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Everton",
+        "id": "en-15",
+        "venue": {
+          "name": "Hill Dickinson Stadium",
+          "capacity": 52769,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Fulham",
+        "id": "en-13",
+        "venue": {
+          "name": "Craven Cottage",
+          "capacity": 28107,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Hull City",
+        "id": "en-16",
+        "venue": {
+          "name": "MKM Stadium",
+          "capacity": 24983,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Ipswich Town",
+        "id": "en-18",
+        "venue": {
+          "name": "Portman Road",
+          "capacity": 30056,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Leeds United",
+        "id": "en-17",
+        "venue": {
+          "name": "Elland Road",
+          "capacity": 37633,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Liverpool",
+        "id": "en-2",
+        "venue": {
+          "name": "Anfield",
+          "capacity": 61276,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Manchester City",
+        "id": "en-1",
+        "venue": {
+          "name": "City of Manchester Stadium",
+          "capacity": 61038,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Manchester United",
+        "id": "en-4",
+        "venue": {
+          "name": "Old Trafford",
+          "capacity": 74158,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Newcastle United",
+        "id": "en-6",
+        "venue": {
+          "name": "St James' Park",
+          "capacity": 52729,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Nottingham Forest",
+        "id": "en-9",
+        "venue": {
+          "name": "City Ground",
+          "capacity": 31212,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Sunderland",
+        "id": "en-19",
+        "venue": {
+          "name": "Stadium of Light",
+          "capacity": 48095,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Tottenham Hotspur",
+        "id": "en-5",
+        "venue": {
+          "name": "Tottenham Hotspur Stadium",
+          "capacity": 62850,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Premier_League",
+          "reference": "2026/27"
+        }
+      }
+    ],
+    "classification": "1) Points; 2) Goal difference; 3) Goals scored; 4) If the champions, relegated teams or qualified teams for UEFA competitions cannot be determined by rules 1 to 3 following the completion of the competition, rules 4.1 to 4.3 are applied between such teams – 4.1) Head-to-head points; 4.2) Head-to-head away goals; 4.3) Play-off at a neutral site. [ 106 ]",
+    "page": "https://en.wikipedia.org/wiki/2026–27_Premier_League"
+  },
+  {
+    "id": "es",
+    "clubs": [
+      {
+        "name": "Alavés",
+        "id": "es-14",
+        "venue": {
+          "name": "Campo de Fútbol de Mendizorrotza",
+          "capacity": 19840,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Atlético de Madrid",
+        "id": "es-2",
+        "venue": {
+          "name": "Estadio Riyadh Air Metropolitano",
+          "capacity": 70813,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Barcelona",
+        "id": "es-1",
+        "venue": {
+          "name": "Spotify Camp Nou",
+          "capacity": 62652,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Celta de Vigo",
+        "id": "es-6",
+        "venue": {
+          "name": "Estadio ABANCA Balaídos",
+          "capacity": 24870,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Deportivo La Coruña",
+        "id": "es-9",
+        "venue": {
+          "name": "Estadio ABANCA-Riazor",
+          "capacity": 32660,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Elche",
+        "id": "es-18",
+        "venue": {
+          "name": "Estadio Martínez Valero",
+          "capacity": 31388,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Espanyol",
+        "id": "es-13",
+        "venue": {
+          "name": "Estadi Cornellà-El Prat",
+          "capacity": 37776,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Getafe",
+        "id": "es-12",
+        "venue": {
+          "name": "Estadio Coliseum",
+          "capacity": 16500,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Levante",
+        "id": "es-17",
+        "venue": {
+          "name": "Estadi Ciutat de València",
+          "capacity": 26354,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Málaga",
+        "id": "es-15",
+        "venue": {
+          "name": "Estadio La Rosaleda",
+          "capacity": 30044,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Osasuna",
+        "id": "es-8",
+        "venue": {
+          "name": "Estadio El Sadar",
+          "capacity": 23576,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Racing Santander",
+        "id": "es-19",
+        "venue": {
+          "name": "Campos de Sport de El Sardinero",
+          "capacity": 22308,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Rayo Vallecano",
+        "id": "es-7",
+        "venue": {
+          "name": "Estadio Ontime Butarque; Campo de Fútbol de Vallecas",
+          "capacity": 14500,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Real Betis",
+        "id": "es-5",
+        "venue": {
+          "name": "Estadio La Cartuja de Sevilla",
+          "capacity": 70000,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Real Madrid",
+        "id": "es-0",
+        "venue": {
+          "name": "Bernabéu",
+          "capacity": 83186,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Real Sociedad",
+        "id": "es-10",
+        "venue": {
+          "name": "Reale Arena",
+          "capacity": 39313,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Sevilla",
+        "id": "es-16",
+        "venue": {
+          "name": "Estadio Ramón Sánchez-Pizjuán",
+          "capacity": 43883,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Valencia",
+        "id": "es-11",
+        "venue": {
+          "name": "Camp de Mestalla",
+          "capacity": 49430,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Villarreal",
+        "id": "es-4",
+        "venue": {
+          "name": "Estadio de la Cerámica",
+          "capacity": 23008,
+          "url": "https://en.wikipedia.org/wiki/2026–27_La_Liga",
+          "reference": "2026/27"
+        }
+      }
+    ],
+    "classification": "1) Points; 2) Head-to-head points; 3) Head-to-head goal difference; 4) Goal difference; 5) Goals scored; 6) Fair-play points (if three or more teams tied); 7) Play-off at neutral site. [ 43 ] (Note: Head-to-head record is used only after all the matches between the teams in question have been played)",
+    "page": "https://en.wikipedia.org/wiki/2026–27_La_Liga"
+  },
+  {
+    "id": "it",
+    "clubs": [
+      {
+        "name": "Atalanta",
+        "id": "it-4",
+        "venue": {
+          "name": "New Balance Arena",
+          "capacity": 23439,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Bologna",
+        "id": "it-8",
+        "venue": {
+          "name": "Stadio Renato Dall'Ara",
+          "capacity": 38279,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Cagliari",
+        "id": "it-14",
+        "venue": {
+          "name": "Unipol Domus",
+          "capacity": 16416,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Como",
+        "id": "it-9",
+        "venue": {
+          "name": "Stadio Giuseppe Sinigaglia",
+          "capacity": 13602,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Fiorentina",
+        "id": "it-7",
+        "venue": {
+          "name": "Stadio Artemio Franchi",
+          "capacity": 43118,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Frosinone",
+        "id": "it-13",
+        "venue": {
+          "name": "Stadio Benito Stirpe",
+          "capacity": 16227,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Genoa",
+        "id": "it-12",
+        "venue": {
+          "name": "Stadio Luigi Ferraris",
+          "capacity": 33205,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Inter de Milão",
+        "id": "it-0",
+        "venue": {
+          "name": "Stadio Giuseppe Meazza",
+          "capacity": 75710,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Juventus",
+        "id": "it-3",
+        "venue": {
+          "name": "Allianz Stadium",
+          "capacity": 41507,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Lazio",
+        "id": "it-6",
+        "venue": {
+          "name": "Stadio Olimpico",
+          "capacity": 70634,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Lecce",
+        "id": "it-15",
+        "venue": {
+          "name": "Stadio Via del Mare-Ettore Giardiniero",
+          "capacity": 30354,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Monza",
+        "id": "it-18",
+        "venue": {
+          "name": "Stadio Brianteo",
+          "capacity": 17102,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Napoli",
+        "id": "it-1",
+        "venue": {
+          "name": "Stadio Diego Armando Maradona",
+          "capacity": 54732,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Parma",
+        "id": "it-16",
+        "venue": {
+          "name": "Stadio Ennio Tardini",
+          "capacity": 22352,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Roma",
+        "id": "it-5",
+        "venue": {
+          "name": "Stadio Olimpico",
+          "capacity": 70634,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Sassuolo",
+        "id": "it-17",
+        "venue": {
+          "name": "Mapei Stadium – Città del Tricolore",
+          "capacity": 21515,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Torino",
+        "id": "it-10",
+        "venue": {
+          "name": "Stadio Olimpico Grande Torino",
+          "capacity": 28177,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Udinese",
+        "id": "it-11",
+        "venue": {
+          "name": "Bluenergy Stadium",
+          "capacity": 25132,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Venezia",
+        "id": "it-19",
+        "venue": {
+          "name": "Stadio Pier Luigi Penzo",
+          "capacity": 12048,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Serie_A",
+          "reference": "2026/27"
+        }
+      }
+    ],
+    "classification": "1) Points; 2) Head-to-head points; 3) Head-to-head goal difference; 4) Goal difference; 5) Goals scored; 6) Drawing of lots. End-of-season ties on points for 1st or 17th are instead decided by a one- or two-leg play-off, respectively, unless the play-off would involve a UEFA competition finalist (in which case rules 2–6 apply). Rules 2–6 determine home advantage (for 17th, the better-ranked team hosts the second leg); if three or more teams are tied, they also select the two play-off teams. [ 30 ]",
+    "page": "https://en.wikipedia.org/wiki/2026–27_Serie_A"
+  },
+  {
+    "id": "de",
+    "clubs": [
+      {
+        "name": "Augsburg",
+        "id": "de-11",
+        "venue": {
+          "name": "WWK Arena",
+          "capacity": 30660,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Union Berlin",
+        "id": "de-12",
+        "venue": {
+          "name": "Stadion An der Alten Försterei",
+          "capacity": 22012,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Werder Bremen",
+        "id": "de-8",
+        "venue": {
+          "name": "Weserstadion",
+          "capacity": 42100,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Borussia Dortmund",
+        "id": "de-2",
+        "venue": {
+          "name": "Signal Iduna Park",
+          "capacity": 81365,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Elversberg",
+        "id": "de-10",
+        "venue": {
+          "name": "Waldstadion an der Kaiserlinde",
+          "capacity": 10000,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Eintracht Frankfurt",
+        "id": "de-3",
+        "venue": {
+          "name": "Deutsche Bank Park",
+          "capacity": 59500,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Freiburg",
+        "id": "de-6",
+        "venue": {
+          "name": "Europa-Park Stadion",
+          "capacity": 34700,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Hamburger SV",
+        "id": "de-16",
+        "venue": {
+          "name": "Volksparkstadion",
+          "capacity": 57000,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "RB Leipzig",
+        "id": "de-4",
+        "venue": {
+          "name": "Red Bull Arena",
+          "capacity": 47800,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Bayer Leverkusen",
+        "id": "de-1",
+        "venue": {
+          "name": "BayArena",
+          "capacity": 30210,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Mainz 05",
+        "id": "de-7",
+        "venue": {
+          "name": "MEWA Arena",
+          "capacity": 33305,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Borussia Mönchengladbach",
+        "id": "de-9",
+        "venue": {
+          "name": "Borussia-Park",
+          "capacity": 54057,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Bayern de Munique",
+        "id": "de-0",
+        "venue": {
+          "name": "Allianz Arena",
+          "capacity": 75000,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Paderborn",
+        "id": "de-13",
+        "venue": {
+          "name": "Home Deluxe Arena",
+          "capacity": 15000,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Schalke 04",
+        "id": "de-15",
+        "venue": {
+          "name": "Veltins-Arena",
+          "capacity": 62271,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Bundesliga",
+          "reference": "2026/27"
+        }
+      }
+    ],
+    "classification": "1) Points; 2) Goal difference; 3) Goals scored; 4) Head-to-head aggregate results; 5) Head-to-head away goals scored; 6) Away goals scored; 7) Play-off at neutral site. (Rules 4–6 only apply after all home-and-away matches have been played between the tied teams. Rule 7 only applies after the completion of the season.) [ 31 ]",
+    "page": "https://en.wikipedia.org/wiki/2026–27_Bundesliga"
+  },
+  {
+    "id": "fr",
+    "clubs": [
+      {
+        "name": "Angers",
+        "id": "fr-13",
+        "venue": {
+          "name": "Stade Raymond Kopa",
+          "capacity": 19800,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Auxerre",
+        "id": "fr-10",
+        "venue": {
+          "name": "Stade Abbé Deschamps",
+          "capacity": 17897,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Brest",
+        "id": "fr-8",
+        "venue": {
+          "name": "Stade Francis-Le Blé",
+          "capacity": 15220,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Le Havre",
+        "id": "fr-14",
+        "venue": {
+          "name": "Stade Océane",
+          "capacity": 25181,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Le Mans",
+        "id": "fr-12",
+        "venue": {
+          "name": "Stade Marie-Marvingt",
+          "capacity": 25064,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Lens",
+        "id": "fr-7",
+        "venue": {
+          "name": "Stade Bollaert-Delelis",
+          "capacity": 38223,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Lille",
+        "id": "fr-3",
+        "venue": {
+          "name": "Stade Pierre-Mauroy",
+          "capacity": 50186,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Lorient",
+        "id": "fr-15",
+        "venue": {
+          "name": "Stade du Moustoir",
+          "capacity": 18110,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Lyon",
+        "id": "fr-4",
+        "venue": {
+          "name": "Groupama Stadium",
+          "capacity": 59186,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Olympique de Marseille",
+        "id": "fr-1",
+        "venue": {
+          "name": "Stade Vélodrome",
+          "capacity": 67394,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Monaco",
+        "id": "fr-2",
+        "venue": {
+          "name": "Stade Louis II",
+          "capacity": 16360,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Nice",
+        "id": "fr-5",
+        "venue": {
+          "name": "Allianz Riviera",
+          "capacity": 36178,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Paris FC",
+        "id": "fr-16",
+        "venue": {
+          "name": "Stade Jean-Bouin",
+          "capacity": 20000,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Paris Saint-Germain",
+        "id": "fr-0",
+        "venue": {
+          "name": "Parc des Princes",
+          "capacity": 47926,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Rennes",
+        "id": "fr-9",
+        "venue": {
+          "name": "Roazhon Park",
+          "capacity": 29778,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Strasbourg",
+        "id": "fr-6",
+        "venue": {
+          "name": "Stade de la Meinau",
+          "capacity": 32000,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Toulouse",
+        "id": "fr-11",
+        "venue": {
+          "name": "Stadium de Toulouse",
+          "capacity": 33150,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Troyes",
+        "id": "fr-17",
+        "venue": {
+          "name": "Stade de l'Aube",
+          "capacity": 21877,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Ligue_1",
+          "reference": "2026/27"
+        }
+      }
+    ],
+    "classification": "1) Points; 2) Goal difference; 3) Head-to-head points; 4) Head-to-head goal difference; 5) Goals scored; 6) Wins; 7) Away wins; 8) Fair-play points; 9) Drawing of lots. (Note: Head-to-head record is used only after all the matches between the teams in question have been played). [ 28 ]",
+    "page": "https://en.wikipedia.org/wiki/2026–27_Ligue_1"
+  },
+  {
+    "id": "pt",
+    "clubs": [
+      {
+        "name": "Alverca",
+        "id": "pt-15",
+        "venue": {
+          "name": "Complexo Desportivo FC Alverca",
+          "capacity": 6932,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Arouca",
+        "id": "pt-11",
+        "venue": {
+          "name": "Estádio Municipal de Arouca",
+          "capacity": 5000,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Benfica",
+        "id": "pt-1",
+        "venue": {
+          "name": "Estádio da Luz",
+          "capacity": 68100,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Braga",
+        "id": "pt-3",
+        "venue": {
+          "name": "Estádio Municipal de Braga",
+          "capacity": 30286,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Casa Pia",
+        "id": "pt-8",
+        "venue": {
+          "name": "Estádio Municipal de Rio Maior, at Rio Maior",
+          "capacity": 7000,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Estoril Praia",
+        "id": "pt-7",
+        "venue": {
+          "name": "Estádio António Coimbra da Mota",
+          "capacity": 5094,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Estrela da Amadora",
+        "id": "pt-17",
+        "venue": {
+          "name": "Estádio José Gomes",
+          "capacity": 9288,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Famalicão",
+        "id": "pt-6",
+        "venue": {
+          "name": "Estádio Municipal de Famalicão",
+          "capacity": 5186,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Gil Vicente",
+        "id": "pt-12",
+        "venue": {
+          "name": "Estádio Cidade de Barcelos",
+          "capacity": 12046,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Moreirense",
+        "id": "pt-9",
+        "venue": {
+          "name": "Estádio Comendador Joaquim de Almeida Freitas",
+          "capacity": 6150,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Porto",
+        "id": "pt-2",
+        "venue": {
+          "name": "Estádio do Dragão",
+          "capacity": 50033,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Rio Ave",
+        "id": "pt-10",
+        "venue": {
+          "name": "Estadio dos Arcos",
+          "capacity": 5300,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Santa Clara",
+        "id": "pt-5",
+        "venue": {
+          "name": "Estádio de São Miguel",
+          "capacity": 12500,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Sporting CP",
+        "id": "pt-0",
+        "venue": {
+          "name": "Estádio José Alvalade",
+          "capacity": 52095,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Vitória de Guimarães",
+        "id": "pt-4",
+        "venue": {
+          "name": "Estádio D. Afonso Henriques",
+          "capacity": 30029,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "AVS",
+        "id": "pt-14",
+        "venue": {
+          "name": "Estádio do Clube Desportivo das Aves",
+          "capacity": 6230,
+          "url": "https://en.wikipedia.org/wiki/2025–26_Primeira_Liga",
+          "reference": "2025/26"
+        }
+      },
+      {
+        "name": "Tondela",
+        "id": "pt-16",
+        "venue": {
+          "name": "Estádio João Cardoso",
+          "capacity": 5000,
+          "url": "https://en.wikipedia.org/wiki/2025–26_Primeira_Liga",
+          "reference": "2025/26"
+        }
+      }
+    ],
+    "classification": "1) Points; 2) Head-to-head points; 3) Head-to-head goal difference; 4) Goal difference; 5) Matches won; 6) Goals scored; 7) Play-off.",
+    "page": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga"
+  },
+  {
+    "id": "nl",
+    "clubs": [
+      {
+        "name": "Ajax",
+        "id": "nl-1",
+        "venue": {
+          "name": "Johan Cruyff Arena",
+          "capacity": 55865,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Eredivisie",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Excelsior",
+        "id": "nl-15",
+        "venue": {
+          "name": "Van Donge & De Roo Stadion",
+          "capacity": 4500,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Eredivisie",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Feyenoord",
+        "id": "nl-2",
+        "venue": {
+          "name": "De Kuip",
+          "capacity": 47500,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Eredivisie",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Fortuna Sittard",
+        "id": "nl-10",
+        "venue": {
+          "name": "Fortuna Sittard Stadion",
+          "capacity": 12000,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Eredivisie",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Go Ahead Eagles",
+        "id": "nl-6",
+        "venue": {
+          "name": "De Adelaarshorst",
+          "capacity": 10000,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Eredivisie",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Groningen",
+        "id": "nl-12",
+        "venue": {
+          "name": "Euroborg",
+          "capacity": 22550,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Eredivisie",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Heerenveen",
+        "id": "nl-8",
+        "venue": {
+          "name": "Abe Lenstra Stadion",
+          "capacity": 26100,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Eredivisie",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "PEC Zwolle",
+        "id": "nl-9",
+        "venue": {
+          "name": "MAC³PARK stadion",
+          "capacity": 14000,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Eredivisie",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "PSV",
+        "id": "nl-0",
+        "venue": {
+          "name": "Philips Stadion",
+          "capacity": 35000,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Eredivisie",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Sparta Rotterdam",
+        "id": "nl-11",
+        "venue": {
+          "name": "Sparta Stadion",
+          "capacity": 11026,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Eredivisie",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Telstar",
+        "id": "nl-17",
+        "venue": {
+          "name": "BUKO Stadion",
+          "capacity": 5338,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Eredivisie",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Twente",
+        "id": "nl-5",
+        "venue": {
+          "name": "De Grolsch Veste",
+          "capacity": 30205,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Eredivisie",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Utrecht",
+        "id": "nl-3",
+        "venue": {
+          "name": "Stadion Galgenwaard",
+          "capacity": 23750,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Eredivisie",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Heracles Almelo",
+        "id": "nl-13",
+        "venue": {
+          "name": "Asito Stadion",
+          "capacity": 12080,
+          "url": "https://en.wikipedia.org/wiki/2025–26_Eredivisie",
+          "reference": "2025/26"
+        }
+      },
+      {
+        "name": "NAC Breda",
+        "id": "nl-14",
+        "venue": {
+          "name": "Rat Verlegh Stadion",
+          "capacity": 19000,
+          "url": "https://en.wikipedia.org/wiki/2025–26_Eredivisie",
+          "reference": "2025/26"
+        }
+      },
+      {
+        "name": "Volendam",
+        "id": "nl-16",
+        "venue": {
+          "name": "Kras Stadion",
+          "capacity": 7384,
+          "url": "https://en.wikipedia.org/wiki/2025–26_Eredivisie",
+          "reference": "2025/26"
+        }
+      }
+    ],
+    "classification": "1) Points; 2) Less loss points; 3) Goal difference; 4) Goals scored; 5) Head-to-head points; 6) Head-to-head goal difference; 7) Head-to-head away goals scored; 9) Play-off if relevant for deciding champion, relegation or participating in a European league, otherwise by draw. 9) Penalty shoot-out (only after a play-off)",
+    "page": "https://en.wikipedia.org/wiki/2026–27_Eredivisie"
+  },
+  {
+    "id": "co",
+    "clubs": [
+      {
+        "name": "Águilas Doradas",
+        "id": "co-14",
+        "venue": {
+          "name": "Cincuentenario",
+          "capacity": 4000,
+          "url": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "América de Cali",
+        "id": "co-2",
+        "venue": {
+          "name": "Pascual Guerrero",
+          "capacity": 38588,
+          "url": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Atlético Bucaramanga",
+        "id": "co-11",
+        "venue": {
+          "name": "Américo Montanini",
+          "capacity": 28000,
+          "url": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Atlético Nacional",
+        "id": "co-0",
+        "venue": {
+          "name": "Atanasio Girardot",
+          "capacity": 44863,
+          "url": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Boyacá Chicó",
+        "id": "co-16",
+        "venue": {
+          "name": "La Independencia",
+          "capacity": 20630,
+          "url": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Deportes Tolima",
+        "id": "co-6",
+        "venue": {
+          "name": "Manuel Murillo Toro",
+          "capacity": 28100,
+          "url": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Deportivo Cali",
+        "id": "co-8",
+        "venue": {
+          "name": "Deportivo Cali",
+          "capacity": 42000,
+          "url": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Deportivo Pasto",
+        "id": "co-10",
+        "venue": {
+          "name": "Departamental Libertad",
+          "capacity": 20665,
+          "url": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Deportivo Pereira",
+        "id": "co-9",
+        "venue": {
+          "name": "Centenario",
+          "capacity": 23500,
+          "url": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Independiente Medellín",
+        "id": "co-3",
+        "venue": {
+          "name": "Atanasio Girardot",
+          "capacity": 44863,
+          "url": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Llaneros",
+        "id": "co-18",
+        "venue": {
+          "name": "Bello Horizonte – Rey Pelé",
+          "capacity": 15000,
+          "url": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Millonarios",
+        "id": "co-1",
+        "venue": {
+          "name": "Nemesio Camacho El Campín",
+          "capacity": 39512,
+          "url": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Once Caldas",
+        "id": "co-7",
+        "venue": {
+          "name": "Palogrande",
+          "capacity": 31611,
+          "url": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Envigado",
+        "id": "co-17",
+        "venue": {
+          "name": "Polideportivo Sur",
+          "capacity": 14000,
+          "url": "https://en.wikipedia.org/wiki/2025_Categoría_Primera_A_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "La Equidad",
+        "id": "co-12",
+        "venue": {
+          "name": "Metropolitano de Techo",
+          "capacity": 10000,
+          "url": "https://en.wikipedia.org/wiki/2025_Categoría_Primera_A_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Unión Magdalena",
+        "id": "co-19",
+        "venue": {
+          "name": "Sierra Nevada",
+          "capacity": 16000,
+          "url": "https://en.wikipedia.org/wiki/2025_Categoría_Primera_A_season",
+          "reference": "2025"
+        }
+      }
+    ],
+    "classification": "1) Points, 2) Goal difference, 3) Goals for, 4) Away goals for, 5) Goals against, 6) Away goals against, 7) Drawing of lots (or play-off matches, only if needed to decide eighth place). [ 82 ]",
+    "page": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season"
+  },
+  {
+    "id": "cl",
+    "clubs": [
+      {
+        "name": "Audax Italiano",
+        "id": "cl-5",
+        "venue": {
+          "name": "Bicentenario de La Florida",
+          "capacity": 11637,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Cobresal",
+        "id": "cl-7",
+        "venue": {
+          "name": "El Cobre",
+          "capacity": 11240,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Colo-Colo",
+        "id": "cl-0",
+        "venue": {
+          "name": "Monumental David Arellano",
+          "capacity": 43667,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Coquimbo Unido",
+        "id": "cl-4",
+        "venue": {
+          "name": "Francisco Sánchez Rumoroso",
+          "capacity": 15809,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Deportes Iquique",
+        "id": "cl-13",
+        "venue": {
+          "name": "Tierra de Campeones",
+          "capacity": 13171,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Deportes La Serena",
+        "id": "cl-14",
+        "venue": {
+          "name": "La Portada",
+          "capacity": 17134,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Deportes Limache",
+        "id": "cl-15",
+        "venue": {
+          "name": "Nicolás Chahuán Nazar",
+          "capacity": 8353,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Huachipato",
+        "id": "cl-8",
+        "venue": {
+          "name": "Huachipato-CAP Acero",
+          "capacity": 10032,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Ñublense",
+        "id": "cl-9",
+        "venue": {
+          "name": "Nelson Oyarzún Arenas",
+          "capacity": 11319,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "O’Higgins",
+        "id": "cl-6",
+        "venue": {
+          "name": "El Teniente",
+          "capacity": 12476,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Palestino",
+        "id": "cl-3",
+        "venue": {
+          "name": "Municipal de La Cisterna",
+          "capacity": 8000,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Unión Española",
+        "id": "cl-12",
+        "venue": {
+          "name": "Santa Laura-Universidad SEK",
+          "capacity": 19887,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Unión La Calera",
+        "id": "cl-10",
+        "venue": {
+          "name": "Nicolás Chahuán Nazar",
+          "capacity": 8353,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Universidad Católica",
+        "id": "cl-2",
+        "venue": {
+          "name": "Claro Arena",
+          "capacity": 20249,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Universidad de Chile",
+        "id": "cl-1",
+        "venue": {
+          "name": "Nacional Julio Martínez Prádanos",
+          "capacity": 46190,
+          "url": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División",
+          "reference": "2025"
+        }
+      }
+    ],
+    "classification": "1) Points, 2) Playoff game (only if needed to decide championship between two teams), 3) Goal difference, 4) Matches won, 5) Goals for, 6) Away goals for, 7) Red cards, 8) Yellow cards, 9) Drawing of lots.",
+    "page": "https://en.wikipedia.org/wiki/2025_Chilean_Primera_División"
+  },
+  {
+    "id": "uy",
+    "clubs": [],
+    "classification": "1) Points, 2) Playoff game (only if needed to decide first place between two teams), 3) Goal difference, 4) Goals for, 5) Head-to-head record, 6) Drawing of lots, 7) Playoff game, only if two teams are still tied for first place.",
+    "page": "https://en.wikipedia.org/wiki/2025_Uruguayan_Primera_División_season"
+  },
+  {
+    "id": "ec",
+    "clubs": [
+      {
+        "name": "Aucas",
+        "id": "ec-4",
+        "venue": {
+          "name": "Cooprogreso Gonzalo Pozo Ripalda",
+          "capacity": 21689,
+          "url": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Barcelona SC",
+        "id": "ec-2",
+        "venue": {
+          "name": "Monumental Banco Pichincha",
+          "capacity": 57267,
+          "url": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Delfín",
+        "id": "ec-8",
+        "venue": {
+          "name": "Jocay",
+          "capacity": 21000,
+          "url": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Deportivo Cuenca",
+        "id": "ec-6",
+        "venue": {
+          "name": "Banco del Austro Alejandro Serrano Aguilar",
+          "capacity": 18549,
+          "url": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "El Nacional",
+        "id": "ec-7",
+        "venue": {
+          "name": "Olímpico Atahualpa",
+          "capacity": 35258,
+          "url": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Emelec",
+        "id": "ec-3",
+        "venue": {
+          "name": "George Capwell Banco del Austro",
+          "capacity": 40020,
+          "url": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Independiente del Valle",
+        "id": "ec-1",
+        "venue": {
+          "name": "Banco Guayaquil",
+          "capacity": 12000,
+          "url": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "LDU Quito",
+        "id": "ec-0",
+        "venue": {
+          "name": "Rodrigo Paz Delgado",
+          "capacity": 41575,
+          "url": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Macará",
+        "id": "ec-11",
+        "venue": {
+          "name": "Bellavista Universidad Indoamérica",
+          "capacity": 16467,
+          "url": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Manta",
+        "id": "ec-14",
+        "venue": {
+          "name": "Jocay",
+          "capacity": 21000,
+          "url": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Mushuc Runa",
+        "id": "ec-9",
+        "venue": {
+          "name": "COAC Mushuc Runa",
+          "capacity": 8200,
+          "url": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Orense",
+        "id": "ec-12",
+        "venue": {
+          "name": "Banco de Machala 9 de Mayo",
+          "capacity": 16456,
+          "url": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Técnico Universitario",
+        "id": "ec-10",
+        "venue": {
+          "name": "Bellavista Universidad Indoamérica",
+          "capacity": 16467,
+          "url": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Vinotinto del Ecuador",
+        "id": "ec-15",
+        "venue": {
+          "name": "Olímpico Atahualpa",
+          "capacity": 35258,
+          "url": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A",
+          "reference": "2025"
+        }
+      }
+    ],
+    "classification": "1) Points, 2) Goal difference, 3) Goals for, 4) Away goals for, 5) Head-to-head record, 6) Drawing of lots.",
+    "page": "https://en.wikipedia.org/wiki/2025_Ecuadorian_Serie_A"
+  },
+  {
+    "id": "pe",
+    "clubs": [
+      {
+        "name": "Alianza Atlético",
+        "id": "pe-7",
+        "venue": {
+          "name": "Campeones del 36",
+          "capacity": 12000,
+          "url": "https://en.wikipedia.org/wiki/2026_Liga_1_(Peru)",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Alianza Lima",
+        "id": "pe-1",
+        "venue": {
+          "name": "Alejandro Villanueva",
+          "capacity": 35938,
+          "url": "https://en.wikipedia.org/wiki/2026_Liga_1_(Peru)",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Atlético Grau",
+        "id": "pe-8",
+        "venue": {
+          "name": "Campeones del 36",
+          "capacity": 12000,
+          "url": "https://en.wikipedia.org/wiki/2026_Liga_1_(Peru)",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Cienciano",
+        "id": "pe-4",
+        "venue": {
+          "name": "Garcilaso",
+          "capacity": 45056,
+          "url": "https://en.wikipedia.org/wiki/2026_Liga_1_(Peru)",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Comerciantes Unidos",
+        "id": "pe-12",
+        "venue": {
+          "name": "Juan Maldonado Gamarra",
+          "capacity": 13680,
+          "url": "https://en.wikipedia.org/wiki/2026_Liga_1_(Peru)",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Deportivo Garcilaso",
+        "id": "pe-9",
+        "venue": {
+          "name": "Garcilaso",
+          "capacity": 45056,
+          "url": "https://en.wikipedia.org/wiki/2026_Liga_1_(Peru)",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Juan Pablo II College",
+        "id": "pe-17",
+        "venue": {
+          "name": "Complejo Juan Pablo II",
+          "capacity": 3000,
+          "url": "https://en.wikipedia.org/wiki/2026_Liga_1_(Peru)",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Los Chankas",
+        "id": "pe-13",
+        "venue": {
+          "name": "Los Chankas",
+          "capacity": 10000,
+          "url": "https://en.wikipedia.org/wiki/2026_Liga_1_(Peru)",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Melgar",
+        "id": "pe-3",
+        "venue": {
+          "name": "Virgen de Chapi",
+          "capacity": 40370,
+          "url": "https://en.wikipedia.org/wiki/2026_Liga_1_(Peru)",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Sport Boys",
+        "id": "pe-14",
+        "venue": {
+          "name": "Miguel Grau",
+          "capacity": 17000,
+          "url": "https://en.wikipedia.org/wiki/2026_Liga_1_(Peru)",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Sport Huancayo",
+        "id": "pe-10",
+        "venue": {
+          "name": "Huancayo",
+          "capacity": 20000,
+          "url": "https://en.wikipedia.org/wiki/2026_Liga_1_(Peru)",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Sporting Cristal",
+        "id": "pe-2",
+        "venue": {
+          "name": "Alberto Gallardo",
+          "capacity": 11600,
+          "url": "https://en.wikipedia.org/wiki/2026_Liga_1_(Peru)",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Universitario",
+        "id": "pe-0",
+        "venue": {
+          "name": "Monumental",
+          "capacity": 80093,
+          "url": "https://en.wikipedia.org/wiki/2026_Liga_1_(Peru)",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Alianza Universidad",
+        "id": "pe-15",
+        "venue": {
+          "name": "Heraclio Tapia",
+          "capacity": 25036,
+          "url": "https://en.wikipedia.org/wiki/2025_Liga_1_(Peru)",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Ayacucho FC",
+        "id": "pe-16",
+        "venue": {
+          "name": "Las Américas",
+          "capacity": 6400,
+          "url": "https://en.wikipedia.org/wiki/2025_Liga_1_(Peru)",
+          "reference": "2025"
+        }
+      }
+    ],
+    "classification": "1) Points; 2) Goal difference; 3) Goals for; 4) Fair play points; 5) Drawing of lots.",
+    "page": "https://en.wikipedia.org/wiki/2026_Liga_1_(Peru)"
+  },
+  {
+    "id": "py",
+    "clubs": [
+      {
+        "name": "2 de Mayo",
+        "id": "py-9",
+        "venue": {
+          "name": "Río Parapití",
+          "capacity": 25000,
+          "url": "https://en.wikipedia.org/wiki/2025_Paraguayan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Cerro Porteño",
+        "id": "py-1",
+        "venue": {
+          "name": "General Pablo Rojas",
+          "capacity": 45000,
+          "url": "https://en.wikipedia.org/wiki/2025_Paraguayan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "General Caballero JLM",
+        "id": "py-8",
+        "venue": {
+          "name": "Ka'arendy",
+          "capacity": 10000,
+          "url": "https://en.wikipedia.org/wiki/2025_Paraguayan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Guaraní",
+        "id": "py-3",
+        "venue": {
+          "name": "Rogelio Livieres",
+          "capacity": 6000,
+          "url": "https://en.wikipedia.org/wiki/2025_Paraguayan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Libertad",
+        "id": "py-2",
+        "venue": {
+          "name": "La Huerta",
+          "capacity": 14000,
+          "url": "https://en.wikipedia.org/wiki/2025_Paraguayan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Olimpia",
+        "id": "py-0",
+        "venue": {
+          "name": "Osvaldo Domínguez Dibb",
+          "capacity": 25000,
+          "url": "https://en.wikipedia.org/wiki/2025_Paraguayan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Sportivo Ameliano",
+        "id": "py-7",
+        "venue": {
+          "name": "Ameliano Villeta",
+          "capacity": 7000,
+          "url": "https://en.wikipedia.org/wiki/2025_Paraguayan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Sportivo Luqueño",
+        "id": "py-5",
+        "venue": {
+          "name": "Luis Alberto Salinas",
+          "capacity": 10000,
+          "url": "https://en.wikipedia.org/wiki/2025_Paraguayan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Sportivo Trinidense",
+        "id": "py-6",
+        "venue": {
+          "name": "Martín Torres",
+          "capacity": 3000,
+          "url": "https://en.wikipedia.org/wiki/2025_Paraguayan_Primera_División_season",
+          "reference": "2025"
+        }
+      }
+    ],
+    "classification": "1) Points, 2) Head-to-head points, 3) Head-to-head goal difference, 4) Overall goal difference, 5) Goals for, 6) Playoff game (if needed to decide championship between two teams) or Drawing of lots (if three teams or more are tied).",
+    "page": "https://en.wikipedia.org/wiki/2025_Paraguayan_Primera_División_season"
+  },
+  {
+    "id": "bo",
+    "clubs": [
+      {
+        "name": "ABB",
+        "id": "bo-12",
+        "venue": {
+          "name": "Municipal de Villa Ingenio",
+          "capacity": 22000,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Always Ready",
+        "id": "bo-1",
+        "venue": {
+          "name": "Municipal de Villa Ingenio",
+          "capacity": 22000,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Aurora",
+        "id": "bo-9",
+        "venue": {
+          "name": "Félix Capriles",
+          "capacity": 32000,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Blooming",
+        "id": "bo-3",
+        "venue": {
+          "name": "Ramón Tahuichi Aguilera",
+          "capacity": 38000,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Bolívar",
+        "id": "bo-0",
+        "venue": {
+          "name": "Hernando Siles",
+          "capacity": 42000,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Guabirá",
+        "id": "bo-14",
+        "venue": {
+          "name": "Gilberto Parada",
+          "capacity": 13000,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "GV San José",
+        "id": "bo-11",
+        "venue": {
+          "name": "Jesús Bermúdez",
+          "capacity": 33000,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Independiente Petrolero",
+        "id": "bo-8",
+        "venue": {
+          "name": "Olímpico Patria",
+          "capacity": 30700,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Jorge Wilstermann",
+        "id": "bo-15",
+        "venue": {
+          "name": "Félix Capriles",
+          "capacity": 32000,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Nacional Potosí",
+        "id": "bo-6",
+        "venue": {
+          "name": "Víctor Agustín Ugarte",
+          "capacity": 32105,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Oriente Petrolero",
+        "id": "bo-4",
+        "venue": {
+          "name": "Ramón Tahuichi Aguilera",
+          "capacity": 38000,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Real Tomayapo",
+        "id": "bo-7",
+        "venue": {
+          "name": "IV Centenario",
+          "capacity": 15000,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "San Antonio Bulo Bulo",
+        "id": "bo-5",
+        "venue": {
+          "name": "Carlos Villegas",
+          "capacity": 17000,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "The Strongest",
+        "id": "bo-2",
+        "venue": {
+          "name": "Hernando Siles",
+          "capacity": 42000,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Universitario de Vinto",
+        "id": "bo-10",
+        "venue": {
+          "name": "Félix Capriles",
+          "capacity": 32000,
+          "url": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season",
+          "reference": "2025"
+        }
+      }
+    ],
+    "classification": "1) Points, 2) Playoff game (only if needed to decide championship between two teams), 3) Goal difference, 4) Goals for, 5) Away goals for, 6) Yellow cards, 7) Drawing of lots. [ 98 ]",
+    "page": "https://en.wikipedia.org/wiki/2025_Bolivian_Primera_División_season"
+  },
+  {
+    "id": "ve",
+    "clubs": [
+      {
+        "name": "Academia Puerto Cabello",
+        "id": "ve-5",
+        "venue": {
+          "name": "La Bombonerita",
+          "capacity": 7500,
+          "url": "https://en.wikipedia.org/wiki/2025_Venezuelan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Anzoátegui",
+        "id": "ve-12",
+        "venue": {
+          "name": "José Antonio Anzoátegui",
+          "capacity": 37485,
+          "url": "https://en.wikipedia.org/wiki/2025_Venezuelan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Carabobo",
+        "id": "ve-4",
+        "venue": {
+          "name": "Misael Delgado",
+          "capacity": 10400,
+          "url": "https://en.wikipedia.org/wiki/2025_Venezuelan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Deportivo La Guaira",
+        "id": "ve-2",
+        "venue": {
+          "name": "Olímpico de la UCV",
+          "capacity": 23940,
+          "url": "https://en.wikipedia.org/wiki/2025_Venezuelan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Deportivo Táchira",
+        "id": "ve-0",
+        "venue": {
+          "name": "Polideportivo de Pueblo Nuevo",
+          "capacity": 38755,
+          "url": "https://en.wikipedia.org/wiki/2025_Venezuelan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Estudiantes de Mérida",
+        "id": "ve-10",
+        "venue": {
+          "name": "Metropolitano de Mérida",
+          "capacity": 42200,
+          "url": "https://en.wikipedia.org/wiki/2025_Venezuelan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Metropolitanos",
+        "id": "ve-6",
+        "venue": {
+          "name": "Olímpico de la UCV",
+          "capacity": 23940,
+          "url": "https://en.wikipedia.org/wiki/2025_Venezuelan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Monagas",
+        "id": "ve-7",
+        "venue": {
+          "name": "Monumental de Maturín",
+          "capacity": 51796,
+          "url": "https://en.wikipedia.org/wiki/2025_Venezuelan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Portuguesa",
+        "id": "ve-8",
+        "venue": {
+          "name": "General José Antonio Páez",
+          "capacity": 18000,
+          "url": "https://en.wikipedia.org/wiki/2025_Venezuelan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Rayo Zuliano",
+        "id": "ve-11",
+        "venue": {
+          "name": "José Pachencho Romero",
+          "capacity": 40800,
+          "url": "https://en.wikipedia.org/wiki/2025_Venezuelan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Yaracuyanos",
+        "id": "ve-13",
+        "venue": {
+          "name": "Florentino Oropeza",
+          "capacity": 10000,
+          "url": "https://en.wikipedia.org/wiki/2025_Venezuelan_Primera_División_season",
+          "reference": "2025"
+        }
+      },
+      {
+        "name": "Zamora",
+        "id": "ve-9",
+        "venue": {
+          "name": "Agustín Tovar",
+          "capacity": 29800,
+          "url": "https://en.wikipedia.org/wiki/2025_Venezuelan_Primera_División_season",
+          "reference": "2025"
+        }
+      }
+    ],
+    "classification": "1) Points; 2) Goal difference; 3) Goals scored; 4) Head-to-head results; 5) Drawing of lots.",
+    "page": "https://en.wikipedia.org/wiki/2025_Venezuelan_Primera_División_season"
+  },
+  {
+    "id": "us",
+    "clubs": [
+      {
+        "name": "Atlanta United",
+        "id": "us-3",
+        "venue": {
+          "name": "Mercedes-Benz Stadium",
+          "capacity": 42500,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Austin FC",
+        "id": "us-4",
+        "venue": {
+          "name": "Q2 Stadium",
+          "capacity": 20738,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "CF Montréal",
+        "id": "us-15",
+        "venue": {
+          "name": "Saputo Stadium",
+          "capacity": 19619,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Charlotte FC",
+        "id": "us-5",
+        "venue": {
+          "name": "Bank of America Stadium",
+          "capacity": 38000,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Chicago Fire",
+        "id": "us-6",
+        "venue": {
+          "name": "Soldier Field",
+          "capacity": 24955,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Colorado Rapids",
+        "id": "us-8",
+        "venue": {
+          "name": "Dick's Sporting Goods Park",
+          "capacity": 18061,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Columbus Crew",
+        "id": "us-9",
+        "venue": {
+          "name": "ScottsMiracle-Gro Field",
+          "capacity": 20011,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "D.C. United",
+        "id": "us-11",
+        "venue": {
+          "name": "Audi Field",
+          "capacity": 20000,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "FC Cincinnati",
+        "id": "us-7",
+        "venue": {
+          "name": "TQL Stadium",
+          "capacity": 26000,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "FC Dallas",
+        "id": "us-10",
+        "venue": {
+          "name": "Toyota Stadium",
+          "capacity": 20500,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Houston Dynamo",
+        "id": "us-12",
+        "venue": {
+          "name": "Shell Energy Stadium",
+          "capacity": 22039,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Inter Miami",
+        "id": "us-0",
+        "venue": {
+          "name": "Nu Stadium",
+          "capacity": 26700,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "LA Galaxy",
+        "id": "us-1",
+        "venue": {
+          "name": "Dignity Health Sports Park",
+          "capacity": 27000,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Los Angeles FC",
+        "id": "us-2",
+        "venue": {
+          "name": "BMO Stadium",
+          "capacity": 22000,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Minnesota United",
+        "id": "us-14",
+        "venue": {
+          "name": "Allianz Field",
+          "capacity": 19400,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Nashville SC",
+        "id": "us-16",
+        "venue": {
+          "name": "Geodis Park",
+          "capacity": 30000,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "New England Revolution",
+        "id": "us-17",
+        "venue": {
+          "name": "Gillette Stadium",
+          "capacity": 20000,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "New York City FC",
+        "id": "us-18",
+        "venue": {
+          "name": "Yankee StadiumCiti Field",
+          "capacity": null,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "New York Red Bulls",
+        "id": "us-19",
+        "venue": {
+          "name": "Sports Illustrated Stadium",
+          "capacity": 25000,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Orlando City",
+        "id": "us-20",
+        "venue": {
+          "name": "Inter&Co Stadium",
+          "capacity": 25500,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Philadelphia Union",
+        "id": "us-21",
+        "venue": {
+          "name": "Subaru Park",
+          "capacity": 18500,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Portland Timbers",
+        "id": "us-22",
+        "venue": {
+          "name": "Providence Park",
+          "capacity": 25218,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Real Salt Lake",
+        "id": "us-23",
+        "venue": {
+          "name": "America First Field",
+          "capacity": 20213,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "San Diego FC",
+        "id": "us-24",
+        "venue": {
+          "name": "Snapdragon Stadium",
+          "capacity": 35000,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "San Jose Earthquakes",
+        "id": "us-25",
+        "venue": {
+          "name": "PayPal Park",
+          "capacity": 18000,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Seattle Sounders",
+        "id": "us-26",
+        "venue": {
+          "name": "Lumen Field",
+          "capacity": 37722,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Sporting Kansas City",
+        "id": "us-13",
+        "venue": {
+          "name": "Sporting Park",
+          "capacity": 18467,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "St. Louis City",
+        "id": "us-27",
+        "venue": {
+          "name": "Energizer Park",
+          "capacity": 22423,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Toronto FC",
+        "id": "us-28",
+        "venue": {
+          "name": "BMO Field",
+          "capacity": 28351,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Vancouver Whitecaps",
+        "id": "us-29",
+        "venue": {
+          "name": "BC Place",
+          "capacity": 22120,
+          "url": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season",
+          "reference": "2026"
+        }
+      }
+    ],
+    "classification": "1) points; 2) total wins; 3) total goal differential; 4) total goals scored; 5) fewer disciplinary points; 6) away goal differential; 7) away goals scored; 8) home goals differential; 9) home goals scored; 10) coin toss (2 clubs tied) or drawing of lots (≥3 clubs tied) (E) Eliminated; (Q) Qualified for the phase indicated; (T) Qualified, but not yet for the particular phase indicated MLS Western Conference table (2026) Pos Team v t e Pld W L T GF GA GD Pts Qualification 1 Vancouver Whitecaps FC (T) 31 16 8 7 63 32 +31 55 Qualification for round one and the CONCACAF Champions Cup round one 2 FC Dallas (T) 31 15 7 9 58 47 +11 54 Qualification for round one 3 St. Louis City SC (T) 31 14 8 9 56 44 +12 51 Qualification for round one and the CONCACAF Champions Cup round one [ a ] 4 San Jose Earthquakes (T) 31 13 9 9 52 45 +7 48 Qualification for round one 5 Houston Dynamo FC (T) 31 13 9 9 41 39 +2 48 6 Los Angeles FC (T) 32 12 9 11 50 35 +15 47 7 Seattle Sounders FC 31 11 10 10 41 39 +2 43 8 Colorado Rapids 31 12 13 6 42 41 +1 42 Qualification for the wild card round 9 LA Galaxy 32 10 11 11 45 54 − 9 41 10 Real Salt Lake 31 11 14 6 48 48 0 39 11 Portland Timbers 31 10 14 7 54 58 − 4 37 12 San Diego FC 31 8 12 11 55 58 − 3 35 13 Minnesota United FC 31 8 12 11 47 55 − 8 35 14 Austin FC 31 8 13 10 40 57 − 17 34 15 Sporting Kansas City (E) 31 6 21 4 37 77 − 40 22 Updated to match(es) played on October 25, 2026.",
+    "page": "https://en.wikipedia.org/wiki/2026_Major_League_Soccer_season"
+  },
+  {
+    "id": "mx",
+    "clubs": [
+      {
+        "name": "Atlas",
+        "id": "mx-10",
+        "venue": {
+          "name": "Jalisco",
+          "capacity": 55020,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Atlético San Luis",
+        "id": "mx-15",
+        "venue": {
+          "name": "Libertad Financiera",
+          "capacity": 27029,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Cruz Azul",
+        "id": "mx-2",
+        "venue": {
+          "name": "Azteca",
+          "capacity": 87523,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Guadalajara",
+        "id": "mx-1",
+        "venue": {
+          "name": "Akron",
+          "capacity": 46232,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Juárez",
+        "id": "mx-16",
+        "venue": {
+          "name": "Olímpico Benito Juárez",
+          "capacity": 19703,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "León",
+        "id": "mx-8",
+        "venue": {
+          "name": "León",
+          "capacity": 31297,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Monterrey",
+        "id": "mx-5",
+        "venue": {
+          "name": "BBVA",
+          "capacity": 53500,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Necaxa",
+        "id": "mx-11",
+        "venue": {
+          "name": "Victoria",
+          "capacity": 23851,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Pachuca",
+        "id": "mx-7",
+        "venue": {
+          "name": "Hidalgo",
+          "capacity": 25922,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Puebla",
+        "id": "mx-12",
+        "venue": {
+          "name": "Cuauhtémoc",
+          "capacity": 51726,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Pumas UNAM",
+        "id": "mx-3",
+        "venue": {
+          "name": "Olímpico Universitario",
+          "capacity": 58445,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Querétaro",
+        "id": "mx-13",
+        "venue": {
+          "name": "Corregidora",
+          "capacity": 34107,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Santos Laguna",
+        "id": "mx-9",
+        "venue": {
+          "name": "Corona",
+          "capacity": 29101,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Tigres UANL",
+        "id": "mx-4",
+        "venue": {
+          "name": "Universitario",
+          "capacity": 41886,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Tijuana",
+        "id": "mx-14",
+        "venue": {
+          "name": "Caliente",
+          "capacity": 31158,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Toluca",
+        "id": "mx-6",
+        "venue": {
+          "name": "Nemesio Diez",
+          "capacity": 27273,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Mazatlán",
+        "id": "mx-17",
+        "venue": {
+          "name": "El Encanto",
+          "capacity": 20195,
+          "url": "https://en.wikipedia.org/wiki/2025–26_Liga_MX_season",
+          "reference": "2025/26"
+        }
+      }
+    ],
+    "classification": "1) Points; 2) Goal difference; 3) Number of goals scored; 4) Head-to-head results between tied teams; 5) Number of goals scored away; 6) Highest relegation coefficient; 7) Fair Play points (E) Eliminated",
+    "page": "https://en.wikipedia.org/wiki/2026–27_Liga_MX_season"
+  },
+  {
+    "id": "sa",
+    "clubs": [
+      {
+        "name": "Al-Ahli",
+        "id": "sa-3",
+        "venue": {
+          "name": "King Abdullah Sports City Stadium; Al-Faisal Stadium",
+          "capacity": 60342,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Al-Ettifaq",
+        "id": "sa-6",
+        "venue": {
+          "name": "EGO Stadium",
+          "capacity": 12984,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Al-Fateh",
+        "id": "sa-8",
+        "venue": {
+          "name": "Maydan Tamweel Aloula",
+          "capacity": 11851,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Al-Fayha",
+        "id": "sa-9",
+        "venue": {
+          "name": "Majmaah Sports City Stadium",
+          "capacity": 6843,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Al-Hazem",
+        "id": "sa-17",
+        "venue": {
+          "name": "Al-Hazem Club Stadium",
+          "capacity": 5100,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Al-Hilal",
+        "id": "sa-0",
+        "venue": {
+          "name": "Kingdom Arena",
+          "capacity": 26090,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Al-Ittihad",
+        "id": "sa-2",
+        "venue": {
+          "name": "King Abdullah Sports City Stadium; Al-Faisal Stadium",
+          "capacity": 60342,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Al-Khaleej",
+        "id": "sa-10",
+        "venue": {
+          "name": "Prince Mohamed bin Fahd Stadium (Dammam)",
+          "capacity": 22042,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Al-Kholood",
+        "id": "sa-14",
+        "venue": {
+          "name": "Al-Hazem Club Stadium",
+          "capacity": 5100,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Al-Nassr",
+        "id": "sa-1",
+        "venue": {
+          "name": "Al-Awwal Park",
+          "capacity": 26004,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Al-Qadsiah",
+        "id": "sa-5",
+        "venue": {
+          "name": "Prince Mohamed bin Fahd Stadium (Dammam)",
+          "capacity": 22042,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Al-Riyadh",
+        "id": "sa-12",
+        "venue": {
+          "name": "SHG Arena",
+          "capacity": 13537,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Al-Shabab",
+        "id": "sa-4",
+        "venue": {
+          "name": "SHG Arena",
+          "capacity": 13537,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Al-Taawoun",
+        "id": "sa-7",
+        "venue": {
+          "name": "King Abdullah Sports City Stadium Buraidah; Al-Taawoun Stadium",
+          "capacity": 30180,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "NEOM",
+        "id": "sa-15",
+        "venue": {
+          "name": "King Khalid Sport City Stadium",
+          "capacity": 12000,
+          "url": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+          "reference": "2026/27"
+        }
+      },
+      {
+        "name": "Al-Najma",
+        "id": "sa-16",
+        "venue": {
+          "name": "King Abdullah Sports City Stadium Buraidah",
+          "capacity": 30180,
+          "url": "https://en.wikipedia.org/wiki/2025–26_Saudi_Pro_League",
+          "reference": "2025/26"
+        }
+      },
+      {
+        "name": "Al-Okhdood",
+        "id": "sa-13",
+        "venue": {
+          "name": "Prince Hathloul bin Abdulaziz Sports City Stadium",
+          "capacity": 12000,
+          "url": "https://en.wikipedia.org/wiki/2025–26_Saudi_Pro_League",
+          "reference": "2025/26"
+        }
+      },
+      {
+        "name": "Damac",
+        "id": "sa-11",
+        "venue": {
+          "name": "Damac Club Stadium; Prince Sultan bin Abdulaziz Sports City Stadium (Abha)",
+          "capacity": 3800,
+          "url": "https://en.wikipedia.org/wiki/2025–26_Saudi_Pro_League",
+          "reference": "2025/26"
+        }
+      }
+    ],
+    "classification": "1) Points; 2) Head-to-head points; 3) Head-to-head goal difference; 4) Total goal difference; 5) Total goals scored; 6) Fair-play points (Note: Head-to-head record is used only after all the matches between the teams in question have been played). [ 25 ]",
+    "page": "https://en.wikipedia.org/wiki/2025–26_Saudi_Pro_League"
+  },
+  {
+    "id": "jp",
+    "clubs": [
+      {
+        "name": "Kashima Antlers",
+        "id": "jp-0",
+        "venue": {
+          "name": "Kashima Soccer Stadium",
+          "capacity": 39095,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Urawa Red Diamonds",
+        "id": "jp-6",
+        "venue": {
+          "name": "Saitama Stadium 2002",
+          "capacity": 62040,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Kashiwa Reysol",
+        "id": "jp-1",
+        "venue": {
+          "name": "Sankyo Frontier Kashiwa Stadium",
+          "capacity": 15109,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "FC Tokyo",
+        "id": "jp-10",
+        "venue": {
+          "name": "Ajinomoto Stadium",
+          "capacity": 47851,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Tokyo Verdy",
+        "id": "jp-16",
+        "venue": {
+          "name": "Ajinomoto Stadium",
+          "capacity": 47851,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Machida Zelvia",
+        "id": "jp-5",
+        "venue": {
+          "name": "Machida GION Stadium",
+          "capacity": 15320,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Kawasaki Frontale",
+        "id": "jp-7",
+        "venue": {
+          "name": "Uvance Todoroki Stadium by Fujitsu",
+          "capacity": 26827,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Yokohama F. Marinos",
+        "id": "jp-12",
+        "venue": {
+          "name": "Nissan Stadium",
+          "capacity": 71624,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Shimizu S-Pulse",
+        "id": "jp-15",
+        "venue": {
+          "name": "IAI Stadium Nihondaira",
+          "capacity": 19594,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Nagoya Grampus",
+        "id": "jp-13",
+        "venue": {
+          "name": "Toyota Stadium",
+          "capacity": 42753,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Kyoto Sanga",
+        "id": "jp-2",
+        "venue": {
+          "name": "Sanga Stadium by Kyocera",
+          "capacity": 21269,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Gamba Osaka",
+        "id": "jp-8",
+        "venue": {
+          "name": "Panasonic Stadium Suita",
+          "capacity": 39694,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Cerezo Osaka",
+        "id": "jp-9",
+        "venue": {
+          "name": "Yodoko Sakura Stadium",
+          "capacity": 24481,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Vissel Kobe",
+        "id": "jp-4",
+        "venue": {
+          "name": "Noevir Stadium Kobe",
+          "capacity": 27974,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Fagiano Okayama",
+        "id": "jp-11",
+        "venue": {
+          "name": "JFE Harenokuni Stadium",
+          "capacity": 15479,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Sanfrecce Hiroshima",
+        "id": "jp-3",
+        "venue": {
+          "name": "Edion Peace Wing Hiroshima",
+          "capacity": 28407,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      },
+      {
+        "name": "Avispa Fukuoka",
+        "id": "jp-17",
+        "venue": {
+          "name": "Best Denki Stadium",
+          "capacity": 21546,
+          "url": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League",
+          "reference": "2026"
+        }
+      }
+    ],
+    "classification": "1) Points; 2) Goal difference; 3) Goals scored; 4) Head-to-head.",
+    "page": "https://en.wikipedia.org/wiki/2026_J1_100_Year_Vision_League"
+  }
+]

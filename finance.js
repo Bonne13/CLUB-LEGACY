@@ -149,12 +149,20 @@
     }
   }
   function gate(t, s) {
-    const homeGames = Math.max(12, t.players.length ? 19 : 1);
+    const fixtures = s.leagues?.find((l) => l.id === t.leagueId)?.fixtures;
+    const homeGames = Math.max(
+      1,
+      fixtures?.flat().filter((pair) => pair[0] === t.id).length || 19,
+    );
     return post(
       t,
       s,
       ((t.finance.annualRevenue * 0.16) / homeGames) *
-        (1 + (t.stadium - 1) * 0.12),
+        (1 + (t.stadium - 1) * 0.12) *
+        (t.infrastructure
+          ? t.infrastructure.gameCapacity / t.infrastructure.initialCapacity
+          : 1) *
+        (1 + ((t.infrastructure?.levels.commercial || 1) - 1) * 0.05),
       "matchday",
       "Bilheteria e receitas de jogo em casa",
     );
@@ -266,7 +274,9 @@
   }
 
   function offers(t, s) {
-    const annual = t.finance.annualRevenue;
+    const annual =
+      t.finance.annualRevenue *
+      (1 + ((t.infrastructure?.levels.commercial || 1) - 1) * 0.05);
     return [
       {
         id: "atlas-master",

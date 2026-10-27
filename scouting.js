@@ -199,15 +199,19 @@
           academy,
           score: Math.round(score * 10) / 10,
           affordable,
-          confidence: Math.max(
-            45,
-            (options.depth === "deep"
-              ? 93
-              : options.depth === "quick"
-                ? 68
-                : 81) -
-              (p.ratingEstimated ? 12 : 0) -
-              (p.ageUnknown ? 8 : 0),
+          confidence: Math.min(
+            99,
+            Math.max(
+              45,
+              (options.depth === "deep"
+                ? 93
+                : options.depth === "quick"
+                  ? 68
+                  : 81) +
+                ((club.infrastructure?.levels.scouting || 1) - 1) * 2 -
+                (p.ratingEstimated ? 12 : 0) -
+                (p.ageUnknown ? 8 : 0),
+            ),
           ),
           reason: a.strengths[0],
           observedFee: cost,
@@ -310,7 +314,11 @@
             ? 7
             : scope === "market"
               ? 3
-              : 5),
+              : 5) -
+        Math.min(
+          1,
+          Math.floor(((own(s).infrastructure?.levels.scouting || 1) - 1) / 2),
+        ),
     };
     data.missions.unshift(m);
     data.missions = data.missions.slice(0, 30);
