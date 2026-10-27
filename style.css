@@ -5079,3 +5079,98 @@ body.compact-navigation #game {
     padding: 17px;
   }
 }
+
+/* Disciplina: cartões visíveis, conteúdo fluido nos dois temas. */
+.referee-card {
+  display: inline-block;
+  width: 17px;
+  height: 25px;
+  border-radius: 3px;
+  flex: 0 0 auto;
+  box-shadow: 0 2px 5px #0002;
+  transform: rotate(-7deg);
+}
+.referee-card.yellow {
+  background: #f6c744;
+  border: 1px solid #997000;
+}
+.referee-card.red {
+  background: #e44355;
+  border: 1px solid #a11827;
+}
+.discipline-yellow {
+  color: #9a6300;
+  font-weight: 700;
+}
+.discipline-red {
+  color: #ba2c43;
+  font-weight: 700;
+}
+[data-theme="dark"] .discipline-yellow {
+  color: #ffdc75;
+}
+[data-theme="dark"] .discipline-red {
+  color: #ff9aaa;
+}
+.match-card-events,
+.discipline-bans,
+.discipline-history {
+  display: grid;
+  gap: 12px;
+}
+.match-card-event,
+.discipline-ban {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-width: 0;
+}
+.match-card-event > div,
+.discipline-ban > div {
+  flex: 1;
+  min-width: 0;
+}
+.match-card-event small,
+.discipline-ban small {
+  display: block;
+  color: var(--muted);
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.match-card-event time {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+.discipline-history article {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 15px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.discipline-history p {
+  margin: 5px 0;
+}
+.discipline-history time,
+.discipline-history small {
+  color: var(--muted);
+}
+.discipline-rules p {
+  line-height: 1.7;
+  max-width: 90ch;
+}
+@media (max-width: 550px) {
+  .discipline-history article {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .discipline-ban {
+    flex-wrap: wrap;
+  }
+  .discipline-ban b {
+    margin-left: 31px;
+  }
+}

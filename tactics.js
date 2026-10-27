@@ -4,6 +4,12 @@
     typeof module !== "undefined"
       ? require("./leadership.js")
       : root.LegacyLeadership;
+  const DS =
+    typeof module !== "undefined"
+      ? require("./discipline.js")
+      : root.LegacyDiscipline;
+  const usable = (t, p) =>
+    DS.available(p, t.selectionCompetition || t.leagueId);
   const slot = (id, label, pos, x, y) => ({ id, label, pos, x, y });
   const back4 = [
     slot("gk", "GOL", "GOL", 50, 91),
@@ -319,7 +325,7 @@
     };
   }
   function positions(t) {
-    const available = t.players.filter((p) => !p.injury),
+    const available = t.players.filter((p) => usable(t, p)),
       chosen = Array(11).fill(null),
       reserved = new Set();
     slots(t).forEach((s, i) => {
@@ -355,8 +361,8 @@
   function select(t, index, id) {
     if (!Number.isInteger(index) || index < 0 || index > 10)
       throw Error("Posição inválida.");
-    if (id && !t.players.some((p) => p.id === id && !p.injury))
-      throw Error("Jogador indisponível ou lesionado.");
+    if (id && !t.players.some((p) => p.id === id && usable(t, p)))
+      throw Error("Jogador suspenso, indisponível ou lesionado.");
     const current = positions(t).map((p) => p?.id || ""),
       other = current.indexOf(id);
     if (id && other !== index && other >= 0) current[other] = current[index];
@@ -498,7 +504,7 @@
           .filter(Boolean)
           .map((p) => p.id),
       ),
-      available = t.players.filter((p) => !p.injury && !starters.has(p.id));
+      available = t.players.filter((p) => usable(t, p) && !starters.has(p.id));
     const preferred = (t.tactics?.bench || [])
       .map((id) => available.find((p) => p.id === id))
       .filter(Boolean);
@@ -510,14 +516,14 @@
     ].slice(0, 9);
   }
   function toggleBench(t, id) {
-    if (!t.players.some((p) => p.id === id && !p.injury))
+    if (!t.players.some((p) => p.id === id && usable(t, p)))
       throw Error("Jogador indisponível.");
     if (positions(t).some((p) => p?.id === id))
       throw Error("Este jogador está entre os titulares.");
     const plan = ensure(t);
     plan.bench = plan.bench.filter(
       (pid) =>
-        t.players.some((p) => p.id === pid && !p.injury) &&
+        t.players.some((p) => p.id === pid && usable(t, p)) &&
         !positions(t).some((p) => p?.id === pid),
     );
     if (plan.bench.includes(id))

@@ -34,6 +34,7 @@
     "keeperRatingSum",
     "keeperRatedMatches",
   ];
+  const cardKeys = ["yellowCards", "redCards", "straightReds"];
   const extraKeys = ["decisiveGoals", "decisiveAssists", "knockoutMvp"];
   function emptyTotals(p) {
     return {
@@ -41,7 +42,9 @@
       name: p.name,
       pos: p.pos,
       clubId: p.clubId,
-      ...Object.fromEntries([...totalKeys, ...extraKeys].map((k) => [k, 0])),
+      ...Object.fromEntries(
+        [...totalKeys, ...extraKeys, ...cardKeys].map((k) => [k, 0]),
+      ),
       clubs: {},
     };
   }
@@ -130,7 +133,7 @@
   function tick(m) {
     const data = begin(m, m.minute - 1);
     for (let side = 0; side < m.plans.length; side++) {
-      const ps = m.plans[side].starters;
+      const ps = m.plans[side].starters.filter((p) => !p.sentOff);
       for (const p of ps) data.players[p.id].minutes++;
       if (!ps.length) continue;
       if (side === m.possessionSide) {
@@ -185,7 +188,7 @@
     if (type === "escanteio" && taker?.id !== actor?.id) assist = taker;
     else if (type === "jogada" && m.minute % 5 !== 0) {
       const candidates = m.plans[side].starters.filter(
-        (x) => x.id !== actor?.id && x.pos !== "GOL",
+        (x) => !x.sentOff && x.id !== actor?.id && x.pos !== "GOL",
       );
       assist =
         candidates[
@@ -212,7 +215,7 @@
         assistId: assist?.id || null,
       });
     if (goal)
-      for (const opponent of other.starters)
+      for (const opponent of other.starters.filter((p) => !p.sentOff))
         data.players[opponent.id].conceded++;
     m.lastShot = {
       minute: m.minute,
@@ -260,6 +263,10 @@
       value += clean ? (defensive ? 0.55 : 0.18) : 0;
       value -= p.conceded * (defensive ? 0.17 : 0.06);
     }
+    value -=
+      (p.yellowCards || 0) * 0.15 +
+      (p.redCards || 0) * 0.7 +
+      (p.straightReds || 0) * 0.3;
     value += (result > 0 ? 0.16 : result < 0 ? -0.13 : 0.03) * played;
     if (final && p.minutes < 20 && p.goals + p.assists === 0 && p.saves < 3)
       return null;
@@ -319,7 +326,8 @@
     ])
       p[k] += line[k];
     p.cleanSheets += line.cleanSheet;
-    for (const key of extraKeys) p[key] = (p[key] || 0) + (line[key] || 0);
+    for (const key of [...extraKeys, ...cardKeys])
+      p[key] = (p[key] || 0) + (line[key] || 0);
     if (line.keeper) {
       p.keeperMatches++;
       p.keeperMinutes += line.minutes;
@@ -397,6 +405,16 @@
         (p.decisiveAssists || 0) +
         (p.knockoutMvp || 0) * 3,
     );
+    const fairPlay =
+      0 -
+      round(
+        Math.min(
+          20,
+          (p.yellowCards || 0) * 0.15 +
+            Math.max(0, (p.redCards || 0) - (p.straightReds || 0)) * 1.25 +
+            (p.straightReds || 0) * 2.5,
+        ),
+      );
     const goalkeeping =
       kind === "keeper"
         ? round(
@@ -417,7 +435,8 @@
             consistency +
             team +
             goalkeeping +
-            decisiveness,
+            decisiveness +
+            fairPlay,
         ),
       ),
       performance,
@@ -426,6 +445,7 @@
       titles: team,
       goalkeeping,
       decisiveness,
+      fairPlay,
     };
   }
   function rank(
@@ -501,7 +521,7 @@
       winner: list[0],
       podium: list.slice(0, 3),
       partial: data.current.startedOffset > 0,
-      criteriaRevision: 2,
+      criteriaRevision: 3,
     };
     data.awards.unshift(award);
     data.awards = data.awards.slice(0, 2000);
@@ -703,6 +723,9 @@
       if (p.cleanSheet !== undefined) num(p.cleanSheet, 0, 1, true);
       for (const key of extraKeys)
         if (p[key] !== undefined) num(p[key], 0, 1, true);
+      for (const key of cardKeys)
+        if (p[key] !== undefined)
+          num(p[key], 0, key === "yellowCards" ? 2 : 1, true);
     }
     function totals(p) {
       base(p);
@@ -721,8 +744,9 @@
         p.duelsWon > p.duels
       )
         fail();
-      for (const key of extraKeys)
+      for (const key of [...extraKeys, ...cardKeys])
         if (p[key] !== undefined) num(p[key], 0, 1000000, true);
+      if (p.points?.fairPlay !== undefined) num(p.points.fairPlay, -20, 0);
       if (p.points?.decisiveness !== undefined)
         num(p.points.decisiveness, 0, 20);
       for (const [id, minutes] of Object.entries(p.clubs)) {

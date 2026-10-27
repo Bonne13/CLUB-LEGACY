@@ -283,7 +283,7 @@ O **Jornal** inclui nove veículos reais como referências de cobertura: ge, UOL
 
 Os nomes identificam **referências**, não a autoria da notícia: todos os textos da carreira continuam assinados **Redação Legacy**, com identificação de **cobertura simulada**. Não se atribuem citações, opiniões, publicações ou votos fictícios a jornalistas reais. Perfis editoriais podem documentar contribuições históricas e não afirmam vínculo contratual atual. Não há RSS, cópia de matérias, fotografias ou reprodução de logotipos desses veículos. A apresentação funciona offline; links externos levam ao veículo ou perfil, e não a uma suposta matéria sobre a carreira.
 
-Em **Prêmios → Ver critérios e fontes**, a página oficial do Ballon d’Or é indicada como referência dos três pilares, nesta ordem: desempenho individual, resultados coletivos e classe/fair play. O jogo adapta os dois primeiros a dados acompanhados. Fair play permanece informativo, pois cartões e sanções não são registrados; não há bônus ou punição presumida por falta de dados. Isso não constitui uma votação oficial nem simula votos em nome de jornalistas reais.
+Em **Prêmios → Ver critérios e fontes**, a página oficial do Ballon d’Or é indicada como referência dos três pilares, nesta ordem: desempenho individual, resultados coletivos e classe/fair play. O jogo adapta os três pilares a dados acompanhados. Desde a v0.13, fair play desconta pontos pelos cartões oficiais registrados; dados anteriores sem cartões permanecem neutros. Isso não constitui uma votação oficial nem simula votos em nome de jornalistas reais.
 
 O cálculo ganha o componente **Atuações decisivas**, limitado a 20 pontos: gol da vitória vale 1,5 ponto, assistência nesse gol vale 1 e melhor em campo nas quartas, semifinais ou final continental vale 3. O gol da vitória é o gol de ordem “gols sofridos pelo vencedor + 1”. Por exemplo, num 3 a 1, o segundo gol da equipe vencedora define esse crédito; os demais gols continuam pontuando na produção normal. Empates não geram esse crédito. O passe e o autor vêm dos mesmos eventos que alimentam a partida.
 
@@ -292,3 +292,18 @@ O componente é calculado dentro de cada apuração: temporada, campeonato ou m�
 Saves anteriores mantêm gols, notas, prêmios confirmados e pontos históricos. Apenas novos gols acompanhados recebem o crédito por decisão; uma partida antiga retomada no meio não tem os gols anteriores reconstruídos. O início do acompanhamento dos critérios novos fica identificado. Referências e critérios estão em `data/press.json`; `python3 scripts/build-press.py` regenera o pacote local.
 
 `npm run test:press-browser` verifica identificação da simulação, perfis e veículos, filtros, busca, links, abrangência mundial, decisões, critérios, celular, temas e persistência. `LEGACY_STANDALONE=1` repete a verificação com rede bloqueada. Os testes de regras cobrem a autoria, estabilidade das referências, ausência de alterações no save por consulta, gol/assistência da vitória, limite do bônus, mata-mata e compatibilidade com a v0.11.
+
+
+## Cartões e sanções (v0.13)
+
+O motor acompanha faltas, amarelos, segundo amarelo, vermelho direto e conduta violenta, tanto nos jogos geridos quanto nos jogos da IA. Pressão alta aumenta o risco. Os incidentes usam uma sequência determinística própria, preservada ao salvar, sem consumir o gerador dos lances de gol.
+
+O expulso sai das jogadas e dos campos 2D e 3D; não pode ser substituído, cobrar bolas paradas ou continuar acumulando minutos, gols e desgaste. Se o goleiro for expulso, um atleta de linha o cobre até uma substituição válida. Com menos de sete jogadores, o jogo termina com placar administrativo, sem inventar gols individuais. A carga física dos jogos da IA considera os minutos efetivos.
+
+**Disciplina** mostra suspensões por competição, cartões da temporada, pendurados e histórico do clube. Elenco e escalação sinalizam a indisponibilidade e impedem escalar suspensos. Penas são cumpridas nos próximos jogos da mesma competição, independentemente de o atleta estar no banco ou lesionado. Dias corridos, amistosos e outras competições não cumprem uma pena oficial. Transferências mantêm a sanção; a temporada seguinte zera o acúmulo de amarelos, mantendo penas pendentes.
+
+Regras simplificadas desta simulação: Brasileirão suspende a cada três amarelos; outras ligas, a cada cinco; competições continentais, a cada três. Segundo amarelo gera um jogo; vermelho direto, dois; conduta violenta, três. Os amarelos da expulsão também contam no acumulado, e as penas se somam quando há dois motivos. Amistosos têm cartões e expulsões apenas naquela partida. Esses perfis não reproduzem integralmente os regulamentos oficiais.
+
+Cartões reduzem a nota individual: −0,15 por amarelo e −0,7 pela expulsão, com −0,3 adicional no vermelho direto. Nas premiações oficiais, fair play desconta −0,15 por amarelo, −1,25 adicional por expulsão com dois amarelos e −2,5 por vermelho direto; o desconto tem teto de 20 pontos por apuração. Notas e fair play aparecem nos detalhes. Prêmios já entregues são preservados e cartões anteriores não são reconstruídos.
+
+`npm run test:discipline-browser` verifica expulsões no 2D/3D, substituições, sanções, escalação, jornal, critérios, temas, celular e persistência. `LEGACY_STANDALONE=1` verifica o arquivo único com a rede bloqueada. Os testes de regras incluem acúmulo e cumprimento por competição, idempotência, troca de temporada, transferência, goleiro expulso, placar administrativo, IA, fair play e validação dos saves.

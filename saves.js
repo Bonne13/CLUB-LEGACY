@@ -596,6 +596,7 @@
       if (m.goalReplays) array(m.goalReplays, 12).forEach(play);
     }
     try {
+      E.discipline.validate(s);
       E.performance.validate(s, { clubIds: known, nationalIds: nationalIDs });
     } catch {
       fail();

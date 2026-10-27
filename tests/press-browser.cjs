@@ -154,7 +154,7 @@ const { chromium } = require("playwright"),
     assert.equal(await page.locator(".criteria-pillars > article").count(), 3);
     assert(
       (await page.locator(".criteria-pillars").innerText()).includes(
-        "ainda não são acompanhados",
+        "Cartões oficiais reduzem",
       ),
     );
     assert.equal(
@@ -165,7 +165,7 @@ const { chromium } = require("playwright"),
       ).hostname,
       "ballondor.com",
     );
-    await page.locator(".real-award-criteria details > summary").click();
+    await page.locator(".real-award-criteria details > summary").last().click();
     await page
       .locator(".real-award-criteria")
       .screenshot({ path: "/tmp/legacy-v12-award-criteria.png" });

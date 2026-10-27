@@ -225,6 +225,7 @@ const pages = [
   "Jornal",
   "Elenco",
   "Treinamento",
+  "Disciplina",
   "Transferências",
   "Olheiros",
   "Categorias de base",
@@ -277,6 +278,7 @@ const navigationGroups = [
     [
       "Elenco",
       "Treinamento",
+      "Disciplina",
       "Transferências",
       "Olheiros",
       "Categorias de base",
@@ -286,6 +288,8 @@ const navigationGroups = [
   ["GESTÃO", ["Carreira", "Clube", "Financeiro", "Salvamentos"]],
 ];
 const navigationPaths = {
+  Disciplina:
+    '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6m-6 4h6m-6 4h3"/>',
   Prêmios:
     '<path d="M8 3h8v5a4 4 0 0 1-8 0V3Zm0 1H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4m-4 1v6m-4 3h8m-6-3h4v3h-4Z"/>',
   "Visão geral":
@@ -391,6 +395,7 @@ function act(fn, save = true) {
   }
 }
 const pageDescriptions = {
+  Disciplina: "Cartões, pendurados e suspensões por competição.",
   Prêmios:
     "Notas, estatísticas e os protagonistas de cada partida e temporada.",
   "Visão geral":
@@ -464,6 +469,7 @@ document.addEventListener("keydown", (e) => {
 
 function render() {
   const hasCareer = Boolean(state.clubId);
+  if (hasCareer) E.refreshAvailability(state);
   $("#sidebar").hidden = !hasCareer;
   $("#game").hidden = !hasCareer;
   $("#career-entry").hidden = hasCareer;
@@ -683,7 +689,7 @@ function standings(rows) {
     .join("")}</tbody></table></div>`;
 }
 function playersTable(ps, context = "squad") {
-  return `<div class="table-wrap"><table><thead><tr><th>JOGADOR</th><th>POS.</th><th>IDADE</th><th>GERAL</th><th>VALOR</th><th title="Preparo físico: varia com minutos, intensidade e recuperação">CONDIÇÃO ⓘ</th><th>SALÁRIO EST./SEM.</th><th>CONTRATO</th><th>AÇÕES</th></tr></thead><tbody>${ps.map((p) => `<tr><td>${p.shirtNumber ? `<span class="shirt-number" title="Número do uniforme na carreira">${p.shirtNumber}</span>` : ""}<strong>${esc(p.name)}</strong>${seasonStatLine(p)}<span class="sub">${esc(playerReference(p))}<span class="sub">${esc((p.nationalities?.length ? p.nationalities : [p.nationality]).map(countryLabel).filter(Boolean).join(" / ") || "Nacionalidade indisponível")}</span>${context === "market" ? " · " + esc(p.sellerName) : ""}</span></td><td>${esc(p.naturalPositions?.length ? p.naturalPositions.join(" / ") : p.pos)}${p.secondaryPositions?.length ? `<small class="sub">Também: ${esc(p.secondaryPositions.join(" / "))}</small>` : ""}${p.positionEstimated ? " · est." : ""}</td><td>${playerAge(p)}</td><td><span class="rating" title="${esc(p.ratingSource || "Estimativa do jogo")}">${p.ovr}</span></td><td>${moneyValue(p.price)}</td><td>${p.injury ? `Lesão · ${p.injury} dias` : `<span class="condition-meter ${p.fitness < 75 ? "tired" : p.fitness < 90 ? "wear" : "ready"}"><strong>${p.fitness}%</strong><i style="width:${p.fitness}%"></i><small>${p.fitness >= 90 ? "Pronto" : p.fitness >= 75 ? "Desgastado" : "Cansado"}</small></span>`}</td><td>${moneyValue(p.salary, "por semana")}</td><td>${p.contract}${p.contractEstimated ? " · est." : ""}<small class="sub">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")}</small></td><td>${context === "squad" ? btn("Renovar", "renew", p.id) + btn("Vender", "sell", p.id) + btn("Camisa " + p.shirtNumber, "edit-shirt", p.id) : context === "youth" ? btn("Promover · R$ 100 mil", "promote", p.id) : btn("Negociar", "buy", p.id)}</td></tr>`).join("")}</tbody></table></div>${ps.length ? "" : '<p class="muted">Nenhum jogador encontrado.</p>'}`;
+  return `<div class="table-wrap"><table><thead><tr><th>JOGADOR</th><th>POS.</th><th>IDADE</th><th>GERAL</th><th>VALOR</th><th title="Preparo físico: varia com minutos, intensidade e recuperação">CONDIÇÃO ⓘ</th><th>SALÁRIO EST./SEM.</th><th>CONTRATO</th><th>AÇÕES</th></tr></thead><tbody>${ps.map((p) => `<tr><td>${p.shirtNumber ? `<span class="shirt-number" title="Número do uniforme na carreira">${p.shirtNumber}</span>` : ""}<strong>${esc(p.name)}</strong>${context === "squad" ? disciplineStatus(p) : ""}${seasonStatLine(p)}<span class="sub">${esc(playerReference(p))}<span class="sub">${esc((p.nationalities?.length ? p.nationalities : [p.nationality]).map(countryLabel).filter(Boolean).join(" / ") || "Nacionalidade indisponível")}</span>${context === "market" ? " · " + esc(p.sellerName) : ""}</span></td><td>${esc(p.naturalPositions?.length ? p.naturalPositions.join(" / ") : p.pos)}${p.secondaryPositions?.length ? `<small class="sub">Também: ${esc(p.secondaryPositions.join(" / "))}</small>` : ""}${p.positionEstimated ? " · est." : ""}</td><td>${playerAge(p)}</td><td><span class="rating" title="${esc(p.ratingSource || "Estimativa do jogo")}">${p.ovr}</span></td><td>${moneyValue(p.price)}</td><td>${p.injury ? `Lesão · ${p.injury} dias` : `<span class="condition-meter ${p.fitness < 75 ? "tired" : p.fitness < 90 ? "wear" : "ready"}"><strong>${p.fitness}%</strong><i style="width:${p.fitness}%"></i><small>${p.fitness >= 90 ? "Pronto" : p.fitness >= 75 ? "Desgastado" : "Cansado"}</small></span>`}</td><td>${moneyValue(p.salary, "por semana")}</td><td>${p.contract}${p.contractEstimated ? " · est." : ""}<small class="sub">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")}</small></td><td>${context === "squad" ? btn("Renovar", "renew", p.id) + btn("Vender", "sell", p.id) + btn("Camisa " + p.shirtNumber, "edit-shirt", p.id) : context === "youth" ? btn("Promover · R$ 100 mil", "promote", p.id) : btn("Negociar", "buy", p.id)}</td></tr>`).join("")}</tbody></table></div>${ps.length ? "" : '<p class="muted">Nenhum jogador encontrado.</p>'}`;
 }
 function matchup(f, goals) {
   return `<span class="matchup">${teamLabel(f.pair[0])}<strong>${goals ? goals.join(" × ") : "×"}</strong>${teamLabel(f.pair[1])}</span>`;
@@ -771,6 +777,7 @@ const views = {
   Seleções: () => nationalView(),
   Salvamentos: () => saveView(),
   Prêmios: () => awardsView(),
+  Disciplina: () => disciplineView(),
   Financeiro: () => financialView(),
   Clube: () =>
     `<div class="grid">${metric("CAIXA", money(team().money), "Fluxo completo na página Financeiro")}${metric("FOLHA SEMANAL", money(E.finance.payroll(team())), "Pagamento a cada sete dias")}${metric("ELENCO REAL", team().players.length, team().youth.length + " jovens confirmados")}</div><div class="columns">${["stadium", "facility"].map((k) => `<div class="card"><h3>${k === "stadium" ? "Estádio" : "Centro de treinamento"} · nível ${team()[k]} / 5</h3><p class="muted">${k === "stadium" ? "Aumenta a receita em casa." : "Melhora as chances de desenvolvimento dos atletas."}</p>${btn("Ampliar · " + money(team()[k] * 1500000), "upgrade", k)}</div>`).join("")}</div><div class="card"><h3>Administração do clube</h3><p>Controle os limites de salários e transferências, acompanhe o extrato e negocie patrocínios.</p><button data-page="Financeiro">Abrir Financeiro →</button></div>`,
@@ -965,6 +972,8 @@ function squadPlayersView() {
       (rosterStatus === "all" ||
         (rosterStatus === "starting" && lineup.has(p.id)) ||
         (rosterStatus === "injured" && p.injury) ||
+        (rosterStatus === "suspended" &&
+          E.discipline.suspension(p, t.selectionCompetition)) ||
         (rosterStatus === "tired" &&
           (p.fitness < 85 || (p.fatigue || 0) > 50)) ||
         (rosterStatus === "expiring" && p.contract <= state.season + 1)),
@@ -978,12 +987,13 @@ function squadPlayersView() {
   };
   players.sort(sorting[rosterSort] || sorting.overall);
   const cards = () =>
-    `<div class="roster-grid">${players.map((p) => `<article class="roster-player"><div class="row"><button class="player-jersey" data-action="edit-shirt" data-id="${esc(p.id)}" aria-label="Mudar camisa de ${esc(p.name)}">${p.shirtNumber}</button><div><h3>${esc(p.name)}</h3><small>${esc([...(p.naturalPositions || []), ...(p.secondaryPositions || [])].join(" / ") || p.pos)} · ${playerAge(p)} anos</small></div><span class="rating">${p.ovr}</span></div><div class="roster-player-state"><span>${p.injury ? "Lesionado" : lineup.has(p.id) ? "No onze titular" : "Opção de elenco"}</span><strong>${p.fitness}% energia</strong></div><div class="money-pair"><div><small>Valor</small>${moneyValue(p.price)}</div><div><small>Salário / semana</small>${moneyValue(p.salary)}</div></div><p class="muted">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")} · contrato ${p.contract}</p><div class="row">${btn("Renovar", "renew", p.id)}${btn("Vender", "sell", p.id)}${btn("Camisa " + p.shirtNumber, "edit-shirt", p.id)}</div></article>`).join("") || "<p>Nenhum jogador corresponde aos filtros.</p>"}</div>`;
-  return `<div class="hero roster-hero"><span class="badge">GESTÃO DO ELENCO</span><h2 class="identity-title">${badge(t, "large")}<span>${esc(t.name)}</span></h2><p>${t.players.length} profissionais · ${t.players.filter((p) => !p.injury).length} disponíveis · ${t.players.filter((p) => p.injury).length} no departamento médico</p><div class="row">${btn("Numeração do elenco", "shirt-squad", t.players[0]?.id || "")}<button data-page="Treinamento">Preparação física →</button></div></div><section class="card"><div class="row"><h3>Jogadores e contratos</h3><div class="segmented">${btn("Tabela", "roster-view", "table", rosterView === "table" ? "active" : "")}${btn("Cartões", "roster-view", "cards", rosterView === "cards" ? "active" : "")}</div></div><form id="roster-search" class="roster-filters"><label>Buscar jogador<input id="roster-query" value="${esc(rosterQuery)}" placeholder="Nome do atleta"></label><label>Posição<select id="roster-position">${options([["all", "Todas"], ...["GOL", "LAT", "ZAG", "VOL", "MEI", "ATA"].map((x) => [x, x])], rosterPosition)}</select></label><label>Situação<select id="roster-status">${options(
+    `<div class="roster-grid">${players.map((p) => `<article class="roster-player"><div class="row"><button class="player-jersey" data-action="edit-shirt" data-id="${esc(p.id)}" aria-label="Mudar camisa de ${esc(p.name)}">${p.shirtNumber}</button><div><h3>${esc(p.name)}</h3><small>${esc([...(p.naturalPositions || []), ...(p.secondaryPositions || [])].join(" / ") || p.pos)} · ${playerAge(p)} anos</small></div><span class="rating">${p.ovr}</span></div><div class="roster-player-state"><span>${E.discipline.suspension(p, t.selectionCompetition) ? "Suspenso · " + E.discipline.suspension(p, t.selectionCompetition) + " jogo(s)" : p.injury ? "Lesionado" : lineup.has(p.id) ? "No onze titular" : "Opção de elenco"}</span><strong>${p.fitness}% energia</strong></div><div class="money-pair"><div><small>Valor</small>${moneyValue(p.price)}</div><div><small>Salário / semana</small>${moneyValue(p.salary)}</div></div><p class="muted">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")} · contrato ${p.contract}</p><div class="row">${btn("Renovar", "renew", p.id)}${btn("Vender", "sell", p.id)}${btn("Camisa " + p.shirtNumber, "edit-shirt", p.id)}</div></article>`).join("") || "<p>Nenhum jogador corresponde aos filtros.</p>"}</div>`;
+  return `<div class="hero roster-hero"><span class="badge">GESTÃO DO ELENCO</span><h2 class="identity-title">${badge(t, "large")}<span>${esc(t.name)}</span></h2><p>${t.players.length} profissionais · ${t.players.filter((p) => E.discipline.available(p, t.selectionCompetition)).length} disponíveis · ${t.players.filter((p) => p.injury).length} no departamento médico</p><div class="row">${btn("Numeração do elenco", "shirt-squad", t.players[0]?.id || "")}<button data-page="Treinamento">Preparação física →</button></div></div><section class="card"><div class="row"><h3>Jogadores e contratos</h3><div class="segmented">${btn("Tabela", "roster-view", "table", rosterView === "table" ? "active" : "")}${btn("Cartões", "roster-view", "cards", rosterView === "cards" ? "active" : "")}</div></div><form id="roster-search" class="roster-filters"><label>Buscar jogador<input id="roster-query" value="${esc(rosterQuery)}" placeholder="Nome do atleta"></label><label>Posição<select id="roster-position">${options([["all", "Todas"], ...["GOL", "LAT", "ZAG", "VOL", "MEI", "ATA"].map((x) => [x, x])], rosterPosition)}</select></label><label>Situação<select id="roster-status">${options(
     [
       ["all", "Todos"],
       ["starting", "Titulares"],
       ["injured", "Lesionados"],
+      ["suspended", "Suspensos no próximo compromisso"],
       ["tired", "Desgastados"],
       ["expiring", "Contrato perto do fim"],
     ],
@@ -1070,7 +1080,7 @@ function squadTacticsView() {
     [
       ["", "Automático"],
       ...t.players
-        .filter((p) => !p.injury)
+        .filter((p) => E.discipline.available(p, t.selectionCompetition))
         .sort((a, b) => T.fit(b, target) * b.ovr - T.fit(a, target) * a.ovr)
         .map((p) => [
           p.id,
@@ -1093,7 +1103,7 @@ function squadTacticsView() {
   )}</select></label><label>Tarefa<select id="slot-duty">${options(
     T.duties.map((v) => [v, v]),
     r.duty,
-  )}</select></label></div><form id="squad-search" class="squad-search"><label>Buscar atleta<input id="squad-query" placeholder="Nome do jogador" value="${esc(squadQuery)}"></label><label>Posição de origem<select id="squad-position">${options([["all", "Todas"], ...["GOL", "LAT", "ZAG", "VOL", "MEI", "ATA"].map((v) => [v, v])], squadPosition)}</select></label><button>Buscar</button></form><div class="candidate-list">${candidates.map((p) => `<div class="candidate ${chosen?.id === p.id ? "chosen" : ""}" draggable="${!p.injury}" data-drag-player="${esc(p.id)}"><div><strong>${esc(p.name)}</strong><small>${T.adaptation(p, target).natural} · overall ${p.ovr} → ${T.adaptation(p, target).effective} · ${T.adaptation(p, target).label} · adaptação ${Math.round(T.fit(p, target) * 100)}% · ${p.injury ? "lesão " + p.injury + " dias" : p.fitness + "%"}${assigned.has(p.id) ? " · titular " + assigned.get(p.id) : ""}</small></div><div>${btn(chosen?.id === p.id ? "Escalado aqui" : "Escalar", "place-player", p.id).replace("<button ", `<button ${p.injury || chosen?.id === p.id ? "disabled" : ""} `)}${!assigned.has(p.id) && !p.injury ? btn(plan.bench.includes(p.id) ? "Retirar prioridade" : "Priorizar banco", "toggle-bench", p.id) : ""}</div></div>`).join("") || "<p>Nenhum atleta neste filtro.</p>"}</div></section></div><p class="muted">Posições principais e habituais confirmadas mantêm o overall posicional. A perda por improvisação se aplica a locais sem confirmação, inclusive ao lado oposto quando ele não está entre as posições conhecidas do atleta. PE e PD são pontas. No centro, ATA permite um atacante móvel; escolha a função Centroavante para exigir a posição específica CA. A função não muda o lado no campo. Quando a fonte só informa uma posição geral, o lado fica identificado como não informado. As posições detalhadas são referências históricas e os percentuais de adaptação são parâmetros do jogo. A escalação automática prioriza condição física e adequação ao local. O banco completa automaticamente até nove atletas, respeitando suas prioridades.</p></div><div class="card"><span class="badge">IDENTIDADE DA EQUIPE</span><h3>Instruções táticas</h3><div class="tactic-instructions">${Object.entries(
+  )}</select></label></div><form id="squad-search" class="squad-search"><label>Buscar atleta<input id="squad-query" placeholder="Nome do jogador" value="${esc(squadQuery)}"></label><label>Posição de origem<select id="squad-position">${options([["all", "Todas"], ...["GOL", "LAT", "ZAG", "VOL", "MEI", "ATA"].map((v) => [v, v])], squadPosition)}</select></label><button>Buscar</button></form><div class="candidate-list">${candidates.map((p) => `<div class="candidate ${chosen?.id === p.id ? "chosen" : ""}" draggable="${E.discipline.available(p, t.selectionCompetition)}" data-drag-player="${esc(p.id)}"><div><strong>${esc(p.name)}</strong>${disciplineStatus(p)}<small>${T.adaptation(p, target).natural} · overall ${p.ovr} → ${T.adaptation(p, target).effective} · ${T.adaptation(p, target).label} · adaptação ${Math.round(T.fit(p, target) * 100)}% · ${p.injury ? "lesão " + p.injury + " dias" : p.fitness + "%"}${assigned.has(p.id) ? " · titular " + assigned.get(p.id) : ""}</small></div><div>${btn(chosen?.id === p.id ? "Escalado aqui" : "Escalar", "place-player", p.id).replace("<button ", `<button ${!E.discipline.available(p, t.selectionCompetition) || chosen?.id === p.id ? "disabled" : ""} `)}${!assigned.has(p.id) && E.discipline.available(p, t.selectionCompetition) ? btn(plan.bench.includes(p.id) ? "Retirar prioridade" : "Priorizar banco", "toggle-bench", p.id) : ""}</div></div>`).join("") || "<p>Nenhum atleta neste filtro.</p>"}</div></section></div><p class="muted">Posições principais e habituais confirmadas mantêm o overall posicional. A perda por improvisação se aplica a locais sem confirmação, inclusive ao lado oposto quando ele não está entre as posições conhecidas do atleta. PE e PD são pontas. No centro, ATA permite um atacante móvel; escolha a função Centroavante para exigir a posição específica CA. A função não muda o lado no campo. Quando a fonte só informa uma posição geral, o lado fica identificado como não informado. As posições detalhadas são referências históricas e os percentuais de adaptação são parâmetros do jogo. A escalação automática prioriza condição física e adequação ao local. O banco completa automaticamente até nove atletas, respeitando suas prioridades.</p></div><div class="card"><span class="badge">IDENTIDADE DA EQUIPE</span><h3>Instruções táticas</h3><div class="tactic-instructions">${Object.entries(
     T.instructions,
   )
     .map(
@@ -1125,6 +1135,7 @@ function squadTacticsView() {
 
 const newsCategories = {
   all: "Todas as editorias",
+  discipline: "Disciplina",
   preview: "Pré-jogo",
   results: "Resultados",
   market: "Mercado",
@@ -1156,7 +1167,7 @@ function pressDirectory() {
 function realAwardCriteria() {
   const c = E.press.data.awardCriteria,
     start = state.performance?.criteriaStarted;
-  return `<section class="card real-award-criteria" id="award-real-criteria" tabindex="-1"><div class="row"><div><span class="badge">REFERÊNCIA DA PREMIAÇÃO REAL</span><h3>O que inspira a Bola de Ouro da carreira</h3></div><a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">Consultar critérios oficiais ↗</a></div><div class="criteria-pillars">${c.pillars.map((p) => `<article><span class="criteria-order">0${p.order}</span><h4>${esc(p.name)}</h4><p>${esc(p.description)}</p><small>${esc(p.application)}</small></article>`).join("")}</div><p class="muted">A ordem de referência começa pelo desempenho individual. O jogo adapta esses pilares a estatísticas; não simula votos de jornalistas reais.</p><details><summary>Novos pontos por atuações decisivas</summary><p>O gol da vitória é o gol de número “gols sofridos + 1” do time vencedor: vale ${note(c.winningGoalPoints)} ponto(s). A assistência nesse gol vale ${note(c.winningAssistPoints)}. Ser melhor em campo nas quartas, semifinais ou final de uma copa continental vale ${note(c.knockoutMvpPoints)}.</p><p>O bônus de atuações decisivas é limitado a ${c.decisivenessCap} pontos por apuração. Jogos empatados não geram gol da vitória; amistosos continuam fora dos rankings oficiais. Apenas gols acompanhados depois desta atualização contam.${start ? " Início desse acompanhamento: " + E.formatDate({ ...state, season: start.season }, start.offset) + "." : ""}</p></details></section>`;
+  return `<section class="card real-award-criteria" id="award-real-criteria" tabindex="-1"><div class="row"><div><span class="badge">REFERÊNCIA DA PREMIAÇÃO REAL</span><h3>O que inspira a Bola de Ouro da carreira</h3></div><a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">Consultar critérios oficiais ↗</a></div><div class="criteria-pillars">${c.pillars.map((p) => `<article><span class="criteria-order">0${p.order}</span><h4>${esc(p.name)}</h4><p>${esc(p.description)}</p><small>${esc(p.application)}</small></article>`).join("")}</div><p class="muted">A ordem de referência começa pelo desempenho individual. O jogo adapta esses pilares a estatísticas; não simula votos de jornalistas reais.</p><details><summary>Fair play e cartões</summary><p>Amarelo: −0,15 ponto; expulsão por dois amarelos: −1,25 adicional; vermelho direto: −2,5. Desconto total limitado a 20 pontos por apuração. As notas da partida também caem com os cartões.</p><p>Apenas cartões acompanhados nesta versão entram na avaliação. Prêmios já entregues mantêm o resultado anterior.</p></details><details><summary>Novos pontos por atuações decisivas</summary><p>O gol da vitória é o gol de número “gols sofridos + 1” do time vencedor: vale ${note(c.winningGoalPoints)} ponto(s). A assistência nesse gol vale ${note(c.winningAssistPoints)}. Ser melhor em campo nas quartas, semifinais ou final de uma copa continental vale ${note(c.knockoutMvpPoints)}.</p><p>O bônus de atuações decisivas é limitado a ${c.decisivenessCap} pontos por apuração. Jogos empatados não geram gol da vitória; amistosos continuam fora dos rankings oficiais. Apenas gols acompanhados depois desta atualização contam.${start ? " Início desse acompanhamento: " + E.formatDate({ ...state, season: start.season }, start.offset) + "." : ""}</p></details></section>`;
 }
 
 function newspaper() {
@@ -1271,7 +1282,10 @@ function matchView() {
     starters = new Set(plan?.starters.map((p) => p.id) || []);
   const bench =
     t?.players.filter(
-      (p) => !p.injury && !starters.has(p.id) && !used.has(p.id),
+      (p) =>
+        E.discipline.available(p, m.competition) &&
+        !starters.has(p.id) &&
+        !used.has(p.id),
     ) || [];
   return `<section class="match-centre"><header class="match-heading"><span class="badge">${esc(f.name)}</span><div id="match-minute">${m ? m.minute + "’" : "PRÉ-JOGO"} · ${half ? "INTERVALO" : m?.done ? "ENCERRADO" : m?.secondHalfStarted || m?.minute > 45 ? "SEGUNDO TEMPO" : "PRIMEIRO TEMPO"}</div><div class="score">${scoreboard(f, m?.goals || [0, 0])}</div><div class="match-progress"><i style="width:${((m?.minute || 0) / 90) * 100}%"></i></div></header><div class="match-controls">${controls}<label>Visualização<select id="mode">${options(
     [
@@ -1290,10 +1304,12 @@ function matchView() {
   )}</select></label></div><div class="match-workspace"><div><div id="event-announcement" class="goal-announcement" aria-live="assertive"></div><div class="play-caption" id="play-caption" aria-live="polite">${half ? "Intervalo: faça os ajustes e inicie o segundo tempo." : m?.done ? "Fim de jogo. Confira os melhores momentos." : "Acompanhe a bola e a construção das jogadas."}</div><div id="field"><div class="match-empty-field"><strong>Prepare o seu time.</strong><span>Inicie a partida para acompanhar a bola em 2D ou 3D.</span></div></div><p class="muted">${half ? "O relógio está parado no intervalo." : playing && paused ? "Partida pausada." : "O lance desacelera nas finalizações; o placar atualiza quando a bola chega ao gol."}</p><div class="match-stats" id="stats"></div>${m?.goalReplays?.length ? `<div class="card"><h3>Gols e replays</h3><div class="row">${m.goalReplays.map((p, i) => btn(`${p.minute}’ · ${esc(p.playerName)}`, "replay-goal", String(i))).join("")}</div></div>` : ""}</div><aside><section class="card"><h3>Relato da partida</h3><div class="log" id="log" aria-live="off"></div></section></aside></div>${
     plan && playing
       ? `<section class="card"><h3>Banco do treinador</h3><p>${(m.substitutions || []).filter((x) => x.side === side).length} de 5 substituições. Pause para escolher a troca.</p><form id="substitution-form" class="substitution-form"><label>Sai<select name="out">${options(
-          plan.starters.map((p) => [
-            p.id,
-            p.name + " · " + E.matchFitness(p, m, plan.fatigue) + "%",
-          ]),
+          E.discipline
+            .active(plan)
+            .map((p) => [
+              p.id,
+              p.name + " · " + E.matchFitness(p, m, plan.fatigue) + "%",
+            ]),
           plan.starters[0]?.id,
         )}</select></label><label>Entra<select name="in">${options(
           bench.map((p) => [
@@ -1303,7 +1319,7 @@ function matchView() {
           bench[0]?.id,
         )}</select></label><button ${(!paused && !half) || !bench.length ? "disabled" : ""}>Fazer substituição</button></form></section>`
       : ""
-  }<section class="card match-ratings-card"><div class="row"><h3>Notas e desempenho</h3><span class="pill">${m?.done ? "Avaliação final" : "Em avaliação"}</span></div><div id="match-ratings">${matchRatingsView(m)}</div></section>${m?.plans ? `<details class="card"><summary>Escalações e condição física</summary>${m.plans.map((p) => `<h3>${esc(p.name)}</h3><div class="live-player-list">${p.starters.map((x) => `<span>${esc(x.name)}<small>${E.matchFitness(x, m, p.fatigue)}% · ${x.pos}</small></span>`).join("")}</div>`).join("")}</details>` : ""}<p class="muted">O campo ilustra os lances gerados pelo motor da partida. Condição é preparo físico: diminui com minutos e intensidade, e se recupera com descanso.</p></section>`;
+  }<div id="match-discipline">${matchDisciplineView(m)}</div><section class="card match-ratings-card"><div class="row"><h3>Notas e desempenho</h3><span class="pill">${m?.done ? "Avaliação final" : "Em avaliação"}</span></div><div id="match-ratings">${matchRatingsView(m)}</div></section>${m?.plans ? `<details class="card"><summary>Escalações e condição física</summary>${m.plans.map((p) => `<h3>${esc(p.name)}</h3><div class="live-player-list">${p.starters.map((x) => `<span>${esc(x.name)}${x.sentOff ? ' <b class="discipline-red">Expulso</b>' : ""}<small>${E.matchFitness(x, m, p.fatigue)}% · ${x.pos}</small></span>`).join("")}</div>`).join("")}</details>` : ""}<p class="muted">O campo ilustra os lances gerados pelo motor da partida. Condição é preparo físico: diminui com minutos e intensidade, e se recupera com descanso.</p></section>`;
 }
 function draw() {
   const m = state.live;
@@ -1316,6 +1332,13 @@ function draw() {
     $("#match-minute").textContent =
       `${m.minute}’ · ${m.done ? "ENCERRADO" : m.minute === 45 && !m.secondHalfStarted ? "INTERVALO" : m.secondHalfStarted || m.minute > 45 ? "SEGUNDO TEMPO" : "PRIMEIRO TEMPO"}`;
   if ($(".score")) $(".score").innerHTML = scoreboard(m, hold);
+  if ($("#match-discipline"))
+    $("#match-discipline").innerHTML = matchDisciplineView(m);
+  document
+    .querySelectorAll("#substitution-form select[name=out] option")
+    .forEach((o) => {
+      if (m.discipline?.reds.includes(o.value)) o.remove();
+    });
   const possession = m.possession || [0, 0],
     sum = Math.max(1, possession[0] + possession[1]);
   const matchLines = E.performance.lines(m);
@@ -1323,7 +1346,7 @@ function draw() {
     matchLines.filter((p) => p.side === side).reduce((n, p) => n + p[key], 0);
   if ($("#stats"))
     $("#stats").innerHTML =
-      `<div><small>Finalizações</small><strong>${m.shots.join(" × ")}</strong></div><div><small>Chutes no alvo</small><strong>${statFor(0, "onTarget")} × ${statFor(1, "onTarget")}</strong></div><div><small>Defesas</small><strong>${statFor(0, "saves")} × ${statFor(1, "saves")}</strong></div><div><small>Posse de bola</small><strong>${Math.round((possession[0] / sum) * 100)}% × ${Math.round((possession[1] / sum) * 100)}%</strong></div>${m.penalties ? `<div><small>Pênaltis</small><strong>${m.penalties.join(" × ")}</strong></div>` : ""}`;
+      `<div><small>Finalizações</small><strong>${m.shots.join(" × ")}</strong></div><div><small>Chutes no alvo</small><strong>${statFor(0, "onTarget")} × ${statFor(1, "onTarget")}</strong></div><div><small>Defesas</small><strong>${statFor(0, "saves")} × ${statFor(1, "saves")}</strong></div><div><small>Posse de bola</small><strong>${Math.round((possession[0] / sum) * 100)}% × ${Math.round((possession[1] / sum) * 100)}%</strong></div><div><small>Faltas</small><strong>${(m.discipline?.fouls || [0, 0]).join(" × ")}</strong></div><div><small>Amarelos</small><strong>${statFor(0, "yellowCards")} × ${statFor(1, "yellowCards")}</strong></div><div><small>Expulsões</small><strong>${statFor(0, "redCards")} × ${statFor(1, "redCards")}</strong></div>${m.penalties ? `<div><small>Pênaltis</small><strong>${m.penalties.join(" × ")}</strong></div>` : ""}`;
   if ($("#log")) {
     const events = m.events.filter(
       (e) =>
@@ -3192,13 +3215,13 @@ function matchRatingsView(m) {
           .sort((a, b) => (b.rating || 0) - (a.rating || 0))
           .map(
             (p) =>
-              `<div class="match-rating-line ${p.id === winner?.id ? "best" : ""}"><div><strong>${esc(p.name)}${p.id === winner?.id ? " ★" : ""}</strong><small>${p.minutes} min · ${p.goals} G · ${p.assists} A${p.keeper ? ` · ${p.saves} defesas · ${p.conceded} sofridos` : ` · ${p.recoveries} recuperações`}${p.cleanSheet ? " · SG" : ""}</small></div><span class="match-note ${(p.rating || 0) >= 8 ? "excellent" : (p.rating || 0) < 6 ? "poor" : ""}" aria-label="Nota de ${esc(p.name)}: ${note(p.rating)}">${note(p.rating)}</span></div>`,
+              `<div class="match-rating-line ${p.id === winner?.id ? "best" : ""}"><div><strong>${esc(p.name)}${p.id === winner?.id ? " ★" : ""}</strong><small>${p.yellowCards ? "🟨 " + p.yellowCards + " · " : ""}${p.redCards ? "🟥 EXPULSO · " : ""}${p.minutes} min · ${p.goals} G · ${p.assists} A${p.keeper ? ` · ${p.saves} defesas · ${p.conceded} sofridos` : ` · ${p.recoveries} recuperações`}${p.cleanSheet ? " · SG" : ""}</small></div><span class="match-note ${(p.rating || 0) >= 8 ? "excellent" : (p.rating || 0) < 6 ? "poor" : ""}" aria-label="Nota de ${esc(p.name)}: ${note(p.rating)}">${note(p.rating)}</span></div>`,
           )
           .join("")}</section>`,
     )
     .join(
       "",
-    )}</div><p class="muted ratings-explanation">Notas de 1 a 10, baseadas nos lances. SG: pelo menos 60 minutos sem sofrer gol enquanto esteve em campo. Participações curtas sem ações relevantes ficam sem nota final.${m.performance.fromMinute ? ` Acompanhamento parcial a partir do minuto ${m.performance.fromMinute}.` : ""}</p>`;
+    )}</div><p class="muted ratings-explanation">Notas de 1 a 10, baseadas nos lances, com desconto por cartões. SG: pelo menos 60 minutos sem sofrer gol enquanto esteve em campo. Participações curtas sem ações relevantes ficam sem nota final.${m.performance.fromMinute ? ` Acompanhamento parcial a partir do minuto ${m.performance.fromMinute}.` : ""}</p>`;
 }
 function awardCard(a) {
   const month = a.month
@@ -3207,10 +3230,10 @@ function awardCard(a) {
         year: "numeric",
       })
     : a.seasonLabel;
-  return `<article class="card individual-award"><span class="award-symbol ${a.type === "ballon" ? "gold-ball" : ""}" aria-hidden="true">${a.type === "ballon" ? "" : a.type === "keeper" ? "◈" : "★"}</span><span class="badge">${esc(a.name)}</span><h3>${esc(a.winner.name)}</h3><p>${teamLabel(a.winner.clubId, "small")}</p><p class="award-period">${esc(month)}${a.competitionName ? " · " + esc(a.competitionName) : ""}</p><div class="award-card-stats"><span>Nota <b>${note(a.winner.average, 2)}</b></span>${a.type === "keeper" ? `<span><b>${a.winner.saves}</b> defesas</span><span><b>${a.winner.keeperCleanSheets}</b> sem sofrer gol</span>` : `<span><b>${a.winner.goals}</b> gols</span><span><b>${a.winner.assists}</b> assistências</span>`}</div><details><summary>Ver pontuação e pódio</summary>${a.podium.map((p, i) => `<p>${i + 1}º · ${esc(p.name)} · ${note(p.points.total)} pontos</p>`).join("")}<small>${a.partial ? "Apuração parcial: esta temporada já estava em andamento ao iniciar o acompanhamento." : "Apuração do desempenho acompanhado na temporada."}</small>${(a.criteriaRevision || 1) < 2 ? '<small class="sub">Resultado preservado com os critérios vigentes na época.</small>' : ""}</details></article>`;
+  return `<article class="card individual-award"><span class="award-symbol ${a.type === "ballon" ? "gold-ball" : ""}" aria-hidden="true">${a.type === "ballon" ? "" : a.type === "keeper" ? "◈" : "★"}</span><span class="badge">${esc(a.name)}</span><h3>${esc(a.winner.name)}</h3><p>${teamLabel(a.winner.clubId, "small")}</p><p class="award-period">${esc(month)}${a.competitionName ? " · " + esc(a.competitionName) : ""}</p><div class="award-card-stats"><span>Nota <b>${note(a.winner.average, 2)}</b></span>${a.type === "keeper" ? `<span><b>${a.winner.saves}</b> defesas</span><span><b>${a.winner.keeperCleanSheets}</b> sem sofrer gol</span>` : `<span><b>${a.winner.goals}</b> gols</span><span><b>${a.winner.assists}</b> assistências</span>`}</div><details><summary>Ver pontuação e pódio</summary>${a.podium.map((p, i) => `<p>${i + 1}º · ${esc(p.name)} · ${note(p.points.total)} pontos</p>`).join("")}<small>${a.partial ? "Apuração parcial: esta temporada já estava em andamento ao iniciar o acompanhamento." : "Apuração do desempenho acompanhado na temporada."}</small>${(a.criteriaRevision || 1) < 3 ? '<small class="sub">Resultado preservado com os critérios vigentes na época.</small>' : ""}</details></article>`;
 }
 function performanceDetails(p) {
-  return `<details class="performance-breakdown"><summary>Como foram calculados os ${note(p.points.total)} pontos</summary><dl><dt>Desempenho e nota média</dt><dd>${note(p.points.performance)}</dd><dt>Gols e assistências</dt><dd>${note(p.points.production)}</dd><dt>Minutos e melhores em campo</dt><dd>${note(p.points.consistency)}</dd><dt>Contribuição para títulos</dt><dd>${note(p.points.titles)}</dd><dt>Atuações decisivas</dt><dd>${note(p.points.decisiveness || 0)}</dd>${awardsKind === "keeper" ? `<dt>Defesas, eficiência e jogos sem sofrer gol</dt><dd>${note(p.points.goalkeeping)}</dd>` : ""}</dl><p class="muted">${p.decisiveGoals || 0} gols da vitória · ${p.decisiveAssists || 0} assistências decisivas · ${p.knockoutMvp || 0} melhores em campo no mata-mata continental.</p></details>`;
+  return `<details class="performance-breakdown"><summary>Como foram calculados os ${note(p.points.total)} pontos</summary><dl><dt>Desempenho e nota média</dt><dd>${note(p.points.performance)}</dd><dt>Gols e assistências</dt><dd>${note(p.points.production)}</dd><dt>Minutos e melhores em campo</dt><dd>${note(p.points.consistency)}</dd><dt>Contribuição para títulos</dt><dd>${note(p.points.titles)}</dd><dt>Atuações decisivas</dt><dd>${note(p.points.decisiveness || 0)}</dd><dt>Fair play · desconto por cartões</dt><dd>${note(p.points.fairPlay || 0)}</dd>${awardsKind === "keeper" ? `<dt>Defesas, eficiência e jogos sem sofrer gol</dt><dd>${note(p.points.goalkeeping)}</dd>` : ""}</dl><p class="muted">${p.decisiveGoals || 0} gols da vitória · ${p.decisiveAssists || 0} assistências decisivas · ${p.knockoutMvp || 0} melhores em campo no mata-mata continental.</p></details>`;
 }
 function awardsView() {
   const data = E.performance.ensure(state),
@@ -3593,3 +3616,65 @@ $("#trophy-dialog").addEventListener("cancel", (event) => {
   $("#trophy-dialog").close();
   scheduleSave();
 });
+
+function disciplineStatus(p) {
+  const competition = team().selectionCompetition || team().leagueId,
+    ban = E.discipline.suspension(p, competition),
+    c = E.discipline.counts(p, state, competition),
+    kind = state.cups.some((x) => x.id === competition) ? "cup" : "league",
+    limit = E.discipline.rules(competition, kind).yellowLimit;
+  return ban
+    ? `<small class="sub discipline-red">Suspenso · ${ban} jogo(s) nesta competição</small>`
+    : c.accumulated === limit - 1
+      ? '<small class="sub discipline-yellow">Pendurado · mais um amarelo gera suspensão</small>'
+      : "";
+}
+function matchDisciplineView(m) {
+  if (!m?.discipline) return "";
+  const cards = m.discipline.cards.slice(-6).reverse();
+  return `<section class="card match-discipline-panel"><div class="row"><h3>Disciplina em campo</h3><span class="pill">${m.plans.map((p) => E.discipline.active(p).length).join(" × ")} jogadores</span></div>${m.discipline.forfeit ? `<p class="notice">${esc(m.discipline.forfeit.reason)} aos ${m.discipline.forfeit.minute}’. Placar administrativo; não gera gols individuais.</p>` : ""}<div class="match-card-events">${cards.map((e) => `<div class="match-card-event"><span class="referee-card ${e.type === "yellow" ? "yellow" : "red"}" aria-label="${e.type === "yellow" ? "Amarelo" : "Vermelho"}"></span><time>${e.minute}’</time><div><strong>${esc(e.name)}</strong><small>${esc(e.reason)} · ${esc(m.plans[e.side].name)}</small></div></div>`).join("") || '<p class="muted">Nenhum cartão nesta partida.</p>'}</div></section>`;
+}
+function disciplineView() {
+  const DS = E.discipline,
+    t = team(),
+    competitions = [
+      ...state.leagues.map((l) => ({ id: l.id, name: l.name, kind: "league" })),
+      ...state.cups.map((c) => ({ id: c.id, name: c.name, kind: "cup" })),
+    ],
+    compName = (id) => competitions.find((c) => c.id === id)?.name || id,
+    current = t.selectionCompetition || t.leagueId,
+    bans = t.players.flatMap((p) =>
+      Object.entries(p.discipline?.bans || {})
+        .filter(([, b]) => b.remaining > 0)
+        .map(([id, b]) => ({ p, id, ...b })),
+    ),
+    rows = t.players
+      .flatMap((p) =>
+        Object.entries(p.discipline?.cards || {})
+          .filter(([, c]) => c.season === state.season)
+          .map(([id, c]) => ({ p, id, ...c })),
+      )
+      .sort((a, b) => b.accumulated - a.accumulated),
+    pending = rows.filter(
+      (c) =>
+        c.accumulated ===
+        DS.rules(c.id, competitions.find((x) => x.id === c.id)?.kind)
+          .yellowLimit -
+          1,
+    ),
+    history = (state.discipline?.events || [])
+      .filter((e) => e.clubId === t.id)
+      .slice(0, 60);
+  return `<div class="hero"><span class="badge">GESTÃO DISCIPLINAR</span><h2>Quem pode entrar em campo.</h2><p>Próximo compromisso: ${esc(compName(current))}. Suspensões são cumpridas em jogos da mesma competição.</p><button data-page="Elenco">Preparar escalação →</button></div><div class="grid">${metric("SUSPENSÕES ATIVAS", bans.length, "Penas por atleta e competição")}${metric("PENDURADOS", pending.length, "Um amarelo do limite")}${metric("FORA DO PRÓXIMO JOGO", t.players.filter((p) => DS.suspension(p, current)).length, compName(current))}</div><section class="card"><h3>Suspensões a cumprir</h3><div class="discipline-bans">${bans.map((b) => `<article class="discipline-ban"><span class="referee-card red" aria-hidden="true"></span><div><strong>${esc(b.p.name)}</strong><small>${esc(compName(b.id))} · ${esc(b.reason)}</small></div><b>${b.remaining} jogo(s)</b></article>`).join("") || '<p class="muted">Seu elenco está livre de suspensões.</p>'}</div></section><section class="card"><h3>Cartões nesta temporada</h3><div class="table-wrap"><table class="discipline-table"><thead><tr><th>JOGADOR</th><th>COMPETIÇÃO</th><th>AMARELOS</th><th>EXPULSÕES</th><th>ACÚMULO ATUAL</th><th>SITUAÇÃO</th></tr></thead><tbody>${
+    rows
+      .map((c) => {
+        const limit = DS.rules(
+          c.id,
+          competitions.find((x) => x.id === c.id)?.kind,
+        ).yellowLimit;
+        return `<tr><td>${esc(c.p.name)}</td><td>${esc(compName(c.id))}</td><td>${c.yellows}</td><td>${c.reds}</td><td>${c.accumulated} / ${limit}</td><td>${DS.suspension(c.p, c.id) ? '<span class="discipline-red">Suspenso</span>' : c.accumulated === limit - 1 ? '<span class="discipline-yellow">Pendurado</span>' : "Disponível"}</td></tr>`;
+      })
+      .join("") ||
+    '<tr><td colspan="6">Nenhum cartão oficial registrado nesta temporada.</td></tr>'
+  }</tbody></table></div></section><section class="card"><h3>Histórico de sanções do clube</h3><div class="discipline-history">${history.map((e) => `<article><time>${esc(E.formatDate({ ...state, season: e.season }, e.offset))}</time><div><strong>${esc(e.name)}</strong><p>${e.action === "suspended" ? `Suspensão: ${e.matches} jogo(s)` : e.action === "served" ? (e.matches ? `Pena cumprida nesta rodada · restam ${e.matches} jogo(s)` : "Suspensão cumprida · liberado") : "Cartão registrado"} · ${esc(e.reason)}</p><small>${esc(compName(e.competition))}</small></div></article>`).join("") || '<p class="muted">Os próximos cartões e cumprimentos de suspensão aparecerão aqui.</p>'}</div></section><details class="card discipline-rules"><summary>Regras disciplinares da simulação</summary><p>Brasileirão: suspensão a cada 3 amarelos. Demais ligas: a cada 5. Copas continentais: a cada 3. O acúmulo é separado por competição e reinicia na temporada seguinte; penas pendentes continuam.</p><p>Dois amarelos no jogo expulsam e geram 1 jogo de suspensão. Vermelho direto: 2 jogos; conduta violenta: 3 jogos. Se o amarelo também completar o limite acumulado, as penas se somam. Os amarelos do segundo cartão contam no acumulado deste regulamento.</p><p>A pena começa no próximo jogo oficial da mesma competição, incluindo quando o atleta ficaria no banco. Dias sem jogo, outras competições e amistosos não cumprem essa pena. Cartões em amistosos afetam só a partida. Em uma transferência, as penas acompanham o atleta.</p><p>Uma equipe com menos de sete jogadores perde por resultado administrativo, sem criar gols individuais. Pressão alta aumenta o risco de advertências. Goleiro expulso é coberto por um atleta de linha até você colocar um goleiro disponível.</p><p>Estas são regras simplificadas do jogo, não uma reprodução integral dos regulamentos de cada federação. Fair play considera os cartões oficiais acompanhados desde a atualização; o histórico anterior é preservado.</p><a href="https://www.theifab.com/laws/latest/fouls-and-misconduct/" target="_blank" rel="noopener noreferrer">Referência: IFAB · faltas e conduta ↗</a></details>`;
+}

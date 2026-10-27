@@ -265,7 +265,7 @@
         "order": 3,
         "name": "Classe e fair play",
         "description": "Conduta esportiva como parte da avaliação real.",
-        "application": "Referência informativa: cartões e sanções disciplinares ainda não são acompanhados; este item não dá bônus nem punições no jogo."
+        "application": "Cartões oficiais reduzem a nota da partida e a pontuação de fair play: amarelo −0,15; expulsão por dois amarelos −1,25 adicional; vermelho direto −2,5. Desconto limitado a 20 pontos por apuração."
       }
     ],
     "decisivenessCap": 20,

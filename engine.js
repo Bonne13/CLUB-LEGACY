@@ -39,6 +39,10 @@
     typeof module !== "undefined"
       ? require("./schedule.js")
       : root.LegacySchedule;
+  const DS =
+    typeof module !== "undefined"
+      ? require("./discipline.js")
+      : root.LegacyDiscipline;
   const PF =
     typeof module !== "undefined"
       ? require("./performance.js")
@@ -458,6 +462,7 @@
   }
   function prepareCareer(s) {
     PF.ensure(s);
+    DS.ensure(s);
     ensureFriendlies(s);
     TR.ensure(s);
     SC.ensure(s);
@@ -610,6 +615,7 @@
       const m = s.live;
       m.plans ??= matchPlans(s, m);
       PF.begin(m);
+      DS.begin(s, m);
       if (!m.minutesPlayed)
         m.minutesPlayed = Object.fromEntries(
           m.plans.flatMap((plan) => plan.starters.map((p) => [p.id, m.minute])),
@@ -689,7 +695,8 @@
           plan.baseStrength = matchPlanStrength(plan);
           const condition =
             plan.starters.reduce(
-              (sum, p) => sum + matchFitness(p, m, plan.fatigue),
+              (sum, p) =>
+                sum + (p.sentOff ? 0 : matchFitness(p, m, plan.fatigue)),
               0,
             ) / 11;
           plan.strength =
@@ -921,6 +928,13 @@
       }));
   }
 
+  function refreshAvailability(s) {
+    if (!s.clubId) return;
+    const t = team(s, s.clubId),
+      f = upcomingFixture(s);
+    t.selectionCompetition =
+      f?.kind !== "national" ? f?.competition || t.leagueId : t.leagueId;
+  }
   function lineup(t) {
     return T.positions(t).filter(Boolean);
   }
@@ -942,9 +956,17 @@
   }
   function matchPlans(s, m) {
     return m.pair.map((id) => {
-      const t = team(s, id),
+      const original = team(s, id);
+      T.ensure(original);
+      const t = {
+          ...original,
+          selectionCompetition: m.competition || original.leagueId,
+        },
         plan = copy(T.ensure(t)),
-        starters = lineup(t),
+        occupied = T.positions(t)
+          .map((p, i) => ({ p, slot: T.slots(t)[i] }))
+          .filter((x) => x.p),
+        starters = occupied.map((x) => x.p),
         responsible = T.specialists(t, starters);
       if (id === s.clubId && m.kind !== "national") plan.mentality = s.tactic;
       return {
@@ -953,7 +975,7 @@
         leadershipRevision: T.leadership.revision,
         ...T.ratings(t),
         instructions: plan,
-        slots: copy(T.slots(t)),
+        slots: copy(occupied.map((x) => x.slot)),
         starters: starters.map((p) => ({
           id: p.id,
           name: p.name,
@@ -1349,11 +1371,13 @@
     const f = nextFixture(s);
     if (!f) fail("Seu clube não joga nesta data. Avance o calendário.");
     if (
-      lineup(team(s, f.kind === "national" ? s.national.job : s.clubId))
-        .length < 11
+      lineup({
+        ...team(s, f.kind === "national" ? s.national.job : s.clubId),
+        selectionCompetition: f.competition,
+      }).length < 7
     )
       fail(
-        "Você precisa de 11 jogadores disponíveis. Contrate ou promova atletas da base.",
+        "Você precisa de pelo menos 7 jogadores disponíveis para iniciar a partida. Verifique lesões e suspensões.",
       );
     s.live = {
       ...copy(f),
@@ -1375,6 +1399,7 @@
     };
     s.live.plans = matchPlans(s, s.live);
     PF.begin(s.live);
+    DS.begin(s, s.live);
     s.live.events.push(
       ...s.live.plans.map(
         (p) =>
@@ -1396,13 +1421,16 @@
   function matchVisual(m, play = m.lastPlay) {
     if (play?.positions)
       return {
-        positions: play.positions.map((p) => ({ ...p })),
+        positions: play.positions
+          .filter((p) => !m.discipline?.reds.includes(p.id))
+          .map((p) => ({ ...p })),
         ball: play.path[0],
         side: play.side,
       };
     const side = play?.side ?? m.possessionSide ?? 0;
     const positions = m.plans.flatMap((plan, teamSide) =>
-      plan.starters.map((p, i) => {
+      plan.starters.flatMap((p, i) => {
+        if (p.sentOff) return [];
         const slot = plan.slots[i],
           advance = teamSide === side ? 5 : -3;
         let x =
@@ -1522,9 +1550,12 @@
       fail("A equipe gerida não participa desta partida.");
     const changes = (m.substitutions || []).filter((x) => x.side === side),
       index = plan?.starters.findIndex((p) => p.id === outId),
-      incoming = t.players.find((p) => p.id === inId && !p.injury);
+      incoming = t.players.find(
+        (p) => p.id === inId && DS.available(p, m.competition),
+      );
     if (
       index < 0 ||
+      plan.starters[index]?.sentOff ||
       !incoming ||
       plan.starters.some((p) => p.id === inId) ||
       changes.some((x) => x.outId === inId) ||
@@ -1552,9 +1583,18 @@
     m.minutesPlayed[inId] ??= 0;
     m.substitutions ??= [];
     m.substitutions.push({ side, outId, inId, minute: m.minute });
+    if (
+      incoming.pos === "GOL" &&
+      plan.starters[0]?.pos !== "GOL" &&
+      index !== 0
+    )
+      [plan.starters[0], plan.starters[index]] = [
+        plan.starters[index],
+        plan.starters[0],
+      ];
     plan.baseStrength = matchPlanStrength(plan);
     plan.strength = plan.baseStrength;
-    const valid = new Set(plan.starters.map((p) => p.id));
+    const valid = new Set(DS.active(plan).map((p) => p.id));
     if (
       !valid.has(plan.specialists.captain?.id) &&
       valid.has(plan.specialists.viceCaptain?.id)
@@ -1569,7 +1609,7 @@
             : key === "freeKicks"
               ? "freeKicks"
               : "leadership";
-        const best = [...plan.starters].sort(
+        const best = DS.active(plan).sort(
           (a, b) => b.skills[skill] - a.skills[skill],
         )[0];
         plan.specialists[key] = {
@@ -1580,7 +1620,7 @@
       }
     const leaders = T.specialists(
       { ...team(s, m.pair[side]), tactics: plan.instructions },
-      plan.starters,
+      DS.active(plan),
     );
     for (const key of ["captain", "viceCaptain"]) {
       const p = leaders[key];
@@ -1598,7 +1638,7 @@
       plan.starters.reduce(
         (sum, p, i) =>
           sum +
-          p.ovr *
+          (p.sentOff ? 0 : p.ovr) *
             (0.65 + (0.35 * (p.fitness ?? 100)) / 100) *
             (1 - (p.fatigue || 0) * 0.001) *
             T.fit(p, plan.slots[i]),
@@ -1609,17 +1649,19 @@
   function minute(s, m, rng = Math.random) {
     if (m.done || m.minute >= 90) return;
     if (!m.plans) m.plans = matchPlans(s, m);
+    DS.begin(s, m);
     m.minute++;
     m.minutesPlayed ??= {};
     m.possession ??= [0, 0];
     if (!m.compact)
       for (const plan of m.plans) {
-        for (const p of plan.starters)
+        for (const p of DS.active(plan))
           m.minutesPlayed[p.id] = (m.minutesPlayed[p.id] || 0) + 1;
         plan.baseStrength ??= plan.strength;
         const condition =
           plan.starters.reduce(
-            (sum, p) => sum + matchFitness(p, m, plan.fatigue),
+            (sum, p) =>
+              sum + (p.sentOff ? 0 : matchFitness(p, m, plan.fatigue)),
             0,
           ) / 11;
         plan.strength = plan.baseStrength * (0.85 + (0.15 * condition) / 100);
@@ -1630,6 +1672,8 @@
         ? 0
         : 1;
     PF.tick(m);
+    DS.tick(s, m);
+    if (m.discipline.forfeit) return;
     let producedPlay = false;
     const pace = (p) =>
       p.instructions.tempo === "Rápido"
@@ -1709,10 +1753,10 @@
           0.075 + ((taker?.skills.crossing || 55) - 65) / 700 + delta / 500;
       }
       chance = Math.max(0.025, Math.min(0.9, chance));
-      const attackers = own.starters.filter((p) =>
+      const attackers = DS.active(own).filter((p) =>
           ["ATA", "MEI"].includes(p.pos),
         ),
-        pool = attackers.length ? attackers : own.starters;
+        pool = attackers.length ? attackers : DS.active(own);
       const scorer =
         type === "pênalti" || type === "falta direta"
           ? taker
@@ -1980,7 +2024,8 @@
       fail("Conclua a partida antes de avançar.");
     const results = [];
     const participants = new Set(),
-      international = new Map();
+      international = new Map(),
+      playedMinutes = new Map();
     for (const f of allFixtures(s)) {
       if (f.kind !== "national") f.pair.forEach((id) => participants.add(id));
       const controlled =
@@ -1989,6 +2034,25 @@
         m?.competition === f.competition;
       const played = controlled ? m : score(s, f, rng);
       const g = [...played.goals];
+      if (played.plans)
+        for (let side = 0; side < 2; side++)
+          playedMinutes.set(
+            played.pair[side],
+            Object.fromEntries(
+              Object.values(played.performance?.players || {})
+                .filter((p) => p.side === side)
+                .map((p) => [p.id, played.minutesPlayed?.[p.id] ?? p.minutes]),
+            ),
+          );
+      const disciplinary = DS.commit(s, played);
+      for (const sanction of disciplinary.filter(
+        (e) => e.action === "suspended",
+      ))
+        news(s, `${sanction.name} recebe suspensão.`, {
+          category: "discipline",
+          clubIds: [sanction.clubId],
+          body: `${sanction.reason}: ${sanction.matches} jogo(s) de suspensão em ${f.name}. A pena será cumprida nessa competição.`,
+        });
       const playerOfMatch = PF.commit(s, played, { managed: controlled });
       const entry = {
         ...copy(f),
@@ -2003,7 +2067,10 @@
           for (const p of plan.starters)
             international.set(p.id, {
               fatigue: plan.fatigue,
-              minutes: played.minutesPlayed?.[p.id] ?? 90,
+              minutes:
+                played.minutesPlayed?.[p.id] ??
+                played.performance?.players[p.id]?.minutes ??
+                0,
             });
         s.national.results.push({
           ...entry,
@@ -2130,7 +2197,7 @@
         rng,
         participants.has(t.id),
         international,
-        m?.pair.includes(t.id) ? m.minutesPlayed || null : null,
+        playedMinutes.get(t.id) || null,
       );
       if (t.id !== s.clubId) ensureAI(s, t);
     });
@@ -2199,6 +2266,7 @@
     const next = calendar(s)[s.day];
     if (next?.kind === "cup") prepareKnockouts(s, next.round);
     if (!next) seasonEnd(s, rng);
+    refreshAvailability(s);
     return results;
   }
   function careerCalendar(s, scope = "career") {
@@ -3540,6 +3608,8 @@
     physical: P,
     training: TR,
     performance: PF,
+    discipline: DS,
+    refreshAvailability,
     press: PR,
     setRecoveryPlan,
     NEGOTIATION_STAGES,
