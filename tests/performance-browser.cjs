@@ -30,7 +30,7 @@ const { chromium } = require("playwright"),
           : r.abort(),
       );
     }
-    const nav = (name) => page.locator(`#nav [data-page="${name}"]`).click();
+    const nav = require("./navigation-helper.cjs").createNavigator(page);
     await page.goto(url);
     await page.locator("#start-league").selectOption("es");
     await page.locator("#start-club").selectOption("es-1");

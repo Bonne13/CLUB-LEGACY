@@ -32,7 +32,7 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
           .every((p) => p.real && p.sourceId),
       ),
     );
-    await page.getByRole("button", { name: "Financeiro", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(page, "Financeiro");
     const before = await page.evaluate(() => ({
       money: team().money,
       wage: team().finance.wageBudget,
@@ -60,9 +60,7 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
         team().finance.sponsors.some((c) => c.slot === "kit"),
       ),
     );
-    await page
-      .getByRole("button", { name: "Visão geral", exact: true })
-      .click();
+    await require("./navigation-helper.cjs").navigate(page, "Visão geral");
     await page.locator("#simulate-unit").selectOption("weeks");
     await page
       .getByRole("button", { name: "Simular período", exact: true })
@@ -99,9 +97,7 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
       .click();
     await page.waitForFunction(() => !advancing);
     assert.equal(await page.evaluate(() => state.today), 2);
-    await page
-      .getByRole("button", { name: "Visão geral", exact: true })
-      .click();
+    await require("./navigation-helper.cjs").navigate(page, "Visão geral");
     await page.locator("#simulate-unit").selectOption("weeks");
     await page
       .getByRole("button", { name: "Simular período", exact: true })
@@ -127,7 +123,7 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
           .click();
       await page.waitForFunction(() => !advancing);
     }
-    await page.getByRole("button", { name: "Financeiro", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(page, "Financeiro");
     await page.locator("#ledger-category").selectOption("wages");
     assert(
       (await page.locator("#content").innerText()).includes(
@@ -158,7 +154,7 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
         localStorage.getItem("club-legacy-v2").startsWith("CL3:"),
       ),
     );
-    await page.getByRole("button", { name: "Financeiro", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(page, "Financeiro");
     await page.screenshot({ path: "/tmp/legacy-finance.png", fullPage: true });
     await page.setViewportSize({ width: 390, height: 844 });
     assert(

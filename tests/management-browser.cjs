@@ -29,8 +29,7 @@ const { chromium } = require("playwright"),
           : r.abort(),
       );
     }
-    const nav = async (name) =>
-      page.getByRole("button", { name, exact: true }).click();
+    const nav = require("./navigation-helper.cjs").createNavigator(page);
     const idle = () => page.waitForFunction(() => !advancing);
     const advance = async (amount = 1, unit = "days") => {
       await nav("Visão geral");
@@ -291,9 +290,7 @@ const { chromium } = require("playwright"),
     });
     await page.locator("[data-action=close-dialog]").click();
     await nav("Elenco");
-    await page
-      .getByRole("tab", { name: "Jogadores e contratos", exact: true })
-      .click();
+    await page.getByRole("tab", { name: "Jogadores", exact: true }).click();
     const shirtPlayer = await page
       .locator("[data-action=edit-shirt]")
       .first()

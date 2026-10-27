@@ -30,7 +30,7 @@ const { chromium } = require("playwright"),
           : r.abort(),
       );
     }
-    const nav = (name) => page.locator(`#nav [data-page="${name}"]`).click();
+    const nav = require("./navigation-helper.cjs").createNavigator(page);
     const advance = async (days) => {
       await nav("Visão geral");
       await page.locator("#simulate-amount").fill(String(days));

@@ -30,16 +30,30 @@ test("catálogo visual usa arquivos locais íntegros, sem baixar imagens durante
       e.sha256,
       e.file,
     );
-    assert(
-      bytes
-        .subarray(0, 8)
-        .equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])),
-      e.file,
-    );
-    assert(
-      bytes.readUInt32BE(16) >= 24 && bytes.readUInt32BE(20) >= 24,
-      e.file,
-    );
+    if (e.name) {
+      assert(e.file.startsWith("original-") && e.file.endsWith(".svg"), e.file);
+      assert.equal(e.design, "geometric-v1");
+      const svg = bytes.toString("utf8");
+      assert(svg.includes('viewBox="0 0 96 96"'));
+      assert(svg.includes("emblema original Dinastia FC"));
+      assert(
+        !/<(?:image|script|foreignObject)|\bonload\s*=|href=|<rect[^>]*width="96"/i.test(
+          svg,
+        ),
+      );
+      assert(!e.sourceUrl && !e.sourceId);
+    } else {
+      assert(
+        bytes
+          .subarray(0, 8)
+          .equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])),
+        e.file,
+      );
+      assert(
+        bytes.readUInt32BE(16) >= 24 && bytes.readUInt32BE(20) >= 24,
+        e.file,
+      );
+    }
   }
 });
 test("temas mantêm contraste de leitura em todas as cores dos clubes e seleções", () => {

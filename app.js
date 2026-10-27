@@ -1,5 +1,8 @@
 "use strict";
 const A = LegacyAppearance;
+const NAV = LegacyNavigation;
+const sectionMemory = new Map();
+const workspaceScroll = new Map();
 const E = Legacy,
   T = E.tactics,
   KEY = "club-legacy-v2";
@@ -254,7 +257,7 @@ const btn = (label, action, id = "", cls = "") =>
 function badge(t, size = "medium") {
   const src = LegacyBadges.asset(t),
     colors = A.clubColors(t);
-  return `<span class="team-badge badge-${size}" data-badge="${esc(t?.name || "A definir")}" data-loaded="${Boolean(src)}" style="--badge-primary:${colors.primary};--badge-secondary:${colors.secondary}"><svg class="badge-fallback" viewBox="0 0 40 48" aria-hidden="true"><path d="M3 3h34v23c0 10-17 19-17 19S3 36 3 26Z" fill="var(--badge-primary)" stroke="var(--badge-secondary)" stroke-width="3"/><path d="m11 19 9-6 9 6-4 12H15Z" fill="var(--badge-secondary)"/></svg>${src ? `<img src="${esc(src)}" alt="${t?.isNational || t?.id?.startsWith("nt-") ? "Bandeira" : "Escudo"} de ${esc(t.name)}" width="64" height="64" decoding="async" draggable="false">` : ""}</span>`;
+  return `<span class="team-badge badge-${size}" data-badge="${esc(t?.name || "A definir")}" data-loaded="${Boolean(src)}" style="--badge-primary:${colors.primary};--badge-secondary:${colors.secondary}"><svg class="badge-fallback" viewBox="0 0 40 48" aria-hidden="true"><path d="M3 3h34v23c0 10-17 19-17 19S3 36 3 26Z" fill="var(--badge-primary)" stroke="var(--badge-secondary)" stroke-width="3"/><path d="m11 19 9-6 9 6-4 12H15Z" fill="var(--badge-secondary)"/></svg>${src ? `<img src="${esc(src)}" alt="${t?.isNational || t?.id?.startsWith("nt-") ? "Bandeira" : "Emblema original"} de ${esc(t.name)}" width="64" height="64" decoding="async" draggable="false">` : ""}</span>`;
 }
 function teamLabel(id, size = "small") {
   const t = team(id);
@@ -271,22 +274,10 @@ document.addEventListener(
   },
   true,
 );
-const navigationGroups = [
-  ["DIA A DIA", ["Visão geral", "Jornal", "Calendário"]],
-  [
-    "FUTEBOL",
-    [
-      "Elenco",
-      "Treinamento",
-      "Disciplina",
-      "Transferências",
-      "Olheiros",
-      "Categorias de base",
-    ],
-  ],
-  ["COMPETIÇÕES", ["Competições", "Troféus", "Prêmios", "Seleções"]],
-  ["GESTÃO", ["Carreira", "Clube", "Financeiro", "Salvamentos"]],
-];
+const navigationGroups = ["DIA A DIA", "FUTEBOL", "GESTÃO"].map((label) => [
+  label,
+  NAV.groups.filter((g) => g.category === label).map((g) => g.page),
+]);
 const navigationPaths = {
   Disciplina:
     '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6m-6 4h6m-6 4h3"/>',
@@ -324,13 +315,13 @@ function renderNavigation() {
     nav.innerHTML = navigationGroups
       .map(
         ([label, items]) =>
-          `<div class="nav-group"><small class="nav-group-label">${label}</small>${items.map((p) => `<button data-page="${p}" aria-label="${p}" title="${p}"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${navigationPaths[p]}</svg><span class="nav-label">${p}</span></button>`).join("")}</div>`,
+          `<div class="nav-group"><small class="nav-group-label">${label}</small>${items.map((p) => `<button data-page="${p}" data-workspace="${NAV.groupFor(p).id}" aria-label="${p}" title="${NAV.groupFor(p).description}"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${navigationPaths[p]}</svg><span class="nav-label">${p}</span></button>`).join("")}</div>`,
       )
       .join("");
     navigationReady = true;
   }
   nav.querySelectorAll("button[data-page]").forEach((button) => {
-    const active = button.dataset.page === page;
+    const active = button.dataset.page === NAV.groupFor(page)?.page;
     button.classList.toggle("active", active);
     if (active) button.setAttribute("aria-current", "page");
     else button.removeAttribute("aria-current");
@@ -427,22 +418,17 @@ function openQuickMenu() {
       .value.normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase();
-    $("#quick-menu-results").innerHTML =
-      navigationGroups
-        .map(([label, pages]) => {
-          const found = pages.filter((p) =>
-            (p + " " + pageDescriptions[p])
-              .normalize("NFD")
-              .replace(/[\u0300-\u036f]/g, "")
-              .toLowerCase()
-              .includes(term),
-          );
-          return found.length
-            ? `<section><h3>${label}</h3>${found.map((p) => `<button data-page="${p}" class="${page === p ? "current" : ""}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">${navigationPaths[p]}</svg><span><strong>${p}</strong><small>${pageDescriptions[p]}</small></span><span aria-hidden="true">→</span></button>`).join("")}</section>`
-            : "";
-        })
-        .join("") ||
-      '<p class="muted">Nenhuma página encontrada. Tente outro nome.</p>';
+    const found = NAV.search(term);
+    $("#quick-menu-results").innerHTML = found.length
+      ? ["DIA A DIA", "FUTEBOL", "GESTÃO"]
+          .map((category) => {
+            const items = found.filter((x) => x.group.category === category);
+            return items.length
+              ? `<section><h3>${category}</h3>${items.map(({ group: g, section: x }) => `<button data-page="${x.page}" ${x.squadTab ? `data-squad-tab="${x.squadTab}"` : ""} ${!term ? `data-workspace="${g.id}"` : ""} class="${NAV.sectionFor(page, squadTab)?.key === x.key ? "current" : ""}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">${navigationPaths[g.page]}</svg><span><strong>${esc(term ? g.label + " → " + x.label : g.label)}</strong><small>${esc(term ? pageDescriptions[x.page] : g.description)}</small></span><span aria-hidden="true">→</span></button>`).join("")}</section>`
+              : "";
+          })
+          .join("")
+      : '<p class="muted">Nenhuma seção encontrada. Tente jogador, treino, prêmio ou financeiro.</p>';
   }
   $("#quick-menu-search").oninput = results;
   $("#quick-menu-search").onkeydown = (e) => {
@@ -491,13 +477,26 @@ function render() {
   $("#time-controls").hidden = page !== "Visão geral" || match.active;
   $("#time-controls").innerHTML = page === "Visão geral" ? timeControls() : "";
   renderNavigation();
-  $("#title").textContent = page;
+  const group = NAV.groupFor(page),
+    section = NAV.sectionFor(page, squadTab);
+  if (group && section) sectionMemory.set(group.id, section.key);
+  $("#title").textContent = group?.label || page;
   $("#page-description").textContent = pageDescriptions[page] || "";
+  const previousTabs = $("#content .workspace-tabs");
+  if (previousTabs)
+    workspaceScroll.set(
+      $("#content").dataset.workspace,
+      previousTabs.scrollLeft,
+    );
+  $("#content").dataset.workspace = group?.id || "match";
   $("#content").dataset.view = page;
-  document.title = page + " · " + team().name + " · CLUB LEGACY";
+  document.title = page + " · " + team().name + " · DINASTIA FC";
   match3D?.dispose();
   match3D = null;
-  $("#content").innerHTML = views[page]();
+  $("#content").innerHTML = workspaceView(group, section);
+  if ($("#content .workspace-tabs"))
+    $("#content .workspace-tabs").scrollLeft =
+      workspaceScroll.get(group.id) || 0;
   decorateMoneyInputs();
   $("#context").textContent =
     `${appearanceTeam().name} · ${E.seasonLabel(state)} · ${E.date(state)}${state.mode === "test" ? " · MODO TESTE" : ""}`;
@@ -526,7 +525,7 @@ function setup() {
     "<button ",
     `<button ${chosen.players.length < 11 ? "disabled" : ""} `,
   );
-  return `<div class="entry-top"><a class="wordmark" href="#" aria-label="Club Legacy">CLUB<span>LEGACY</span></a><button data-action="toggle-theme" aria-label="${theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"}">${theme === "dark" ? "☀ Modo claro" : "☾ Modo escuro"}</button></div><div class="entry-layout"><div class="entry-copy"><span class="badge">SUA HISTÓRIA COMEÇA AQUI</span><h1>Um clube. <br>Mil decisões. <br><em>O seu legado.</em></h1><p>Assuma o comando de um clube real, negocie com atletas reais e controle cada entrada e saída do caixa.</p><div class="entry-facts"><span><strong>${available}</strong> clubes com elenco disponível</span><span><strong>21</strong> ligas no mundo</span><span><strong>4</strong> copas continentais</span></div></div><section class="career-card" aria-label="Escolha seu clube"><div class="entry-step"><span>01 / INÍCIO DA JORNADA</span><span>Treinador & gestor</span></div><h2>Começar carreira</h2><p class="muted">Somente jogadores reais. Valores e caixa são referências e projeções.</p>${profileFields(setupProfile, "start")}<label for="start-game-mode">Modo de carreira</label><select id="start-game-mode">${options(
+  return `<div class="entry-top"><a class="wordmark" href="#" aria-label="Dinastia FC">DINASTIA<span>FC</span></a><button data-action="toggle-theme" aria-label="${theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"}">${theme === "dark" ? "☀ Modo claro" : "☾ Modo escuro"}</button></div><div class="entry-layout"><div class="entry-copy"><span class="badge">SUA HISTÓRIA COMEÇA AQUI</span><h1>Um clube. <br>Mil decisões. <br><em>O seu legado.</em></h1><p>Assuma o comando de um clube real, negocie com atletas reais e controle cada entrada e saída do caixa.</p><div class="entry-facts"><span><strong>${available}</strong> clubes com elenco disponível</span><span><strong>21</strong> ligas no mundo</span><span><strong>4</strong> copas continentais</span></div></div><section class="career-card" aria-label="Escolha seu clube"><div class="entry-step"><span>01 / INÍCIO DA JORNADA</span><span>Treinador & gestor</span></div><h2>Começar carreira</h2><p class="muted">Somente jogadores reais. Valores e caixa são referências e projeções.</p>${profileFields(setupProfile, "start")}<label for="start-game-mode">Modo de carreira</label><select id="start-game-mode">${options(
     [
       ["normal", "Carreira normal"],
       ["test", "Modo teste · adicionar dinheiro"],
@@ -947,11 +946,12 @@ function editTacticalTeam(fn) {
   storeTacticalTeam(t);
 }
 function squadView() {
-  const tabs = [
-    ["tactics", "Escalação e táticas"],
-    ["players", "Jogadores e contratos"],
-  ];
-  return `<div class="squad-tabs" role="tablist" aria-label="Seções do elenco">${tabs.map(([id, label]) => `<button id="squad-tab-${id}" role="tab" aria-selected="${squadTab === id}" aria-controls="squad-panel-${id}" tabindex="${squadTab === id ? 0 : -1}" data-action="squad-tab" data-id="${id}">${label}</button>`).join("")}</div>${tabs.map(([id]) => `<section id="squad-panel-${id}" role="tabpanel" aria-labelledby="squad-tab-${id}" ${squadTab === id ? "" : "hidden"}>${squadTab === id ? (id === "players" ? squadPlayersView() : squadTacticsView()) : ""}</section>`).join("")}`;
+  return squadTab === "players" ? squadPlayersView() : squadTacticsView();
+}
+function workspaceView(group, selected) {
+  const body = views[page]();
+  if (!group || group.sections.length === 1) return body;
+  return `<div class="workspace-heading"><span class="workspace-caption">${esc(group.description)}</span><span class="workspace-position">${group.sections.indexOf(selected) + 1} / ${group.sections.length}</span></div><div class="workspace-tabs" role="tablist" aria-label="Seções de ${group.label}">${group.sections.map((x) => `<button id="${NAV.tabId(group, x)}" role="tab" aria-selected="${x === selected}" aria-controls="${NAV.panelId(group, x)}" tabindex="${x === selected ? 0 : -1}" data-section="${x.key}" data-page="${x.page}" ${x.squadTab ? `data-squad-tab="${x.squadTab}" data-action="squad-tab" data-id="${x.squadTab}"` : ""}>${x.label}</button>`).join("")}</div>${group.sections.map((x) => `<section class="workspace-panel" id="${NAV.panelId(group, x)}" role="tabpanel" aria-labelledby="${NAV.tabId(group, x)}" ${x === selected ? "" : "hidden"}>${x === selected ? body : ""}</section>`).join("")}`;
 }
 function squadPlayersView() {
   if (tacticalScope === "national" && state.national.job) {
@@ -1149,7 +1149,7 @@ const newsCategories = {
 };
 function pressDirectory() {
   const data = E.press.data;
-  return `<details class="card press-directory"><summary>Veículos e jornalistas de referência</summary><p class="muted">Conheça os perfis reais e abra as páginas de origem. As matérias desta carreira são escritas pela Redação Legacy e não representam publicações ou opiniões dessas pessoas.</p><h3>Veículos</h3><div class="press-outlets">${data.outlets.map((o) => `<a href="${esc(o.url)}" target="_blank" rel="noopener noreferrer"><strong>${esc(o.name)}</strong><small>${esc(o.focus)}</small></a>`).join("")}</div><h3>Jornalistas</h3><div class="press-profiles">${data.journalists
+  return `<details class="card press-directory"><summary>Conheça a imprensa do jogo</summary><p class="muted">Os jornais e os jornalistas abaixo são fictícios. Cada redação acompanha regiões e assuntos diferentes do universo da sua carreira.</p><h3>Jornais</h3><div class="press-outlets">${data.outlets.map((o) => `<article class="fictional-outlet"><span class="badge">JORNAL FICTÍCIO</span><strong>${esc(o.name)}</strong><small>${esc(o.focus)}</small></article>`).join("")}</div><h3>Jornalistas</h3><div class="press-profiles">${data.journalists
     .map(
       (p) =>
         `<article><span class="press-initials" aria-hidden="true">${esc(
@@ -1158,11 +1158,9 @@ function pressDirectory() {
             .slice(0, 2)
             .map((n) => n[0])
             .join(""),
-        )}</span><div><h4>${esc(p.name)}</h4><p>${esc(p.focus)}</p><a href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">Abrir perfil de referência ↗</a></div><button data-action="press-follow" data-id="${p.id}">Ver cobertura simulada</button></article>`,
+        )}</span><div><h4>${esc(p.name)}</h4><p>${esc(p.focus)}</p><small>${esc(data.outlets.find((o) => o.id === p.outletId).name)} · personagem fictício</small></div><button data-action="press-follow" data-id="${p.id}">Ver reportagens</button></article>`,
     )
-    .join(
-      "",
-    )}</div><small>Referências consultadas em ${data.checkedAt.split("-").reverse().join("/")}.</small></details>`;
+    .join("")}</div></details>`;
 }
 function realAwardCriteria() {
   const c = E.press.data.awardCriteria,
@@ -1191,7 +1189,7 @@ function newspaper() {
         : newsScope === "world"
           ? "Futebol mundial"
           : regions[ownLeague.region];
-  return `<section class="newspaper"><div class="paper-masthead"><div><span class="badge">O FUTEBOL ACONTECE AQUI</span><h2>LEGACY <em>Jornal</em></h2></div><span>${esc(E.date(state))}<br>Temporada ${E.seasonLabel(state)}</span></div><div class="paper-edition"><strong>${esc(scopeLabel)}</strong><span>Notícias do universo da sua carreira</span></div><div class="press-disclosure"><span class="pill">COBERTURA SIMULADA</span><p>Os veículos e jornalistas são reais e aparecem como referências. Os textos e acontecimentos desta página pertencem ao jogo; não são notícias publicadas nem declarações feitas por eles.</p></div><div class="news-toolbar"><div class="scope-filters" role="group" aria-label="Abrangência das notícias">${[
+  return `<section class="newspaper"><div class="paper-masthead"><div><span class="badge">O FUTEBOL ACONTECE AQUI</span><h2>DINASTIA <em>Jornal</em></h2></div><span>${esc(E.date(state))}<br>Temporada ${E.seasonLabel(state)}</span></div><div class="paper-edition"><strong>${esc(scopeLabel)}</strong><span>Notícias do universo da sua carreira</span></div><div class="press-disclosure"><strong>IMPRENSA FICTÍCIA · NOTÍCIAS DA CARREIRA</strong><p>Jornais e jornalistas são personagens do Dinastia FC. As matérias acompanham os acontecimentos da sua simulação.</p></div><div class="news-toolbar"><div class="scope-filters" role="group" aria-label="Abrangência das notícias">${[
     ["club", "Meu clube"],
     ["league", "Minha liga"],
     ["continent", "Meu continente"],
@@ -1203,8 +1201,8 @@ function newspaper() {
     )
     .join(
       "",
-    )}</div><label class="inline">Editoria<select id="news-category">${options(Object.entries(newsCategories), newsCategory)}</select></label></div><form id="press-search" class="press-filters"><label>Veículo de referência<select id="news-outlet">${options([["all", "Todos os veículos"], ...E.press.data.outlets.map((o) => [o.id, o.name])], newsOutlet)}</select></label><label>Jornalista de referência<select id="news-journalist">${options([["all", "Todos os perfis"], ...E.press.data.journalists.filter((p) => newsOutlet === "all" || p.outletId === newsOutlet).map((p) => [p.id, p.name])], newsJournalist)}</select></label><label>Buscar no jornal<input id="news-query" type="search" value="${esc(newsQuery)}" placeholder="Jogador, treinador, clube…"></label><button class="primary">Filtrar</button>${btn("Limpar", "press-clear").replace("<button ", '<button type="button" ')}</form><p class="muted press-results">${articles.length} matérias nesta seleção · autoria: Redação Legacy</p>
-    <div class="news-grid">${articles.map((a, i) => `<article class="news-article ${i === 0 ? "news-featured" : ""}" data-article="${esc(a.id)}" data-clubs="${esc(a.clubIds.join(" "))}"><div class="press-source"><a href="${esc(a.press.outlet.url)}" target="_blank" rel="noopener noreferrer">${esc(a.press.outlet.name)}</a><small>Simulação</small></div><div class="article-meta"><span>${newsCategories[a.category] || "Clube"}</span><time>${esc(E.formatDate({ ...state, season: a.season }, a.offset ?? E.calendar(state)[a.day]?.offset ?? 0))}</time></div><h3>${esc(a.title)}</h3>${a.body ? `<p>${esc(a.body)}</p>` : ""}<div class="article-clubs">${a.clubIds.map((id) => teamLabel(id, "tiny")).join("")}</div><footer class="article-reference"><strong>${a.press.byline}</strong>${a.press.journalist ? `<span>Perfil de referência: <a href="${esc(a.press.journalist.url)}" target="_blank" rel="noopener noreferrer">${esc(a.press.journalist.name)}</a></span>` : "<span>Veículo usado como referência de cobertura.</span>"}</footer></article>`).join("") || '<div class="news-empty"><h3>Nenhuma notícia nesta seleção</h3><p class="muted">Amplie a abrangência ou limpe os filtros para acompanhar outras coberturas da carreira.</p><button data-action="news-scope" data-id="world">Ver o mundo</button></div>'}</div>${pressDirectory()}</section>`;
+    )}</div><label class="inline">Editoria<select id="news-category">${options(Object.entries(newsCategories), newsCategory)}</select></label></div><form id="press-search" class="press-filters"><label>Jornal<select id="news-outlet">${options([["all", "Todos os jornais"], ...E.press.data.outlets.map((o) => [o.id, o.name])], newsOutlet)}</select></label><label>Jornalista<select id="news-journalist">${options([["all", "Todos os jornalistas"], ...E.press.data.journalists.filter((p) => newsOutlet === "all" || p.outletId === newsOutlet).map((p) => [p.id, p.name])], newsJournalist)}</select></label><label>Buscar no jornal<input id="news-query" type="search" value="${esc(newsQuery)}" placeholder="Jogador, treinador, clube…"></label><button class="primary">Filtrar</button>${btn("Limpar", "press-clear").replace("<button ", '<button type="button" ')}</form><p class="muted press-results">${articles.length} matérias nesta seleção · imprensa fictícia</p>
+    <div class="news-grid">${articles.map((a, i) => `<article class="news-article ${i === 0 ? "news-featured" : ""}" data-article="${esc(a.id)}" data-clubs="${esc(a.clubIds.join(" "))}"><div class="press-source"><strong>${esc(a.press.outlet.name)}</strong><small>Simulação</small></div><div class="article-meta"><span>${newsCategories[a.category] || "Clube"}</span><time>${esc(E.formatDate({ ...state, season: a.season }, a.offset ?? E.calendar(state)[a.day]?.offset ?? 0))}</time></div><h3>${esc(a.title)}</h3>${a.body ? `<p>${esc(a.body)}</p>` : ""}<div class="article-clubs">${a.clubIds.map((id) => teamLabel(id, "tiny")).join("")}</div><footer class="article-reference"><strong>${a.press.byline}</strong><span>${a.press.journalist ? "Jornalista fictício" : "Redação fictícia"} · notícia da carreira</span></footer></article>`).join("") || '<div class="news-empty"><h3>Nenhuma notícia nesta seleção</h3><p class="muted">Amplie a abrangência ou limpe os filtros para acompanhar outras coberturas da carreira.</p><button data-action="news-scope" data-id="world">Ver o mundo</button></div>'}</div>${pressDirectory()}</section>`;
 }
 function referenceClubName(id) {
   const [code, index] = id.split("-"),
@@ -1882,20 +1880,22 @@ function openDeal(kind, id) {
   };
 }
 document.addEventListener("keydown", (event) => {
-  const tab = event.target.closest('[role="tab"][data-action="squad-tab"]');
+  const tab = event.target.closest('[role="tab"][data-section]');
   if (!tab || !["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key))
     return;
   event.preventDefault();
-  squadTab =
-    event.key === "Home"
-      ? "tactics"
-      : event.key === "End"
-        ? "players"
-        : squadTab === "tactics"
-          ? "players"
-          : "tactics";
-  render();
-  $("#squad-tab-" + squadTab).focus();
+  const tabs = [...tab.parentElement.querySelectorAll('[role="tab"]')],
+    i = tabs.indexOf(tab),
+    next =
+      event.key === "Home"
+        ? 0
+        : event.key === "End"
+          ? tabs.length - 1
+          : (i + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) %
+            tabs.length;
+  const id = tabs[next].id;
+  tabs[next].click();
+  document.getElementById(id)?.focus();
 });
 document.addEventListener("click", (event) => {
   const nav = event.target.closest("[data-page]");
@@ -1910,7 +1910,22 @@ document.addEventListener("click", (event) => {
       paused = true;
       stopTimer();
     }
-    page = nav.dataset.page;
+    const group =
+      nav.dataset.workspace &&
+      NAV.groups.find((g) => g.id === nav.dataset.workspace);
+    const remembered = group?.sections.find(
+      (x) => x.key === sectionMemory.get(group.id),
+    );
+    const targetPage = remembered?.page || nav.dataset.page,
+      targetSquad = remembered?.squadTab || nav.dataset.squadTab || squadTab;
+    if (targetPage === page && targetSquad === squadTab) {
+      if (!nav.dataset.section)
+        window.scrollTo({ top: 0, behavior: "instant" });
+      return;
+    }
+    page = targetPage;
+    if (remembered?.squadTab || nav.dataset.squadTab)
+      squadTab = remembered?.squadTab || nav.dataset.squadTab;
     if (
       [
         "Visão geral",
@@ -1940,7 +1955,17 @@ document.addEventListener("click", (event) => {
       state.live.offset !== state.today
     )
       state.live = null;
+    const focusTab = nav.dataset.section ? nav.id : null;
     render();
+    if (focusTab) {
+      const selected = document.getElementById(focusTab);
+      selected?.focus({ preventScroll: true });
+      selected?.scrollIntoView({
+        block: "nearest",
+        inline: "nearest",
+        behavior: "instant",
+      });
+    } else window.scrollTo({ top: 0, behavior: "instant" });
     return;
   }
   const b = event.target.closest("[data-action]");
@@ -3482,7 +3507,7 @@ function exportCareer() {
       a = document.createElement("a");
     a.href = url;
     a.download =
-      "club-legacy-" + state.season + "-" + (state.today || 0) + ".json";
+      "dinastia-fc-" + state.season + "-" + (state.today || 0) + ".json";
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
     notify("Arquivo do save preparado para download.");

@@ -18,7 +18,7 @@ function finish(s, m) {
   while (m.minute < 90) E.minute(s, m, () => 0.99);
   return PF.commit(s, m, { managed: true });
 }
-test("catálogo traz nove veículos e oito jornalistas reais com URLs HTTPS e referência oficial dos critérios", () => {
+test("catálogo traz nove jornais e oito jornalistas fictícios sem vínculos ou URLs reais e referência oficial dos critérios", () => {
   assert.deepEqual(PR.data, require("../data/press.json"));
   assert.equal(PR.data.outlets.length, 9);
   assert.equal(PR.data.journalists.length, 8);
@@ -26,23 +26,29 @@ test("catálogo traz nove veículos e oito jornalistas reais com URLs HTTPS e re
   assert.equal(ids.size, 9);
   for (const p of PR.data.journalists) {
     assert(ids.has(p.outletId));
-    assert.equal(new URL(p.url).protocol, "https:");
+    assert.equal(p.fictional, true);
+    assert.equal(p.url, undefined);
   }
-  assert(PR.data.journalists.some((p) => p.name === "Sid Lowe"));
-  assert(PR.data.journalists.some((p) => p.name === "Fabrizio Romano"));
-  assert(PR.data.journalists.some((p) => p.id === "pvc"));
+  assert(PR.data.journalists.some((p) => p.name === "Oliver Fairmont"));
+  assert(PR.data.journalists.some((p) => p.name === "Matteo Bellavento"));
+  assert(PR.data.journalists.some((p) => p.id === "lia-valenca"));
   assert.deepEqual(
     PR.data.awardCriteria.pillars.map((p) => p.order),
     [1, 2, 3],
   );
   assert.equal(new URL(PR.data.awardCriteria.url).hostname, "ballondor.com");
 });
-test("cobertura é determinística, tem autoria Legacy e não atribui publicações reais nem altera o save", () => {
+test("cobertura é determinística, tem autoria de personagem fictício e não atribui publicações reais nem altera o save", () => {
   const s = career(),
     before = JSON.stringify(s.articles),
     a = E.journal(s, "world")[0];
   assert(a.press.simulated);
-  assert.equal(a.press.byline, "Redação Legacy");
+  assert(a.press.fictional);
+  assert.equal(
+    a.press.byline,
+    a.press.journalist?.name || "Redação " + a.press.outlet.name,
+  );
+  assert(PR.data.fictional);
   if (a.press.journalist)
     assert.equal(a.press.journalist.outletId, a.press.outlet.id);
   assert.deepEqual(PR.coverage(s, a), a.press);
@@ -73,22 +79,27 @@ test("filtros por veículo, jornalista e texto combinam e abrangência mundial i
         offset: 0,
       });
     }
-  const pvc = E.journal(s, "world", "all", { journalist: "pvc" });
+  const pvc = E.journal(s, "world", "all", { journalist: "lia-valenca" });
   assert(pvc.length > 0);
   assert(
     pvc.every(
-      (a) => a.press.journalist.id === "pvc" && a.press.outlet.id === "uol",
+      (a) =>
+        a.press.journalist.id === "lia-valenca" &&
+        a.press.outlet.id === "panorama-90",
     ),
   );
   assert(E.journal(s, "world").some((a) => a.regions.includes("sa")));
   const query = E.journal(s, "world", "all", {
-    outlet: "uol",
+    outlet: "panorama-90",
     query: "ANALISE",
   });
   assert(query.length > 0);
-  assert(query.every((a) => a.press.outlet.id === "uol"));
+  assert(query.every((a) => a.press.outlet.id === "panorama-90"));
   assert.equal(
-    E.journal(s, "world", "all", { outlet: "marca", journalist: "pvc" }).length,
+    E.journal(s, "world", "all", {
+      outlet: "tribuna-balon",
+      journalist: "lia-valenca",
+    }).length,
     0,
   );
   assert.equal(

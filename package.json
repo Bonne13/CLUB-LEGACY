@@ -1,10 +1,10 @@
 {
-  "name": "club-legacy",
-  "version": "0.13.0",
+  "name": "dinastia-fc",
+  "version": "0.14.0",
   "private": true,
   "scripts": {
     "start": "python3 -m http.server 3000",
-    "check": "node --check world.js && node --check badges-data.js && node --check badges.js && node --check appearance.js && node --check calendar-data.js && node --check roster-data.js && node --check rosters.js && node --check finance.js && node --check captains-data.js && node --check leadership.js && node --check schedule.js && node --check discipline.js && node --check tactics.js && node --check national.js && node --check physical.js && node --check scouting.js && node --check autosave.js && node --check performance.js && node --check press-data.js && node --check press.js && node --check engine.js && node --check saves.js && node --check money.js && node --check training.js && node --check match-renderer.js && node --check app.js",
+    "check": "node --check world.js && node --check badges-data.js && node --check badges.js && node --check appearance.js && node --check calendar-data.js && node --check roster-data.js && node --check rosters.js && node --check finance.js && node --check captains-data.js && node --check leadership.js && node --check schedule.js && node --check discipline.js && node --check tactics.js && node --check national.js && node --check physical.js && node --check scouting.js && node --check autosave.js && node --check performance.js && node --check press-data.js && node --check press.js && node --check engine.js && node --check saves.js && node --check money.js && node --check training.js && node --check match-renderer.js && node --check navigation.js && node --check scripts/build-badges.cjs && node --check app.js",
     "test": "node --test tests/*.test.cjs",
     "test:browser": "node tests/browser.cjs",
     "build:standalone": "python3 scripts/build-standalone.py",
@@ -21,6 +21,8 @@
     "test:preseason-browser": "node tests/preseason-browser.cjs",
     "test:performance-browser": "node tests/performance-browser.cjs",
     "test:press-browser": "node tests/press-browser.cjs",
-    "test:discipline-browser": "node tests/discipline-browser.cjs"
+    "test:discipline-browser": "node tests/discipline-browser.cjs",
+    "build:badges": "node scripts/build-badges.cjs",
+    "test:navigation-browser": "node tests/navigation-browser.cjs"
   }
 }

@@ -1,2 +1,1365 @@
 "use strict";
-(function(root){const data={"assets":{"espn-1011.png":"assets/badges/espn-1011.png","espn-10122.png":"assets/badges/espn-10122.png","espn-130875.png":"assets/badges/espn-130875.png","espn-21314.png":"assets/badges/espn-21314.png","espn-21316.png":"assets/badges/espn-21316.png","espn-21843.png":"assets/badges/espn-21843.png","espn-21850.png":"assets/badges/espn-21850.png","espn-22168.png":"assets/badges/espn-22168.png","espn-22534.png":"assets/badges/espn-22534.png","espn-4134.png":"assets/badges/espn-4134.png","espn-5480.png":"assets/badges/espn-5480.png","espn-5481.png":"assets/badges/espn-5481.png","espn-5489.png":"assets/badges/espn-5489.png","espn-6046.png":"assets/badges/espn-6046.png","espn-6137.png":"assets/badges/espn-6137.png","espn-8186.png":"assets/badges/espn-8186.png","espn-9497.png":"assets/badges/espn-9497.png","espn-9762.png":"assets/badges/espn-9762.png","flag-ar.png":"assets/badges/flag-ar.png","flag-at.png":"assets/badges/flag-at.png","flag-au.png":"assets/badges/flag-au.png","flag-be.png":"assets/badges/flag-be.png","flag-bo.png":"assets/badges/flag-bo.png","flag-br.png":"assets/badges/flag-br.png","flag-ca.png":"assets/badges/flag-ca.png","flag-ch.png":"assets/badges/flag-ch.png","flag-ci.png":"assets/badges/flag-ci.png","flag-cl.png":"assets/badges/flag-cl.png","flag-cm.png":"assets/badges/flag-cm.png","flag-co.png":"assets/badges/flag-co.png","flag-cr.png":"assets/badges/flag-cr.png","flag-cz.png":"assets/badges/flag-cz.png","flag-de.png":"assets/badges/flag-de.png","flag-dk.png":"assets/badges/flag-dk.png","flag-dz.png":"assets/badges/flag-dz.png","flag-ec.png":"assets/badges/flag-ec.png","flag-eg.png":"assets/badges/flag-eg.png","flag-es.png":"assets/badges/flag-es.png","flag-fr.png":"assets/badges/flag-fr.png","flag-gb-eng.png":"assets/badges/flag-gb-eng.png","flag-gb-sct.png":"assets/badges/flag-gb-sct.png","flag-gb-wls.png":"assets/badges/flag-gb-wls.png","flag-gh.png":"assets/badges/flag-gh.png","flag-gr.png":"assets/badges/flag-gr.png","flag-hr.png":"assets/badges/flag-hr.png","flag-ie.png":"assets/badges/flag-ie.png","flag-ir.png":"assets/badges/flag-ir.png","flag-it.png":"assets/badges/flag-it.png","flag-jm.png":"assets/badges/flag-jm.png","flag-jp.png":"assets/badges/flag-jp.png","flag-kr.png":"assets/badges/flag-kr.png","flag-ma.png":"assets/badges/flag-ma.png","flag-mx.png":"assets/badges/flag-mx.png","flag-ng.png":"assets/badges/flag-ng.png","flag-nl.png":"assets/badges/flag-nl.png","flag-no.png":"assets/badges/flag-no.png","flag-nz.png":"assets/badges/flag-nz.png","flag-pe.png":"assets/badges/flag-pe.png","flag-pl.png":"assets/badges/flag-pl.png","flag-pt.png":"assets/badges/flag-pt.png","flag-py.png":"assets/badges/flag-py.png","flag-rs.png":"assets/badges/flag-rs.png","flag-sa.png":"assets/badges/flag-sa.png","flag-se.png":"assets/badges/flag-se.png","flag-sn.png":"assets/badges/flag-sn.png","flag-tr.png":"assets/badges/flag-tr.png","flag-ua.png":"assets/badges/flag-ua.png","flag-us.png":"assets/badges/flag-us.png","flag-uy.png":"assets/badges/flag-uy.png","flag-ve.png":"assets/badges/flag-ve.png","flag-za.png":"assets/badges/flag-za.png","tm-10004.png":"assets/badges/tm-10004.png","tm-100047.png":"assets/badges/tm-100047.png","tm-10010.png":"assets/badges/tm-10010.png","tm-1005.png":"assets/badges/tm-1005.png","tm-10090.png":"assets/badges/tm-10090.png","tm-10093.png":"assets/badges/tm-10093.png","tm-1022.png":"assets/badges/tm-1022.png","tm-1023.png":"assets/badges/tm-1023.png","tm-10247.png":"assets/badges/tm-10247.png","tm-1025.png":"assets/badges/tm-1025.png","tm-1029.png":"assets/badges/tm-1029.png","tm-1030.png":"assets/badges/tm-1030.png","tm-1037.png":"assets/badges/tm-1037.png","tm-1041.png":"assets/badges/tm-1041.png","tm-1047.png":"assets/badges/tm-1047.png","tm-1049.png":"assets/badges/tm-1049.png","tm-10492.png":"assets/badges/tm-10492.png","tm-1050.png":"assets/badges/tm-1050.png","tm-10511.png":"assets/badges/tm-10511.png","tm-1061.png":"assets/badges/tm-1061.png","tm-1062.png":"assets/badges/tm-1062.png","tm-1066.png":"assets/badges/tm-1066.png","tm-10663.png":"assets/badges/tm-10663.png","tm-1075.png":"assets/badges/tm-1075.png","tm-1082.png":"assets/badges/tm-1082.png","tm-1084.png":"assets/badges/tm-1084.png","tm-10870.png":"assets/badges/tm-10870.png","tm-1090.png":"assets/badges/tm-1090.png","tm-1095.png":"assets/badges/tm-1095.png","tm-10997.png":"assets/badges/tm-10997.png","tm-11.png":"assets/badges/tm-11.png","tm-110302.png":"assets/badges/tm-110302.png","tm-1106.png":"assets/badges/tm-1106.png","tm-1108.png":"assets/badges/tm-1108.png","tm-1114.png":"assets/badges/tm-1114.png","tm-11141.png":"assets/badges/tm-11141.png","tm-1132.png":"assets/badges/tm-1132.png","tm-1143.png":"assets/badges/tm-1143.png","tm-1146.png":"assets/badges/tm-1146.png","tm-11470.png":"assets/badges/tm-11470.png","tm-1148.png":"assets/badges/tm-1148.png","tm-114977.png":"assets/badges/tm-114977.png","tm-1158.png":"assets/badges/tm-1158.png","tm-1164.png":"assets/badges/tm-1164.png","tm-11648.png":"assets/badges/tm-11648.png","tm-11831.png":"assets/badges/tm-11831.png","tm-11854.png":"assets/badges/tm-11854.png","tm-11855.png":"assets/badges/tm-11855.png","tm-12.png":"assets/badges/tm-12.png","tm-1214.png":"assets/badges/tm-1214.png","tm-12179.png":"assets/badges/tm-12179.png","tm-12301.png":"assets/badges/tm-12301.png","tm-12321.png":"assets/badges/tm-12321.png","tm-1234.png":"assets/badges/tm-1234.png","tm-1237.png":"assets/badges/tm-1237.png","tm-12454.png":"assets/badges/tm-12454.png","tm-1247.png":"assets/badges/tm-1247.png","tm-12574.png":"assets/badges/tm-12574.png","tm-1269.png":"assets/badges/tm-1269.png","tm-127.png":"assets/badges/tm-127.png","tm-1286.png":"assets/badges/tm-1286.png","tm-13.png":"assets/badges/tm-13.png","tm-130.png":"assets/badges/tm-130.png","tm-1304.png":"assets/badges/tm-1304.png","tm-1306.png":"assets/badges/tm-1306.png","tm-131.png":"assets/badges/tm-131.png","tm-132.png":"assets/badges/tm-132.png","tm-132121.png":"assets/badges/tm-132121.png","tm-13297.png":"assets/badges/tm-13297.png","tm-13353.png":"assets/badges/tm-13353.png","tm-1390.png":"assets/badges/tm-1390.png","tm-1403.png":"assets/badges/tm-1403.png","tm-1418.png":"assets/badges/tm-1418.png","tm-1420.png":"assets/badges/tm-1420.png","tm-1434.png":"assets/badges/tm-1434.png","tm-1435.png":"assets/badges/tm-1435.png","tm-1444.png":"assets/badges/tm-1444.png","tm-1450.png":"assets/badges/tm-1450.png","tm-14545.png":"assets/badges/tm-14545.png","tm-14554.png":"assets/badges/tm-14554.png","tm-14555.png":"assets/badges/tm-14555.png","tm-14596.png":"assets/badges/tm-14596.png","tm-1465.png":"assets/badges/tm-1465.png","tm-14680.png":"assets/badges/tm-14680.png","tm-14682.png":"assets/badges/tm-14682.png","tm-14723.png":"assets/badges/tm-14723.png","tm-14758.png":"assets/badges/tm-14758.png","tm-148.png":"assets/badges/tm-148.png","tm-14806.png":"assets/badges/tm-14806.png","tm-15.png":"assets/badges/tm-15.png","tm-150.png":"assets/badges/tm-150.png","tm-1531.png":"assets/badges/tm-1531.png","tm-16.png":"assets/badges/tm-16.png","tm-162.png":"assets/badges/tm-162.png","tm-167.png":"assets/badges/tm-167.png","tm-17425.png":"assets/badges/tm-17425.png","tm-17426.png":"assets/badges/tm-17426.png","tm-17427.png":"assets/badges/tm-17427.png","tm-17428.png":"assets/badges/tm-17428.png","tm-17479.png":"assets/badges/tm-17479.png","tm-17482.png":"assets/badges/tm-17482.png","tm-17484.png":"assets/badges/tm-17484.png","tm-17584.png":"assets/badges/tm-17584.png","tm-17595.png":"assets/badges/tm-17595.png","tm-1775.png":"assets/badges/tm-1775.png","tm-17776.png":"assets/badges/tm-17776.png","tm-18.png":"assets/badges/tm-18.png","tm-18018.png":"assets/badges/tm-18018.png","tm-1804.png":"assets/badges/tm-1804.png","tm-18074.png":"assets/badges/tm-18074.png","tm-18076.png":"assets/badges/tm-18076.png","tm-18099.png":"assets/badges/tm-18099.png","tm-1829.png":"assets/badges/tm-1829.png","tm-184.png":"assets/badges/tm-184.png","tm-18487.png":"assets/badges/tm-18487.png","tm-18544.png":"assets/badges/tm-18544.png","tm-189.png":"assets/badges/tm-189.png","tm-19104.png":"assets/badges/tm-19104.png","tm-19309.png":"assets/badges/tm-19309.png","tm-19775.png":"assets/badges/tm-19775.png","tm-199.png":"assets/badges/tm-199.png","tm-200.png":"assets/badges/tm-200.png","tm-20189.png":"assets/badges/tm-20189.png","tm-202.png":"assets/badges/tm-202.png","tm-2029.png":"assets/badges/tm-2029.png","tm-2036.png":"assets/badges/tm-2036.png","tm-20514.png":"assets/badges/tm-20514.png","tm-2063.png":"assets/badges/tm-2063.png","tm-209.png":"assets/badges/tm-209.png","tm-210.png":"assets/badges/tm-210.png","tm-21178.png":"assets/badges/tm-21178.png","tm-2125.png":"assets/badges/tm-2125.png","tm-21655.png":"assets/badges/tm-21655.png","tm-221.png":"assets/badges/tm-221.png","tm-22171.png":"assets/badges/tm-22171.png","tm-2239.png":"assets/badges/tm-2239.png","tm-2241.png":"assets/badges/tm-2241.png","tm-22902.png":"assets/badges/tm-22902.png","tm-23171.png":"assets/badges/tm-23171.png","tm-234.png":"assets/badges/tm-234.png","tm-2350.png":"assets/badges/tm-2350.png","tm-2352.png":"assets/badges/tm-2352.png","tm-23568.png":"assets/badges/tm-23568.png","tm-237.png":"assets/badges/tm-237.png","tm-23826.png":"assets/badges/tm-23826.png","tm-24.png":"assets/badges/tm-24.png","tm-2402.png":"assets/badges/tm-2402.png","tm-2403.png":"assets/badges/tm-2403.png","tm-2407.png":"assets/badges/tm-2407.png","tm-2417.png":"assets/badges/tm-2417.png","tm-2419.png":"assets/badges/tm-2419.png","tm-2420.png":"assets/badges/tm-2420.png","tm-2423.png":"assets/badges/tm-2423.png","tm-2424.png":"assets/badges/tm-2424.png","tm-2425.png":"assets/badges/tm-2425.png","tm-2431.png":"assets/badges/tm-2431.png","tm-2433.png":"assets/badges/tm-2433.png","tm-244.png":"assets/badges/tm-244.png","tm-2440.png":"assets/badges/tm-2440.png","tm-2462.png":"assets/badges/tm-2462.png","tm-2497.png":"assets/badges/tm-2497.png","tm-25184.png":"assets/badges/tm-25184.png","tm-252.png":"assets/badges/tm-252.png","tm-2521.png":"assets/badges/tm-2521.png","tm-25467.png":"assets/badges/tm-25467.png","tm-25576.png":"assets/badges/tm-25576.png","tm-25958.png":"assets/badges/tm-25958.png","tm-26069.png":"assets/badges/tm-26069.png","tm-2619.png":"assets/badges/tm-2619.png","tm-26468.png":"assets/badges/tm-26468.png","tm-26697.png":"assets/badges/tm-26697.png","tm-2697.png":"assets/badges/tm-2697.png","tm-27.png":"assets/badges/tm-27.png","tm-27221.png":"assets/badges/tm-27221.png","tm-2729.png":"assets/badges/tm-2729.png","tm-273.png":"assets/badges/tm-273.png","tm-2730.png":"assets/badges/tm-2730.png","tm-2734.png":"assets/badges/tm-2734.png","tm-276.png":"assets/badges/tm-276.png","tm-27861.png":"assets/badges/tm-27861.png","tm-281.png":"assets/badges/tm-281.png","tm-288.png":"assets/badges/tm-288.png","tm-28887.png":"assets/badges/tm-28887.png","tm-289.png":"assets/badges/tm-289.png","tm-28999.png":"assets/badges/tm-28999.png","tm-29.png":"assets/badges/tm-29.png","tm-290.png":"assets/badges/tm-290.png","tm-2919.png":"assets/badges/tm-2919.png","tm-294.png":"assets/badges/tm-294.png","tm-3.png":"assets/badges/tm-3.png","tm-3008.png":"assets/badges/tm-3008.png","tm-306.png":"assets/badges/tm-306.png","tm-30854.png":"assets/badges/tm-30854.png","tm-31.png":"assets/badges/tm-31.png","tm-31008.png":"assets/badges/tm-31008.png","tm-31284.png":"assets/badges/tm-31284.png","tm-317.png":"assets/badges/tm-317.png","tm-32041.png":"assets/badges/tm-32041.png","tm-32328.png":"assets/badges/tm-32328.png","tm-3268.png":"assets/badges/tm-3268.png","tm-3277.png":"assets/badges/tm-3277.png","tm-33.png":"assets/badges/tm-33.png","tm-330.png":"assets/badges/tm-330.png","tm-331.png":"assets/badges/tm-331.png","tm-3329.png":"assets/badges/tm-3329.png","tm-333.png":"assets/badges/tm-333.png","tm-336.png":"assets/badges/tm-336.png","tm-3368.png":"assets/badges/tm-3368.png","tm-347.png":"assets/badges/tm-347.png","tm-34911.png":"assets/badges/tm-34911.png","tm-35.png":"assets/badges/tm-35.png","tm-3523.png":"assets/badges/tm-3523.png","tm-35589.png":"assets/badges/tm-35589.png","tm-36020.png":"assets/badges/tm-36020.png","tm-3631.png":"assets/badges/tm-3631.png","tm-367.png":"assets/badges/tm-367.png","tm-368.png":"assets/badges/tm-368.png","tm-3709.png":"assets/badges/tm-3709.png","tm-3711.png":"assets/badges/tm-3711.png","tm-3734.png":"assets/badges/tm-3734.png","tm-37535.png":"assets/badges/tm-37535.png","tm-379.png":"assets/badges/tm-379.png","tm-3828.png":"assets/badges/tm-3828.png","tm-383.png":"assets/badges/tm-383.png","tm-385.png":"assets/badges/tm-385.png","tm-38628.png":"assets/badges/tm-38628.png","tm-3876.png":"assets/badges/tm-3876.png","tm-39.png":"assets/badges/tm-39.png","tm-3911.png":"assets/badges/tm-3911.png","tm-3938.png":"assets/badges/tm-3938.png","tm-3958.png":"assets/badges/tm-3958.png","tm-398.png":"assets/badges/tm-398.png","tm-399.png":"assets/badges/tm-399.png","tm-40058.png":"assets/badges/tm-40058.png","tm-40188.png":"assets/badges/tm-40188.png","tm-4035.png":"assets/badges/tm-4035.png","tm-405.png":"assets/badges/tm-405.png","tm-4078.png":"assets/badges/tm-4078.png","tm-41.png":"assets/badges/tm-41.png","tm-410.png":"assets/badges/tm-410.png","tm-41054.png":"assets/badges/tm-41054.png","tm-415.png":"assets/badges/tm-415.png","tm-416.png":"assets/badges/tm-416.png","tm-417.png":"assets/badges/tm-417.png","tm-4172.png":"assets/badges/tm-4172.png","tm-418.png":"assets/badges/tm-418.png","tm-42208.png":"assets/badges/tm-42208.png","tm-4284.png":"assets/badges/tm-4284.png","tm-4291.png":"assets/badges/tm-4291.png","tm-42918.png":"assets/badges/tm-42918.png","tm-430.png":"assets/badges/tm-430.png","tm-43146.png":"assets/badges/tm-43146.png","tm-432.png":"assets/badges/tm-432.png","tm-4321.png":"assets/badges/tm-4321.png","tm-45193.png":"assets/badges/tm-45193.png","tm-45604.png":"assets/badges/tm-45604.png","tm-4561.png":"assets/badges/tm-4561.png","tm-46.png":"assets/badges/tm-46.png","tm-467.png":"assets/badges/tm-467.png","tm-468.png":"assets/badges/tm-468.png","tm-47107.png":"assets/badges/tm-47107.png","tm-4862.png":"assets/badges/tm-4862.png","tm-49283.png":"assets/badges/tm-49283.png","tm-4941.png":"assets/badges/tm-4941.png","tm-4961.png":"assets/badges/tm-4961.png","tm-5.png":"assets/badges/tm-5.png","tm-50531.png":"assets/badges/tm-50531.png","tm-50532.png":"assets/badges/tm-50532.png","tm-506.png":"assets/badges/tm-506.png","tm-51663.png":"assets/badges/tm-51663.png","tm-51772.png":"assets/badges/tm-51772.png","tm-51828.png":"assets/badges/tm-51828.png","tm-531.png":"assets/badges/tm-531.png","tm-533.png":"assets/badges/tm-533.png","tm-537.png":"assets/badges/tm-537.png","tm-543.png":"assets/badges/tm-543.png","tm-5570.png":"assets/badges/tm-5570.png","tm-56089.png":"assets/badges/tm-56089.png","tm-5662.png":"assets/badges/tm-5662.png","tm-5747.png":"assets/badges/tm-5747.png","tm-583.png":"assets/badges/tm-583.png","tm-585.png":"assets/badges/tm-585.png","tm-593.png":"assets/badges/tm-593.png","tm-596.png":"assets/badges/tm-596.png","tm-60.png":"assets/badges/tm-60.png","tm-6044.png":"assets/badges/tm-6044.png","tm-607.png":"assets/badges/tm-607.png","tm-6070.png":"assets/badges/tm-6070.png","tm-609.png":"assets/badges/tm-609.png","tm-610.png":"assets/badges/tm-610.png","tm-614.png":"assets/badges/tm-614.png","tm-6195.png":"assets/badges/tm-6195.png","tm-621.png":"assets/badges/tm-621.png","tm-623.png":"assets/badges/tm-623.png","tm-626.png":"assets/badges/tm-626.png","tm-629.png":"assets/badges/tm-629.png","tm-630.png":"assets/badges/tm-630.png","tm-631.png":"assets/badges/tm-631.png","tm-6321.png":"assets/badges/tm-6321.png","tm-6362.png":"assets/badges/tm-6362.png","tm-6363.png":"assets/badges/tm-6363.png","tm-63966.png":"assets/badges/tm-63966.png","tm-64.png":"assets/badges/tm-64.png","tm-6536.png":"assets/badges/tm-6536.png","tm-6574.png":"assets/badges/tm-6574.png","tm-6593.png":"assets/badges/tm-6593.png","tm-6600.png":"assets/badges/tm-6600.png","tm-6631.png":"assets/badges/tm-6631.png","tm-6632.png":"assets/badges/tm-6632.png","tm-6643.png":"assets/badges/tm-6643.png","tm-667.png":"assets/badges/tm-667.png","tm-6711.png":"assets/badges/tm-6711.png","tm-677.png":"assets/badges/tm-677.png","tm-679.png":"assets/badges/tm-679.png","tm-681.png":"assets/badges/tm-681.png","tm-6878.png":"assets/badges/tm-6878.png","tm-69261.png":"assets/badges/tm-69261.png","tm-6984.png":"assets/badges/tm-6984.png","tm-6985.png":"assets/badges/tm-6985.png","tm-7020.png":"assets/badges/tm-7020.png","tm-703.png":"assets/badges/tm-703.png","tm-7055.png":"assets/badges/tm-7055.png","tm-7097.png":"assets/badges/tm-7097.png","tm-7098.png":"assets/badges/tm-7098.png","tm-714.png":"assets/badges/tm-714.png","tm-71665.png":"assets/badges/tm-71665.png","tm-7179.png":"assets/badges/tm-7179.png","tm-720.png":"assets/badges/tm-720.png","tm-72309.png":"assets/badges/tm-72309.png","tm-724.png":"assets/badges/tm-724.png","tm-738.png":"assets/badges/tm-738.png","tm-7477.png":"assets/badges/tm-7477.png","tm-75558.png":"assets/badges/tm-75558.png","tm-762.png":"assets/badges/tm-762.png","tm-7633.png":"assets/badges/tm-7633.png","tm-7656.png":"assets/badges/tm-7656.png","tm-76945.png":"assets/badges/tm-76945.png","tm-7732.png":"assets/badges/tm-7732.png","tm-776.png":"assets/badges/tm-776.png","tm-78435.png":"assets/badges/tm-78435.png","tm-79.png":"assets/badges/tm-79.png","tm-798.png":"assets/badges/tm-798.png","tm-800.png":"assets/badges/tm-800.png","tm-8023.png":"assets/badges/tm-8023.png","tm-8024.png":"assets/badges/tm-8024.png","tm-8056.png":"assets/badges/tm-8056.png","tm-813.png":"assets/badges/tm-813.png","tm-8172.png":"assets/badges/tm-8172.png","tm-82.png":"assets/badges/tm-82.png","tm-826.png":"assets/badges/tm-826.png","tm-82686.png":"assets/badges/tm-82686.png","tm-82696.png":"assets/badges/tm-82696.png","tm-828.png":"assets/badges/tm-828.png","tm-830.png":"assets/badges/tm-830.png","tm-8344.png":"assets/badges/tm-8344.png","tm-8457.png":"assets/badges/tm-8457.png","tm-8590.png":"assets/badges/tm-8590.png","tm-86.png":"assets/badges/tm-86.png","tm-861.png":"assets/badges/tm-861.png","tm-866.png":"assets/badges/tm-866.png","tm-8718.png":"assets/badges/tm-8718.png","tm-873.png":"assets/badges/tm-873.png","tm-8781.png":"assets/badges/tm-8781.png","tm-8793.png":"assets/badges/tm-8793.png","tm-8816.png":"assets/badges/tm-8816.png","tm-89.png":"assets/badges/tm-89.png","tm-897.png":"assets/badges/tm-897.png","tm-8970.png":"assets/badges/tm-8970.png","tm-908.png":"assets/badges/tm-908.png","tm-9131.png":"assets/badges/tm-9131.png","tm-91427.png":"assets/badges/tm-91427.png","tm-9168.png":"assets/badges/tm-9168.png","tm-928.png":"assets/badges/tm-928.png","tm-92977.png":"assets/badges/tm-92977.png","tm-92979.png":"assets/badges/tm-92979.png","tm-931.png":"assets/badges/tm-931.png","tm-940.png":"assets/badges/tm-940.png","tm-943.png":"assets/badges/tm-943.png","tm-95571.png":"assets/badges/tm-95571.png","tm-9597.png":"assets/badges/tm-9597.png","tm-9598.png":"assets/badges/tm-9598.png","tm-9636.png":"assets/badges/tm-9636.png","tm-97642.png":"assets/badges/tm-97642.png","tm-978.png":"assets/badges/tm-978.png","tm-979.png":"assets/badges/tm-979.png","tm-9811.png":"assets/badges/tm-9811.png","tm-982.png":"assets/badges/tm-982.png","tm-9840.png":"assets/badges/tm-9840.png","tm-985.png":"assets/badges/tm-985.png","tm-9855.png":"assets/badges/tm-9855.png","tm-9875.png":"assets/badges/tm-9875.png","tm-989.png":"assets/badges/tm-989.png","tm-990.png":"assets/badges/tm-990.png","tm-995.png":"assets/badges/tm-995.png","tm-9961.png":"assets/badges/tm-9961.png","wiki-yaracuyanos.png":"assets/badges/wiki-yaracuyanos.png"},"clubs":{"Flamengo":"tm-614.png","Palmeiras":"tm-1023.png","Cruzeiro":"tm-609.png","Mirassol":"tm-3876.png","Fluminense":"tm-2462.png","Botafogo":"tm-537.png","Bahia":"tm-10010.png","São Paulo":"tm-585.png","Grêmio":"tm-210.png","Red Bull Bragantino":"tm-8793.png","Atlético Mineiro":"tm-330.png","Santos":"tm-221.png","Corinthians":"tm-199.png","Vasco da Gama":"tm-978.png","Vitória":"tm-2125.png","Internacional":"tm-6600.png","Athletico Paranaense":"tm-679.png","Chapecoense":"tm-17776.png","Coritiba":"tm-776.png","Remo":"tm-10997.png","River Plate":"tm-209.png","Boca Juniors":"tm-189.png","Racing Club":"tm-1444.png","Independiente":"tm-1234.png","San Lorenzo":"tm-1775.png","Estudiantes de La Plata":"tm-288.png","Vélez Sarsfield":"tm-1029.png","Rosario Central":"tm-1418.png","Newell’s Old Boys":"tm-1286.png","Talleres":"tm-3938.png","Belgrano":"tm-2417.png","Lanús":"tm-333.png","Huracán":"tm-2063.png","Argentinos Juniors":"tm-1030.png","Defensa y Justicia":"tm-2402.png","Godoy Cruz":"tm-12574.png","Unión de Santa Fe":"tm-7097.png","Tigre":"tm-11831.png","Gimnasia La Plata":"tm-1106.png","Banfield":"tm-830.png","Atlético Tucumán":"tm-14554.png","Central Córdoba":"tm-31284.png","Instituto":"tm-1829.png","Independiente Rivadavia":"tm-12179.png","Deportivo Riestra":"tm-19775.png","Barracas Central":"tm-25184.png","Platense":"tm-928.png","Sarmiento":"tm-12454.png","San Martín de San Juan":"tm-10511.png","Aldosivi":"tm-12301.png","Arsenal":"tm-11.png","Manchester City":"tm-281.png","Liverpool":"tm-31.png","Chelsea":"tm-631.png","Manchester United":"tm-985.png","Tottenham Hotspur":"tm-148.png","Newcastle United":"tm-762.png","Aston Villa":"tm-405.png","Brighton & Hove Albion":"tm-1237.png","Nottingham Forest":"tm-703.png","Crystal Palace":"tm-873.png","Bournemouth":"tm-989.png","Brentford":"tm-1148.png","Fulham":"tm-931.png","Coventry City":"tm-990.png","Everton":"tm-29.png","Hull City":"tm-3008.png","Leeds United":"tm-399.png","Ipswich Town":"tm-677.png","Sunderland":"tm-289.png","Real Madrid":"tm-418.png","Barcelona":"tm-131.png","Atlético de Madrid":"tm-13.png","Athletic Club":"tm-621.png","Villarreal":"tm-1050.png","Real Betis":"tm-150.png","Celta de Vigo":"tm-940.png","Rayo Vallecano":"tm-367.png","Osasuna":"tm-331.png","Deportivo La Coruña":"tm-897.png","Real Sociedad":"tm-681.png","Valencia":"tm-1049.png","Getafe":"tm-3709.png","Espanyol":"tm-714.png","Alavés":"tm-1108.png","Málaga":"tm-1084.png","Sevilla":"tm-368.png","Levante":"tm-3368.png","Elche":"tm-1531.png","Racing Santander":"tm-630.png","Inter de Milão":"tm-46.png","Napoli":"tm-6195.png","Milan":"tm-5.png","Juventus":"tm-506.png","Atalanta":"tm-800.png","Roma":"tm-12.png","Lazio":"tm-398.png","Fiorentina":"tm-430.png","Bologna":"tm-1025.png","Como":"tm-1047.png","Torino":"tm-416.png","Udinese":"tm-410.png","Genoa":"tm-252.png","Frosinone":"tm-8970.png","Cagliari":"tm-1390.png","Lecce":"tm-1005.png","Parma":"tm-130.png","Sassuolo":"tm-6574.png","Monza":"tm-2919.png","Venezia":"tm-607.png","Bayern de Munique":"tm-27.png","Bayer Leverkusen":"tm-15.png","Borussia Dortmund":"tm-16.png","Eintracht Frankfurt":"tm-24.png","RB Leipzig":"tm-23826.png","Stuttgart":"tm-79.png","Freiburg":"tm-60.png","Mainz 05":"tm-39.png","Werder Bremen":"tm-86.png","Borussia Mönchengladbach":"tm-18.png","Elversberg":"tm-64.png","Augsburg":"tm-167.png","Union Berlin":"tm-89.png","Paderborn":"tm-127.png","Hoffenheim":"tm-533.png","Schalke 04":"tm-33.png","Hamburger SV":"tm-41.png","Köln":"tm-3.png","Paris Saint-Germain":"tm-583.png","Olympique de Marseille":"tm-244.png","Monaco":"tm-162.png","Lille":"tm-1082.png","Lyon":"tm-1041.png","Nice":"tm-417.png","Strasbourg":"tm-667.png","Lens":"tm-826.png","Brest":"tm-3911.png","Rennes":"tm-273.png","Auxerre":"tm-290.png","Toulouse":"tm-415.png","Le Mans":"tm-1164.png","Angers":"tm-1420.png","Le Havre":"tm-738.png","Lorient":"tm-1158.png","Paris FC":"tm-10004.png","Troyes":"tm-1095.png","Sporting CP":"tm-336.png","Benfica":"tm-294.png","Porto":"tm-720.png","Braga":"tm-1075.png","Vitória de Guimarães":"tm-2420.png","Santa Clara":"tm-2423.png","Famalicão":"tm-3329.png","Estoril Praia":"tm-1465.png","Casa Pia":"tm-3268.png","Moreirense":"tm-979.png","Rio Ave":"tm-2425.png","Arouca":"tm-8024.png","Gil Vicente":"tm-2424.png","Nacional da Madeira":"tm-982.png","AVS":"tm-110302.png","Alverca":"tm-2521.png","Tondela":"tm-7179.png","Estrela da Amadora":"tm-2431.png","PSV":"tm-383.png","Ajax":"tm-610.png","Feyenoord":"tm-234.png","Utrecht":"tm-200.png","AZ Alkmaar":"tm-1090.png","Twente":"tm-317.png","Go Ahead Eagles":"tm-1435.png","NEC Nijmegen":"tm-467.png","Heerenveen":"tm-306.png","PEC Zwolle":"tm-1269.png","Fortuna Sittard":"tm-385.png","Sparta Rotterdam":"tm-468.png","Groningen":"tm-202.png","Heracles Almelo":"tm-1304.png","NAC Breda":"tm-132.png","Excelsior":"tm-798.png","Volendam":"tm-724.png","Telstar":"tm-1434.png","Atlético Nacional":"tm-8172.png","Millonarios":"tm-2350.png","América de Cali":"tm-2352.png","Independiente Medellín":"tm-10093.png","Junior Barranquilla":"tm-11854.png","Independiente Santa Fe":"tm-11648.png","Deportes Tolima":"espn-5489.png","Once Caldas":"tm-6984.png","Deportivo Cali":"tm-9961.png","Deportivo Pereira":"tm-9811.png","Deportivo Pasto":"tm-10090.png","Atlético Bucaramanga":"espn-6137.png","La Equidad":"tm-17425.png","Fortaleza CEIF":"tm-32041.png","Águilas Doradas":"espn-9762.png","Alianza FC":"tm-22902.png","Boyacá Chicó":"espn-5480.png","Llaneros":"tm-38628.png","Unión Magdalena":"tm-14680.png","Colo-Colo":"tm-2433.png","Universidad de Chile":"tm-1037.png","Universidad Católica":"tm-3277.png","Palestino":"tm-6536.png","Coquimbo Unido":"espn-8186.png","Audax Italiano":"tm-6363.png","O’Higgins":"tm-11470.png","Cobresal":"tm-17482.png","Huachipato":"espn-4134.png","Ñublense":"tm-14723.png","Unión La Calera":"tm-20514.png","Everton de Viña del Mar":"tm-7020.png","Unión Española":"tm-4321.png","Deportes Iquique":"tm-18076.png","Deportes La Serena":"tm-5747.png","Deportes Limache":"tm-26697.png","Peñarol":"tm-861.png","Nacional":"tm-866.png","Liverpool Montevideo":"tm-10663.png","Defensor Sporting":"tm-2619.png","Danubio":"tm-1306.png","Boston River":"tm-18074.png","Racing Montevideo":"tm-14758.png","Montevideo Wanderers":"tm-2403.png","Cerro Largo":"tm-20189.png","Cerro":"tm-14806.png","Progreso":"tm-17595.png","River Plate Montevideo":"tm-2419.png","Miramar Misiones":"tm-7477.png","Plaza Colonia":"tm-6044.png","Juventud de Las Piedras":"tm-17428.png","Montevideo City Torque":"tm-37535.png","LDU Quito":"tm-9855.png","Independiente del Valle":"tm-19309.png","Barcelona SC":"tm-3523.png","Emelec":"tm-4561.png","Aucas":"tm-6362.png","Universidad Católica del Ecuador":"tm-17584.png","Deportivo Cuenca":"tm-8781.png","El Nacional":"tm-1143.png","Delfín":"espn-1011.png","Mushuc Runa":"tm-25576.png","Técnico Universitario":"tm-19104.png","Macará":"tm-17426.png","Orense":"tm-36020.png","Libertad de Loja":"espn-21843.png","Manta":"tm-18099.png","Vinotinto del Ecuador":"tm-25958.png","Universitario":"tm-6593.png","Alianza Lima":"tm-184.png","Sporting Cristal":"tm-1450.png","Melgar":"tm-2734.png","Cienciano":"tm-2729.png","ADT de Tarma":"espn-21314.png","Cusco FC":"tm-28999.png","Alianza Atlético":"tm-17479.png","Atlético Grau":"tm-27861.png","Deportivo Garcilaso":"tm-76945.png","Sport Huancayo":"tm-21655.png","UTC Cajamarca":"espn-10122.png","Comerciantes Unidos":"tm-47107.png","Los Chankas":"espn-22168.png","Sport Boys":"tm-2730.png","Alianza Universidad":"tm-35589.png","Ayacucho FC":"tm-21178.png","Juan Pablo II College":"espn-22534.png","Deportivo Binacional":"tm-41054.png","Olimpia":"tm-629.png","Cerro Porteño":"tm-1214.png","Libertad":"tm-9875.png","Guaraní":"tm-11855.png","Nacional de Asunción":"tm-7098.png","Sportivo Luqueño":"tm-7656.png","Sportivo Trinidense":"tm-17427.png","Sportivo Ameliano":"tm-95571.png","2 de Mayo":"tm-17484.png","Deportivo Recoleta":"tm-14545.png","Atlético Tembetary":"tm-908.png","Bolívar":"tm-6878.png","Always Ready":"tm-42208.png","The Strongest":"tm-5570.png","Blooming":"tm-8056.png","Oriente Petrolero":"tm-6985.png","San Antonio Bulo Bulo":"tm-92979.png","Nacional Potosí":"tm-23171.png","Real Tomayapo":"tm-75558.png","Independiente Petrolero":"tm-30854.png","Aurora":"espn-6046.png","Universitario de Vinto":"tm-92977.png","GV San José":"tm-132121.png","ABB":"espn-130875.png","CDT Real Oruro":"tm-100047.png","Guabirá":"espn-9497.png","Jorge Wilstermann":"tm-4862.png","Deportivo Táchira":"tm-13297.png","Caracas FC":"tm-531.png","Deportivo La Guaira":"tm-26468.png","Universidad Central de Venezuela":"tm-43146.png","Carabobo":"tm-14682.png","Academia Puerto Cabello":"tm-45193.png","Metropolitanos":"tm-42918.png","Monagas":"tm-14596.png","Portuguesa":"tm-10247.png","Zamora":"tm-18018.png","Estudiantes de Mérida":"tm-14555.png","Rayo Zuliano":"espn-21850.png","Anzoátegui":"tm-97642.png","Inter Miami":"tm-69261.png","LA Galaxy":"tm-1061.png","Los Angeles FC":"tm-51828.png","Atlanta United":"tm-51663.png","Austin FC":"tm-72309.png","Charlotte FC":"tm-78435.png","Chicago Fire":"tm-432.png","FC Cincinnati":"tm-51772.png","Colorado Rapids":"tm-1247.png","Columbus Crew":"tm-813.png","FC Dallas":"tm-8816.png","D.C. United":"tm-2440.png","Houston Dynamo":"tm-9168.png","Sporting Kansas City":"tm-4284.png","Minnesota United":"tm-56089.png","CF Montréal":"tm-4078.png","Nashville SC":"tm-63966.png","New England Revolution":"tm-626.png","New York City FC":"tm-40058.png","New York Red Bulls":"tm-623.png","Orlando City":"tm-45604.png","Philadelphia Union":"tm-25467.png","Portland Timbers":"tm-4291.png","Real Salt Lake":"tm-6643.png","San Diego FC":"tm-114977.png","San Jose Earthquakes":"tm-677.png","Seattle Sounders":"tm-9636.png","St. Louis City":"tm-82686.png","Toronto FC":"tm-11141.png","Vancouver Whitecaps":"tm-6321.png","Club América":"tm-3631.png","Guadalajara":"tm-6711.png","Cruz Azul":"tm-3711.png","Pumas UNAM":"tm-7633.png","Tigres UANL":"tm-7055.png","Monterrey":"tm-2407.png","Toluca":"tm-1804.png","Pachuca":"tm-4035.png","León":"tm-4941.png","Santos Laguna":"tm-1403.png","Atlas":"tm-8590.png","Necaxa":"tm-1146.png","Puebla":"tm-5662.png","Querétaro":"tm-4961.png","Tijuana":"tm-13353.png","Atlético San Luis":"tm-40188.png","Juárez":"tm-49283.png","Mazatlán":"tm-82696.png","Al-Hilal":"tm-1114.png","Al-Nassr":"tm-18544.png","Al-Ittihad":"tm-8023.png","Al-Ahli":"tm-18487.png","Al-Shabab":"tm-9840.png","Al-Qadsiah":"tm-26069.png","Al-Ettifaq":"tm-7732.png","Al-Taawoun":"tm-28887.png","Al-Fateh":"tm-27221.png","Al-Fayha":"tm-50531.png","Al-Khaleej":"tm-6070.png","Damac":"tm-50532.png","Al-Riyadh":"tm-31008.png","Al-Okhdood":"tm-71665.png","Al-Kholood":"tm-91427.png","NEOM":"tm-34911.png","Al-Najma":"tm-32328.png","Al-Hazem":"tm-9131.png","Kashima Antlers":"tm-2241.png","Kashiwa Reysol":"tm-6632.png","Kyoto Sanga":"tm-593.png","Sanfrecce Hiroshima":"tm-2697.png","Vissel Kobe":"tm-3958.png","Machida Zelvia":"tm-23568.png","Urawa Red Diamonds":"tm-828.png","Kawasaki Frontale":"tm-9598.png","Gamba Osaka":"tm-596.png","Cerezo Osaka":"tm-1022.png","FC Tokyo":"tm-6631.png","Fagiano Okayama":"tm-22171.png","Yokohama F. Marinos":"tm-3828.png","Nagoya Grampus":"tm-1066.png","Albirex Niigata":"tm-8344.png","Shimizu S-Pulse":"tm-1062.png","Tokyo Verdy":"tm-3734.png","Avispa Fukuoka":"tm-9597.png","Shonan Bellmare":"tm-8457.png","Yokohama FC":"tm-943.png","Ceará":"tm-2029.png","Fortaleza":"tm-10870.png","Juventude":"tm-10492.png","Sport":"tm-8718.png","West Ham United":"tm-379.png","Wolverhampton Wanderers":"tm-543.png","Burnley":"tm-1132.png","Mallorca":"tm-237.png","Girona":"tm-12321.png","Real Oviedo":"tm-2497.png","Hellas Verona":"tm-276.png","Pisa":"tm-4172.png","Cremonese":"tm-2239.png","Wolfsburg":"tm-82.png","St. Pauli":"tm-35.png","Heidenheim":"tm-2036.png","Nantes":"tm-995.png","Metz":"tm-347.png","Envigado":"espn-5481.png","General Caballero JLM":"espn-21316.png","Yaracuyanos":"wiki-yaracuyanos.png"},"countries":{"Brazil":"flag-br.png","Argentina":"flag-ar.png","Uruguay":"flag-uy.png","Colombia":"flag-co.png","Chile":"flag-cl.png","Ecuador":"flag-ec.png","Peru":"flag-pe.png","Paraguay":"flag-py.png","Bolivia":"flag-bo.png","Venezuela":"flag-ve.png","England":"flag-gb-eng.png","Spain":"flag-es.png","Italy":"flag-it.png","Germany":"flag-de.png","France":"flag-fr.png","Portugal":"flag-pt.png","Netherlands":"flag-nl.png","Belgium":"flag-be.png","Croatia":"flag-hr.png","Denmark":"flag-dk.png","Switzerland":"flag-ch.png","Sweden":"flag-se.png","Norway":"flag-no.png","Poland":"flag-pl.png","Serbia":"flag-rs.png","Scotland":"flag-gb-sct.png","Wales":"flag-gb-wls.png","Türkiye":"flag-tr.png","Ukraine":"flag-ua.png","Austria":"flag-at.png","Greece":"flag-gr.png","Ireland":"flag-ie.png","Czech Republic":"flag-cz.png","United States":"flag-us.png","Canada":"flag-ca.png","Mexico":"flag-mx.png","Costa Rica":"flag-cr.png","Jamaica":"flag-jm.png","Japan":"flag-jp.png","South Korea":"flag-kr.png","Saudi Arabia":"flag-sa.png","Australia":"flag-au.png","Iran":"flag-ir.png","Morocco":"flag-ma.png","Senegal":"flag-sn.png","Nigeria":"flag-ng.png","Ghana":"flag-gh.png","Algeria":"flag-dz.png","Cameroon":"flag-cm.png","Cote d'Ivoire":"flag-ci.png","Egypt":"flag-eg.png","South Africa":"flag-za.png","New Zealand":"flag-nz.png"}};root.LegacyBadgeData=data;if(typeof module!=="undefined")module.exports=data;})(globalThis);
+(function (root) {
+  const data = {
+    revision: "original-1",
+    assets: {
+      "flag-ar.png": "assets/badges/flag-ar.png",
+      "flag-at.png": "assets/badges/flag-at.png",
+      "flag-au.png": "assets/badges/flag-au.png",
+      "flag-be.png": "assets/badges/flag-be.png",
+      "flag-bo.png": "assets/badges/flag-bo.png",
+      "flag-br.png": "assets/badges/flag-br.png",
+      "flag-ca.png": "assets/badges/flag-ca.png",
+      "flag-ch.png": "assets/badges/flag-ch.png",
+      "flag-ci.png": "assets/badges/flag-ci.png",
+      "flag-cl.png": "assets/badges/flag-cl.png",
+      "flag-cm.png": "assets/badges/flag-cm.png",
+      "flag-co.png": "assets/badges/flag-co.png",
+      "flag-cr.png": "assets/badges/flag-cr.png",
+      "flag-cz.png": "assets/badges/flag-cz.png",
+      "flag-de.png": "assets/badges/flag-de.png",
+      "flag-dk.png": "assets/badges/flag-dk.png",
+      "flag-dz.png": "assets/badges/flag-dz.png",
+      "flag-ec.png": "assets/badges/flag-ec.png",
+      "flag-eg.png": "assets/badges/flag-eg.png",
+      "flag-es.png": "assets/badges/flag-es.png",
+      "flag-fr.png": "assets/badges/flag-fr.png",
+      "flag-gb-eng.png": "assets/badges/flag-gb-eng.png",
+      "flag-gb-sct.png": "assets/badges/flag-gb-sct.png",
+      "flag-gb-wls.png": "assets/badges/flag-gb-wls.png",
+      "flag-gh.png": "assets/badges/flag-gh.png",
+      "flag-gr.png": "assets/badges/flag-gr.png",
+      "flag-hr.png": "assets/badges/flag-hr.png",
+      "flag-ie.png": "assets/badges/flag-ie.png",
+      "flag-ir.png": "assets/badges/flag-ir.png",
+      "flag-it.png": "assets/badges/flag-it.png",
+      "flag-jm.png": "assets/badges/flag-jm.png",
+      "flag-jp.png": "assets/badges/flag-jp.png",
+      "flag-kr.png": "assets/badges/flag-kr.png",
+      "flag-ma.png": "assets/badges/flag-ma.png",
+      "flag-mx.png": "assets/badges/flag-mx.png",
+      "flag-ng.png": "assets/badges/flag-ng.png",
+      "flag-nl.png": "assets/badges/flag-nl.png",
+      "flag-no.png": "assets/badges/flag-no.png",
+      "flag-nz.png": "assets/badges/flag-nz.png",
+      "flag-pe.png": "assets/badges/flag-pe.png",
+      "flag-pl.png": "assets/badges/flag-pl.png",
+      "flag-pt.png": "assets/badges/flag-pt.png",
+      "flag-py.png": "assets/badges/flag-py.png",
+      "flag-rs.png": "assets/badges/flag-rs.png",
+      "flag-sa.png": "assets/badges/flag-sa.png",
+      "flag-se.png": "assets/badges/flag-se.png",
+      "flag-sn.png": "assets/badges/flag-sn.png",
+      "flag-tr.png": "assets/badges/flag-tr.png",
+      "flag-ua.png": "assets/badges/flag-ua.png",
+      "flag-us.png": "assets/badges/flag-us.png",
+      "flag-uy.png": "assets/badges/flag-uy.png",
+      "flag-ve.png": "assets/badges/flag-ve.png",
+      "flag-za.png": "assets/badges/flag-za.png",
+      "original-0017739db94fdc.svg":
+        "assets/badges/original-0017739db94fdc.svg",
+      "original-008be6875298f5.svg":
+        "assets/badges/original-008be6875298f5.svg",
+      "original-01735c5ff16087.svg":
+        "assets/badges/original-01735c5ff16087.svg",
+      "original-02cdd331feda2a.svg":
+        "assets/badges/original-02cdd331feda2a.svg",
+      "original-02f7162d60bf12.svg":
+        "assets/badges/original-02f7162d60bf12.svg",
+      "original-030f424ea0bb64.svg":
+        "assets/badges/original-030f424ea0bb64.svg",
+      "original-0350634061ab3c.svg":
+        "assets/badges/original-0350634061ab3c.svg",
+      "original-0385d89114211d.svg":
+        "assets/badges/original-0385d89114211d.svg",
+      "original-04b8abb199ba87.svg":
+        "assets/badges/original-04b8abb199ba87.svg",
+      "original-0582f4223d9a3c.svg":
+        "assets/badges/original-0582f4223d9a3c.svg",
+      "original-0637e04572f640.svg":
+        "assets/badges/original-0637e04572f640.svg",
+      "original-07550f0af9ffd4.svg":
+        "assets/badges/original-07550f0af9ffd4.svg",
+      "original-080c74cad0233f.svg":
+        "assets/badges/original-080c74cad0233f.svg",
+      "original-08537182ea85e9.svg":
+        "assets/badges/original-08537182ea85e9.svg",
+      "original-0921c87786172e.svg":
+        "assets/badges/original-0921c87786172e.svg",
+      "original-099dd595ce6576.svg":
+        "assets/badges/original-099dd595ce6576.svg",
+      "original-0a3a7da8f0efec.svg":
+        "assets/badges/original-0a3a7da8f0efec.svg",
+      "original-0af6c3986da78b.svg":
+        "assets/badges/original-0af6c3986da78b.svg",
+      "original-0b2d9f079cd12a.svg":
+        "assets/badges/original-0b2d9f079cd12a.svg",
+      "original-0bf974d86c72f1.svg":
+        "assets/badges/original-0bf974d86c72f1.svg",
+      "original-0c5e15445f995b.svg":
+        "assets/badges/original-0c5e15445f995b.svg",
+      "original-0df2b318462f5a.svg":
+        "assets/badges/original-0df2b318462f5a.svg",
+      "original-0eb286e8cb40c0.svg":
+        "assets/badges/original-0eb286e8cb40c0.svg",
+      "original-0ed9c3e264df41.svg":
+        "assets/badges/original-0ed9c3e264df41.svg",
+      "original-0eefcdd6e5d0a5.svg":
+        "assets/badges/original-0eefcdd6e5d0a5.svg",
+      "original-105198f08f096b.svg":
+        "assets/badges/original-105198f08f096b.svg",
+      "original-1067936ba29c8a.svg":
+        "assets/badges/original-1067936ba29c8a.svg",
+      "original-108bd0766bf42a.svg":
+        "assets/badges/original-108bd0766bf42a.svg",
+      "original-11148d8f6ad4d4.svg":
+        "assets/badges/original-11148d8f6ad4d4.svg",
+      "original-113052d87118bd.svg":
+        "assets/badges/original-113052d87118bd.svg",
+      "original-11dc72589ed82d.svg":
+        "assets/badges/original-11dc72589ed82d.svg",
+      "original-11ef08e9306614.svg":
+        "assets/badges/original-11ef08e9306614.svg",
+      "original-126f214023a030.svg":
+        "assets/badges/original-126f214023a030.svg",
+      "original-13129b09d0934a.svg":
+        "assets/badges/original-13129b09d0934a.svg",
+      "original-132b44a3745a94.svg":
+        "assets/badges/original-132b44a3745a94.svg",
+      "original-1382dca91398a1.svg":
+        "assets/badges/original-1382dca91398a1.svg",
+      "original-1534cf2af76ecd.svg":
+        "assets/badges/original-1534cf2af76ecd.svg",
+      "original-15c6d611193988.svg":
+        "assets/badges/original-15c6d611193988.svg",
+      "original-1627a9f7b693c9.svg":
+        "assets/badges/original-1627a9f7b693c9.svg",
+      "original-1666a289fa9875.svg":
+        "assets/badges/original-1666a289fa9875.svg",
+      "original-170c4efbf64c7f.svg":
+        "assets/badges/original-170c4efbf64c7f.svg",
+      "original-17a65f2f9937c0.svg":
+        "assets/badges/original-17a65f2f9937c0.svg",
+      "original-18cd53867bcbba.svg":
+        "assets/badges/original-18cd53867bcbba.svg",
+      "original-1a12d59363af28.svg":
+        "assets/badges/original-1a12d59363af28.svg",
+      "original-1c33ac6f1f97b3.svg":
+        "assets/badges/original-1c33ac6f1f97b3.svg",
+      "original-1c4c961ee71813.svg":
+        "assets/badges/original-1c4c961ee71813.svg",
+      "original-1dbd7dfe35d468.svg":
+        "assets/badges/original-1dbd7dfe35d468.svg",
+      "original-1ecd41c03ef78b.svg":
+        "assets/badges/original-1ecd41c03ef78b.svg",
+      "original-1f4f01dd5ab726.svg":
+        "assets/badges/original-1f4f01dd5ab726.svg",
+      "original-2049907ef04e94.svg":
+        "assets/badges/original-2049907ef04e94.svg",
+      "original-213a5031760024.svg":
+        "assets/badges/original-213a5031760024.svg",
+      "original-2183027e204015.svg":
+        "assets/badges/original-2183027e204015.svg",
+      "original-21f4f2974c5b99.svg":
+        "assets/badges/original-21f4f2974c5b99.svg",
+      "original-22eeb0bc430c1c.svg":
+        "assets/badges/original-22eeb0bc430c1c.svg",
+      "original-23196a2a84e36d.svg":
+        "assets/badges/original-23196a2a84e36d.svg",
+      "original-231b1156c6445c.svg":
+        "assets/badges/original-231b1156c6445c.svg",
+      "original-233c761b095305.svg":
+        "assets/badges/original-233c761b095305.svg",
+      "original-23934147080990.svg":
+        "assets/badges/original-23934147080990.svg",
+      "original-23b611dc72bae9.svg":
+        "assets/badges/original-23b611dc72bae9.svg",
+      "original-242aaa92a02d7f.svg":
+        "assets/badges/original-242aaa92a02d7f.svg",
+      "original-25277b0ab9dcd0.svg":
+        "assets/badges/original-25277b0ab9dcd0.svg",
+      "original-259431f28f16a7.svg":
+        "assets/badges/original-259431f28f16a7.svg",
+      "original-25e650426bbf0d.svg":
+        "assets/badges/original-25e650426bbf0d.svg",
+      "original-27052dea936da6.svg":
+        "assets/badges/original-27052dea936da6.svg",
+      "original-2727b4974efc6e.svg":
+        "assets/badges/original-2727b4974efc6e.svg",
+      "original-278966f8b4c560.svg":
+        "assets/badges/original-278966f8b4c560.svg",
+      "original-28acfad0ff8203.svg":
+        "assets/badges/original-28acfad0ff8203.svg",
+      "original-28eeff6c59ad54.svg":
+        "assets/badges/original-28eeff6c59ad54.svg",
+      "original-295e92b5d918d7.svg":
+        "assets/badges/original-295e92b5d918d7.svg",
+      "original-2ab4a454502b41.svg":
+        "assets/badges/original-2ab4a454502b41.svg",
+      "original-2ac4296d076e4e.svg":
+        "assets/badges/original-2ac4296d076e4e.svg",
+      "original-2ae8d797a6ecd7.svg":
+        "assets/badges/original-2ae8d797a6ecd7.svg",
+      "original-2baf2836799bcf.svg":
+        "assets/badges/original-2baf2836799bcf.svg",
+      "original-2ced3e41fa1815.svg":
+        "assets/badges/original-2ced3e41fa1815.svg",
+      "original-2e5d7cb7a53c51.svg":
+        "assets/badges/original-2e5d7cb7a53c51.svg",
+      "original-301b7dcffefc6b.svg":
+        "assets/badges/original-301b7dcffefc6b.svg",
+      "original-306ae847a44bc0.svg":
+        "assets/badges/original-306ae847a44bc0.svg",
+      "original-308cf262347c9f.svg":
+        "assets/badges/original-308cf262347c9f.svg",
+      "original-309cf6f8eda4f3.svg":
+        "assets/badges/original-309cf6f8eda4f3.svg",
+      "original-32a77484e0d82d.svg":
+        "assets/badges/original-32a77484e0d82d.svg",
+      "original-342f43aedf7be2.svg":
+        "assets/badges/original-342f43aedf7be2.svg",
+      "original-34647d8798a88d.svg":
+        "assets/badges/original-34647d8798a88d.svg",
+      "original-36ca70f4e5025c.svg":
+        "assets/badges/original-36ca70f4e5025c.svg",
+      "original-37895dfa26402a.svg":
+        "assets/badges/original-37895dfa26402a.svg",
+      "original-384658cd94a64f.svg":
+        "assets/badges/original-384658cd94a64f.svg",
+      "original-385f8f79371964.svg":
+        "assets/badges/original-385f8f79371964.svg",
+      "original-39d742c56ae8cc.svg":
+        "assets/badges/original-39d742c56ae8cc.svg",
+      "original-3a08cf3ef1f804.svg":
+        "assets/badges/original-3a08cf3ef1f804.svg",
+      "original-3aac28fd826770.svg":
+        "assets/badges/original-3aac28fd826770.svg",
+      "original-3b76c8e0266c4c.svg":
+        "assets/badges/original-3b76c8e0266c4c.svg",
+      "original-3cbdfd87da999f.svg":
+        "assets/badges/original-3cbdfd87da999f.svg",
+      "original-3cc71f38946c2f.svg":
+        "assets/badges/original-3cc71f38946c2f.svg",
+      "original-3e3615ec3811a2.svg":
+        "assets/badges/original-3e3615ec3811a2.svg",
+      "original-3ef249cab88399.svg":
+        "assets/badges/original-3ef249cab88399.svg",
+      "original-3f4634466a9ac3.svg":
+        "assets/badges/original-3f4634466a9ac3.svg",
+      "original-405ff137e5e411.svg":
+        "assets/badges/original-405ff137e5e411.svg",
+      "original-40cea1fd091baf.svg":
+        "assets/badges/original-40cea1fd091baf.svg",
+      "original-4265559e75e90f.svg":
+        "assets/badges/original-4265559e75e90f.svg",
+      "original-42b5ff547e7fbc.svg":
+        "assets/badges/original-42b5ff547e7fbc.svg",
+      "original-43385e411ef944.svg":
+        "assets/badges/original-43385e411ef944.svg",
+      "original-448146261188a4.svg":
+        "assets/badges/original-448146261188a4.svg",
+      "original-45643fcbe9784d.svg":
+        "assets/badges/original-45643fcbe9784d.svg",
+      "original-471d553d58d2f1.svg":
+        "assets/badges/original-471d553d58d2f1.svg",
+      "original-477a89c66f44ad.svg":
+        "assets/badges/original-477a89c66f44ad.svg",
+      "original-4794ab21564d35.svg":
+        "assets/badges/original-4794ab21564d35.svg",
+      "original-47e26a1b78b95a.svg":
+        "assets/badges/original-47e26a1b78b95a.svg",
+      "original-4ab8dbacfc4dc5.svg":
+        "assets/badges/original-4ab8dbacfc4dc5.svg",
+      "original-4ad81a18cd00d3.svg":
+        "assets/badges/original-4ad81a18cd00d3.svg",
+      "original-4b25105c7d86fa.svg":
+        "assets/badges/original-4b25105c7d86fa.svg",
+      "original-4b826b02a59a8a.svg":
+        "assets/badges/original-4b826b02a59a8a.svg",
+      "original-4bae064671250a.svg":
+        "assets/badges/original-4bae064671250a.svg",
+      "original-4bee8a0051fdd2.svg":
+        "assets/badges/original-4bee8a0051fdd2.svg",
+      "original-4cd8e7a58a4ff9.svg":
+        "assets/badges/original-4cd8e7a58a4ff9.svg",
+      "original-4e4ec7c99bc1b9.svg":
+        "assets/badges/original-4e4ec7c99bc1b9.svg",
+      "original-4e573a4a9c5b53.svg":
+        "assets/badges/original-4e573a4a9c5b53.svg",
+      "original-4e611a995fb9b8.svg":
+        "assets/badges/original-4e611a995fb9b8.svg",
+      "original-4fc160adcf968c.svg":
+        "assets/badges/original-4fc160adcf968c.svg",
+      "original-4fc60038a6190a.svg":
+        "assets/badges/original-4fc60038a6190a.svg",
+      "original-5005bcc5ccd788.svg":
+        "assets/badges/original-5005bcc5ccd788.svg",
+      "original-50a7067d924c9c.svg":
+        "assets/badges/original-50a7067d924c9c.svg",
+      "original-5288e20d45360e.svg":
+        "assets/badges/original-5288e20d45360e.svg",
+      "original-536b8ff293feaa.svg":
+        "assets/badges/original-536b8ff293feaa.svg",
+      "original-53946ba3c31279.svg":
+        "assets/badges/original-53946ba3c31279.svg",
+      "original-54141373db1eee.svg":
+        "assets/badges/original-54141373db1eee.svg",
+      "original-545f91326c4e8b.svg":
+        "assets/badges/original-545f91326c4e8b.svg",
+      "original-546b6448aad768.svg":
+        "assets/badges/original-546b6448aad768.svg",
+      "original-5483d5df9b245e.svg":
+        "assets/badges/original-5483d5df9b245e.svg",
+      "original-55a2411c28949c.svg":
+        "assets/badges/original-55a2411c28949c.svg",
+      "original-5750bae2d7818f.svg":
+        "assets/badges/original-5750bae2d7818f.svg",
+      "original-578e07faeeb3c4.svg":
+        "assets/badges/original-578e07faeeb3c4.svg",
+      "original-58df625253c9a7.svg":
+        "assets/badges/original-58df625253c9a7.svg",
+      "original-5932b1a8b1d0dd.svg":
+        "assets/badges/original-5932b1a8b1d0dd.svg",
+      "original-5a15316fba78f4.svg":
+        "assets/badges/original-5a15316fba78f4.svg",
+      "original-5a49be55773f5b.svg":
+        "assets/badges/original-5a49be55773f5b.svg",
+      "original-5ac1ace0e4497d.svg":
+        "assets/badges/original-5ac1ace0e4497d.svg",
+      "original-5b0e6767971373.svg":
+        "assets/badges/original-5b0e6767971373.svg",
+      "original-5d6f7db8fce02a.svg":
+        "assets/badges/original-5d6f7db8fce02a.svg",
+      "original-5d88a03e611899.svg":
+        "assets/badges/original-5d88a03e611899.svg",
+      "original-5dfcbdf7895956.svg":
+        "assets/badges/original-5dfcbdf7895956.svg",
+      "original-5e487a6a362c28.svg":
+        "assets/badges/original-5e487a6a362c28.svg",
+      "original-5e9d7a1fde38be.svg":
+        "assets/badges/original-5e9d7a1fde38be.svg",
+      "original-5ecfb8df4af87f.svg":
+        "assets/badges/original-5ecfb8df4af87f.svg",
+      "original-5ee3fdf4b47bd5.svg":
+        "assets/badges/original-5ee3fdf4b47bd5.svg",
+      "original-5ef1c9f20a5a71.svg":
+        "assets/badges/original-5ef1c9f20a5a71.svg",
+      "original-5f0d364b5a8e7a.svg":
+        "assets/badges/original-5f0d364b5a8e7a.svg",
+      "original-5f110ca0212ab1.svg":
+        "assets/badges/original-5f110ca0212ab1.svg",
+      "original-5f16a64934b51d.svg":
+        "assets/badges/original-5f16a64934b51d.svg",
+      "original-5f80b32380c53a.svg":
+        "assets/badges/original-5f80b32380c53a.svg",
+      "original-5ffc7dfc876eca.svg":
+        "assets/badges/original-5ffc7dfc876eca.svg",
+      "original-60eb30c4c4620d.svg":
+        "assets/badges/original-60eb30c4c4620d.svg",
+      "original-61ad8f7fa19ae2.svg":
+        "assets/badges/original-61ad8f7fa19ae2.svg",
+      "original-61edad3fb27cf0.svg":
+        "assets/badges/original-61edad3fb27cf0.svg",
+      "original-626b208a365327.svg":
+        "assets/badges/original-626b208a365327.svg",
+      "original-628d5f40c0b324.svg":
+        "assets/badges/original-628d5f40c0b324.svg",
+      "original-62ba8e1464c13e.svg":
+        "assets/badges/original-62ba8e1464c13e.svg",
+      "original-62f8b67236e1b5.svg":
+        "assets/badges/original-62f8b67236e1b5.svg",
+      "original-6334dee5252449.svg":
+        "assets/badges/original-6334dee5252449.svg",
+      "original-63cf1eb27691c9.svg":
+        "assets/badges/original-63cf1eb27691c9.svg",
+      "original-64daa95b808018.svg":
+        "assets/badges/original-64daa95b808018.svg",
+      "original-650a26c3640c8a.svg":
+        "assets/badges/original-650a26c3640c8a.svg",
+      "original-667160bb7dcafc.svg":
+        "assets/badges/original-667160bb7dcafc.svg",
+      "original-669dc1db6dc80b.svg":
+        "assets/badges/original-669dc1db6dc80b.svg",
+      "original-68ef7f48796ade.svg":
+        "assets/badges/original-68ef7f48796ade.svg",
+      "original-6afb5e008b7f9e.svg":
+        "assets/badges/original-6afb5e008b7f9e.svg",
+      "original-6b08b708fbed2e.svg":
+        "assets/badges/original-6b08b708fbed2e.svg",
+      "original-6b828aeb754061.svg":
+        "assets/badges/original-6b828aeb754061.svg",
+      "original-6d290cf8979c69.svg":
+        "assets/badges/original-6d290cf8979c69.svg",
+      "original-6e97caf1910c92.svg":
+        "assets/badges/original-6e97caf1910c92.svg",
+      "original-6eded4e498617d.svg":
+        "assets/badges/original-6eded4e498617d.svg",
+      "original-6f92f0167ad073.svg":
+        "assets/badges/original-6f92f0167ad073.svg",
+      "original-6fef4472df5521.svg":
+        "assets/badges/original-6fef4472df5521.svg",
+      "original-70528be54163fe.svg":
+        "assets/badges/original-70528be54163fe.svg",
+      "original-71043d70252539.svg":
+        "assets/badges/original-71043d70252539.svg",
+      "original-715edf8ba87294.svg":
+        "assets/badges/original-715edf8ba87294.svg",
+      "original-72028c69fe5859.svg":
+        "assets/badges/original-72028c69fe5859.svg",
+      "original-72adc7dc3a6270.svg":
+        "assets/badges/original-72adc7dc3a6270.svg",
+      "original-739ceba7b07393.svg":
+        "assets/badges/original-739ceba7b07393.svg",
+      "original-742df99fe0bc39.svg":
+        "assets/badges/original-742df99fe0bc39.svg",
+      "original-7438b640fba921.svg":
+        "assets/badges/original-7438b640fba921.svg",
+      "original-752eea38ab97fd.svg":
+        "assets/badges/original-752eea38ab97fd.svg",
+      "original-760791825f1335.svg":
+        "assets/badges/original-760791825f1335.svg",
+      "original-7619d687372e05.svg":
+        "assets/badges/original-7619d687372e05.svg",
+      "original-767fc64ce31d98.svg":
+        "assets/badges/original-767fc64ce31d98.svg",
+      "original-76ad7747516ce6.svg":
+        "assets/badges/original-76ad7747516ce6.svg",
+      "original-76b6ab8321f6c7.svg":
+        "assets/badges/original-76b6ab8321f6c7.svg",
+      "original-76c88b0a737261.svg":
+        "assets/badges/original-76c88b0a737261.svg",
+      "original-774183b41e2c10.svg":
+        "assets/badges/original-774183b41e2c10.svg",
+      "original-777a30046167fc.svg":
+        "assets/badges/original-777a30046167fc.svg",
+      "original-7825b3a1a4f58b.svg":
+        "assets/badges/original-7825b3a1a4f58b.svg",
+      "original-783f41c994d41a.svg":
+        "assets/badges/original-783f41c994d41a.svg",
+      "original-79996373623b60.svg":
+        "assets/badges/original-79996373623b60.svg",
+      "original-7a31c276744b66.svg":
+        "assets/badges/original-7a31c276744b66.svg",
+      "original-7afcaccd304efd.svg":
+        "assets/badges/original-7afcaccd304efd.svg",
+      "original-7c8159dd2e49a5.svg":
+        "assets/badges/original-7c8159dd2e49a5.svg",
+      "original-7c82602500857a.svg":
+        "assets/badges/original-7c82602500857a.svg",
+      "original-7cabadb8331090.svg":
+        "assets/badges/original-7cabadb8331090.svg",
+      "original-7cb4e2a1388dad.svg":
+        "assets/badges/original-7cb4e2a1388dad.svg",
+      "original-7cc269eaadbcc4.svg":
+        "assets/badges/original-7cc269eaadbcc4.svg",
+      "original-7df8a68cb2d987.svg":
+        "assets/badges/original-7df8a68cb2d987.svg",
+      "original-7e85b195803780.svg":
+        "assets/badges/original-7e85b195803780.svg",
+      "original-7f3b9b0e0a765d.svg":
+        "assets/badges/original-7f3b9b0e0a765d.svg",
+      "original-7fb5b505920a4b.svg":
+        "assets/badges/original-7fb5b505920a4b.svg",
+      "original-80d4f92371f0c2.svg":
+        "assets/badges/original-80d4f92371f0c2.svg",
+      "original-812b9215cd2f0e.svg":
+        "assets/badges/original-812b9215cd2f0e.svg",
+      "original-828ab0d90425b0.svg":
+        "assets/badges/original-828ab0d90425b0.svg",
+      "original-82d31938a5088e.svg":
+        "assets/badges/original-82d31938a5088e.svg",
+      "original-8500dd3916cfdd.svg":
+        "assets/badges/original-8500dd3916cfdd.svg",
+      "original-85a9aae459569d.svg":
+        "assets/badges/original-85a9aae459569d.svg",
+      "original-8617b1495b83c3.svg":
+        "assets/badges/original-8617b1495b83c3.svg",
+      "original-864023960423af.svg":
+        "assets/badges/original-864023960423af.svg",
+      "original-86bdaad31a9d37.svg":
+        "assets/badges/original-86bdaad31a9d37.svg",
+      "original-87b8efa10d8ecc.svg":
+        "assets/badges/original-87b8efa10d8ecc.svg",
+      "original-87fef07bf984ee.svg":
+        "assets/badges/original-87fef07bf984ee.svg",
+      "original-88609184c61624.svg":
+        "assets/badges/original-88609184c61624.svg",
+      "original-886b904b012dd0.svg":
+        "assets/badges/original-886b904b012dd0.svg",
+      "original-8870e6cbc01473.svg":
+        "assets/badges/original-8870e6cbc01473.svg",
+      "original-88eae1f2542c4e.svg":
+        "assets/badges/original-88eae1f2542c4e.svg",
+      "original-89f1921a62c69b.svg":
+        "assets/badges/original-89f1921a62c69b.svg",
+      "original-8a713ff5ac700c.svg":
+        "assets/badges/original-8a713ff5ac700c.svg",
+      "original-8b36588118b6f5.svg":
+        "assets/badges/original-8b36588118b6f5.svg",
+      "original-8b4c41d26912eb.svg":
+        "assets/badges/original-8b4c41d26912eb.svg",
+      "original-8b651d9ed6ca98.svg":
+        "assets/badges/original-8b651d9ed6ca98.svg",
+      "original-8ba44810bc725d.svg":
+        "assets/badges/original-8ba44810bc725d.svg",
+      "original-8bb453ba636b71.svg":
+        "assets/badges/original-8bb453ba636b71.svg",
+      "original-8cd270073b55a1.svg":
+        "assets/badges/original-8cd270073b55a1.svg",
+      "original-8d294eb556df7e.svg":
+        "assets/badges/original-8d294eb556df7e.svg",
+      "original-8d4c4ec664410f.svg":
+        "assets/badges/original-8d4c4ec664410f.svg",
+      "original-8e7bfd10ebcb05.svg":
+        "assets/badges/original-8e7bfd10ebcb05.svg",
+      "original-8f266a0a15f348.svg":
+        "assets/badges/original-8f266a0a15f348.svg",
+      "original-8f29a0c8dabfc0.svg":
+        "assets/badges/original-8f29a0c8dabfc0.svg",
+      "original-8f7f2f7ccd3f28.svg":
+        "assets/badges/original-8f7f2f7ccd3f28.svg",
+      "original-8fc0293969dac5.svg":
+        "assets/badges/original-8fc0293969dac5.svg",
+      "original-9086cdf9770bb6.svg":
+        "assets/badges/original-9086cdf9770bb6.svg",
+      "original-917e53c1305a63.svg":
+        "assets/badges/original-917e53c1305a63.svg",
+      "original-91ae7ecf20a7ab.svg":
+        "assets/badges/original-91ae7ecf20a7ab.svg",
+      "original-92dec88dbd585f.svg":
+        "assets/badges/original-92dec88dbd585f.svg",
+      "original-933a7380cb1109.svg":
+        "assets/badges/original-933a7380cb1109.svg",
+      "original-9465e4584d6b48.svg":
+        "assets/badges/original-9465e4584d6b48.svg",
+      "original-950324b21dc5d0.svg":
+        "assets/badges/original-950324b21dc5d0.svg",
+      "original-954fd15b13737d.svg":
+        "assets/badges/original-954fd15b13737d.svg",
+      "original-96681c1de46dca.svg":
+        "assets/badges/original-96681c1de46dca.svg",
+      "original-97d4e341ca6436.svg":
+        "assets/badges/original-97d4e341ca6436.svg",
+      "original-989468f5d9c435.svg":
+        "assets/badges/original-989468f5d9c435.svg",
+      "original-99e2b58c8c58d8.svg":
+        "assets/badges/original-99e2b58c8c58d8.svg",
+      "original-9a58c3f2e6b99b.svg":
+        "assets/badges/original-9a58c3f2e6b99b.svg",
+      "original-9b1d1f559116de.svg":
+        "assets/badges/original-9b1d1f559116de.svg",
+      "original-9b650274a60e6f.svg":
+        "assets/badges/original-9b650274a60e6f.svg",
+      "original-9b6e27e377e036.svg":
+        "assets/badges/original-9b6e27e377e036.svg",
+      "original-9b70e5225ecc3e.svg":
+        "assets/badges/original-9b70e5225ecc3e.svg",
+      "original-9b89025ce7a6d9.svg":
+        "assets/badges/original-9b89025ce7a6d9.svg",
+      "original-9ce21eac3a5cb6.svg":
+        "assets/badges/original-9ce21eac3a5cb6.svg",
+      "original-9d5bb828b837fe.svg":
+        "assets/badges/original-9d5bb828b837fe.svg",
+      "original-9db2b735d93e83.svg":
+        "assets/badges/original-9db2b735d93e83.svg",
+      "original-9dc5bad7a55031.svg":
+        "assets/badges/original-9dc5bad7a55031.svg",
+      "original-9e351dcbee1983.svg":
+        "assets/badges/original-9e351dcbee1983.svg",
+      "original-9e84dc2a8cde9f.svg":
+        "assets/badges/original-9e84dc2a8cde9f.svg",
+      "original-9e861941ad8bf5.svg":
+        "assets/badges/original-9e861941ad8bf5.svg",
+      "original-9f190d0d641acf.svg":
+        "assets/badges/original-9f190d0d641acf.svg",
+      "original-9f97b71bbbb848.svg":
+        "assets/badges/original-9f97b71bbbb848.svg",
+      "original-a0152061d6a032.svg":
+        "assets/badges/original-a0152061d6a032.svg",
+      "original-a079a0da42a428.svg":
+        "assets/badges/original-a079a0da42a428.svg",
+      "original-a26915b4ef4993.svg":
+        "assets/badges/original-a26915b4ef4993.svg",
+      "original-a34b40d010af11.svg":
+        "assets/badges/original-a34b40d010af11.svg",
+      "original-a397c3e431ec77.svg":
+        "assets/badges/original-a397c3e431ec77.svg",
+      "original-a41bd2420ce218.svg":
+        "assets/badges/original-a41bd2420ce218.svg",
+      "original-a4be5add023d49.svg":
+        "assets/badges/original-a4be5add023d49.svg",
+      "original-a4ca2054508518.svg":
+        "assets/badges/original-a4ca2054508518.svg",
+      "original-a52cbb7f1af3e9.svg":
+        "assets/badges/original-a52cbb7f1af3e9.svg",
+      "original-a5f3cf1c18f917.svg":
+        "assets/badges/original-a5f3cf1c18f917.svg",
+      "original-a62d13a1b5f0b7.svg":
+        "assets/badges/original-a62d13a1b5f0b7.svg",
+      "original-a673e87911497f.svg":
+        "assets/badges/original-a673e87911497f.svg",
+      "original-a7181364574015.svg":
+        "assets/badges/original-a7181364574015.svg",
+      "original-a73cf33ef680a2.svg":
+        "assets/badges/original-a73cf33ef680a2.svg",
+      "original-a78ac513b8d641.svg":
+        "assets/badges/original-a78ac513b8d641.svg",
+      "original-a8195c452ddb70.svg":
+        "assets/badges/original-a8195c452ddb70.svg",
+      "original-a95d0ac8c57fe4.svg":
+        "assets/badges/original-a95d0ac8c57fe4.svg",
+      "original-a985759c9db4b2.svg":
+        "assets/badges/original-a985759c9db4b2.svg",
+      "original-abd20b0f073652.svg":
+        "assets/badges/original-abd20b0f073652.svg",
+      "original-acc2cab42640dd.svg":
+        "assets/badges/original-acc2cab42640dd.svg",
+      "original-adf507fc027afe.svg":
+        "assets/badges/original-adf507fc027afe.svg",
+      "original-ae4a1b349a98b4.svg":
+        "assets/badges/original-ae4a1b349a98b4.svg",
+      "original-aeb53a7c9cde15.svg":
+        "assets/badges/original-aeb53a7c9cde15.svg",
+      "original-aedd4473a5048c.svg":
+        "assets/badges/original-aedd4473a5048c.svg",
+      "original-af0cf99b839a6c.svg":
+        "assets/badges/original-af0cf99b839a6c.svg",
+      "original-af0f0108f0bcd6.svg":
+        "assets/badges/original-af0f0108f0bcd6.svg",
+      "original-af52da8fdd1f6d.svg":
+        "assets/badges/original-af52da8fdd1f6d.svg",
+      "original-b0bfc163036b51.svg":
+        "assets/badges/original-b0bfc163036b51.svg",
+      "original-b0c27fca74fa91.svg":
+        "assets/badges/original-b0c27fca74fa91.svg",
+      "original-b2c3a52b284f6f.svg":
+        "assets/badges/original-b2c3a52b284f6f.svg",
+      "original-b45fae26bcdd54.svg":
+        "assets/badges/original-b45fae26bcdd54.svg",
+      "original-b4895b93392d68.svg":
+        "assets/badges/original-b4895b93392d68.svg",
+      "original-b4a53bd82f8c8d.svg":
+        "assets/badges/original-b4a53bd82f8c8d.svg",
+      "original-b4a8782df29c96.svg":
+        "assets/badges/original-b4a8782df29c96.svg",
+      "original-b4aeb7162f385b.svg":
+        "assets/badges/original-b4aeb7162f385b.svg",
+      "original-b5239761f0075b.svg":
+        "assets/badges/original-b5239761f0075b.svg",
+      "original-b536a2876f25bd.svg":
+        "assets/badges/original-b536a2876f25bd.svg",
+      "original-b70e859bdb691a.svg":
+        "assets/badges/original-b70e859bdb691a.svg",
+      "original-b83de8521ec258.svg":
+        "assets/badges/original-b83de8521ec258.svg",
+      "original-b8f42a33d6c81f.svg":
+        "assets/badges/original-b8f42a33d6c81f.svg",
+      "original-b92a0b4bfc4a66.svg":
+        "assets/badges/original-b92a0b4bfc4a66.svg",
+      "original-b9a2c0c9e15b02.svg":
+        "assets/badges/original-b9a2c0c9e15b02.svg",
+      "original-ba9a54475412e7.svg":
+        "assets/badges/original-ba9a54475412e7.svg",
+      "original-bac07b951db6e1.svg":
+        "assets/badges/original-bac07b951db6e1.svg",
+      "original-bac3176504a8fe.svg":
+        "assets/badges/original-bac3176504a8fe.svg",
+      "original-bae6729079741c.svg":
+        "assets/badges/original-bae6729079741c.svg",
+      "original-bb1746bcf9261e.svg":
+        "assets/badges/original-bb1746bcf9261e.svg",
+      "original-bb9d03c00eb898.svg":
+        "assets/badges/original-bb9d03c00eb898.svg",
+      "original-bbf9dee91d983f.svg":
+        "assets/badges/original-bbf9dee91d983f.svg",
+      "original-bd7178acf59a20.svg":
+        "assets/badges/original-bd7178acf59a20.svg",
+      "original-bda11b42d148b3.svg":
+        "assets/badges/original-bda11b42d148b3.svg",
+      "original-bdc441631b8a37.svg":
+        "assets/badges/original-bdc441631b8a37.svg",
+      "original-bdc5ce96d0bfd0.svg":
+        "assets/badges/original-bdc5ce96d0bfd0.svg",
+      "original-be1807d21a1102.svg":
+        "assets/badges/original-be1807d21a1102.svg",
+      "original-be83f6d5677550.svg":
+        "assets/badges/original-be83f6d5677550.svg",
+      "original-bed942d84bc947.svg":
+        "assets/badges/original-bed942d84bc947.svg",
+      "original-c00fb0b23bf3d1.svg":
+        "assets/badges/original-c00fb0b23bf3d1.svg",
+      "original-c1143705b37c3d.svg":
+        "assets/badges/original-c1143705b37c3d.svg",
+      "original-c1e0c2e88f5d68.svg":
+        "assets/badges/original-c1e0c2e88f5d68.svg",
+      "original-c35f5328c6cd20.svg":
+        "assets/badges/original-c35f5328c6cd20.svg",
+      "original-c43044a6ef23a2.svg":
+        "assets/badges/original-c43044a6ef23a2.svg",
+      "original-c48db3ce2b9eee.svg":
+        "assets/badges/original-c48db3ce2b9eee.svg",
+      "original-c49cf0094c04b2.svg":
+        "assets/badges/original-c49cf0094c04b2.svg",
+      "original-c4a4e1d8f2f61f.svg":
+        "assets/badges/original-c4a4e1d8f2f61f.svg",
+      "original-c6980a21481dad.svg":
+        "assets/badges/original-c6980a21481dad.svg",
+      "original-c7736aea27f345.svg":
+        "assets/badges/original-c7736aea27f345.svg",
+      "original-c84ba7d16b33e5.svg":
+        "assets/badges/original-c84ba7d16b33e5.svg",
+      "original-c93d96f7f07fbd.svg":
+        "assets/badges/original-c93d96f7f07fbd.svg",
+      "original-c940429f4dcb49.svg":
+        "assets/badges/original-c940429f4dcb49.svg",
+      "original-ca9e6517632557.svg":
+        "assets/badges/original-ca9e6517632557.svg",
+      "original-cb6b0140a169a6.svg":
+        "assets/badges/original-cb6b0140a169a6.svg",
+      "original-cbb3895904f679.svg":
+        "assets/badges/original-cbb3895904f679.svg",
+      "original-cbf2f43a43856d.svg":
+        "assets/badges/original-cbf2f43a43856d.svg",
+      "original-cd0351b5130abe.svg":
+        "assets/badges/original-cd0351b5130abe.svg",
+      "original-cd1a80dd2052f2.svg":
+        "assets/badges/original-cd1a80dd2052f2.svg",
+      "original-cd2206729d2b8d.svg":
+        "assets/badges/original-cd2206729d2b8d.svg",
+      "original-cd5e264ed34422.svg":
+        "assets/badges/original-cd5e264ed34422.svg",
+      "original-ce7758352ca3ba.svg":
+        "assets/badges/original-ce7758352ca3ba.svg",
+      "original-cecc9d1e1a2c04.svg":
+        "assets/badges/original-cecc9d1e1a2c04.svg",
+      "original-ced2b494918909.svg":
+        "assets/badges/original-ced2b494918909.svg",
+      "original-cf07a92378cbfc.svg":
+        "assets/badges/original-cf07a92378cbfc.svg",
+      "original-cf1301e0bafc39.svg":
+        "assets/badges/original-cf1301e0bafc39.svg",
+      "original-cf41e3028f10bb.svg":
+        "assets/badges/original-cf41e3028f10bb.svg",
+      "original-cf83e7771e6362.svg":
+        "assets/badges/original-cf83e7771e6362.svg",
+      "original-cfe27adc8f53d8.svg":
+        "assets/badges/original-cfe27adc8f53d8.svg",
+      "original-d0fd88044fd502.svg":
+        "assets/badges/original-d0fd88044fd502.svg",
+      "original-d11ede0b14412a.svg":
+        "assets/badges/original-d11ede0b14412a.svg",
+      "original-d16c591686d22b.svg":
+        "assets/badges/original-d16c591686d22b.svg",
+      "original-d1f92f0593ca35.svg":
+        "assets/badges/original-d1f92f0593ca35.svg",
+      "original-d3bd49c5011ff6.svg":
+        "assets/badges/original-d3bd49c5011ff6.svg",
+      "original-d4342f053abff4.svg":
+        "assets/badges/original-d4342f053abff4.svg",
+      "original-d44f2bcf3464e5.svg":
+        "assets/badges/original-d44f2bcf3464e5.svg",
+      "original-d5136e93e64c91.svg":
+        "assets/badges/original-d5136e93e64c91.svg",
+      "original-d58d736c7a967f.svg":
+        "assets/badges/original-d58d736c7a967f.svg",
+      "original-d64baa9c22c9fa.svg":
+        "assets/badges/original-d64baa9c22c9fa.svg",
+      "original-d6c1efec22846c.svg":
+        "assets/badges/original-d6c1efec22846c.svg",
+      "original-d6de3e17fe2d2a.svg":
+        "assets/badges/original-d6de3e17fe2d2a.svg",
+      "original-d6fb74f5bd283a.svg":
+        "assets/badges/original-d6fb74f5bd283a.svg",
+      "original-d826a57fbaa86c.svg":
+        "assets/badges/original-d826a57fbaa86c.svg",
+      "original-d9f7dd92c3edda.svg":
+        "assets/badges/original-d9f7dd92c3edda.svg",
+      "original-dadd47a65108df.svg":
+        "assets/badges/original-dadd47a65108df.svg",
+      "original-dc48d002e4cee9.svg":
+        "assets/badges/original-dc48d002e4cee9.svg",
+      "original-dc512f92f0dccd.svg":
+        "assets/badges/original-dc512f92f0dccd.svg",
+      "original-dd064116b0bbd1.svg":
+        "assets/badges/original-dd064116b0bbd1.svg",
+      "original-ddece691bb2c6b.svg":
+        "assets/badges/original-ddece691bb2c6b.svg",
+      "original-ded6a687514227.svg":
+        "assets/badges/original-ded6a687514227.svg",
+      "original-df79d58cda49d3.svg":
+        "assets/badges/original-df79d58cda49d3.svg",
+      "original-e03644633d4bf6.svg":
+        "assets/badges/original-e03644633d4bf6.svg",
+      "original-e0591aac025500.svg":
+        "assets/badges/original-e0591aac025500.svg",
+      "original-e0ef629c5209fd.svg":
+        "assets/badges/original-e0ef629c5209fd.svg",
+      "original-e186022d0931af.svg":
+        "assets/badges/original-e186022d0931af.svg",
+      "original-e2894ed4cfe366.svg":
+        "assets/badges/original-e2894ed4cfe366.svg",
+      "original-e3f3ea7cd0ae44.svg":
+        "assets/badges/original-e3f3ea7cd0ae44.svg",
+      "original-e491ab1b9331bc.svg":
+        "assets/badges/original-e491ab1b9331bc.svg",
+      "original-e5b204cfb8167d.svg":
+        "assets/badges/original-e5b204cfb8167d.svg",
+      "original-e647708a520607.svg":
+        "assets/badges/original-e647708a520607.svg",
+      "original-e68b2c7b607a76.svg":
+        "assets/badges/original-e68b2c7b607a76.svg",
+      "original-e790738858b370.svg":
+        "assets/badges/original-e790738858b370.svg",
+      "original-e80f7ad27a676e.svg":
+        "assets/badges/original-e80f7ad27a676e.svg",
+      "original-e879004e0f9892.svg":
+        "assets/badges/original-e879004e0f9892.svg",
+      "original-e911eeec727080.svg":
+        "assets/badges/original-e911eeec727080.svg",
+      "original-e986234b0943f4.svg":
+        "assets/badges/original-e986234b0943f4.svg",
+      "original-ea3dc747f15400.svg":
+        "assets/badges/original-ea3dc747f15400.svg",
+      "original-eb0d298cd8140f.svg":
+        "assets/badges/original-eb0d298cd8140f.svg",
+      "original-eb3e0612b16d82.svg":
+        "assets/badges/original-eb3e0612b16d82.svg",
+      "original-ebeeef29e0a49a.svg":
+        "assets/badges/original-ebeeef29e0a49a.svg",
+      "original-ec1569a31d2db0.svg":
+        "assets/badges/original-ec1569a31d2db0.svg",
+      "original-ec450786e26a51.svg":
+        "assets/badges/original-ec450786e26a51.svg",
+      "original-ec4fd550587bd6.svg":
+        "assets/badges/original-ec4fd550587bd6.svg",
+      "original-ed188318358e1a.svg":
+        "assets/badges/original-ed188318358e1a.svg",
+      "original-eef90325620a7d.svg":
+        "assets/badges/original-eef90325620a7d.svg",
+      "original-ef376b8f315b03.svg":
+        "assets/badges/original-ef376b8f315b03.svg",
+      "original-efee614420c57d.svg":
+        "assets/badges/original-efee614420c57d.svg",
+      "original-f00cb6c4922024.svg":
+        "assets/badges/original-f00cb6c4922024.svg",
+      "original-f04e8efb46e2d7.svg":
+        "assets/badges/original-f04e8efb46e2d7.svg",
+      "original-f0990dc8a0f70f.svg":
+        "assets/badges/original-f0990dc8a0f70f.svg",
+      "original-f0de59487a87f0.svg":
+        "assets/badges/original-f0de59487a87f0.svg",
+      "original-f104b0fa29cb3b.svg":
+        "assets/badges/original-f104b0fa29cb3b.svg",
+      "original-f335c5dc36f57d.svg":
+        "assets/badges/original-f335c5dc36f57d.svg",
+      "original-f56206ec0f42e0.svg":
+        "assets/badges/original-f56206ec0f42e0.svg",
+      "original-f66336cb6323bd.svg":
+        "assets/badges/original-f66336cb6323bd.svg",
+      "original-f6ae2186c8050d.svg":
+        "assets/badges/original-f6ae2186c8050d.svg",
+      "original-f797eaa92ec389.svg":
+        "assets/badges/original-f797eaa92ec389.svg",
+      "original-f7f2ae38c04eb6.svg":
+        "assets/badges/original-f7f2ae38c04eb6.svg",
+      "original-f828f11c37ac70.svg":
+        "assets/badges/original-f828f11c37ac70.svg",
+      "original-f96897f277953f.svg":
+        "assets/badges/original-f96897f277953f.svg",
+      "original-f97557ce9b1cf0.svg":
+        "assets/badges/original-f97557ce9b1cf0.svg",
+      "original-fa1d5838ef24b1.svg":
+        "assets/badges/original-fa1d5838ef24b1.svg",
+      "original-fc53333a2b0e82.svg":
+        "assets/badges/original-fc53333a2b0e82.svg",
+      "original-fd2766fd407496.svg":
+        "assets/badges/original-fd2766fd407496.svg",
+      "original-fe0bb719b1692a.svg":
+        "assets/badges/original-fe0bb719b1692a.svg",
+      "original-fe27ee87f62411.svg":
+        "assets/badges/original-fe27ee87f62411.svg",
+      "original-fe9759b01435d4.svg":
+        "assets/badges/original-fe9759b01435d4.svg",
+      "original-ff95170fc37105.svg":
+        "assets/badges/original-ff95170fc37105.svg",
+      "original-ffa15aeed70cd0.svg":
+        "assets/badges/original-ffa15aeed70cd0.svg",
+      "original-ffa2084d0ce399.svg":
+        "assets/badges/original-ffa2084d0ce399.svg",
+    },
+    clubs: {
+      Flamengo: "original-d58d736c7a967f.svg",
+      Palmeiras: "original-2ac4296d076e4e.svg",
+      Cruzeiro: "original-a673e87911497f.svg",
+      Mirassol: "original-cf07a92378cbfc.svg",
+      Fluminense: "original-f828f11c37ac70.svg",
+      Botafogo: "original-ded6a687514227.svg",
+      Bahia: "original-6334dee5252449.svg",
+      "São Paulo": "original-8f7f2f7ccd3f28.svg",
+      Grêmio: "original-d11ede0b14412a.svg",
+      "Red Bull Bragantino": "original-dc48d002e4cee9.svg",
+      "Atlético Mineiro": "original-bd7178acf59a20.svg",
+      Santos: "original-0df2b318462f5a.svg",
+      Corinthians: "original-45643fcbe9784d.svg",
+      "Vasco da Gama": "original-72adc7dc3a6270.svg",
+      Vitória: "original-a5f3cf1c18f917.svg",
+      Internacional: "original-8d294eb556df7e.svg",
+      "Athletico Paranaense": "original-f6ae2186c8050d.svg",
+      Chapecoense: "original-f104b0fa29cb3b.svg",
+      Coritiba: "original-fa1d5838ef24b1.svg",
+      Remo: "original-f04e8efb46e2d7.svg",
+      "River Plate": "original-99e2b58c8c58d8.svg",
+      "Boca Juniors": "original-d6de3e17fe2d2a.svg",
+      "Racing Club": "original-933a7380cb1109.svg",
+      Independiente: "original-53946ba3c31279.svg",
+      "San Lorenzo": "original-bac3176504a8fe.svg",
+      "Estudiantes de La Plata": "original-be83f6d5677550.svg",
+      "Vélez Sarsfield": "original-9b1d1f559116de.svg",
+      "Rosario Central": "original-97d4e341ca6436.svg",
+      "Newell’s Old Boys": "original-783f41c994d41a.svg",
+      Talleres: "original-ebeeef29e0a49a.svg",
+      Belgrano: "original-36ca70f4e5025c.svg",
+      Lanús: "original-60eb30c4c4620d.svg",
+      Huracán: "original-6eded4e498617d.svg",
+      "Argentinos Juniors": "original-5d6f7db8fce02a.svg",
+      "Defensa y Justicia": "original-ffa15aeed70cd0.svg",
+      "Godoy Cruz": "original-86bdaad31a9d37.svg",
+      "Unión de Santa Fe": "original-e986234b0943f4.svg",
+      Tigre: "original-ca9e6517632557.svg",
+      "Gimnasia La Plata": "original-71043d70252539.svg",
+      Banfield: "original-9db2b735d93e83.svg",
+      "Atlético Tucumán": "original-13129b09d0934a.svg",
+      "Central Córdoba": "original-23196a2a84e36d.svg",
+      Instituto: "original-2183027e204015.svg",
+      "Independiente Rivadavia": "original-aeb53a7c9cde15.svg",
+      "Deportivo Riestra": "original-62ba8e1464c13e.svg",
+      "Barracas Central": "original-a4be5add023d49.svg",
+      Platense: "original-76ad7747516ce6.svg",
+      Sarmiento: "original-63cf1eb27691c9.svg",
+      "San Martín de San Juan": "original-3a08cf3ef1f804.svg",
+      Aldosivi: "original-4fc160adcf968c.svg",
+      Arsenal: "original-15c6d611193988.svg",
+      "Manchester City": "original-477a89c66f44ad.svg",
+      Liverpool: "original-9e861941ad8bf5.svg",
+      Chelsea: "original-1ecd41c03ef78b.svg",
+      "Manchester United": "original-767fc64ce31d98.svg",
+      "Tottenham Hotspur": "original-546b6448aad768.svg",
+      "Newcastle United": "original-87fef07bf984ee.svg",
+      "Aston Villa": "original-5ffc7dfc876eca.svg",
+      "Brighton & Hove Albion": "original-d64baa9c22c9fa.svg",
+      "Nottingham Forest": "original-b9a2c0c9e15b02.svg",
+      "Crystal Palace": "original-d826a57fbaa86c.svg",
+      Bournemouth: "original-c940429f4dcb49.svg",
+      Brentford: "original-8617b1495b83c3.svg",
+      Fulham: "original-79996373623b60.svg",
+      "Coventry City": "original-17a65f2f9937c0.svg",
+      Everton: "original-7c8159dd2e49a5.svg",
+      "Hull City": "original-b4a8782df29c96.svg",
+      "Leeds United": "original-8a713ff5ac700c.svg",
+      "Ipswich Town": "original-5ac1ace0e4497d.svg",
+      Sunderland: "original-f0990dc8a0f70f.svg",
+      "Real Madrid": "original-8fc0293969dac5.svg",
+      Barcelona: "original-e647708a520607.svg",
+      "Atlético de Madrid": "original-fe9759b01435d4.svg",
+      "Athletic Club": "original-ec4fd550587bd6.svg",
+      Villarreal: "original-b4a53bd82f8c8d.svg",
+      "Real Betis": "original-650a26c3640c8a.svg",
+      "Celta de Vigo": "original-8f29a0c8dabfc0.svg",
+      "Rayo Vallecano": "original-ec1569a31d2db0.svg",
+      Osasuna: "original-ba9a54475412e7.svg",
+      "Deportivo La Coruña": "original-4ab8dbacfc4dc5.svg",
+      "Real Sociedad": "original-c93d96f7f07fbd.svg",
+      Valencia: "original-626b208a365327.svg",
+      Getafe: "original-af0cf99b839a6c.svg",
+      Espanyol: "original-88609184c61624.svg",
+      Alavés: "original-213a5031760024.svg",
+      Málaga: "original-2e5d7cb7a53c51.svg",
+      Sevilla: "original-a0152061d6a032.svg",
+      Levante: "original-bae6729079741c.svg",
+      Elche: "original-3ef249cab88399.svg",
+      "Racing Santander": "original-113052d87118bd.svg",
+      "Inter de Milão": "original-5f16a64934b51d.svg",
+      Napoli: "original-008be6875298f5.svg",
+      Milan: "original-efee614420c57d.svg",
+      Juventus: "original-11148d8f6ad4d4.svg",
+      Atalanta: "original-c48db3ce2b9eee.svg",
+      Roma: "original-b0c27fca74fa91.svg",
+      Lazio: "original-25e650426bbf0d.svg",
+      Fiorentina: "original-2baf2836799bcf.svg",
+      Bologna: "original-23b611dc72bae9.svg",
+      Como: "original-ea3dc747f15400.svg",
+      Torino: "original-e03644633d4bf6.svg",
+      Udinese: "original-7cabadb8331090.svg",
+      Genoa: "original-bbf9dee91d983f.svg",
+      Frosinone: "original-5f80b32380c53a.svg",
+      Cagliari: "original-f0de59487a87f0.svg",
+      Lecce: "original-4ad81a18cd00d3.svg",
+      Parma: "original-0bf974d86c72f1.svg",
+      Sassuolo: "original-b70e859bdb691a.svg",
+      Monza: "original-0b2d9f079cd12a.svg",
+      Venezia: "original-d0fd88044fd502.svg",
+      "Bayern de Munique": "original-0c5e15445f995b.svg",
+      "Bayer Leverkusen": "original-76b6ab8321f6c7.svg",
+      "Borussia Dortmund": "original-adf507fc027afe.svg",
+      "Eintracht Frankfurt": "original-f335c5dc36f57d.svg",
+      "RB Leipzig": "original-ae4a1b349a98b4.svg",
+      Stuttgart: "original-9dc5bad7a55031.svg",
+      Freiburg: "original-f00cb6c4922024.svg",
+      "Mainz 05": "original-cf83e7771e6362.svg",
+      "Werder Bremen": "original-c49cf0094c04b2.svg",
+      "Borussia Mönchengladbach": "original-dadd47a65108df.svg",
+      Elversberg: "original-6afb5e008b7f9e.svg",
+      Augsburg: "original-3cc71f38946c2f.svg",
+      "Union Berlin": "original-fe27ee87f62411.svg",
+      Paderborn: "original-cbb3895904f679.svg",
+      Hoffenheim: "original-5a49be55773f5b.svg",
+      "Schalke 04": "original-d44f2bcf3464e5.svg",
+      "Hamburger SV": "original-8b36588118b6f5.svg",
+      Köln: "original-1c33ac6f1f97b3.svg",
+      "Paris Saint-Germain": "original-68ef7f48796ade.svg",
+      "Olympique de Marseille": "original-6b828aeb754061.svg",
+      Monaco: "original-8870e6cbc01473.svg",
+      Lille: "original-954fd15b13737d.svg",
+      Lyon: "original-f56206ec0f42e0.svg",
+      Nice: "original-e186022d0931af.svg",
+      Strasbourg: "original-9086cdf9770bb6.svg",
+      Lens: "original-812b9215cd2f0e.svg",
+      Brest: "original-c1143705b37c3d.svg",
+      Rennes: "original-170c4efbf64c7f.svg",
+      Auxerre: "original-2ae8d797a6ecd7.svg",
+      Toulouse: "original-5483d5df9b245e.svg",
+      "Le Mans": "original-9f97b71bbbb848.svg",
+      Angers: "original-0582f4223d9a3c.svg",
+      "Le Havre": "original-1f4f01dd5ab726.svg",
+      Lorient: "original-42b5ff547e7fbc.svg",
+      "Paris FC": "original-9ce21eac3a5cb6.svg",
+      Troyes: "original-a397c3e431ec77.svg",
+      "Sporting CP": "original-47e26a1b78b95a.svg",
+      Benfica: "original-f97557ce9b1cf0.svg",
+      Porto: "original-01735c5ff16087.svg",
+      Braga: "original-ef376b8f315b03.svg",
+      "Vitória de Guimarães": "original-105198f08f096b.svg",
+      "Santa Clara": "original-5d88a03e611899.svg",
+      Famalicão: "original-64daa95b808018.svg",
+      "Estoril Praia": "original-02cdd331feda2a.svg",
+      "Casa Pia": "original-d9f7dd92c3edda.svg",
+      Moreirense: "original-d6fb74f5bd283a.svg",
+      "Rio Ave": "original-7e85b195803780.svg",
+      Arouca: "original-a52cbb7f1af3e9.svg",
+      "Gil Vicente": "original-b83de8521ec258.svg",
+      "Nacional da Madeira": "original-306ae847a44bc0.svg",
+      AVS: "original-774183b41e2c10.svg",
+      Alverca: "original-1a12d59363af28.svg",
+      Tondela: "original-eb3e0612b16d82.svg",
+      "Estrela da Amadora": "original-e491ab1b9331bc.svg",
+      PSV: "original-5f0d364b5a8e7a.svg",
+      Ajax: "original-40cea1fd091baf.svg",
+      Feyenoord: "original-108bd0766bf42a.svg",
+      Utrecht: "original-1067936ba29c8a.svg",
+      "AZ Alkmaar": "original-18cd53867bcbba.svg",
+      Twente: "original-5b0e6767971373.svg",
+      "Go Ahead Eagles": "original-b8f42a33d6c81f.svg",
+      "NEC Nijmegen": "original-72028c69fe5859.svg",
+      Heerenveen: "original-a62d13a1b5f0b7.svg",
+      "PEC Zwolle": "original-23934147080990.svg",
+      "Fortuna Sittard": "original-7cc269eaadbcc4.svg",
+      "Sparta Rotterdam": "original-b4aeb7162f385b.svg",
+      Groningen: "original-0eefcdd6e5d0a5.svg",
+      "Heracles Almelo": "original-405ff137e5e411.svg",
+      "NAC Breda": "original-9b6e27e377e036.svg",
+      Excelsior: "original-50a7067d924c9c.svg",
+      Volendam: "original-3cbdfd87da999f.svg",
+      Telstar: "original-cd0351b5130abe.svg",
+      "Atlético Nacional": "original-578e07faeeb3c4.svg",
+      Millonarios: "original-b0bfc163036b51.svg",
+      "América de Cali": "original-25277b0ab9dcd0.svg",
+      "Independiente Medellín": "original-cecc9d1e1a2c04.svg",
+      "Junior Barranquilla": "original-e2894ed4cfe366.svg",
+      "Independiente Santa Fe": "original-242aaa92a02d7f.svg",
+      "Deportes Tolima": "original-92dec88dbd585f.svg",
+      "Once Caldas": "original-5005bcc5ccd788.svg",
+      "Deportivo Cali": "original-0ed9c3e264df41.svg",
+      "Deportivo Pereira": "original-1dbd7dfe35d468.svg",
+      "Deportivo Pasto": "original-bac07b951db6e1.svg",
+      "Atlético Bucaramanga": "original-8bb453ba636b71.svg",
+      "La Equidad": "original-88eae1f2542c4e.svg",
+      "Fortaleza CEIF": "original-f7f2ae38c04eb6.svg",
+      "Águilas Doradas": "original-777a30046167fc.svg",
+      "Alianza FC": "original-4e611a995fb9b8.svg",
+      "Boyacá Chicó": "original-22eeb0bc430c1c.svg",
+      Llaneros: "original-fc53333a2b0e82.svg",
+      "Unión Magdalena": "original-91ae7ecf20a7ab.svg",
+      "Colo-Colo": "original-545f91326c4e8b.svg",
+      "Universidad de Chile": "original-7825b3a1a4f58b.svg",
+      "Universidad Católica": "original-28eeff6c59ad54.svg",
+      Palestino: "original-87b8efa10d8ecc.svg",
+      "Coquimbo Unido": "original-950324b21dc5d0.svg",
+      "Audax Italiano": "original-8ba44810bc725d.svg",
+      "O’Higgins": "original-0a3a7da8f0efec.svg",
+      Cobresal: "original-cf41e3028f10bb.svg",
+      Huachipato: "original-c84ba7d16b33e5.svg",
+      Ñublense: "original-a079a0da42a428.svg",
+      "Unión La Calera": "original-5a15316fba78f4.svg",
+      "Everton de Viña del Mar": "original-3aac28fd826770.svg",
+      "Unión Española": "original-58df625253c9a7.svg",
+      "Deportes Iquique": "original-61edad3fb27cf0.svg",
+      "Deportes La Serena": "original-e3f3ea7cd0ae44.svg",
+      "Deportes Limache": "original-9465e4584d6b48.svg",
+      Peñarol: "original-5f110ca0212ab1.svg",
+      Nacional: "original-886b904b012dd0.svg",
+      "Liverpool Montevideo": "original-989468f5d9c435.svg",
+      "Defensor Sporting": "original-d3bd49c5011ff6.svg",
+      Danubio: "original-6d290cf8979c69.svg",
+      "Boston River": "original-5288e20d45360e.svg",
+      "Racing Montevideo": "original-4b826b02a59a8a.svg",
+      "Montevideo Wanderers": "original-85a9aae459569d.svg",
+      "Cerro Largo": "original-d4342f053abff4.svg",
+      Cerro: "original-030f424ea0bb64.svg",
+      Progreso: "original-b45fae26bcdd54.svg",
+      "River Plate Montevideo": "original-308cf262347c9f.svg",
+      "Miramar Misiones": "original-6b08b708fbed2e.svg",
+      "Plaza Colonia": "original-a26915b4ef4993.svg",
+      "Juventud de Las Piedras": "original-ff95170fc37105.svg",
+      "Montevideo City Torque": "original-4e4ec7c99bc1b9.svg",
+      "LDU Quito": "original-295e92b5d918d7.svg",
+      "Independiente del Valle": "original-d16c591686d22b.svg",
+      "Barcelona SC": "original-fe0bb719b1692a.svg",
+      Emelec: "original-c7736aea27f345.svg",
+      Aucas: "original-e911eeec727080.svg",
+      "Universidad Católica del Ecuador": "original-c43044a6ef23a2.svg",
+      "Deportivo Cuenca": "original-af52da8fdd1f6d.svg",
+      "El Nacional": "original-bda11b42d148b3.svg",
+      Delfín: "original-a73cf33ef680a2.svg",
+      "Mushuc Runa": "original-ce7758352ca3ba.svg",
+      "Técnico Universitario": "original-9e84dc2a8cde9f.svg",
+      Macará: "original-917e53c1305a63.svg",
+      Orense: "original-8f266a0a15f348.svg",
+      "Libertad de Loja": "original-39d742c56ae8cc.svg",
+      Manta: "original-54141373db1eee.svg",
+      "Vinotinto del Ecuador": "original-7f3b9b0e0a765d.svg",
+      Universitario: "original-cd5e264ed34422.svg",
+      "Alianza Lima": "original-4265559e75e90f.svg",
+      "Sporting Cristal": "original-aedd4473a5048c.svg",
+      Melgar: "original-b92a0b4bfc4a66.svg",
+      Cienciano: "original-c35f5328c6cd20.svg",
+      "ADT de Tarma": "original-ced2b494918909.svg",
+      "Cusco FC": "original-8500dd3916cfdd.svg",
+      "Alianza Atlético": "original-a41bd2420ce218.svg",
+      "Atlético Grau": "original-448146261188a4.svg",
+      "Deportivo Garcilaso": "original-2049907ef04e94.svg",
+      "Sport Huancayo": "original-bb1746bcf9261e.svg",
+      "UTC Cajamarca": "original-7438b640fba921.svg",
+      "Comerciantes Unidos": "original-61ad8f7fa19ae2.svg",
+      "Los Chankas": "original-21f4f2974c5b99.svg",
+      "Sport Boys": "original-fd2766fd407496.svg",
+      "Alianza Universidad": "original-385f8f79371964.svg",
+      "Ayacucho FC": "original-301b7dcffefc6b.svg",
+      "Juan Pablo II College": "original-5ef1c9f20a5a71.svg",
+      "Deportivo Binacional": "original-8cd270073b55a1.svg",
+      Olimpia: "original-6f92f0167ad073.svg",
+      "Cerro Porteño": "original-96681c1de46dca.svg",
+      Libertad: "original-6e97caf1910c92.svg",
+      Guaraní: "original-cb6b0140a169a6.svg",
+      "Nacional de Asunción": "original-5dfcbdf7895956.svg",
+      "Sportivo Luqueño": "original-dc512f92f0dccd.svg",
+      "Sportivo Trinidense": "original-9f190d0d641acf.svg",
+      "Sportivo Ameliano": "original-eef90325620a7d.svg",
+      "2 de Mayo": "original-f66336cb6323bd.svg",
+      "Deportivo Recoleta": "original-af0f0108f0bcd6.svg",
+      "Atlético Tembetary": "original-cf1301e0bafc39.svg",
+      Bolívar: "original-5932b1a8b1d0dd.svg",
+      "Always Ready": "original-b4895b93392d68.svg",
+      "The Strongest": "original-acc2cab42640dd.svg",
+      Blooming: "original-259431f28f16a7.svg",
+      "Oriente Petrolero": "original-9b650274a60e6f.svg",
+      "San Antonio Bulo Bulo": "original-471d553d58d2f1.svg",
+      "Nacional Potosí": "original-82d31938a5088e.svg",
+      "Real Tomayapo": "original-9d5bb828b837fe.svg",
+      "Independiente Petrolero": "original-4bee8a0051fdd2.svg",
+      Aurora: "original-9b89025ce7a6d9.svg",
+      "Universitario de Vinto": "original-08537182ea85e9.svg",
+      "GV San José": "original-7fb5b505920a4b.svg",
+      ABB: "original-715edf8ba87294.svg",
+      "CDT Real Oruro": "original-cbf2f43a43856d.svg",
+      Guabirá: "original-e790738858b370.svg",
+      "Jorge Wilstermann": "original-4b25105c7d86fa.svg",
+      "Deportivo Táchira": "original-742df99fe0bc39.svg",
+      "Caracas FC": "original-4cd8e7a58a4ff9.svg",
+      "Deportivo La Guaira": "original-a8195c452ddb70.svg",
+      "Universidad Central de Venezuela": "original-828ab0d90425b0.svg",
+      Carabobo: "original-b536a2876f25bd.svg",
+      "Academia Puerto Cabello": "original-7619d687372e05.svg",
+      Metropolitanos: "original-5ee3fdf4b47bd5.svg",
+      Monagas: "original-9e351dcbee1983.svg",
+      Portuguesa: "original-233c761b095305.svg",
+      Zamora: "original-bed942d84bc947.svg",
+      "Estudiantes de Mérida": "original-628d5f40c0b324.svg",
+      "Rayo Zuliano": "original-5e487a6a362c28.svg",
+      Anzoátegui: "original-11dc72589ed82d.svg",
+      "Inter Miami": "original-4794ab21564d35.svg",
+      "LA Galaxy": "original-ddece691bb2c6b.svg",
+      "Los Angeles FC": "original-a34b40d010af11.svg",
+      "Atlanta United": "original-2ced3e41fa1815.svg",
+      "Austin FC": "original-f96897f277953f.svg",
+      "Charlotte FC": "original-28acfad0ff8203.svg",
+      "Chicago Fire": "original-ed188318358e1a.svg",
+      "FC Cincinnati": "original-11ef08e9306614.svg",
+      "Colorado Rapids": "original-a78ac513b8d641.svg",
+      "Columbus Crew": "original-62f8b67236e1b5.svg",
+      "FC Dallas": "original-e5b204cfb8167d.svg",
+      "D.C. United": "original-309cf6f8eda4f3.svg",
+      "Houston Dynamo": "original-32a77484e0d82d.svg",
+      "Sporting Kansas City": "original-a985759c9db4b2.svg",
+      "Minnesota United": "original-be1807d21a1102.svg",
+      "CF Montréal": "original-eb0d298cd8140f.svg",
+      "Nashville SC": "original-5750bae2d7818f.svg",
+      "New England Revolution": "original-231b1156c6445c.svg",
+      "New York City FC": "original-a95d0ac8c57fe4.svg",
+      "New York Red Bulls": "original-37895dfa26402a.svg",
+      "Orlando City": "original-c4a4e1d8f2f61f.svg",
+      "Philadelphia Union": "original-3e3615ec3811a2.svg",
+      "Portland Timbers": "original-5e9d7a1fde38be.svg",
+      "Real Salt Lake": "original-5ecfb8df4af87f.svg",
+      "San Diego FC": "original-278966f8b4c560.svg",
+      "San Jose Earthquakes": "original-df79d58cda49d3.svg",
+      "Seattle Sounders": "original-f797eaa92ec389.svg",
+      "St. Louis City": "original-536b8ff293feaa.svg",
+      "Toronto FC": "original-04b8abb199ba87.svg",
+      "Vancouver Whitecaps": "original-7df8a68cb2d987.svg",
+      "Club América": "original-9a58c3f2e6b99b.svg",
+      Guadalajara: "original-c00fb0b23bf3d1.svg",
+      "Cruz Azul": "original-760791825f1335.svg",
+      "Pumas UNAM": "original-0350634061ab3c.svg",
+      "Tigres UANL": "original-2ab4a454502b41.svg",
+      Monterrey: "original-cd2206729d2b8d.svg",
+      Toluca: "original-89f1921a62c69b.svg",
+      Pachuca: "original-8d4c4ec664410f.svg",
+      León: "original-1534cf2af76ecd.svg",
+      "Santos Laguna": "original-384658cd94a64f.svg",
+      Atlas: "original-7c82602500857a.svg",
+      Necaxa: "original-342f43aedf7be2.svg",
+      Puebla: "original-752eea38ab97fd.svg",
+      Querétaro: "original-669dc1db6dc80b.svg",
+      Tijuana: "original-c6980a21481dad.svg",
+      "Atlético San Luis": "original-9b70e5225ecc3e.svg",
+      Juárez: "original-dd064116b0bbd1.svg",
+      Mazatlán: "original-bdc441631b8a37.svg",
+      "Al-Hilal": "original-8e7bfd10ebcb05.svg",
+      "Al-Nassr": "original-3f4634466a9ac3.svg",
+      "Al-Ittihad": "original-ffa2084d0ce399.svg",
+      "Al-Ahli": "original-1c4c961ee71813.svg",
+      "Al-Shabab": "original-0921c87786172e.svg",
+      "Al-Qadsiah": "original-0637e04572f640.svg",
+      "Al-Ettifaq": "original-7afcaccd304efd.svg",
+      "Al-Taawoun": "original-02f7162d60bf12.svg",
+      "Al-Fateh": "original-bb9d03c00eb898.svg",
+      "Al-Fayha": "original-0385d89114211d.svg",
+      "Al-Khaleej": "original-1627a9f7b693c9.svg",
+      Damac: "original-8b651d9ed6ca98.svg",
+      "Al-Riyadh": "original-7cb4e2a1388dad.svg",
+      "Al-Okhdood": "original-07550f0af9ffd4.svg",
+      "Al-Kholood": "original-7a31c276744b66.svg",
+      NEOM: "original-1666a289fa9875.svg",
+      "Al-Najma": "original-0017739db94fdc.svg",
+      "Al-Hazem": "original-43385e411ef944.svg",
+      "Kashima Antlers": "original-080c74cad0233f.svg",
+      "Kashiwa Reysol": "original-b5239761f0075b.svg",
+      "Kyoto Sanga": "original-e80f7ad27a676e.svg",
+      "Sanfrecce Hiroshima": "original-d6c1efec22846c.svg",
+      "Vissel Kobe": "original-cfe27adc8f53d8.svg",
+      "Machida Zelvia": "original-4fc60038a6190a.svg",
+      "Urawa Red Diamonds": "original-a4ca2054508518.svg",
+      "Kawasaki Frontale": "original-0af6c3986da78b.svg",
+      "Gamba Osaka": "original-667160bb7dcafc.svg",
+      "Cerezo Osaka": "original-c1e0c2e88f5d68.svg",
+      "FC Tokyo": "original-e0ef629c5209fd.svg",
+      "Fagiano Okayama": "original-bdc5ce96d0bfd0.svg",
+      "Yokohama F. Marinos": "original-b2c3a52b284f6f.svg",
+      "Nagoya Grampus": "original-34647d8798a88d.svg",
+      "Albirex Niigata": "original-4e573a4a9c5b53.svg",
+      "Shimizu S-Pulse": "original-739ceba7b07393.svg",
+      "Tokyo Verdy": "original-d1f92f0593ca35.svg",
+      "Avispa Fukuoka": "original-0eb286e8cb40c0.svg",
+      "Shonan Bellmare": "original-126f214023a030.svg",
+      "Yokohama FC": "original-e879004e0f9892.svg",
+      Ceará: "original-70528be54163fe.svg",
+      Fortaleza: "original-d5136e93e64c91.svg",
+      Juventude: "original-e0591aac025500.svg",
+      Sport: "original-ec450786e26a51.svg",
+      "West Ham United": "original-4bae064671250a.svg",
+      "Wolverhampton Wanderers": "original-6fef4472df5521.svg",
+      Burnley: "original-099dd595ce6576.svg",
+      Mallorca: "original-80d4f92371f0c2.svg",
+      Girona: "original-27052dea936da6.svg",
+      "Real Oviedo": "original-132b44a3745a94.svg",
+      "Hellas Verona": "original-cd1a80dd2052f2.svg",
+      Pisa: "original-2727b4974efc6e.svg",
+      Cremonese: "original-3b76c8e0266c4c.svg",
+      Wolfsburg: "original-e68b2c7b607a76.svg",
+      "St. Pauli": "original-a7181364574015.svg",
+      Heidenheim: "original-abd20b0f073652.svg",
+      Nantes: "original-864023960423af.svg",
+      Metz: "original-1382dca91398a1.svg",
+      Envigado: "original-55a2411c28949c.svg",
+      "General Caballero JLM": "original-76c88b0a737261.svg",
+      Yaracuyanos: "original-8b4c41d26912eb.svg",
+    },
+    countries: {
+      Brazil: "flag-br.png",
+      Argentina: "flag-ar.png",
+      Uruguay: "flag-uy.png",
+      Colombia: "flag-co.png",
+      Chile: "flag-cl.png",
+      Ecuador: "flag-ec.png",
+      Peru: "flag-pe.png",
+      Paraguay: "flag-py.png",
+      Bolivia: "flag-bo.png",
+      Venezuela: "flag-ve.png",
+      England: "flag-gb-eng.png",
+      Spain: "flag-es.png",
+      Italy: "flag-it.png",
+      Germany: "flag-de.png",
+      France: "flag-fr.png",
+      Portugal: "flag-pt.png",
+      Netherlands: "flag-nl.png",
+      Belgium: "flag-be.png",
+      Croatia: "flag-hr.png",
+      Denmark: "flag-dk.png",
+      Switzerland: "flag-ch.png",
+      Sweden: "flag-se.png",
+      Norway: "flag-no.png",
+      Poland: "flag-pl.png",
+      Serbia: "flag-rs.png",
+      Scotland: "flag-gb-sct.png",
+      Wales: "flag-gb-wls.png",
+      Türkiye: "flag-tr.png",
+      Ukraine: "flag-ua.png",
+      Austria: "flag-at.png",
+      Greece: "flag-gr.png",
+      Ireland: "flag-ie.png",
+      "Czech Republic": "flag-cz.png",
+      "United States": "flag-us.png",
+      Canada: "flag-ca.png",
+      Mexico: "flag-mx.png",
+      "Costa Rica": "flag-cr.png",
+      Jamaica: "flag-jm.png",
+      Japan: "flag-jp.png",
+      "South Korea": "flag-kr.png",
+      "Saudi Arabia": "flag-sa.png",
+      Australia: "flag-au.png",
+      Iran: "flag-ir.png",
+      Morocco: "flag-ma.png",
+      Senegal: "flag-sn.png",
+      Nigeria: "flag-ng.png",
+      Ghana: "flag-gh.png",
+      Algeria: "flag-dz.png",
+      Cameroon: "flag-cm.png",
+      "Cote d'Ivoire": "flag-ci.png",
+      Egypt: "flag-eg.png",
+      "South Africa": "flag-za.png",
+      "New Zealand": "flag-nz.png",
+    },
+  };
+  root.LegacyBadgeData = data;
+  if (typeof module !== "undefined") module.exports = data;
+})(globalThis);

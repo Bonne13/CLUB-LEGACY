@@ -83,15 +83,13 @@ LZ-String 1.5.0, MIT, em `vendor/lz-string.js`; licença em `vendor/LICENSE.lz-s
 
 Avaliações ausentes são estimadas, com calibrações explícitas para alguns atletas, e marcadas **Estimativa do jogo**. Não se declara cobertura oficial de todos os brasileiros ou atualização completa de 2026. A nova revisão preserva o crescimento acumulado ao migrar saves e não sobrescreve salários/contratos vigentes. Pretensões de negociação têm um piso modelado por habilidade, contexto e referências salariais; não são demandas contratuais reais verificadas.
 
-## Escudos e bandeiras (26/10/2026)
+## Emblemas originais e bandeiras (v0.14)
 
-`data/badges.json` registra **415 identidades de clubes**, cobrindo os 397 participantes atuais e 18 nomes de participantes anteriores, e **53 bandeiras de seleções**. Cada registro contém nome, fornecedor, identificador, URL e SHA-256 do arquivo. As imagens ficam em `assets/badges/`; não são carregadas de terceiros durante a carreira. O HTML único e o site publicado incorporam o catálogo uma única vez.
+O catálogo `data/badges.json` contém 415 identidades de clubes com emblemas geométricos originais do Dinastia FC, cobrindo os 397 participantes atuais e 18 nomes anteriores. Os SVGs são gerados por `scripts/build-badges.cjs` a partir de uma família de formas e símbolos próprios, com identificação por nome normalizado, cores de referência e SHA-256. Não são transformações dos escudos oficiais: as miniaturas anteriores de Transfermarkt, ESPN e Wikipedia foram removidas dos ativos, do manifesto e do build.
 
-Os escudos vêm de miniaturas públicas do Transfermarkt, conciliadas com os IDs do baseline e com `team_details`/`player_profiles` da revisão histórica acima. Nomes abreviados diferentes têm aliases revisados explicitamente. Complementos usam o catálogo de equipes da ESPN e suas miniaturas de 80 px, com identificador e endpoint registrados. Yaracuyanos usa o arquivo [Yaracuyanos FC.png](https://en.wikipedia.org/wiki/File:Yaracuyanos_FC.png), identificado na [página do clube](https://en.wikipedia.org/wiki/Yaracuyanos_F.C.). Bandeiras usam as imagens de 80 px do [Flagcdn](https://flagcdn.com/). Os desenhos são preservados; não há mudança de cores dos escudos nem uso de imagens do EA FC. Marcas pertencem aos respectivos titulares; a inclusão não declara licença ou parceria oficial.
+Os emblemas ficam em `assets/badges/original-*.svg`, com área exterior transparente, sem elementos externos ou scripts. A identidade por nome mantém os clubes de saves antigos associados ao seu próprio emblema. Não se afirma licença de nomes ou marcas pelo uso de um desenho original.
 
-O vínculo visual usa o nome do clube, sem depender apenas da posição na liga: uma carreira antiga com Ceará não recebe o escudo do Athletico que ocupa sua vaga no catálogo novo. Identidades desconhecidas ou imagens indisponíveis usam um pequeno escudo neutro nas cores da equipe. Bandeiras identificam seleções; não são apresentadas como escudos oficiais de federações.
-
-`python3 scripts/import-badges.py` baixa arquivos ausentes, verifica os formatos e gera `badges-data.js`. `--refresh` baixa novamente as mesmas URLs. Os hashes versionados documentam a cópia distribuída, sem alegar que as URLs dos fornecedores sejam imutáveis. O build incorpora os arquivos locais sem depender dessas URLs.
+As 53 bandeiras identificam países e foram mantidas a partir do Flagcdn; suas referências e hashes continuam no manifesto. O script `python3 scripts/import-badges.py` agora delega à geração local e não restaura nem baixa escudos oficiais. O build incorpora o catálogo uma única vez e funciona offline.
 
 Energia, carga acumulada, recuperação, risco de lesão, observação de atletas, tolerância a propostas, convites de federações e papéis no elenco são regras da simulação. Números de uniforme são atribuídos pela carreira e podem ser editados; não constituem uma base oficial de camisas atuais. Janelas de transferência seguem os dias da temporada unificada, com datas explícitas na interface. A animação do campo deriva do autor e da trajetória de cada evento gerado, sem imagens reais de partidas.
 
@@ -119,14 +117,11 @@ A Bola de Ouro, os prêmios de goleiro, de melhor em campo, do mês e do campeon
 
 Não se atribuem estatísticas a jogos anteriores à implantação. Em saves atualizados, apenas novos lances observados são contabilizados, inclusive no restante de uma partida recuperada. O sistema usa os mesmos eventos para texto, 2D, 3D e jogos simulados da IA.
 
-## Imprensa e referência dos critérios da Bola de Ouro (26/10/2026)
+## Imprensa fictícia e referência das premiações (v0.14)
 
-`data/press.json` registra nove veículos e oito perfis reais, com seus links públicos e a data de consulta. Foram conferidos os portais do ge, UOL, MARCA, AS, Mundo Deportivo, BBC Sport, France Football e Gianluca Di Marzio; os perfis de [PVC](https://www.uol.com.br/esporte/colunas/pvc/), [Juca Kfouri](https://www.uol.com.br/esporte/colunas/juca-kfouri/), [Alexandre Lozetti](https://ge.globo.com/blogs/blog-do-lozetti/), [Sid Lowe](https://www.theguardian.com/profile/sidlowe), [Jonathan Wilson](https://www.theguardian.com/profile/jonathanwilson), [Philippe Auclair](https://www.theguardian.com/profile/philippe-auclair) e [Fabrizio Romano](https://www.theguardian.com/profile/fabrizio-romano); e o [portal de Gianluca Di Marzio](https://www.gianlucadimarzio.com/). Uma página de contribuição pode ser histórica: o catálogo não afirma emprego atual ou participação num júri.
+`data/press.json` registra nove veículos e oito jornalistas inventados para o Dinastia FC, explicitamente marcados como fictícios. As reportagens usam apenas acontecimentos simulados da carreira. Os nomes, perfis e links dos veículos e jornalistas reais utilizados pela versão anterior foram retirados do catálogo e da interface; não há cópia de artigos ou fotografias reais.
 
-São referências nominais e links, sem fotografias, reprodução de matérias ou declarações atribuídas a essas pessoas. Notícias e resultados da carreira são ficção da simulação, identificados como tal e assinados pela Redação Legacy. O catálogo não importa uma notícia real para transformá-la em notícia da carreira, nem atribui votos de premiação a pessoas reais.
-
-A [página oficial sobre o Ballon d’Or](https://ballondor.com/pt/the-ballon-dor), consultada em 26/10/2026, apresenta a ordem de critérios: desempenho individual, conquistas coletivas e classe/fair play. A página da [UEFA sobre a edição de 2026](https://www.uefa.com/ballondor/news/02aa-21dcfc743210-2786daba77d8-1000--2026-ballon-d-or-ceremony-when-and-where-all-the-nominees-/) foi usada como contexto do evento. A pontuação estatística da carreira, incluindo os novos bônus por decisões, é própria do jogo e não uma fórmula oficial. Não se presume fair play a partir de dados ausentes. Desde a v0.13, os cartões oficiais acompanhados alimentam esse pilar com pesos próprios; dados anteriores continuam neutros.
-
+A [página oficial do Ballon d’Or](https://ballondor.com/pt/the-ballon-dor), consultada em 26/10/2026, permanece como referência dos critérios: desempenho individual, conquistas coletivas e classe/fair play. A pontuação da carreira é própria do jogo e não uma fórmula ou votação oficial. Dados anteriores sem cartões não recebem créditos retroativos.
 
 ## Disciplina e fair play (v0.13)
 

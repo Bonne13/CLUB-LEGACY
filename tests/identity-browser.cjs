@@ -29,8 +29,7 @@ const { chromium } = require("playwright"),
           : r.abort(),
       );
     }
-    const nav = (name) =>
-      page.locator(`#nav button[data-page="${name}"]`).click();
+    const nav = require("./navigation-helper.cjs").createNavigator(page);
     const images = () =>
       page.locator(".team-badge img").evaluateAll(async (imgs) => {
         await Promise.all(imgs.map((i) => i.decode()));
@@ -155,9 +154,7 @@ const { chromium } = require("playwright"),
       await page.evaluate(() => document.body.dataset.scope),
       "national",
     );
-    await page
-      .getByRole("tab", { name: "Jogadores e contratos", exact: true })
-      .click();
+    await page.getByRole("tab", { name: "Jogadores", exact: true }).click();
     assert((await page.locator("#content").innerText()).includes("Convocados"));
     assert.equal(await page.locator('[data-action="renew"]').count(), 0);
     await nav("Calendário");
@@ -215,8 +212,17 @@ const { chromium } = require("playwright"),
       ["Elenco", "Transferências", "Olheiros", "Calendário", "Visão geral"].map(
         (p) => {
           const t = performance.now();
-          document.querySelector(`#nav button[data-page="${p}"]`).click();
-          return performance.now() - t;
+          const parent = LegacyNavigation.groupFor(p);
+          document
+            .querySelector(`#nav button[data-page="${parent.page}"]`)
+            .click();
+          const mainDuration = performance.now() - t,
+            childStart = performance.now();
+          if (p !== parent.page)
+            document
+              .querySelector(`.workspace-tabs [data-page="${p}"]`)
+              .click();
+          return Math.max(mainDuration, performance.now() - childStart);
         },
       ),
     );
@@ -239,7 +245,7 @@ const { chromium } = require("playwright"),
     );
     assert.deepEqual(errors, []);
     console.log(
-      `PASS: escudos reais, fallback, menu estável e foco preservado; cores por contexto e tema; seleção apenas por convite; convocados, calendário, celular e persistência. Navegação máxima: ${Math.round(Math.max(...durations))} ms.`,
+      `PASS: emblemas originais, fallback, menu estável e foco preservado; cores por contexto e tema; seleção apenas por convite; convocados, calendário, celular e persistência. Navegação máxima: ${Math.round(Math.max(...durations))} ms.`,
     );
   } catch (e) {
     if (page)

@@ -45,16 +45,16 @@ const { chromium } = require("playwright"),
       assert(await p.locator("#time-controls").isHidden());
       assert.equal(await p.locator("#simulation-form").count(), 0);
     }
-    await p.getByRole("button", { name: "Financeiro", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Financeiro");
     assert.equal(await p.locator("#test-funds-form").count(), 0);
-    await p.getByRole("button", { name: "Carreira", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Carreira");
     p.once("dialog", (d) => d.dismiss());
     await p.locator("[data-action=enable-test-mode]").click();
     assert.equal(await p.evaluate(() => state.mode), "normal");
     p.once("dialog", (d) => d.accept());
     await p.locator("[data-action=enable-test-mode]").click();
     assert.equal(await p.evaluate(() => state.mode), "test");
-    await p.getByRole("button", { name: "Financeiro", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Financeiro");
     const before = await p.evaluate(() => ({
       cash: team().money,
       transfer: team().finance.transferBudget,
@@ -72,15 +72,13 @@ const { chromium } = require("playwright"),
     await p.reload();
     assert.equal(await p.evaluate(() => state.mode), "test");
     assert.equal(await p.evaluate(() => state.testFundingTotal), 500000000);
-    await p.getByRole("button", { name: "Visão geral", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Visão geral");
     assert(await p.locator("#time-controls").isVisible());
-    await p.getByRole("button", { name: "Elenco", exact: true }).click();
-    await p
-      .getByRole("tab", { name: "Jogadores e contratos", exact: true })
-      .click();
+    await require("./navigation-helper.cjs").navigate(p, "Elenco");
+    await p.getByRole("tab", { name: "Jogadores", exact: true }).click();
     assert((await p.locator("#content").innerText()).includes("02/06/2026"));
     assert((await p.locator("#content").innerText()).includes("Lucas Paquetá"));
-    await p.getByRole("button", { name: "Financeiro", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Financeiro");
     await p.setViewportSize({ width: 390, height: 844 });
     assert(
       await p.evaluate(
@@ -92,7 +90,7 @@ const { chromium } = require("playwright"),
       fullPage: true,
     });
     // Outra carreira escolhe modo teste já na criação.
-    await p.getByRole("button", { name: "Salvamentos", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Salvamentos");
     await p.locator("[data-action=delete-save]").click();
     await p.locator("[data-action=confirm-delete]").click();
     await p.locator("#start-game-mode").selectOption("test");
@@ -102,7 +100,7 @@ const { chromium } = require("playwright"),
     await p.locator("#start-calendar").selectOption("classic");
     await p.locator("[data-action=begin]").click();
     assert.equal(await p.evaluate(() => state.mode), "test");
-    await p.getByRole("button", { name: "Financeiro", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Financeiro");
     assert(await p.locator("#test-funds-form").isVisible());
     assert.deepEqual(errors, []);
     console.log(

@@ -30,7 +30,7 @@ const { chromium } = require("playwright"),
           : r.abort(),
       );
     }
-    const nav = (name) => page.locator(`#nav [data-page="${name}"]`).click();
+    const nav = require("./navigation-helper.cjs").createNavigator(page);
     await page.goto(url);
     await page.locator("#start-league").selectOption("es");
     await page.locator("#start-club").selectOption("es-1");
@@ -40,7 +40,7 @@ const { chromium } = require("playwright"),
     await nav("Jornal");
     assert(
       (await page.locator(".press-disclosure").innerText()).includes(
-        "não são notícias publicadas",
+        "Jornais e jornalistas são personagens",
       ),
     );
     assert.equal(await page.locator("#news-outlet option").count(), 10);
@@ -49,9 +49,7 @@ const { chromium } = require("playwright"),
     assert(
       await page
         .locator(".article-reference > strong")
-        .evaluateAll((els) =>
-          els.every((e) => e.textContent === "Redação Legacy"),
-        ),
+        .evaluateAll((els) => els.every((e) => Boolean(e.textContent.trim()))),
     );
     await page.screenshot({ path: "/tmp/legacy-v12-newspaper.png" });
     const before = await page.evaluate(() => ({
@@ -59,35 +57,42 @@ const { chromium } = require("playwright"),
       money: team().money,
     }));
     await page.locator(".press-directory > summary").click();
-    assert.equal(await page.locator(".press-outlets > a").count(), 9);
+    assert.equal(await page.locator(".press-outlets > article").count(), 9);
     assert.equal(await page.locator(".press-profiles > article").count(), 8);
+    assert.equal(await page.locator(".press-directory a").count(), 0);
     assert(
-      await page
-        .locator(".press-directory a")
-        .evaluateAll((els) =>
-          els.every(
-            (e) => e.href.startsWith("https:") && e.rel.includes("noopener"),
-          ),
-        ),
+      !(await page.locator(".newspaper").innerText()).includes(
+        "Fabrizio Romano",
+      ),
     );
-    await page.locator("[data-action=press-follow][data-id=pvc]").click();
-    assert.equal(await page.locator("#news-outlet").inputValue(), "uol");
-    assert.equal(await page.locator("#news-journalist").inputValue(), "pvc");
+    await page
+      .locator("[data-action=press-follow][data-id=lia-valenca]")
+      .click();
+    assert.equal(
+      await page.locator("#news-outlet").inputValue(),
+      "panorama-90",
+    );
+    assert.equal(
+      await page.locator("#news-journalist").inputValue(),
+      "lia-valenca",
+    );
     assert((await page.locator(".news-article").count()) > 0);
     assert(
       await page
         .locator(".article-reference")
         .evaluateAll((els) =>
-          els.every((e) => e.textContent.includes("Paulo Vinícius Coelho")),
+          els.every((e) => e.textContent.includes("Lia Valença")),
         ),
     );
     await page.locator("[data-action=press-clear]").click();
-    await page.locator("#news-outlet").selectOption("marca");
+    await page.locator("#news-outlet").selectOption("tribuna-balon");
     assert.equal(await page.locator("#news-journalist option").count(), 1);
     assert(
       await page
-        .locator(".press-source > a")
-        .evaluateAll((els) => els.every((e) => e.textContent === "MARCA")),
+        .locator(".press-source > strong")
+        .evaluateAll((els) =>
+          els.every((e) => e.textContent === "Tribuna del Balón"),
+        ),
     );
     await page.locator("[data-action=press-clear]").click();
     await page.locator("#news-query").fill("MARINA");
@@ -203,12 +208,12 @@ const { chromium } = require("playwright"),
     await nav("Jornal");
     assert(
       (await page.locator(".press-disclosure").innerText()).includes(
-        "referências",
+        "IMPRENSA FICTÍCIA",
       ),
     );
     assert.deepEqual(errors, []);
     console.log(
-      "PASS: veículos e perfis reais, autoria simulada identificada, diretório, fontes HTTPS, filtros combinados, pesquisa, mundo, crédito por decisão, critérios oficiais explicados, celular, claro/escuro e persistência.",
+      "PASS: jornais e jornalistas fictícios, autoria simulada identificada, diretório sem links reais, fontes dos critérios HTTPS, filtros combinados, pesquisa, mundo, crédito por decisão, critérios oficiais explicados, celular, claro/escuro e persistência.",
     );
   } catch (error) {
     if (page)

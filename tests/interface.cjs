@@ -100,7 +100,7 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
     assert(
       (await page.locator("#sidebar-club").innerText()).includes("Palmeiras"),
     );
-    await page.getByRole("button", { name: "Jornal", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(page, "Jornal");
     const allOwn = await page
       .locator("[data-article]")
       .evaluateAll((els) =>
@@ -135,15 +135,13 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
     );
     await page.locator("#news-category").selectOption("market");
     assert(await page.locator(".news-empty").isVisible());
-    await page.getByRole("button", { name: "Financeiro", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(page, "Financeiro");
     await page.locator(".budget-slider summary").click();
     await page.locator("#budget-share").fill("50");
     await page
       .getByRole("button", { name: "Aplicar distribuição", exact: true })
       .click();
-    await page
-      .getByRole("button", { name: "Transferências", exact: true })
-      .click();
+    await require("./navigation-helper.cjs").navigate(page, "Transferências");
     await page
       .getByRole("button", { name: "Negociar", exact: true })
       .first()
@@ -151,7 +149,7 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
     await page
       .getByRole("button", { name: "Enviar proposta", exact: true })
       .click();
-    await page.getByRole("button", { name: "Jornal", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(page, "Jornal");
     await page.getByRole("button", { name: "Meu clube", exact: true }).click();
     assert((await page.locator("[data-article]").count()) > 0);
     assert(
@@ -208,7 +206,7 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
     await page
       .getByRole("button", { name: "Continuar carreira", exact: false })
       .click();
-    await page.getByRole("button", { name: "Jornal", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(page, "Jornal");
     await page.locator("#news-category").selectOption("results");
     assert((await page.locator("[data-article]").count()) > 0);
     // Uma proposta entre temporadas permite conferir que a identidade visual acompanha o destino.
@@ -217,7 +215,7 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
       state.day = Legacy.calendar().length;
       state.offers = [{ clubId: "es-0", expires: state.season, years: 2 }];
     });
-    await page.getByRole("button", { name: "Carreira", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(page, "Carreira");
     page.once("dialog", (d) => d.accept());
     await page
       .getByRole("button", { name: "Aceitar proposta", exact: true })
@@ -235,7 +233,7 @@ const base = process.env.CLUB_LEGACY_URL || "http://127.0.0.1:3000";
       await page.evaluate(() => document.documentElement.dataset.theme),
       "light",
     );
-    await page.getByRole("button", { name: "Jornal", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(page, "Jornal");
     await page.locator("#news-category").selectOption("all");
     assert(
       await page

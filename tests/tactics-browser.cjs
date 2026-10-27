@@ -33,26 +33,24 @@ const { chromium } = require("playwright"),
     await p.locator("[data-action=begin]").click();
     assert.equal(await p.locator('#nav [data-page="Dia de jogo"]').count(), 0);
     assert(await p.locator("#match-day").isVisible());
-    await p.getByRole("button", { name: "Elenco", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Elenco");
     assert.equal(await p.locator("[data-tactic-slot]").count(), 11);
     assert.equal(
       await p.getByRole("button", { name: "Renovar", exact: true }).count(),
       0,
     );
-    await p
-      .getByRole("tab", { name: "Jogadores e contratos", exact: true })
-      .click();
+    await p.getByRole("tab", { name: "Jogadores", exact: true }).click();
     assert.equal(await p.locator("[data-tactic-slot]").count(), 0);
     assert.equal(
       await p.getByRole("button", { name: "Renovar", exact: true }).count(),
       await p.evaluate(() => team().players.length),
     );
     await p
-      .getByRole("tab", { name: "Jogadores e contratos", exact: true })
+      .getByRole("tab", { name: "Jogadores", exact: true })
       .press("ArrowLeft");
     assert.equal(
       await p
-        .getByRole("tab", { name: "Escalação e táticas", exact: true })
+        .getByRole("tab", { name: "Escalação", exact: true })
         .getAttribute("aria-selected"),
       "true",
     );
@@ -84,7 +82,7 @@ const { chromium } = require("playwright"),
     await p.locator("[data-assignment=cornersLeft]").selectOption(eleven[4]);
     await p.locator("[data-assignment=cornersRight]").selectOption(eleven[1]);
     await p.reload();
-    await p.getByRole("button", { name: "Elenco", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Elenco");
     assert.equal(await p.locator("#formation").inputValue(), "4-2-3-1");
     assert.equal(
       await p.locator("[data-assignment=captain]").inputValue(),
@@ -94,7 +92,7 @@ const { chromium } = require("playwright"),
       await p.locator("[data-instruction=pressing]").inputValue(),
       "Alta",
     );
-    await p.getByRole("button", { name: "Financeiro", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Financeiro");
     const cash = await p.evaluate(() => team().money),
       payroll = await p.evaluate(() => E.finance.payroll(team()));
     await p.locator("#budget-transfer").fill("10000000");
@@ -165,7 +163,7 @@ const { chromium } = require("playwright"),
     await p.waitForFunction(() => !advancing);
     assert(await p.locator("#match-day").isVisible());
     assert.equal(await p.locator('#nav [data-page="Dia de jogo"]').count(), 0);
-    await p.getByRole("button", { name: "Seleções", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Seleções");
     await p.evaluate(() => {
       const id = "nt-Brazil";
       state.national.invites.push({
@@ -182,11 +180,11 @@ const { chromium } = require("playwright"),
       render();
     });
     await p.locator("[data-action=assume-national]").click();
-    await p.getByRole("button", { name: "Elenco", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Elenco");
     await p.locator("#tactical-scope").selectOption("national");
     await p.locator("#formation").selectOption("3-5-2");
     await p.reload();
-    await p.getByRole("button", { name: "Elenco", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Elenco");
     await p.locator("#tactical-scope").selectOption("national");
     assert.equal(await p.locator("#formation").inputValue(), "3-5-2");
     await p.locator("#tactical-scope").selectOption("club");
@@ -196,18 +194,14 @@ const { chromium } = require("playwright"),
       fullPage: true,
     });
     await p.setViewportSize({ width: 390, height: 844 });
-    await p
-      .getByRole("tab", { name: "Jogadores e contratos", exact: true })
-      .click();
+    await p.getByRole("tab", { name: "Jogadores", exact: true }).click();
     assert.equal(await p.locator("[data-tactic-slot]").count(), 0);
     assert(
       await p.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     );
-    await p
-      .getByRole("tab", { name: "Escalação e táticas", exact: true })
-      .click();
+    await p.getByRole("tab", { name: "Escalação", exact: true }).click();
 
     assert(
       await p.evaluate(
@@ -222,7 +216,7 @@ const { chromium } = require("playwright"),
       path: "/tmp/legacy-tactics-mobile.png",
       fullPage: true,
     });
-    await p.getByRole("button", { name: "Financeiro", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Financeiro");
     assert(
       await p.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,

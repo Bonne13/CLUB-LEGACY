@@ -1,4 +1,4 @@
-# CLUB LEGACY
+# DINASTIA FC
 
 Jogo de carreira individual de treinador e gestor, em português, para navegador, com atletas reais, calendário diário e controle financeiro. Sem dependências de execução além de Python 3 e um navegador moderno. Node.js é usado pelos comandos de validação.
 
@@ -213,7 +213,7 @@ Títulos de liga e continentais confirmados geram **troféus**, com clube, compe
 
 ## Identidade visual e menu (v0.8)
 
-Escudos substituem as siglas na escolha de clube e na identidade do menu. Também aparecem em classificações, confrontos, jornal, calendário, propostas de carreira e troféus. Os 397 clubes atuais têm imagem local; nomes de participantes anteriores continuam associados ao escudo correto ao carregar um save. As seleções usam suas bandeiras. Os arquivos ficam disponíveis offline na versão de arquivo único e no site publicado, com as fontes em [data/SOURCES.md](data/SOURCES.md).
+Emblemas originais substituem os escudos oficiais e as siglas na escolha de clube e na identidade do menu. Também aparecem em classificações, confrontos, jornal, calendário, propostas de carreira e troféus. Os 397 clubes atuais têm SVG original local, com geometria própria e cores de identificação; nomes de participantes anteriores continuam associados ao escudo correto ao carregar um save. As seleções usam suas bandeiras. Os arquivos ficam disponíveis offline na versão de arquivo único e no site publicado, com as fontes em [data/SOURCES.md](data/SOURCES.md).
 
 O menu agrupa **Dia a dia**, **Futebol**, **Competições** e **Gestão**, com ícones vetoriais e estado ativo mais legível. A estrutura, o foco e a posição de rolagem são preservados ao trocar de tela. No celular, as opções ficam numa faixa horizontal. Fundos, superfícies, bordas e destaques acompanham a equipe; avisos, finanças e condição física usam cores semânticas com contraste nos modos claro e azul escuro.
 
@@ -277,22 +277,13 @@ Totais, prêmios e últimas 60 partidas geridas acompanham o save. Os rankings s
 
 `npm run test:performance-browser` acompanha um jogo, verifica notas e melhor em campo e completa uma temporada no motor do navegador, incluindo premiações, goleiros, critérios, histórico, paginação, desktop/celular e persistência após começar a temporada seguinte. `LEGACY_STANDALONE=1` verifica o HTML único com rede externa bloqueada. Os testes de regras também conferem autoria de assistências, defesas, substituições, amostra mínima, separação de períodos, títulos por participação, ausência de crédito em duplicidade e saves anteriores.
 
-## Imprensa de referência e atuações decisivas (v0.12)
+## Imprensa fictícia e critérios de premiação (v0.14)
 
-O **Jornal** inclui nove veículos reais como referências de cobertura: ge, UOL Esporte, MARCA, AS, Mundo Deportivo, The Guardian, BBC Sport, France Football e o portal de Gianluca Di Marzio. Há oito perfis públicos de jornalistas: PVC, Juca Kfouri, Alexandre Lozetti, Sid Lowe, Jonathan Wilson, Philippe Auclair, Fabrizio Romano e Gianluca Di Marzio. A seleção considera os assuntos e as ligas envolvidos; filtros permitem escolher veículo, perfil e texto, com abrangência de clube, liga, continente ou mundo. O diretório abre as páginas oficiais e editoriais consultadas.
+O Jornal usa nove redações fictícias: Gazeta Dinastia, Panorama 90, Tribuna del Balón, Línea de Fondo, Horizonte Fútbol, The Touchline Chronicle, Goalfield Review, Le Onze Imaginaire e Mercato Orbital. Os oito jornalistas são personagens inventados. Não há nomes, perfis ou links de veículos e jornalistas reais no catálogo editorial. As reportagens são geradas pelos acontecimentos da carreira, com a autoria do personagem ou da redação fictícia. Filtros por jornal, jornalista, texto, região e assunto continuam funcionando, assim como os saves anteriores.
 
-Os nomes identificam **referências**, não a autoria da notícia: todos os textos da carreira continuam assinados **Redação Legacy**, com identificação de **cobertura simulada**. Não se atribuem citações, opiniões, publicações ou votos fictícios a jornalistas reais. Perfis editoriais podem documentar contribuições históricas e não afirmam vínculo contratual atual. Não há RSS, cópia de matérias, fotografias ou reprodução de logotipos desses veículos. A apresentação funciona offline; links externos levam ao veículo ou perfil, e não a uma suposta matéria sobre a carreira.
+Os critérios de Bola de Ouro continuam inspirados na referência oficial dos três pilares: desempenho individual, resultados coletivos e classe/fair play. Os pesos são próprios do jogo. Gol da vitória vale 1,5 ponto, assistência nesse gol vale 1 e destaque no mata-mata continental vale 3, com teto de 20 pontos para atuações decisivas. Cartões oficiais acompanhados reduzem fair play. Prêmios já entregues e dados anteriores são preservados.
 
-Em **Prêmios → Ver critérios e fontes**, a página oficial do Ballon d’Or é indicada como referência dos três pilares, nesta ordem: desempenho individual, resultados coletivos e classe/fair play. O jogo adapta os três pilares a dados acompanhados. Desde a v0.13, fair play desconta pontos pelos cartões oficiais registrados; dados anteriores sem cartões permanecem neutros. Isso não constitui uma votação oficial nem simula votos em nome de jornalistas reais.
-
-O cálculo ganha o componente **Atuações decisivas**, limitado a 20 pontos: gol da vitória vale 1,5 ponto, assistência nesse gol vale 1 e melhor em campo nas quartas, semifinais ou final continental vale 3. O gol da vitória é o gol de ordem “gols sofridos pelo vencedor + 1”. Por exemplo, num 3 a 1, o segundo gol da equipe vencedora define esse crédito; os demais gols continuam pontuando na produção normal. Empates não geram esse crédito. O passe e o autor vêm dos mesmos eventos que alimentam a partida.
-
-O componente é calculado dentro de cada apuração: temporada, campeonato ou mês. Amistosos continuam fora dos rankings oficiais. Na decomposição da pontuação, é possível ver o bônus e as quantidades de decisões. Os critérios são uma adaptação do jogo; notas, regularidade, produção e títulos continuam compondo o resultado.
-
-Saves anteriores mantêm gols, notas, prêmios confirmados e pontos históricos. Apenas novos gols acompanhados recebem o crédito por decisão; uma partida antiga retomada no meio não tem os gols anteriores reconstruídos. O início do acompanhamento dos critérios novos fica identificado. Referências e critérios estão em `data/press.json`; `python3 scripts/build-press.py` regenera o pacote local.
-
-`npm run test:press-browser` verifica identificação da simulação, perfis e veículos, filtros, busca, links, abrangência mundial, decisões, critérios, celular, temas e persistência. `LEGACY_STANDALONE=1` repete a verificação com rede bloqueada. Os testes de regras cobrem a autoria, estabilidade das referências, ausência de alterações no save por consulta, gol/assistência da vitória, limite do bônus, mata-mata e compatibilidade com a v0.11.
-
+`data/press.json` documenta a imprensa fictícia e, separadamente, a referência dos critérios. `python3 scripts/build-press.py` regenera o catálogo offline. `npm run test:press-browser` verifica autores fictícios, filtros, busca, diretório, premiações, temas, celular e persistência.
 
 ## Cartões e sanções (v0.13)
 
@@ -307,3 +298,27 @@ Regras simplificadas desta simulação: Brasileirão suspende a cada três amare
 Cartões reduzem a nota individual: −0,15 por amarelo e −0,7 pela expulsão, com −0,3 adicional no vermelho direto. Nas premiações oficiais, fair play desconta −0,15 por amarelo, −1,25 adicional por expulsão com dois amarelos e −2,5 por vermelho direto; o desconto tem teto de 20 pontos por apuração. Notas e fair play aparecem nos detalhes. Prêmios já entregues são preservados e cartões anteriores não são reconstruídos.
 
 `npm run test:discipline-browser` verifica expulsões no 2D/3D, substituições, sanções, escalação, jornal, critérios, temas, celular e persistência. `LEGACY_STANDALONE=1` verifica o arquivo único com a rede bloqueada. Os testes de regras incluem acúmulo e cumprimento por competição, idempotência, troca de temporada, transferência, goleiro expulso, placar administrativo, IA, fair play e validação dos saves.
+
+
+## Navegação simplificada e identidade original (v0.14)
+
+O projeto se apresenta como **Dinastia FC**. O repositório e as chaves internas de armazenamento mantêm a compatibilidade com as carreiras anteriores. O menu lateral passou de 17 entradas para oito:
+
+| Menu | Abas internas |
+| --- | --- |
+| Visão geral | Resumo e avanço do tempo |
+| Jornal | Notícias e filtros de cobertura |
+| Calendário | Agenda, amistosos e pré-temporada |
+| Elenco | Escalação, jogadores, treinamento, base e disciplina |
+| Transferências | Mercado e olheiros |
+| Competições | Campeonatos e prêmios/estatísticas |
+| Carreira | Treinador, troféus, seleções e salvamentos |
+| Clube | Estrutura e financeiro/patrocínios |
+
+Uma única aba carrega por vez. Os links antigos dentro das páginas levam à seção correta, e o menu principal indica o grupo ativo. O menu lembra a última seção visitada durante a sessão. A busca por Ctrl/⌘+K pesquisa todas as funções; setas, Home e End percorrem as abas pelo teclado. No celular, as abas deslizam horizontalmente sem alargar a página. Ações de navegação não avançam datas nem movimentam dinheiro.
+
+Foram substituídas as 415 identidades de escudos, incluindo clubes de saves antigos, por SVGs originais, com fundo exterior transparente e margens para evitar cortes. Os arquivos oficiais foram removidos do catálogo e dos ativos distribuídos. As bandeiras dos países foram mantidas. `npm run build:badges` gera o catálogo sem buscar imagens externas. Desenhos originais não equivalem a uma declaração de licença de nomes ou de marcas.
+
+O arquivo `netlify.toml` configura o comando `npm run build:pages`, pasta `dist` e Node 22. No painel do Netlify, o projeto deve estar conectado a Bonne13/CLUB-LEGACY, com produção na branch main e publicações automáticas habilitadas. Após essa conexão, os pushes para main geram o mesmo site em https://dinastiafc.netlify.app/ . A versão GitHub Pages mantém o endereço anterior.
+
+`npm run test:navigation-browser` verifica os oito menus, agrupamentos, teclado, busca, identidade original, redações fictícias, temas, telas pequenas e continuidade do save. `LEGACY_STANDALONE=1` faz a mesma verificação com rede bloqueada.

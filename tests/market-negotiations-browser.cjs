@@ -37,7 +37,7 @@ const path = require("node:path");
         ? p.locator("[data-action=begin]").click()
         : name === "Continuar carreira"
           ? p.locator("[data-action=continue]").click()
-          : p.getByRole("button", { name, exact: true }).click();
+          : require("./navigation-helper.cjs").navigate(p, name);
     const completeToday = async () => {
       if (!(await p.evaluate(() => !!E.nextFixture(state)))) return;
       await p.locator("#match-day").click();

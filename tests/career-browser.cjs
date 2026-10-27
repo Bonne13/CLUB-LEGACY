@@ -40,11 +40,11 @@ const { chromium } = require("playwright"),
     await p
       .getByRole("button", { name: "Começar carreira", exact: false })
       .click();
-    await p.getByRole("button", { name: "Carreira", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Carreira");
     assert(
       (await p.locator("#content").innerText()).includes("32 anos · Portugal"),
     );
-    await p.getByRole("button", { name: "Seleções", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Seleções");
     await p.evaluate(() => {
       const id = "nt-Argentina";
       state.national.invites.push({
@@ -85,7 +85,7 @@ const { chromium } = require("playwright"),
     await p.locator("#mode").selectOption("2d");
     await p.locator("[data-action=play]").click();
     await p.locator("[data-action=pause]").click();
-    await p.getByRole("button", { name: "Salvamentos", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Salvamentos");
     const dl = p.waitForEvent("download");
     await p.locator("[data-action=export-save]").click();
     const download = await dl;
@@ -147,7 +147,7 @@ const { chromium } = require("playwright"),
       ),
     );
     await p.locator("[data-action=continue]").click();
-    await p.getByRole("button", { name: "Carreira", exact: true }).click();
+    await require("./navigation-helper.cjs").navigate(p, "Carreira");
     await p.locator("summary").filter({ hasText: "Editar nome" }).click();
     await p.locator("#edit-coach-name").fill("Mariana Santos");
     await p
@@ -156,7 +156,7 @@ const { chromium } = require("playwright"),
     assert.equal(await p.evaluate(() => state.profile.name), "Mariana Santos");
     for (const width of [1440, 390]) {
       await p.setViewportSize({ width, height: 900 });
-      await p.getByRole("button", { name: "Seleções", exact: true }).click();
+      await require("./navigation-helper.cjs").navigate(p, "Seleções");
       await p.screenshot({
         path: "/tmp/legacy-national-" + width + ".png",
         fullPage: true,

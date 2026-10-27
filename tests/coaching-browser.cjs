@@ -30,7 +30,7 @@ const { chromium } = require("playwright"),
           : r.abort(),
       );
     }
-    const nav = (name) => page.locator(`#nav [data-page="${name}"]`).click();
+    const nav = require("./navigation-helper.cjs").createNavigator(page);
     await page.goto(url);
     await page.locator("#start-league").selectOption("es");
     await page.locator("#start-club").selectOption("es-1");
@@ -164,9 +164,7 @@ const { chromium } = require("playwright"),
     assert.equal(await page.locator(".scout-comparison tbody tr").count(), 7);
     await page.screenshot({ path: "/tmp/legacy-v09-scouts-final.png" });
     await nav("Elenco");
-    await page
-      .getByRole("tab", { name: "Jogadores e contratos", exact: true })
-      .click();
+    await page.getByRole("tab", { name: "Jogadores", exact: true }).click();
     const first = page.locator("[data-action=edit-shirt]").first(),
       id = await first.getAttribute("data-id");
     await first.click();

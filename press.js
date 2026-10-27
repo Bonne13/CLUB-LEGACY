@@ -23,13 +23,19 @@
       article.category === "competitions" &&
       /Bola de Ouro|melhor goleiro|prêmio|premia/i.test(article.title);
     let pool = awards
-      ? [outletMap.get("france-football"), outletMap.get("guardian")]
+      ? [outletMap.get("onze-imaginaire"), outletMap.get("touchline-chronicle")]
       : data.outlets.filter((o) => o.leagues.some((id) => leagues.has(id)));
     if (["market", "contracts"].includes(article.category))
-      pool = [...pool, outletMap.get("di-marzio"), outletMap.get("guardian")];
+      pool = [
+        ...pool,
+        outletMap.get("mercato-orbital"),
+        outletMap.get("touchline-chronicle"),
+      ];
     if (!pool.length)
       pool = data.outlets.filter((o) =>
-        ["bbc", "guardian", "uol"].includes(o.id),
+        ["goalfield-review", "touchline-chronicle", "panorama-90"].includes(
+          o.id,
+        ),
       );
     pool = [...new Set(pool)];
     const outlet = pool[seed % pool.length];
@@ -47,11 +53,14 @@
       : topic.length
         ? topic
         : writers;
+    const journalist =
+      candidates[seed % Math.max(1, candidates.length)] || null;
     return {
       simulated: true,
-      byline: "Redação Legacy",
+      fictional: true,
+      byline: journalist?.name || "Redação " + outlet.name,
       outlet,
-      journalist: candidates[seed % Math.max(1, candidates.length)] || null,
+      journalist,
     };
   }
   function matches(

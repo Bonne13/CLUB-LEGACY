@@ -20,10 +20,8 @@ const assert = require("node:assert/strict");
   await page.locator("#start-club").selectOption("br-7");
   await page.locator("#start-calendar").selectOption("classic");
   await page.getByRole("button", { name: "Começar carreira" }).click();
-  await page.getByRole("button", { name: "Elenco", exact: true }).click();
-  await page
-    .getByRole("tab", { name: "Jogadores e contratos", exact: true })
-    .click();
+  await require("./navigation-helper.cjs").navigate(page, "Elenco");
+  await page.getByRole("tab", { name: "Jogadores", exact: true }).click();
   await page
     .getByRole("button", { name: "Renovar", exact: true })
     .first()
@@ -40,9 +38,7 @@ const assert = require("node:assert/strict");
     .first()
     .click();
   await page.getByRole("button", { name: "Aceitar venda" }).click();
-  await page
-    .getByRole("button", { name: "Transferências", exact: true })
-    .click();
+  await require("./navigation-helper.cjs").navigate(page, "Transferências");
   await page.evaluate(() => {
     team().finance.transferBudget = Math.max(
       team().finance.transferBudget,
@@ -56,14 +52,12 @@ const assert = require("node:assert/strict");
     .first()
     .click();
   await page.getByRole("button", { name: "Enviar proposta" }).click();
-  await page
-    .getByRole("button", { name: "Categorias de base", exact: true })
-    .click();
+  await require("./navigation-helper.cjs").navigate(page, "Categorias de base");
   await page
     .getByRole("button", { name: "Promover · R$ 100 mil" })
     .first()
     .click();
-  await page.getByRole("button", { name: "Clube", exact: true }).click();
+  await require("./navigation-helper.cjs").navigate(page, "Clube");
   await page.getByRole("button", { name: "Ampliar" }).first().click();
   await page.getByRole("button", { name: "Dia de jogo", exact: true }).click();
   await page.locator("#mode").selectOption("2d");
@@ -80,7 +74,7 @@ const assert = require("node:assert/strict");
   assert.equal(await page.evaluate(() => state.day), 1);
   for (const name of ["Calendário", "Carreira", "Competições", "Treinamento"])
     await page.getByRole("button", { name, exact: true }).click();
-  await page.getByRole("button", { name: "Competições", exact: true }).click();
+  await require("./navigation-helper.cjs").navigate(page, "Competições");
   await page.locator("#competition").selectOption("champions");
   assert(
     await page
@@ -88,7 +82,7 @@ const assert = require("node:assert/strict");
       .innerText()
       .then((t) => t.includes("36 clubes")),
   );
-  await page.getByRole("button", { name: "Calendário", exact: true }).click();
+  await require("./navigation-helper.cjs").navigate(page, "Calendário");
   await page
     .getByRole("button", { name: "Consultar datas reais da base" })
     .click();
@@ -117,16 +111,16 @@ const assert = require("node:assert/strict");
     }
     persist();
   });
-  await page.getByRole("button", { name: "Carreira", exact: true }).click();
+  await require("./navigation-helper.cjs").navigate(page, "Carreira");
   while (await page.locator("#trophy-dialog").isVisible())
     await page.locator("[data-action=close-celebration]").click();
   page.once("dialog", (d) => d.accept());
   await page.getByRole("button", { name: "Aceitar proposta" }).first().click();
-  await page.getByRole("button", { name: "Visão geral", exact: true }).click();
+  await require("./navigation-helper.cjs").navigate(page, "Visão geral");
   await page.getByRole("button", { name: "Iniciar temporada 2027" }).click();
   assert.equal(await page.evaluate(() => state.season), 2027);
   assert.equal(await page.evaluate(() => state.day), 0);
-  await page.getByRole("button", { name: "Visão geral", exact: true }).click();
+  await require("./navigation-helper.cjs").navigate(page, "Visão geral");
   await page.screenshot({ path: "/tmp/club-desktop.png", fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({ path: "/tmp/club-mobile.png", fullPage: true });
