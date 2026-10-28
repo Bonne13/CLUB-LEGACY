@@ -95,6 +95,13 @@
         number(p[k], 0);
       if (p.fitness > 100 || p.ovr > 100 || p.potential > 100 || p.age > 150)
         fail();
+      if (p.loan !== undefined) {
+        const l = p.loan;
+        if (!l || !known.has(l.ownerId) || !known.has(l.borrowerId) || l.ownerId === l.borrowerId || typeof l.academy !== "boolean") fail();
+        number(l.endSeason, s.season, s.season + 2);
+        if (!Number.isInteger(l.endSeason)) fail();
+        if (l.option !== null) { number(l.option, 1, 1e13); if (!Number.isSafeInteger(l.option)) fail(); }
+      }
       if (p.shirtNumber !== undefined) {
         number(p.shirtNumber, 1, 99);
         if (!Number.isInteger(p.shirtNumber)) fail();
@@ -162,7 +169,9 @@
         fail();
       }
       array(t.players, 300).forEach(player);
+      if (t.players.some(p => p.loan && p.loan.borrowerId !== t.id)) fail();
       array(t.youth, 300).forEach(player);
+      if (t.youth.some(p => p.loan)) fail();
       const shirts = [...t.players, ...t.youth]
         .map((p) => p.shirtNumber)
         .filter((n) => n !== undefined);
@@ -201,6 +210,7 @@
       }
     }
     array(s.freeAgents, 30000).forEach(player);
+    if (s.freeAgents.some(p => p.loan)) fail();
     if (s.negotiations !== undefined) {
       const negotiations = array(s.negotiations, 100),
         negotiationIds = new Set(),

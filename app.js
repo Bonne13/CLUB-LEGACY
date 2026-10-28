@@ -392,6 +392,7 @@ function act(fn, save = true) {
     if (save) scheduleSave();
     render();
   } catch (e) {
+    if ($("#deal").open && $("#deal-error")) $("#deal-error").textContent = e.message;
     notify(e.message, true);
   }
 }
@@ -541,7 +542,7 @@ function setup() {
     "<button ",
     `<button ${chosen.players.length < 11 ? "disabled" : ""} `,
   );
-  return `<div class="entry-top"><a class="wordmark" href="#" aria-label="Dinastia FC">DINASTIA<span>FC</span></a><button data-action="toggle-theme" aria-label="${theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"}">${theme === "dark" ? "☀ Modo claro" : "☾ Modo escuro"}</button></div><div class="entry-layout"><div class="entry-copy"><span class="badge">SUA HISTÓRIA COMEÇA AQUI</span><h1>Um clube. <br>Mil decisões. <br><em>O seu legado.</em></h1><p>Assuma o comando de um clube real, negocie com atletas reais e controle cada entrada e saída do caixa.</p><div class="entry-facts"><span><strong>${available}</strong> clubes com elenco disponível</span><span><strong>21</strong> ligas no mundo</span><span><strong>4</strong> copas continentais</span></div></div><section class="career-card" aria-label="Escolha seu clube"><div class="entry-step"><span>01 / INÍCIO DA JORNADA</span><span>Treinador & gestor</span></div><h2>Começar carreira</h2><p class="muted">Somente jogadores reais. Valores e caixa são referências e projeções.</p>${profileFields(setupProfile, "start")}<label for="start-game-mode">Modo de carreira</label><select id="start-game-mode">${options(
+  return `<div class="entry-top"><a class="wordmark" href="#" aria-label="Dinastia FC">DINASTIA<span>FC</span></a><button data-action="toggle-theme" aria-label="${theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"}">${theme === "dark" ? "☀ Modo claro" : "☾ Modo escuro"}</button></div><div class="entry-layout"><div class="entry-copy"><span class="badge">SUA HISTÓRIA COMEÇA AQUI</span><h1>Um clube. <br>Mil decisões. <br><em>O seu legado.</em></h1><p>Assuma o comando de um clube real, negocie com atletas reais e controle cada entrada e saída do caixa.</p><div class="entry-facts"><span><strong>${available}</strong> clubes com elenco disponível</span><span><strong>21</strong> ligas no mundo</span><span><strong>4</strong> copas continentais</span></div></div><section class="career-card" aria-label="Escolha seu clube"><div class="entry-step"><span>01 / INÍCIO DA JORNADA</span><span>Treinador & gestor</span></div><h2>Começar carreira</h2><p class="muted">Elencos reais e novas safras fictícias ao longo da carreira. Valores e caixa são projeções.</p>${profileFields(setupProfile, "start")}<label for="start-game-mode">Modo de carreira</label><select id="start-game-mode">${options(
     [
       ["normal", "Carreira normal"],
       ["test", "Modo teste · adicionar dinheiro"],
@@ -582,7 +583,7 @@ function rosterReferenceView(t) {
 function marketFiltersView() {
   const nations = [
     ...new Set(
-      [...state.teams.flatMap((t) => t.players), ...state.freeAgents]
+      [...state.teams.flatMap((t) => [...t.players, ...t.youth]), ...state.freeAgents]
         .flatMap((p) =>
           p.nationalities?.length ? p.nationalities : [p.nationality],
         )
@@ -649,6 +650,7 @@ function playerAge(p) {
     : p.age + (p.ageEstimated ? " aprox." : "");
 }
 function playerReference(p) {
+  if (p.generated) return "Jovem fictício · safra da carreira";
   if (p.membershipReference)
     return (
       "Vínculo " +
@@ -703,8 +705,20 @@ function standings(rows) {
     )
     .join("")}</tbody></table></div>`;
 }
+function loanStatus(p) {
+  return `<small class="sub">Emprestado por ${esc(name(p.loan.ownerId))} · retorno ${p.loan.endSeason}</small>${p.loan.option ? btn("Comprar · " + money(p.loan.option), "loan-option", p.id) : '<small>Sem opção de compra</small>'}`;
+}
+function openLoanDialog(id) {
+  $("#deal-form").oninput = null;
+  $("#deal-form").onclick = null;
+  $("#deal-form").onsubmit = event => event.preventDefault();
+  const p = state.teams.flatMap(t => [...t.players, ...t.youth]).find(p => p.id === id);
+  if (!p) throw Error("Atleta indisponível.");
+  $("#deal-form").innerHTML = `<h2>Empréstimo de ${esc(p.name)}</h2><p>O clube libera reservas e jovens com contrato até o retorno. A contratação ocorre ao confirmar, se os termos forem elegíveis.</p><label>Prazo<select name="loanYears"><option value="1">1 temporada</option><option value="2">2 temporadas</option></select></label><p>Taxa por temporada: ${money(Math.ceil(p.price * 0.1))}. Salário integral: ${money(p.salary)} por semana.</p><label>Opção de compra<select name="loanOption"><option value="yes">Com opção · ${money(Math.ceil(p.price * 1.1))}</option><option value="no">Sem opção</option></select></label><p>A opção pode ser exercida durante o empréstimo. Sem compra, o atleta retorna ao clube de origem no início da temporada indicada.</p><p id="deal-error" class="error" role="alert"></p><button type="button" data-action="confirm-loan" data-id="${esc(id)}" class="primary">Confirmar empréstimo</button><button type="button" data-action="close-dialog">Cancelar</button>`;
+  $("#deal").showModal();
+}
 function playersTable(ps, context = "squad") {
-  return `<div class="table-wrap"><table><thead><tr><th>JOGADOR</th><th>POS.</th><th>IDADE</th><th>GERAL</th><th>VALOR</th><th title="Preparo físico: varia com minutos, intensidade e recuperação">CONDIÇÃO ⓘ</th><th>SALÁRIO EST./SEM.</th><th>CONTRATO</th><th>AÇÕES</th></tr></thead><tbody>${ps.map((p) => `<tr><td>${p.shirtNumber ? `<span class="shirt-number" title="Número do uniforme na carreira">${p.shirtNumber}</span>` : ""}<strong>${esc(p.name)}</strong>${context === "squad" ? disciplineStatus(p) : ""}${seasonStatLine(p)}<span class="sub">${esc(playerReference(p))}<span class="sub">${esc((p.nationalities?.length ? p.nationalities : [p.nationality]).map(countryLabel).filter(Boolean).join(" / ") || "Nacionalidade indisponível")}</span>${context === "market" ? " · " + esc(p.sellerName) : ""}</span></td><td>${esc(p.naturalPositions?.length ? p.naturalPositions.join(" / ") : p.pos)}${p.secondaryPositions?.length ? `<small class="sub">Também: ${esc(p.secondaryPositions.join(" / "))}</small>` : ""}${p.positionEstimated ? " · est." : ""}</td><td>${playerAge(p)}</td><td><span class="rating" title="${esc(p.ratingSource || "Estimativa do jogo")}">${p.ovr}</span></td><td>${moneyValue(p.price)}</td><td>${p.injury ? `Lesão · ${p.injury} dias` : `<span class="condition-meter ${p.fitness < 75 ? "tired" : p.fitness < 90 ? "wear" : "ready"}"><strong>${p.fitness}%</strong><i style="width:${p.fitness}%"></i><small>${p.fitness >= 90 ? "Pronto" : p.fitness >= 75 ? "Desgastado" : "Cansado"}</small></span>`}</td><td>${moneyValue(p.salary, "por semana")}</td><td>${p.contract}${p.contractEstimated ? " · est." : ""}<small class="sub">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")}</small></td><td>${context === "squad" ? btn("Renovar", "renew", p.id) + btn("Vender", "sell", p.id) + btn("Camisa " + p.shirtNumber, "edit-shirt", p.id) : context === "youth" ? btn("Promover · R$ 100 mil", "promote", p.id) : btn("Negociar", "buy", p.id)}</td></tr>`).join("")}</tbody></table></div>${ps.length ? "" : '<p class="muted">Nenhum jogador encontrado.</p>'}`;
+  return `<div class="table-wrap"><table><thead><tr><th>JOGADOR</th><th>POS.</th><th>IDADE</th><th>GERAL</th><th>VALOR</th><th title="Preparo físico: varia com minutos, intensidade e recuperação">CONDIÇÃO ⓘ</th><th>SALÁRIO EST./SEM.</th><th>CONTRATO</th><th>AÇÕES</th></tr></thead><tbody>${ps.map((p) => `<tr><td>${p.shirtNumber ? `<span class="shirt-number" title="Número do uniforme na carreira">${p.shirtNumber}</span>` : ""}<strong>${esc(p.name)}</strong>${context === "squad" ? disciplineStatus(p) : ""}${seasonStatLine(p)}<span class="sub">${esc(playerReference(p))}<span class="sub">${esc((p.nationalities?.length ? p.nationalities : [p.nationality]).map(countryLabel).filter(Boolean).join(" / ") || "Nacionalidade indisponível")}</span>${context === "market" ? " · " + esc(p.sellerName) : ""}</span></td><td>${esc(p.naturalPositions?.length ? p.naturalPositions.join(" / ") : p.pos)}${p.secondaryPositions?.length ? `<small class="sub">Também: ${esc(p.secondaryPositions.join(" / "))}</small>` : ""}${p.positionEstimated ? " · est." : ""}</td><td>${playerAge(p)}</td><td><span class="rating" title="${esc(p.ratingSource || "Estimativa do jogo")}">${p.ovr}</span>${p.developmentChange ? `<small class="sub">${p.developmentChange > 0 ? "+" : ""}${p.developmentChange} na última variação</small>` : ""}</td><td>${moneyValue(p.price)}</td><td>${p.injury ? `Lesão · ${p.injury} dias` : `<span class="condition-meter ${p.fitness < 75 ? "tired" : p.fitness < 90 ? "wear" : "ready"}"><strong>${p.fitness}%</strong><i style="width:${p.fitness}%"></i><small>${p.fitness >= 90 ? "Pronto" : p.fitness >= 75 ? "Desgastado" : "Cansado"}</small></span>`}</td><td>${moneyValue(p.salary, "por semana")}</td><td>${p.contract}${p.contractEstimated ? " · est." : ""}<small class="sub">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")}</small></td><td>${context === "squad" ? (p.loan ? loanStatus(p) : btn("Renovar", "renew", p.id) + btn("Vender", "sell", p.id)) + btn("Camisa " + p.shirtNumber, "edit-shirt", p.id) : context === "youth" ? btn("Promover · R$ 100 mil", "promote", p.id) : btn("Negociar", "buy", p.id) + btn("Empréstimo", "loan", p.id)}</td></tr>`).join("")}</tbody></table></div>${ps.length ? "" : '<p class="muted">Nenhum jogador encontrado.</p>'}`;
 }
 function matchup(f, goals) {
   return `<span class="matchup">${teamLabel(f.pair[0])}<strong>${goals ? goals.join(" × ") : "×"}</strong>${teamLabel(f.pair[1])}</span>`;
@@ -750,7 +764,7 @@ const views = {
     }</div>`;
   },
   "Categorias de base": () =>
-    `<div class="card"><h3>O futuro começa em casa</h3><p class="muted">A base contém apenas atletas reais confirmados. Não há geração de nomes por temporada. Promover custa R$ 100 mil e exige espaço no orçamento salarial; atletas que completam 20 anos sobem ao profissional.</p>${playersTable(team().youth, "youth")}</div>`,
+    `<div class="card"><h3>O futuro começa em casa</h3><p class="muted">A evolução depende de treino, idade e potencial. O declínio anual começa aos 31 anos (35 para goleiros). A base reúne atletas reais e jovens fictícios das safras da carreira, identificados na ficha. Três novos jovens chegam a cada temporada. Promover custa R$ 100 mil e exige espaço no orçamento salarial; atletas que completam 20 anos sobem ao profissional.</p>${playersTable(team().youth, "youth")}</div>`,
   Competições: () => {
     const id = competition || team().leagueId,
       l = state.leagues.find((l) => l.id === id),
@@ -804,7 +818,7 @@ let venueReferenceClub = null;
 function venueReferenceView(id) {
   const t = team(id),
     i = E.facilities.ensure(t, state);
-  return `<strong>${esc(t.name)} · ${esc(i.venue.name)}</strong><p>${i.gameCapacity.toLocaleString("pt-BR")} lugares${i.venue.capacity ? "" : " · estimativa da carreira"}${i.venue.city ? " · " + esc(i.venue.city) : ""}</p>${i.venue.url ? `<a href="${esc(i.venue.url)}" target="_blank" rel="noopener noreferrer">Consultar referência ↗</a>` : ""}`;
+  return `<strong>${esc(t.name)} · ${esc(i.venue.name)}</strong><p>${i.gameCapacity.toLocaleString("pt-BR")} lugares${i.venue.capacity ? "" : " · estimativa da carreira"}${i.venue.city ? " · " + esc(i.venue.city) : ""}</p>`;
 }
 function facilitiesView() {
   const t = team(),
@@ -814,12 +828,7 @@ function facilitiesView() {
     activeMatch = state.live && !state.live.done;
   const integer = (n) => n.toLocaleString("pt-BR"),
     date = (n) => new Date(n).toLocaleDateString("pt-BR", { timeZone: "UTC" });
-  return `<section class="hero club-estate"><span class="badge">PATRIMÔNIO DO CLUBE</span><h2 class="identity-title">${badge(t, "large")}<span>${esc(t.name)}</span></h2><p>Planeje os investimentos que sustentam o futebol.</p><div class="estate-summary"><div><small>CAIXA DISPONÍVEL</small>${moneyValue(t.money)}</div><div><small>OBRAS EM ANDAMENTO</small><strong>${pending.length}</strong></div><div><small>INVESTIMENTO ATIVO</small>${moneyValue(pending.reduce((n, p) => n + p.cost, 0))}</div></div></section><section class="card stadium-profile"><div class="stadium-illustration" aria-hidden="true"><div></div></div><div><span class="badge">CASA DO CLUBE</span><h2>${esc(i.venue.name)}</h2>${i.venue.city ? `<p>${esc(i.venue.city)}</p>` : ""}<div class="row"><span class="pill">${integer(i.gameCapacity)} lugares${i.venue.capacity ? "" : " · estimativa da carreira"}</span><span class="pill">Nível ${t.stadium}/5</span></div>${i.venue.capacity && i.gameCapacity !== i.venue.capacity ? `<p class="muted">Capacidade da referência: ${integer(i.venue.capacity)}. A diferença corresponde às obras da carreira.</p>` : ""}${i.venue.url ? `<a href="${esc(i.venue.url)}" target="_blank" rel="noopener noreferrer">Referência do estádio ↗</a>` : ""}<p class="muted">Treinamento: ${esc(i.trainingName)}</p></div></section><section class="card venue-catalog"><details><summary>Consultar os estádios dos outros clubes</summary><label>Clube<select id="venue-reference-club">${options(
-    [...state.teams]
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .map((t) => [t.id, t.name]),
-    venueReferenceClub || t.id,
-  )}</select></label><div id="venue-reference-result">${venueReferenceView(venueReferenceClub || t.id)}</div></details></section><div class="facilities-grid">${Object.entries(
+  return `<section class="hero club-estate"><span class="badge">PATRIMÔNIO DO CLUBE</span><h2 class="identity-title">${badge(t, "large")}<span>${esc(t.name)}</span></h2><p>Planeje os investimentos que sustentam o futebol.</p><div class="estate-summary"><div><small>CAIXA DISPONÍVEL</small>${moneyValue(t.money)}</div><div><small>OBRAS EM ANDAMENTO</small><strong>${pending.length}</strong></div><div><small>INVESTIMENTO ATIVO</small>${moneyValue(pending.reduce((n, p) => n + p.cost, 0))}</div></div></section><section class="card stadium-profile"><div class="stadium-illustration" aria-hidden="true"><div></div></div><div><span class="badge">CASA DO CLUBE</span><h2>${esc(i.venue.name)}</h2>${i.venue.city ? `<p>${esc(i.venue.city)}</p>` : ""}<div class="row"><span class="pill">${integer(i.gameCapacity)} lugares${i.venue.capacity ? "" : " · estimativa da carreira"}</span><span class="pill">Nível ${t.stadium}/5</span></div><p class="muted">Treinamento: ${esc(i.trainingName)}</p></div></section><div class="facilities-grid">${Object.entries(
     C.definitions,
   )
     .map(([key, def]) => {
@@ -829,7 +838,7 @@ function facilitiesView() {
     })
     .join(
       "",
-    )}</div><section class="card"><h3>Planejamento e histórico</h3><p>O investimento sai do caixa ao iniciar a obra. Os benefícios passam a valer na conclusão, conforme os dias avançam. Cancelar restitui 80% da parcela ainda não executada.</p><p class="muted">Os níveis iniciais e os custos são avaliações da simulação, de acordo com o porte do clube. Nomes e capacidades dos estádios têm referências próprias. Obras não alteram o orçamento de transferências automaticamente.</p>${
+    )}</div><section class="card"><h3>Planejamento e histórico</h3><p>O investimento sai do caixa ao iniciar a obra. Os benefícios passam a valer na conclusão, conforme os dias avançam. Cancelar restitui 80% da parcela ainda não executada.</p><p class="muted">Os níveis iniciais e os custos são avaliações da simulação, de acordo com o porte do clube. Obras não alteram o orçamento de transferências automaticamente.</p>${
     i.history.length
       ? `<div class="facility-history">${i.history
           .slice(0, 10)
@@ -859,7 +868,7 @@ const financeLabels = {
   scouting: "Olheiros e observação",
 };
 function careerModeView() {
-  return `<div class="card"><h3>${state.mode === "test" ? "Modo teste" : "Carreira normal"}</h3><p>${state.mode === "test" ? "Você pode adicionar dinheiro no Financeiro. Aportes acumulados: " + money(state.testFundingTotal || 0) + "." : "A carreira usa os recursos e receitas do clube. Para experimentar contratações com aportes manuais, você pode ativar o modo teste."}</p>${state.mode === "test" ? '<button data-page="Financeiro">Abrir ferramentas de teste</button>' : btn("Ativar modo teste nesta carreira", "enable-test-mode")}</div>`;
+  return `<div class="card"><h3>${state.mode === "test" ? "Modo teste" : "Carreira normal"}</h3><p>${state.mode === "test" ? "Você pode adicionar dinheiro no Financeiro. Aportes acumulados: " + money(state.testFundingTotal || 0) + "." : "A carreira usa os recursos e receitas do clube. O modo é definido ao criar a carreira."}</p>${state.mode === "test" ? '<button data-page="Financeiro">Abrir ferramentas de teste</button>' : ""}</div>`;
 }
 function testFundsView() {
   return `<section class="card test-tools"><span class="badge">MODO TESTE</span><h3>Adicionar dinheiro ao clube</h3><form id="test-funds-form" class="filters"><label>Valor do aporte (R$)<input id="test-funds-amount" type="number" min="1" max="1000000000000" step="1" required value="100000000"></label><label>Destinar para<select id="test-funds-destination">${options(
@@ -1046,7 +1055,7 @@ function squadPlayersView() {
   };
   players.sort(sorting[rosterSort] || sorting.overall);
   const cards = () =>
-    `<div class="roster-grid">${players.map((p) => `<article class="roster-player"><div class="row"><button class="player-jersey" data-action="edit-shirt" data-id="${esc(p.id)}" aria-label="Mudar camisa de ${esc(p.name)}">${p.shirtNumber}</button><div><h3>${esc(p.name)}</h3><small>${esc([...(p.naturalPositions || []), ...(p.secondaryPositions || [])].join(" / ") || p.pos)} · ${playerAge(p)} anos</small></div><span class="rating">${p.ovr}</span></div><div class="roster-player-state"><span>${E.discipline.suspension(p, t.selectionCompetition) ? "Suspenso · " + E.discipline.suspension(p, t.selectionCompetition) + " jogo(s)" : p.injury ? "Lesionado" : lineup.has(p.id) ? "No onze titular" : "Opção de elenco"}</span><strong>${p.fitness}% energia</strong></div><div class="money-pair"><div><small>Valor</small>${moneyValue(p.price)}</div><div><small>Salário / semana</small>${moneyValue(p.salary)}</div></div><p class="muted">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")} · contrato ${p.contract}</p><div class="row">${btn("Renovar", "renew", p.id)}${btn("Vender", "sell", p.id)}${btn("Camisa " + p.shirtNumber, "edit-shirt", p.id)}</div></article>`).join("") || "<p>Nenhum jogador corresponde aos filtros.</p>"}</div>`;
+    `<div class="roster-grid">${players.map((p) => `<article class="roster-player"><div class="row"><button class="player-jersey" data-action="edit-shirt" data-id="${esc(p.id)}" aria-label="Mudar camisa de ${esc(p.name)}">${p.shirtNumber}</button><div><h3>${esc(p.name)}</h3><small>${esc([...(p.naturalPositions || []), ...(p.secondaryPositions || [])].join(" / ") || p.pos)} · ${playerAge(p)} anos</small></div><span class="rating" title="Potencial ${p.potential}${p.developmentChange ? "; última variação: " + (p.developmentChange > 0 ? "+" : "") + p.developmentChange : ""}">${p.ovr}${p.developmentChange ? `<small class="sub">${p.developmentChange > 0 ? "+" : ""}${p.developmentChange}</small>` : ""}</span></div><div class="roster-player-state"><span>${E.discipline.suspension(p, t.selectionCompetition) ? "Suspenso · " + E.discipline.suspension(p, t.selectionCompetition) + " jogo(s)" : p.injury ? "Lesionado" : lineup.has(p.id) ? "No onze titular" : "Opção de elenco"}</span><strong>${p.fitness}% energia</strong></div><div class="money-pair"><div><small>Valor</small>${moneyValue(p.price)}</div><div><small>Salário / semana</small>${moneyValue(p.salary)}</div></div><p class="muted">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")} · contrato ${p.contract}</p><div class="row">${p.loan ? loanStatus(p) : btn("Renovar", "renew", p.id) + btn("Vender", "sell", p.id)}${btn("Camisa " + p.shirtNumber, "edit-shirt", p.id)}</div></article>`).join("") || "<p>Nenhum jogador corresponde aos filtros.</p>"}</div>`;
   return `<div class="hero roster-hero"><span class="badge">GESTÃO DO ELENCO</span><h2 class="identity-title">${badge(t, "large")}<span>${esc(t.name)}</span></h2><p>${t.players.length} profissionais · ${t.players.filter((p) => E.discipline.available(p, t.selectionCompetition)).length} disponíveis · ${t.players.filter((p) => p.injury).length} no departamento médico</p><div class="row">${btn("Numeração do elenco", "shirt-squad", t.players[0]?.id || "")}<button data-page="Treinamento">Preparação física →</button></div></div><section class="card"><div class="row"><h3>Jogadores e contratos</h3><div class="segmented">${btn("Tabela", "roster-view", "table", rosterView === "table" ? "active" : "")}${btn("Cartões", "roster-view", "cards", rosterView === "cards" ? "active" : "")}</div></div><form id="roster-search" class="roster-filters"><label>Buscar jogador<input id="roster-query" value="${esc(rosterQuery)}" placeholder="Nome do atleta"></label><label>Posição<select id="roster-position">${options([["all", "Todas"], ...["GOL", "LAT", "ZAG", "VOL", "MEI", "ATA"].map((x) => [x, x])], rosterPosition)}</select></label><label>Situação<select id="roster-status">${options(
     [
       ["all", "Todos"],
@@ -1798,11 +1807,11 @@ function openNegotiation(kind, id) {
   const n = ["new", "renew"].includes(kind)
       ? null
       : state.negotiations.find((n) => n.id === id),
-    p = [...state.teams.flatMap((t) => t.players), ...state.freeAgents].find(
+    p = [...state.teams.flatMap((t) => [...t.players, ...t.youth]), ...state.freeAgents].find(
       (p) => p.id === (n?.playerId || id),
     );
   if (!p) throw Error("Jogador indisponível.");
-  const seller = state.teams.find((t) => t.players.some((x) => x.id === p.id)),
+  const seller = state.teams.find((t) => [...t.players, ...t.youth].some((x) => x.id === p.id)),
     a = E.scouting.advice(state, p, seller),
     renewal = kind === "renew" || n?.kind === "renewal",
     contract = kind === "player" || kind === "renew",
@@ -2505,6 +2514,18 @@ document.addEventListener("click", (event) => {
       case "ledger-next":
         ledgerPage++;
         break;
+      case "loan":
+        openLoanDialog(id);
+        break;
+      case "confirm-loan":
+        E.loanPlayer(state, id, Number($('[name="loanYears"]').value), $('[name="loanOption"]').value === "yes");
+        $("#deal").close();
+        notify("Empréstimo confirmado.");
+        break;
+      case "loan-option":
+        E.exerciseLoanOption(state, id);
+        notify("Opção de compra exercida.");
+        break;
       case "promote":
         E.promote(state, id);
         break;
@@ -2520,14 +2541,6 @@ document.addEventListener("click", (event) => {
             money(E.cancelUpgrade(state, id)) +
             " registrada no caixa.",
         );
-        break;
-      case "enable-test-mode":
-        if (
-          confirm(
-            "Ativar modo teste nesta carreira? Ela ficará identificada como teste no save. Exporte uma cópia antes se quiser manter a carreira normal.",
-          )
-        )
-          E.enableTestMode(state);
         break;
       case "reset-budget":
         render();
@@ -2996,6 +3009,7 @@ document.addEventListener("submit", (event) => {
         region: form.get("region"),
         league: form.get("league"),
         nationality: form.get("nationality"),
+        country: form.get("country"),
       });
       notify("Olheiro enviado. Avance os dias para receber o relatório.");
     });
@@ -3203,7 +3217,7 @@ function scoutingView() {
     lookup.set(p.id, { p, t: null, academy: false });
   const list = saved
     ? data.shortlist.map((playerId) => ({ playerId }))
-    : report?.players || [];
+    : (report?.players || []).filter(item => { const found = lookup.get(item.playerId); return found?.t?.id !== state.clubId && found?.academy; });
   const cards = list
     .map((item) => {
       const located = lookup.get(item.playerId);
@@ -3219,7 +3233,7 @@ function scoutingView() {
           (academy
             ? club.money >= 100000 && Math.max(p.salary, 3000) <= a.wageRoom
             : a.affordable);
-      return `<article class="scout-player detailed"><div class="row"><div><span class="badge">${academy ? "DA SUA BASE" : owned ? "NO SEU ELENCO" : esc(a.level)}</span><h3>${esc(p.name)}</h3><p>${esc([...(p.naturalPositions || []), ...(p.secondaryPositions || [])].join(" / ") || p.pos)} · ${playerAge(p)}${p.ageUnknown ? "" : " anos"}</p><span class="scout-club">${seller ? teamLabel(seller.id, "tiny") : "Sem clube"}</span></div><span class="scout-rating">${p.ovr}<small>pot. ${p.potential}</small></span></div>${confidence ? `<div class="scout-confidence"><span>Confiança na análise · ${confidence}%</span><i style="width:${confidence}%"></i></div>` : '<p class="muted">Análise preliminar · use uma missão para aprofundar a observação.</p>'}<div class="offer-metrics"><div><small>${academy ? "Promoção" : "Taxa estimada"}</small>${moneyValue(academy ? 100000 : a.askingFee)}</div><div><small>Salário / semana</small>${moneyValue(a.salary)}</div><div><small>1º ano estimado</small>${moneyValue(academy ? 100000 + p.salary * 52 : a.annualTotal)}</div></div><div class="scout-verdict ${fits ? "positive" : "caution"}"><strong>${owned ? "No seu elenco" : fits ? "Cabe nas verbas atuais" : "Requer ajuste de orçamento"}</strong><span>${a.difference >= 0 ? "+" : ""}${a.difference} de overall frente às opções da posição</span></div><p>${esc(item.reason || a.strengths[0])}</p><details><summary>Relatório técnico e financeiro</summary><div class="scout-report-detail"><h4>Pontos de interesse</h4>${a.strengths.map((text) => `<p>✓ ${esc(text)}</p>`).join("")}<h4>O que observar</h4>${a.concerns.map((text) => `<p>• ${esc(text)}</p>`).join("") || "<p>Sem alertas adicionais nesta análise.</p>"}<dl><dt>Abertura prudente</dt><dd>${money(a.minimumOpening)}</dd><dt>Luvas estimadas</dt><dd>${money(a.bonus)}</dd><dt>Espaço salarial / semana</dt><dd>${money(a.wageRoom)}</dd></dl><small>Custos são estimativas; clube e jogador podem contrapropor.</small></div></details><div class="scout-actions">${owned ? '<button data-page="Elenco">Ver no elenco</button>' : academy ? btn("Promover · R$ 100 mil", "promote", p.id) : btn("Abrir negociação", "buy", p.id, "primary")}${btn(favorite ? "★ Observando" : "☆ Observar", "scout-shortlist", p.id)}${btn(scoutCompare.includes(p.id) ? "✓ Comparando" : "Comparar", "scout-compare", p.id)}</div></article>`;
+      return `<article class="scout-player detailed"><div class="row"><div><span class="badge">${academy ? "DA SUA BASE" : owned ? "NO SEU ELENCO" : esc(a.level)}</span><h3>${esc(p.name)}</h3><p>${esc([...(p.naturalPositions || []), ...(p.secondaryPositions || [])].join(" / ") || p.pos)} · ${playerAge(p)}${p.ageUnknown ? "" : " anos"}</p><span class="scout-club">${seller ? teamLabel(seller.id, "tiny") : "Sem clube"}</span></div><span class="scout-rating">${p.ovr}<small>pot. ${p.potential}</small></span></div>${confidence ? `<div class="scout-confidence"><span>Confiança na análise · ${confidence}%</span><i style="width:${confidence}%"></i></div>` : '<p class="muted">Análise preliminar · use uma missão para aprofundar a observação.</p>'}<div class="offer-metrics"><div><small>${academy ? "Promoção" : "Taxa estimada"}</small>${moneyValue(academy ? 100000 : a.askingFee)}</div><div><small>Salário / semana</small>${moneyValue(a.salary)}</div><div><small>1º ano estimado</small>${moneyValue(academy ? 100000 + p.salary * 52 : a.annualTotal)}</div></div><div class="scout-verdict ${fits ? "positive" : "caution"}"><strong>${owned ? "No seu elenco" : fits ? "Cabe nas verbas atuais" : "Requer ajuste de orçamento"}</strong><span>${a.difference >= 0 ? "+" : ""}${a.difference} de overall frente às opções da posição</span></div><p>${esc(item.reason || a.strengths[0])}</p><details><summary>Relatório técnico e financeiro</summary><div class="scout-report-detail"><h4>Pontos de interesse</h4>${a.strengths.map((text) => `<p>✓ ${esc(text)}</p>`).join("")}<h4>O que observar</h4>${a.concerns.map((text) => `<p>• ${esc(text)}</p>`).join("") || "<p>Sem alertas adicionais nesta análise.</p>"}<dl><dt>Abertura prudente</dt><dd>${money(a.minimumOpening)}</dd><dt>Luvas estimadas</dt><dd>${money(a.bonus)}</dd><dt>Espaço salarial / semana</dt><dd>${money(a.wageRoom)}</dd></dl><small>Custos são estimativas; clube e jogador podem contrapropor.</small></div></details><div class="scout-actions">${owned ? '<button data-page="Elenco">Ver no elenco</button>' : academy ? btn("Promover · R$ 100 mil", "promote", p.id) : btn("Abrir negociação", "buy", p.id, "primary") + btn("Empréstimo", "loan", p.id)}${btn(favorite ? "★ Observando" : "☆ Observar", "scout-shortlist", p.id)}${btn(scoutCompare.includes(p.id) ? "✓ Comparando" : "Comparar", "scout-compare", p.id)}</div></article>`;
     })
     .join("");
   const compared = scoutCompare.map((id) => lookup.get(id)?.p).filter(Boolean);
@@ -3246,7 +3260,7 @@ function scoutingView() {
         )
         .join("")}</tbody></table></div></section>`
     : "";
-  return `<div class="hero"><span class="badge">INTELIGÊNCIA DE MERCADO</span><h2>O reforço certo para o seu projeto.</h2><p>Compare custo, encaixe no elenco e margem de evolução. A observação considera transferências, caixa e teto salarial separadamente.</p><div class="scout-budget-strip"><span>Transferências <strong>${money(club.finance.transferBudget)}</strong></span><span>Espaço salarial / semana <strong>${money(Math.max(0, club.finance.wageBudget - E.finance.payroll(club)))}</strong></span><span>Em observação <strong>${data.shortlist.length} / 30</strong></span></div></div><div class="segmented scout-tabs">${btn("Mercado", "scout-scope", "market", scoutScope === "market" ? "active" : "")}${btn("Base e jovens", "scout-scope", "youth", scoutScope === "youth" ? "active" : "")}${btn("Lista de observação", "scout-scope", "shortlist", saved ? "active" : "")}</div>${
+  return `<div class="hero"><span class="badge">INTELIGÊNCIA DE MERCADO</span><h2>Descubra a próxima geração.</h2><p>Os olheiros observam exclusivamente jogadores das categorias de base de outros clubes. Escolha o país de atuação e compare custo, potencial e encaixe no elenco.</p><div class="scout-budget-strip"><span>Transferências <strong>${money(club.finance.transferBudget)}</strong></span><span>Espaço salarial / semana <strong>${money(Math.max(0, club.finance.wageBudget - E.finance.payroll(club)))}</strong></span><span>Em observação <strong>${data.shortlist.length} / 30</strong></span></div></div><div class="segmented scout-tabs">${btn("Base de outros clubes", "scout-scope", "market", scoutScope === "market" ? "active" : "")}${btn("Jovens até 23 anos", "scout-scope", "youth", scoutScope === "youth" ? "active" : "")}${btn("Lista de observação", "scout-scope", "shortlist", saved ? "active" : "")}</div>${
     saved
       ? ""
       : `<div class="columns scouting-workspace"><section class="card"><span class="badge">NOVA MISSÃO</span><h3>Defina quem procurar.</h3><form id="scouting-form"><div class="columns"><label>Perfil<select name="profile">${options(
@@ -3276,7 +3290,7 @@ function scoutingView() {
             ["as", "Ásia"],
           ],
           "all",
-        )}</select></label><label>Liga<select name="league">${options([["all", "Todas"], ["free", "Sem clube"], ...state.leagues.map((l) => [l.id, l.name])], "all")}</select></label></div><label>Nacionalidade<select name="nationality">${options([["all", "Todas"], ...E.national.countries], "all")}</select></label><div class="columns"><label>Máximo de transferência (R$)<input name="maxFee" type="text" value="${club.finance.transferBudget}" required></label><label>Máximo de salário / semana (R$)<input name="maxSalary" type="text" value="${Math.min(30000000, Math.max(0, club.finance.wageBudget - E.finance.payroll(club)))}" required></label></div><div class="mission-estimate" id="mission-estimate">Missão padrão · ${money(scoutScope === "youth" ? 5000 : 10000)} · ${scoutScope === "youth" ? 5 : 3} dias</div><button class="primary" ${missions.some((m) => m.status === "pending") ? "disabled" : ""}>Iniciar observação</button></form><p class="muted">Avance os dias na Visão geral. O relatório usa as verbas da data de conclusão; não garante aceite do clube ou do jogador.</p></section><section class="card"><span class="badge">AGENDA DO DEPARTAMENTO</span><h3>Do pedido ao relatório.</h3>${
+        )}</select></label><label>Liga<select name="league">${options([["all", "Todas"], ...state.leagues.map((l) => [l.id, l.name])], "all")}</select></label></div><label>País de atuação<select name="country">${options([["all", "Todos os países"], ...[...new Set(state.leagues.map(l => l.country))].sort().map(c => [c, countryLabel(c)])], "all")}</select></label><label>Nacionalidade<select name="nationality">${options([["all", "Todas"], ...E.national.countries], "all")}</select></label><div class="columns"><label>Máximo de transferência (R$)<input name="maxFee" type="text" value="${club.finance.transferBudget}" required></label><label>Máximo de salário / semana (R$)<input name="maxSalary" type="text" value="${Math.min(30000000, Math.max(0, club.finance.wageBudget - E.finance.payroll(club)))}" required></label></div><div class="mission-estimate" id="mission-estimate">Missão padrão · ${money(scoutScope === "youth" ? 5000 : 10000)} · ${scoutScope === "youth" ? 5 : 3} dias</div><button class="primary" ${missions.some((m) => m.status === "pending") ? "disabled" : ""}>Iniciar observação</button></form><p class="muted">Avance os dias na Visão geral. O relatório usa as verbas da data de conclusão; não garante aceite do clube ou do jogador.</p></section><section class="card"><span class="badge">AGENDA DO DEPARTAMENTO</span><h3>Do pedido ao relatório.</h3>${
           missions
             .slice(0, 5)
             .map((m) => {
@@ -3705,7 +3719,7 @@ function invitationSummary() {
 }
 function profileView() {
   const p = state.profile;
-  return `<div class="card"><span class="badge">PERFIL DO TREINADOR</span><h3>${esc(p.name)}</h3><p>${state.season - p.birthYear} anos · ${esc(countryLabel(p.nationality))}${state.national.job ? " · Seleção: " + esc(name(state.national.job)) : ""}</p><details><summary>Editar nome, idade e nacionalidade</summary><form id="profile-form">${profileFields({ ...p, age: state.season - p.birthYear }, "edit")}<button class="primary">Atualizar perfil</button></form></details><p class="muted">A idade avança a cada temporada. Você pode acumular o comando de um clube e uma seleção.</p><button data-page="Seleções">Ver convites de seleções →</button> <button data-page="Salvamentos">Gerenciar salvamento</button></div>`;
+  return `<div class="card"><span class="badge">PERFIL DO TREINADOR</span><h3>${esc(p.name)}</h3><p>${state.season - p.birthYear} anos · ${esc(countryLabel(p.nationality))}${state.national.job ? " · Seleção: " + esc(name(state.national.job)) : ""}</p><p class="muted">A idade avança a cada temporada. Você pode acumular o comando de um clube e uma seleção.</p><button data-page="Seleções">Ver convites de seleções →</button> <button data-page="Salvamentos">Gerenciar salvamento</button></div>`;
 }
 function nationalView() {
   const n = state.national,

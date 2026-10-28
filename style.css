@@ -6298,3 +6298,22 @@ body.has-hosting-badge {
     flex-direction: column;
   }
 }
+
+/* Keep management controls and long player names aligned at all widths. */
+.scouting-workspace, .offer-layout, .stadium-profile, .columns { min-width: 0; }
+.scouting-workspace > *, .offer-layout > *, .columns > *, .roster-player .row > *, .scout-player .row > * { min-width: 0; }
+.scout-player, .roster-player { display: flex; flex-direction: column; }
+.scout-player .scout-actions, .roster-player > .row:last-child { margin-top: auto; padding-top: 1rem; }
+.scout-actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: stretch; }
+.scout-player h3, .roster-player h3, .candidate strong { overflow-wrap: anywhere; }
+.scout-rating, .rating, .player-jersey { flex-shrink: 0; }
+form label { min-width: 0; }
+form input, form select { max-width: 100%; box-sizing: border-box; }
+.scouting-workspace { align-items: start; }
+.offer-metrics > div { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .offer-layout, .scouting-workspace { grid-template-columns: minmax(0, 1fr); }
+  .scout-actions > button { flex: 1 1 8rem; }
+  .stadium-profile { grid-template-columns: minmax(0, 1fr); }
+  .roster-player .row { flex-wrap: wrap; }
+}

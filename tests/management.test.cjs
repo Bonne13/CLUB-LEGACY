@@ -112,10 +112,10 @@ test("olheiro entrega candidatos reais, sem lesionados, com salário e taxa dent
   assert(report.players.length > 0);
   for (const item of report.players) {
     const t = s.teams.find((t) =>
-        t.players.some((p) => p.id === item.playerId),
+        t.youth.some((p) => p.id === item.playerId),
       ),
       p = t
-        ? t.players.find((p) => p.id === item.playerId)
+        ? t.youth.find((p) => p.id === item.playerId)
         : s.freeAgents.find((p) => p.id === item.playerId);
     assert(p.real);
     assert(!p.injury);

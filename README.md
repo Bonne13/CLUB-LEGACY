@@ -55,7 +55,7 @@ São **397 clubes reais em 21 ligas**. Brasil e as cinco maiores ligas europeias
 - América do Sul: Brasil, Argentina, Colômbia, Chile, Uruguai, Equador, Peru, Paraguai, Bolívia e Venezuela.
 - Outras regiões: MLS (Estados Unidos e Canadá), México, Arábia Saudita e Japão.
 
-Os jogadores gerados foram removidos. O catálogo base e os complementos de reservas/jovens contêm **10.465 atletas reais**, com **351 clubes disponíveis** para novas carreiras. Os 46 restantes têm cobertura insuficiente e ficam bloqueados na criação. Não há preenchimento com nomes inventados.
+Os elencos iniciais usam jogadores reais; novas safras durante a carreira geram jovens fictícios identificados. O catálogo base e os complementos de reservas/jovens contêm **10.465 atletas reais**, com **351 clubes disponíveis** para novas carreiras. Os 46 restantes têm cobertura insuficiente e ficam bloqueados na criação. Não há preenchimento do elenco inicial com nomes inventados.
 
 As referências novas incluem Brasileirão 2026 (02/06/2026), cinco grandes ligas europeias 2026/27 (27/09/2026), MLS 2026 (09/06/2026) e movimentações observadas em Chile, Uruguai, Paraguai e Peru. São compilações públicas com cobertura parcial: estatísticas de jogadores utilizados não garantem todos os reservas, e transferências observadas não constituem elencos completos. Cada clube mostra sua fonte e data. Os demais conservam a base histórica. Nascimentos ausentes, idades desconhecidas e posições estimadas ficam identificados. A carreira começa em 2026; a base não é atualizada ao vivo.
 
@@ -84,7 +84,7 @@ Contratos de patrocínio master, de uniforme e regional possuem valor anual, dur
 - CONMEBOL Libertadores: 32 clubes, oito grupos de quatro, seis partidas e os dois primeiros nas oitavas.
 - Mata-matas em jogo único e pênaltis em empates. As vagas são simplificadas e distribuídas por posição entre as ligas disponíveis, sem coeficientes, preliminares ou vagas reservadas de campeões. A primeira temporada usa a ordem inicial da base.
 - Compra com proposta de valor, salário e duração de contrato; recusas; vendas para outros clubes com orçamento; jogadores sem clube; janelas de negociação; renovações com aumento e luvas; expiração de vínculos.
-- Treino técnico, intensivo ou recuperação; evolução limitada pelo potencial; estrutura influenciando desenvolvimento; base com promoção somente com identidades reais confirmadas; não há geração de atletas por temporada.
+- Treino técnico, intensivo ou recuperação; evolução limitada pelo potencial; estrutura influenciando desenvolvimento; base com promoção de atletas reais e jovens fictícios gerados em safras anuais; declínio por idade a partir de 31 anos (35 para goleiros).
 - Caixa próprio de cada clube, folha semanal, bilheteria, patrocínios, premiações e melhorias de estádio e centro de treinamento.
 - Trocas de treinadores de clubes com desempenho ruim, reputação e ofertas para assumir outro clube entre temporadas. O caixa e o elenco pertencem ao clube.
 
@@ -141,7 +141,7 @@ O fluxo de financeiro e progressão diária é verificado com `npm run test:econ
 
 ## Perfil, seleções e arquivos de carreira
 
-Na criação, informe nome, idade e nacionalidade. O perfil pode ser editado em **Carreira**, e a idade avança por temporada. Em **Seleções**, convites de federações chegam de acordo com resultados e reputação. Após aceitar uma oferta, você pode acumular o cargo com o clube, convocar até 23 atletas reais e disputar até seis amistosos anuais (com possíveis folgas) em texto ou 2D. O calendário para antes dos jogos da seleção. Elegibilidade é simplificada pela cidadania da base; Copa do Mundo e eliminatórias ainda não estão implementadas.
+Na criação, informe nome, idade e nacionalidade. O perfil fica definido após iniciar; a idade avança por temporada. Em **Seleções**, convites de federações chegam de acordo com resultados e reputação. Após aceitar uma oferta, você pode acumular o cargo com o clube, convocar até 23 atletas reais e disputar até seis amistosos anuais (com possíveis folgas) em texto ou 2D. O calendário para antes dos jogos da seleção. Elegibilidade é simplificada pela cidadania da base; Copa do Mundo e eliminatórias ainda não estão implementadas.
 
 Em **Salvamentos**, salve no navegador, baixe um arquivo JSON, importe uma carreira ou exclua o progresso. Também há importação na tela inicial. A importação aceita arquivos exportados anteriormente (JSON direto), o novo envelope e dados CL3 comprimidos. O arquivo é validado antes de confirmar a substituição; um arquivo inválido não altera o save atual. A partida importada volta pausada. A exclusão pede confirmação e limpa a carreira e os backups locais, preservando o tema; arquivos baixados continuam no dispositivo.
 
@@ -167,7 +167,7 @@ A página **Elenco** tem duas abas: **Escalação e táticas** para o campo e in
 
 Na tela inicial, escolha **Normal** ou **Teste**. O normal usa os recursos e receitas simulados do clube. O teste libera **Financeiro → Adicionar dinheiro**, com destino para caixa, transferências ou salários. Em transferências, o aporte aumenta caixa e limite de contratações; em salários, aumenta caixa e o teto semanal em 1/52 do aporte. Caixa sozinho mantém os limites existentes. Todos os aportes são identificados no extrato e salvos no arquivo da carreira.
 
-Uma carreira normal pode ativar o modo teste em **Carreira**, mediante confirmação. A identificação **MODO TESTE** permanece nessa carreira, inclusive após exportar/importar. Para voltar a uma carreira normal, crie outra.
+O modo só é escolhido na criação. Carreiras normais não podem ativar o modo teste. Saves de teste já existentes continuam identificados como **MODO TESTE**, inclusive após exportar/importar.
 
 `npm run test:current-browser` verifica os dois modos, aportes, persistência, fontes e exclusividade do avanço na Visão geral em desktop/celular. `LEGACY_STANDALONE=1 npm run test:current-browser` verifica o HTML único com todos os recursos externos bloqueados.
 
@@ -403,3 +403,18 @@ Partidas permitem cinco substituições em até três oportunidades, com trocas 
 As referências estão em `data/league-rules.json`; a LaLiga inclui o regulamento oficial RFEF de 2025, artigo 29, e as substituições apontam para a IFAB. As demais tabelas de referência indicam o campeonato/ano efetivamente consultado, incluindo fontes anteriores quando a edição atual não estava disponível.
 
 `npm run build:club-context` empacota os snapshots e recalcula a cobertura. `python3 scripts/import-club-context.py` consulta estádios e goleiros; `python3 scripts/import-young-players.py` consulta jovens U21. Essas buscas são opcionais e externas à execução do jogo; os builds e a carreira usam dados locais. `npm run test:club-context-browser` confere goleiros/jovens, catálogo dos 397 estádios, layout 320/390/768, obras com débito/conclusão/cancelamento, calendário, regulamento e persistência; `LEGACY_STANDALONE=1` usa o arquivo único com a rede externa bloqueada. A temporada completa também verifica tamanho do save e validação antes de publicar.
+
+
+## Desenvolvimento, empréstimos e olheiros (v0.19)
+
+O perfil do treinador e o modo ficam definidos na criação. A idade avança por temporada. As referências e a consulta de estádios de outros clubes saíram da interface. Os painéis de olheiros, negociações e elenco ajustam controles e nomes longos em telas pequenas.
+
+O treino continua evoluindo o overall até o potencial. Ao virar a temporada, atletas de linha a partir dos 31 anos perdem de 1 a 4 pontos conforme a idade; goleiros começam aos 35. A última variação aparece no elenco. Cada clube recebe três jovens fictícios de 16 anos por nova temporada, com IDs próprios, país, posição e potencial. As safras não substituem atletas reais e aparecem identificadas no elenco.
+
+Olheiros pesquisam exclusivamente as bases de outros clubes. O país da missão é o país de atuação do clube, separado da nacionalidade do atleta. Relatórios antigos são preservados; candidatos que já saíram da base não aparecem como novas descobertas. A compra de um jogador da base usa a negociação normal.
+
+O botão **Empréstimo** está no mercado e nos relatórios. O prazo é de uma ou duas temporadas, com taxa de 10% do valor por temporada e salário integral no clube de destino. Clubes liberam jovens ou reservas, mantendo 16 profissionais; o vínculo deve cobrir o prazo. A opção é facultativa, fixada em 110% do valor na contratação, e pode ser exercida no elenco enquanto o empréstimo estiver ativo. Sem compra, o retorno ocorre na virada para a temporada indicada. Não é permitido vender ou renovar um atleta emprestado.
+
+Os saves v3 e suas chaves locais permanecem compatíveis. Novos dados de empréstimos e safras são incluídos na exportação/importação. As novas safras começam na próxima temporada dos saves existentes.
+
+Validação específica: `node tests/career-development.test.cjs` e `npm run test:development-browser`.

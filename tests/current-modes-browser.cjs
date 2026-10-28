@@ -48,12 +48,14 @@ const { chromium } = require("playwright"),
     await require("./navigation-helper.cjs").navigate(p, "Financeiro");
     assert.equal(await p.locator("#test-funds-form").count(), 0);
     await require("./navigation-helper.cjs").navigate(p, "Carreira");
-    p.once("dialog", (d) => d.dismiss());
-    await p.locator("[data-action=enable-test-mode]").click();
+    assert.equal(await p.locator("[data-action=enable-test-mode]").count(), 0);
     assert.equal(await p.evaluate(() => state.mode), "normal");
-    p.once("dialog", (d) => d.accept());
-    await p.locator("[data-action=enable-test-mode]").click();
-    assert.equal(await p.evaluate(() => state.mode), "test");
+    await p.evaluate(() => { localStorage.clear(); });
+    await p.reload();
+    await p.locator("#start-coach-name").fill("Ana Silva");
+    await p.locator("#start-calendar").selectOption("classic");
+    await p.locator("#start-game-mode").selectOption("test");
+    await p.locator("[data-action=begin]").click();
     await require("./navigation-helper.cjs").navigate(p, "Financeiro");
     const before = await p.evaluate(() => ({
       cash: team().money,

@@ -64,7 +64,7 @@
         Math.min(3, peers.length)
       : average;
     const concerns = [];
-    if (seller && seller.players.length <= 16)
+    if (seller && seller.players.includes(p) && seller.players.length <= 16)
       concerns.push("Clube de origem com elenco reduzido: pode não liberar.");
     if (p.ageUnknown) concerns.push("Idade não confirmada.");
     else if (p.age >= 32)
@@ -124,28 +124,15 @@
         club.finance.transferBudget,
         Number(options.maxFee ?? club.finance.transferBudget),
       );
-    const candidates = s.teams
-      .flatMap((t) => [
-        ...(t.id === s.clubId && scope === "youth" ? t.youth : []).map((p) => ({
-          p,
-          t,
-          academy: true,
-        })),
-        ...(t.id === s.clubId
-          ? []
-          : t.players.map((p) => ({ p, t, academy: false }))),
-      ])
-      .concat(
-        scope === "market"
-          ? s.freeAgents.map((p) => ({ p, t: null, academy: false }))
-          : [],
-      );
+    const candidates = s.teams.filter(t => t.id !== s.clubId).flatMap(t =>
+      t.youth.map(p => ({p, t, academy: false}))) ;
     const regions = new Map(s.leagues.map((l) => [l.id, l.region]));
     return candidates
       .filter(
         ({ p, t, academy }) =>
           !p.injury &&
-          (academy || !t || t.players.length > 16) &&
+          !p.loan &&
+          (!options.country || options.country === "all" || s.leagues.find(l => l.id === t.leagueId)?.country === options.country) &&
           (!options.position ||
             options.position === "all" ||
             T.positionMatches(p, options.position)) &&
@@ -274,6 +261,7 @@
       )
     )
       throw Error("Posição de observação inválida.");
+    if (options.country && options.country !== "all" && !s.leagues.some(l => l.country === options.country)) throw Error("País da missão inválido.");
     const multiplier = depth === "quick" ? 0.6 : depth === "deep" ? 2 : 1;
     const cost = Math.round((scope === "market" ? 10000 : 5000) * multiplier);
     if (own(s).money < cost)
@@ -302,6 +290,7 @@
       region: options.region || "all",
       league: options.league || "all",
       nationality: options.nationality || "all",
+      country: options.country || "all",
       includeUnknown: Boolean(options.includeUnknown),
       status: "pending",
       season: s.season,
@@ -348,6 +337,7 @@
           depth: m.depth,
           region: m.region,
           league: m.league,
+          country: m.country || "all",
         },
         players: recommend(s, m),
       };

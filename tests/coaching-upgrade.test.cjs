@@ -35,9 +35,9 @@ test("olheiros combinam idade, nível, perfil, liga e salário; missão detalhad
       depth: "deep",
       profile: "potential",
       position: "ATA",
-      minAge: 18,
+      minAge: 15,
       maxAge: 25,
-      minOverall: 65,
+      minOverall: 0,
       maxFee: club.finance.transferBudget,
       maxSalary: 5000000,
       region: "eu",
@@ -55,8 +55,9 @@ test("olheiros combinam idade, nível, perfil, liga e salário; missão detalhad
   assert.equal(club.money, before - 20000);
   for (const item of report.players) {
     const t = E.team(s, item.clubId),
-      p = t.players.find((p) => p.id === item.playerId);
-    assert(p.age >= 18 && p.age <= 25 && p.ovr >= 65);
+      p = t.youth.find((p) => p.id === item.playerId);
+    assert(p.age >= 15 && p.age <= 25);
+    assert.notEqual(t.id, s.clubId);
     assert.equal(E.league(s, t.leagueId).region, "eu");
     assert(E.tactics.positionMatches(p, "ATA"));
     assert(item.observedSalary <= 5000000);

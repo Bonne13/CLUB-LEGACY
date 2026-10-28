@@ -66,16 +66,8 @@ const { chromium } = require("playwright"),
       );
     }
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.locator(".venue-catalog summary").click();
-    await page.locator("#venue-reference-club").selectOption("br-0");
-    assert.match(
-      await page.locator("#venue-reference-result").innerText(),
-      /Maracan/,
-    );
-    assert.equal(
-      await page.locator("#venue-reference-club option").count(),
-      397,
-    );
+    assert.equal(await page.locator(".venue-catalog").count(), 0);
+    assert.equal(await page.getByText("Referência do estádio", {exact: true}).count(), 0);
     await page.screenshot({ path: "/tmp/dinastia-v18-club-estate-mobile.png" });
     const old = await page.evaluate(() => ({
       cash: team().money,

@@ -148,12 +148,8 @@ const { chromium } = require("playwright"),
     );
     await p.locator("[data-action=continue]").click();
     await require("./navigation-helper.cjs").navigate(p, "Carreira");
-    await p.locator("summary").filter({ hasText: "Editar nome" }).click();
-    await p.locator("#edit-coach-name").fill("Mariana Santos");
-    await p
-      .getByRole("button", { name: "Atualizar perfil", exact: true })
-      .click();
-    assert.equal(await p.evaluate(() => state.profile.name), "Mariana Santos");
+    assert.equal(await p.locator("#profile-form").count(), 0);
+    assert.equal(await p.evaluate(() => state.profile.name), "Mariana Costa");
     for (const width of [1440, 390]) {
       await p.setViewportSize({ width, height: 900 });
       await require("./navigation-helper.cjs").navigate(p, "Seleções");

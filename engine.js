@@ -497,6 +497,7 @@
     return s;
   }
   function setProfile(s, profile) {
+    if (s.clubId && s.profile) fail("O perfil do treinador é definido ao criar a carreira.");
     const name = String(profile.name || "").trim(),
       age = Number(profile.age),
       nationality = profile.nationality;
@@ -2142,12 +2143,13 @@
             body: "O atleta ficará fora enquanto se recupera.",
           });
       }
+      const previousOverall = p.ovr;
       if (
         (s.today + 1) % 7 === 0 &&
         mode !== "Recuperação" &&
         physical.plan !== "rest" &&
         rng() <
-          (p.age < 24 ? 0.22 : 0.06) *
+          (p.age >= (p.pos === "GOL" ? 35 : 31) ? 0 : p.age < 24 ? 0.22 : 0.06) *
             (physical.plan === "intense"
               ? 1.4
               : physical.plan === "light"
@@ -2156,6 +2158,7 @@
             (1 + (t.facility - 1) * 0.2)
       )
         p.ovr = Math.min(p.potential, p.ovr + 1);
+      if (p.ovr !== previousOverall) p.developmentChange = p.ovr - previousOverall;
     }
     if (t.id === s.clubId) {
       for (const p of t.youth) {
@@ -2636,6 +2639,7 @@
     const t = team(s),
       p = t.players.find((p) => p.id === id);
     if (!p) fail("Jogador não encontrado.");
+    if (p.loan) fail("Exerça a opção de compra antes de renovar.");
     terms(s, years, salary);
     if (salary < Math.ceil(p.salary * 1.1))
       fail("O atleta exige aumento de pelo menos 10%.");
@@ -2661,7 +2665,7 @@
   }
   function locate(s, id) {
     for (const t of s.teams) {
-      const p = t.players.find((p) => p.id === id);
+      const p = [...t.players, ...t.youth].find((p) => p.id === id);
       if (p) return { p, t };
     }
     const p = s.freeAgents.find((p) => p.id === id);
@@ -2834,6 +2838,7 @@
       fail("Conclua a partida antes de negociar a renovação.");
     const p = team(s)?.players.find((p) => p.id === playerId);
     if (!p) fail("Jogador não pertence ao elenco profissional.");
+    if (p.loan) fail("Exerça a opção de compra antes de renovar.");
     terms(s, years, salary);
     if (
       !Number.isSafeInteger(bonus) ||
@@ -2960,6 +2965,7 @@
     if (!found.t && fee !== 0)
       fail("Jogadores livres não têm taxa de transferência.");
     const { p, t } = found;
+    if (p.loan) fail("O atleta está emprestado.");
     const n = {
       id: "neg-" + ((s.negotiationSequence || 0) + 1),
       playerId,
@@ -3155,7 +3161,7 @@
       if (!n.dueOn || today < n.dueOn) continue;
       const { p, t } = found;
       if (n.stage === "club-pending") {
-        if (t.players.length <= 16)
+        if (t.players.includes(p) && t.players.length <= 16)
           negotiationUpdate(
             s,
             n,
@@ -3292,6 +3298,7 @@
       buyer = team(s);
     if (!found || found.t === buyer) fail("Jogador indisponível.");
     const { p, t: seller } = found;
+    if (p.loan) fail("O atleta está emprestado.");
     if (!Number.isFinite(fee) || fee < 0) fail("Valor de proposta inválido.");
     if (!seller && fee !== 0)
       fail("Jogadores sem clube não têm taxa de transferência.");
@@ -3311,7 +3318,7 @@
       fail(
         `Proposta recusada. O clube pede pelo menos R$ ${minFee(s, p).toLocaleString("pt-BR")}.`,
       );
-    if (seller && seller.players.length <= 16)
+    if (seller && seller.players.includes(p) && seller.players.length <= 16)
       fail("O clube não libera o atleta: elenco reduzido.");
     if (salary < Math.ceil(p.salary * (seller ? 1.1 : 1)))
       fail("O jogador recusou o salário. Ofereça o valor sugerido ou mais.");
@@ -3334,7 +3341,8 @@
     if (seller) {
       F.post(seller, s, fee, "transfer", `Venda · ${p.name}`);
       seller.finance.transferBudget += Math.round(fee * 0.8);
-      seller.players.splice(seller.players.indexOf(p), 1);
+      const source = seller.youth.includes(p) ? seller.youth : seller.players;
+      source.splice(source.indexOf(p), 1);
       seller.lineup = seller.lineup.map((x) => (x === id ? "" : x));
     } else s.freeAgents.splice(s.freeAgents.indexOf(p), 1);
     delete p.shirtNumber;
@@ -3362,6 +3370,7 @@
       p = seller.players.find((p) => p.id === id),
       buyer = team(s, buyerId);
     if (!p || !buyer || buyer === seller) fail("Proposta indisponível.");
+    if (p.loan) fail("Não é possível vender um atleta emprestado.");
     if (seller.players.length <= 16)
       fail("Mantenha pelo menos 16 jogadores no elenco.");
     if (!Number.isFinite(fee) || fee <= 0 || fee > p.price)
@@ -3497,15 +3506,7 @@
     );
   }
   function enableTestMode(s) {
-    if (!s.clubId) fail("Comece uma carreira primeiro.");
-    if (s.live && !s.live.done)
-      fail("Conclua a partida antes de ativar o modo teste.");
-    s.mode = "test";
-    s.testFundingTotal ??= 0;
-    news(s, "Modo teste ativado nesta carreira.", {
-      category: "club",
-      body: "Aportes manuais ficam identificados no extrato. O modo é preservado no save.",
-    });
+    fail("O modo teste só pode ser escolhido ao criar uma carreira.");
   }
   function addTestFunds(s, amount, destination = "transfer") {
     if (s.mode !== "test")
@@ -3549,9 +3550,99 @@
     });
     return c;
   }
+  function loanPlayer(s, id, years = 1, withOption = true) {
+    if (!s.clubId || !windowOpen(s)) fail("Abra uma carreira e aguarde a janela de transferências.");
+    if (s.live && !s.live.done) fail("Conclua a partida antes de negociar.");
+    if (![1, 2].includes(years) || typeof withOption !== "boolean") fail("Prazo de empréstimo inválido.");
+    const found = locate(s, id), buyer = team(s);
+    if (!found?.t || found.t === buyer || found.p.loan) fail("Atleta indisponível para empréstimo.");
+    const { p, t: owner } = found;
+    if (owner.players.includes(p) && (owner.players.length <= 16 || [...owner.players].sort((a,b) => b.ovr-a.ovr).slice(0,11).includes(p)))
+      fail("O clube só empresta reservas e jogadores da base, mantendo 16 profissionais.");
+    if (p.contract < s.season + years) fail("O contrato termina antes do empréstimo.");
+    if ((s.negotiations || []).some(n => n.playerId === id && negotiationActive(n))) fail("Encerre a negociação em andamento primeiro.");
+    const fee = Math.ceil(p.price * 0.1 * years), option = withOption ? Math.ceil(p.price * 1.1) : null;
+    F.canHire(buyer, p, fee, p.salary, s, 0);
+    F.post(buyer, s, -fee, "transfer", `Empréstimo · ${p.name}`);
+    F.post(owner, s, fee, "transfer", `Empréstimo cedido · ${p.name}`);
+    buyer.finance.transferBudget -= fee;
+    owner.finance.transferBudget += fee;
+    const academy = owner.youth.includes(p), source = academy ? owner.youth : owner.players;
+    source.splice(source.indexOf(p), 1);
+    owner.lineup = owner.lineup.map(x => x === id ? "" : x);
+    p.loan = { ownerId: owner.id, borrowerId: buyer.id, endSeason: s.season + years, option, academy };
+    delete p.shirtNumber;
+    buyer.players.push(p);
+    ensureSquadNumbers(buyer);
+    news(s, `${p.name} chegou por empréstimo até o início de ${p.loan.endSeason}.`, { category: "market", clubIds: [owner.id, buyer.id], body: `Taxa de R$ ${fee.toLocaleString("pt-BR")}. O clube assume o salário integral.${option ? ` Opção de compra: R$ ${option.toLocaleString("pt-BR")}.` : " Sem opção de compra."}` });
+    return p.loan;
+  }
+  function exerciseLoanOption(s, id) {
+    const buyer = team(s), p = buyer?.players.find(p => p.id === id), loan = p?.loan;
+    if (s.live && !s.live.done) fail("Conclua a partida antes de comprar.");
+    if (!loan || loan.borrowerId !== s.clubId || !loan.option || s.season >= loan.endSeason) fail("Opção de compra indisponível.");
+    const owner = team(s, loan.ownerId), fee = loan.option;
+    if (buyer.money < fee || buyer.finance.transferBudget < fee) fail("Caixa ou verba insuficiente para exercer a opção.");
+    F.post(buyer, s, -fee, "transfer", `Opção de compra · ${p.name}`);
+    F.post(owner, s, fee, "transfer", `Opção de compra recebida · ${p.name}`);
+    buyer.finance.transferBudget -= fee;
+    owner.finance.transferBudget += Math.round(fee * 0.8);
+    p.contract = Math.max(p.contract, s.season + 2);
+    delete p.loan;
+    news(s, `${buyer.name} exerceu a opção de compra de ${p.name}.`, {category: "market", clubIds: [buyer.id, owner.id]});
+  }
+  function returnLoans(s) {
+    for (const borrower of s.teams) for (const p of [...borrower.players]) {
+      if (!p.loan || p.loan.endSeason > s.season) continue;
+      const loan = p.loan, owner = team(s, loan.ownerId);
+      borrower.players.splice(borrower.players.indexOf(p), 1);
+      borrower.lineup = borrower.lineup.map(x => x === p.id ? "" : x);
+      delete p.loan;
+      delete p.shirtNumber;
+      (loan.academy && p.age < 19 ? owner.youth : owner.players).push(p);
+      ensureSquadNumbers(owner);
+      news(s, `${p.name} retornou ao ${owner.name} após o empréstimo.`, {category: "market", clubIds: [owner.id, borrower.id]});
+    }
+  }
+  function youthIntake(s, t) {
+    if (t.youthIntakeSeason === s.season) return [];
+    t.youthIntakeSeason = s.season;
+    const first = ["Lucas", "Gabriel", "Alex", "Daniel", "Samuel", "Leo", "Nicolas", "David"], last = ["Silva", "Costa", "Santos", "Lima", "Almeida", "Pereira", "Martins", "Rocha"];
+    const country = s.leagues.find(l => l.id === t.leagueId)?.country;
+    const nationality = N.countries.find(([key, label]) => key === country || label === country)?.[0] || "Brazil";
+    const localNames = {
+      England: [["Oliver", "Jack", "Harry", "George", "Charlie", "James", "Jacob", "Thomas"], ["Smith", "Walker", "Taylor", "Wilson", "Clark", "Brown", "Hill", "Green"]],
+      Spain: [["Pablo", "Hugo", "Diego", "Mateo", "Adrián", "Javier", "Iván", "Álvaro"], ["García", "Ruiz", "Martín", "Sánchez", "López", "Romero", "Vega", "Torres"]],
+      Italy: [["Luca", "Marco", "Matteo", "Andrea", "Davide", "Enzo", "Paolo", "Fabio"], ["Rossi", "Ricci", "Romano", "Greco", "Costa", "Bruno", "Marino", "Conti"]],
+      Germany: [["Leon", "Lukas", "Felix", "Jonas", "Niklas", "Julian", "Finn", "Max"], ["Müller", "Koch", "Weber", "Wagner", "Becker", "Schulz", "Wolf", "Fischer"]],
+      France: [["Louis", "Hugo", "Jules", "Arthur", "Noah", "Adam", "Lucas", "Gabriel"], ["Martin", "Bernard", "Moreau", "Dubois", "Petit", "Laurent", "Leroy", "Roux"]],
+      Japan: [["Haru", "Ren", "Yuto", "Sota", "Riku", "Kaito", "Daiki", "Yuki"], ["Sato", "Suzuki", "Takahashi", "Tanaka", "Ito", "Watanabe", "Yamamoto", "Kobayashi"]],
+    };
+    const [given, family] = localNames[nationality] || (nationality === "Brazil" || nationality === "Portugal" ? [first, last] : [["Lucas", "Mateo", "Alex", "Daniel", "Samuel", "Leo", "Nicolas", "David"], ["García", "Costa", "Santos", "López", "Fernández", "Pérez", "Martín", "Torres"]]);
+    const cohort = Array.from({length: 3}, (_, i) => {
+      const seed = [...t.id].reduce((n,c) => n*31+c.charCodeAt(0), s.season*13+i*997) >>> 0;
+      const ovr = 40 + seed % 15 + FACILITIES.level(t, "academy") * 2, pos = ["GOL","LAT","ZAG","VOL","MEI","ATA"][(seed >>> 4)%6];
+      return { id: `youth-${t.id}-${s.season}-${i}`, name: `${given[seed%8]} ${family[(seed>>>8)%8]}`, age: 16, ovr, potential: Math.min(94, ovr+10+(seed>>>12)%20), pos, naturalPositions: [pos === "LAT" ? (seed % 2 ? "LD" : "LE") : pos === "ATA" ? "CA" : pos], nationality, nationalities: [nationality], real: false, generated: true, dataSource: "career-youth", ratingEstimated: true, ratingSource: "Jovem gerado na carreira", fitness: 100, stamina: 70, fatigue: 0, injury: 0, salary: 1500, marketSalary: 1500, price: Math.round(100000*Math.pow(1.12,ovr-40)), contract: s.season+3, squadRole: "prospect", birthYear: s.season-16 };
+    });
+    t.youth.push(...cohort);
+    if (t.id === s.clubId) news(s, `Nova safra: três jovens chegaram à base do ${t.name}.`, {category: "youth", body: "Atletas fictícios gerados para esta carreira, identificados nos relatórios e no elenco."});
+    return cohort;
+  }
+  function ageDecline(s, p) {
+    if (p.declineSeason === s.season || p.ageUnknown) return;
+    p.declineSeason = s.season;
+    const threshold = p.pos === "GOL" ? 35 : 31;
+    if (p.age < threshold) { p.developmentChange = 0; return; }
+    const before = p.ovr, loss = Math.min(4, 1 + Math.floor((p.age-threshold)/3));
+    p.ovr = Math.max(35, p.ovr-loss);
+    p.developmentChange = p.ovr-before;
+    p.price = Math.max(10000, Math.round(p.price * Math.pow(0.9, loss)));
+  }
   function nextSeason(s) {
     if (dayInfo(s)) fail("Conclua a temporada atual.");
     s.season++;
+    ensureFriendlies(s);
+    returnLoans(s);
     s.friendlies = [];
     s.preseasonTournaments = [];
     s.day = 0;
@@ -3581,6 +3672,8 @@
       }
       t.players = t.players.filter((p) => {
         p.age++;
+        p.ageSeason = s.season;
+        ageDecline(s, p);
         p.injury = 0;
         p.fitness = 100;
         p.fatigue = 0;
@@ -3607,7 +3700,7 @@
         p.contract = s.season + 2;
         t.players.push(p);
       });
-      // Sem geração de atletas: só existem identidades reais da base importada.
+      youthIntake(s, t);
       t.finance.wageBudget = Math.max(t.finance.wageBudget, F.payroll(t));
       if (
         t.id !== s.clubId &&
@@ -3616,6 +3709,11 @@
         t.finance.sponsors = [{ ...F.offers(t, s)[0], expires: s.season + 1 }];
       if (t.id !== s.clubId) ensureAI(s, t);
     });
+    for (const p of s.freeAgents) {
+      // Players who left their club in this rollover have already aged.
+      if (p.ageSeason !== s.season) { p.age++; ageDecline(s, p); }
+      p.ageSeason = s.season;
+    }
     s.freeAgents = s.freeAgents.filter((p) => p.age < 40);
     N.ensure(s);
     s.leagues.forEach((l) => {
@@ -3813,6 +3911,10 @@
     cancelNegotiation,
     retryNegotiation,
     enableTestMode,
+    loanPlayer,
+    exerciseLoanOption,
+    youthIntake,
+    ageDecline,
     addTestFunds,
     tactics: T,
     currentMatch,
