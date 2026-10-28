@@ -91,8 +91,11 @@
         DATA.playerBios?.players?.[
           /^\d+$/.test(sourceId) ? "tm-" + sourceId : sourceId
         ],
-      positionProfile =
-        DATA.playerPositions?.players?.[
+      positionProfile = sourceId === "1018912" ? {
+        natural: ["LD"], secondary: ["VOL", "LE", "MC"], foot: "right",
+        source: "FIFA Index · FC27 · 28/10/2026",
+        revision: "positions-xavi-espart-2026-10-28-v1",
+      } : DATA.playerPositions?.players?.[
           /^\d+$/.test(sourceId) ? "tm-" + sourceId : sourceId
         ],
       dob = originalDob || bio?.birthDate || null,
@@ -199,7 +202,7 @@
       secondaryPositions: secondary,
       preferredFoot: positionProfile?.foot || bio?.foot || null,
       positionSource: positionProfile?.source || null,
-      positionRevision: POSITION_REVISION,
+      positionRevision: positionProfile?.revision || POSITION_REVISION,
       contractEstimated: Boolean(detail.sourceKey),
       membershipReference: detail.reference || null,
       membershipKind: detail.membership || null,

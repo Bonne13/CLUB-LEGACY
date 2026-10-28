@@ -164,3 +164,8 @@ Nomes de centros de treinamento conhecidos e níveis por porte são configurados
 ### Correção individual — Xavi Espart (28/10/2026)
 
 O atleta `tm-1018912` usava overall 58 e potencial 67, estimados a partir do valor de mercado de €50 mil de 24/06/2025. A ficha de [Xavi Espart no FIFA Index, FC27](https://www.fifaindex.com/players/81863-xavi-espart/fc27), consultada em 28/10/2026, informa overall 71 e potencial 85 (ID 81863, FC Barcelona, Espanha). Esses valores substituem a estimativa; a referência fica identificada como FC27/FIFA Index. Não são apresentados como estatísticas ao vivo da temporada real. A revisão individual preserva a evolução em relação à avaliação-base anterior nas carreiras existentes e só é aplicada uma vez.
+
+
+### Posições de Xavi Espart (28/10/2026)
+
+A mesma [ficha do FIFA Index/FC27](https://www.fifaindex.com/players/81863-xavi-espart/fc27) lista **RB / CDM / LB / CM**, correspondentes a **LD / VOL / LE / MC**. LD permanece a posição principal; VOL, LE e MC são habituais, sem penalidade de improvisação. A revisão individual de posições atualiza os saves e os dados de uma partida retomada sem alterar overall, evolução, clube, contratos ou escalação.

@@ -771,9 +771,10 @@
             p.fatigue ??= reference.fatigue;
             p.naturalPositions ??= reference.naturalPositions;
             p.secondaryPositions ??= reference.secondaryPositions;
-            if (refreshPositions) {
+            if (refreshPositions || p.positionRevision !== reference.positionRevision) {
               p.naturalPositions = [...(reference.naturalPositions || [])];
               p.secondaryPositions = [...(reference.secondaryPositions || [])];
+              p.positionRevision = reference.positionRevision;
             }
             p.shirtNumber ??=
               m.kind === "national" ? index + 1 : reference.shirtNumber;
@@ -1159,6 +1160,7 @@
           age: p.age,
           naturalPositions: p.naturalPositions,
           secondaryPositions: p.secondaryPositions,
+          positionRevision: p.positionRevision,
           skills: T.skills(p),
         })),
         specialists: Object.fromEntries(
@@ -1744,6 +1746,7 @@
       age: incoming.age,
       naturalPositions: incoming.naturalPositions,
       secondaryPositions: incoming.secondaryPositions,
+      positionRevision: incoming.positionRevision,
       skills: T.skills(incoming),
     };
     m.minutesPlayed ??= {};
