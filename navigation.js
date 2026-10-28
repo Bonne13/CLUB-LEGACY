@@ -56,9 +56,10 @@
       page: "Transferências",
       label: "Transferências",
       category: "FUTEBOL",
-      description: "Contratações, negociações e olheiros.",
+      description: "Contratações, lista de saídas e olheiros.",
       sections: [
         { key: "transfers", page: "Transferências", label: "Mercado" },
+        { key: "outgoing", page: "Lista de saídas", label: "Lista de saídas" },
         { key: "scouting", page: "Olheiros", label: "Olheiros" },
       ],
     },

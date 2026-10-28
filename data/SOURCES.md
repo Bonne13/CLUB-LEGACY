@@ -159,3 +159,8 @@ Nomes de centros de treinamento conhecidos e níveis por porte são configurados
 ## Regulamentos nacionais
 
 `data/league-reference-research.json` conserva trechos de classificação das páginas consultadas; `data/league-rules.json` seleciona os critérios efetivamente implementados e explicita os formatos especiais ainda adaptados. A fonte primária da LaLiga é o [Reglamento de Competiciones RFEF, 12/11/2025](https://rfef.es/sites/default/files/2025-11/20251112_Reglamento_de_Competiciones_2025.pdf), artigo 29. A [Lei 3 da IFAB](https://www.theifab.com/laws/latest/the-players/) fundamenta o limite de substituições/oportunidades quando adotado pela competição. As regras completas incluem particularidades não cobertas pelo motor: inscrição, coeficientes de fair play, promoções/rebaixamentos, sorteios e fases decisivas. A interface não identifica esses formatos adaptados como reprodução integral do regulamento oficial.
+
+
+### Correção individual — Xavi Espart (28/10/2026)
+
+O atleta `tm-1018912` usava overall 58 e potencial 67, estimados a partir do valor de mercado de €50 mil de 24/06/2025. A ficha de [Xavi Espart no FIFA Index, FC27](https://www.fifaindex.com/players/81863-xavi-espart/fc27), consultada em 28/10/2026, informa overall 71 e potencial 85 (ID 81863, FC Barcelona, Espanha). Esses valores substituem a estimativa; a referência fica identificada como FC27/FIFA Index. Não são apresentados como estatísticas ao vivo da temporada real. A revisão individual preserva a evolução em relação à avaliação-base anterior nas carreiras existentes e só é aplicada uma vez.

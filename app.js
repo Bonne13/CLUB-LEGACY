@@ -232,6 +232,7 @@ const pages = [
   "Disciplina",
   "Transferências",
   "Olheiros",
+  "Lista de saídas",
   "Categorias de base",
   "Competições",
   "Troféus",
@@ -295,6 +296,7 @@ const navigationPaths = {
     '<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3m3-17a3 3 0 0 1 0 6m1 4a5 5 0 0 1 3 4v3"/>',
   Treinamento: '<path d="m4 20 8-17 8 17H4Zm-1 0h18M8 13h8"/>',
   Transferências: '<path d="M3 7h17m-5-5 5 5-5 5M21 17H4m5-5-5 5 5 5"/>',
+  "Lista de saídas": '<path d="M3 7h17m-5-5 5 5-5 5M21 17H4m5-5-5 5 5 5"/>',
   Olheiros:
     '<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6m-14-11h6m-3-3v6"/>',
   "Categorias de base":
@@ -397,6 +399,7 @@ function act(fn, save = true) {
   }
 }
 const pageDescriptions = {
+  "Lista de saídas": "Anuncie jogadores e compare propostas de venda e empréstimo.",
   Histórico:
     "Campeões das competições e vencedores dos prêmios ao longo da carreira.",
   Disciplina: "Cartões, pendurados e suspensões por competição.",
@@ -651,6 +654,7 @@ function playerAge(p) {
 }
 function playerReference(p) {
   if (p.generated) return "Jovem fictício · safra da carreira";
+  if (p.ratingUrl) return p.ratingSource;
   if (p.membershipReference)
     return (
       "Vínculo " +
@@ -705,6 +709,45 @@ function standings(rows) {
     )
     .join("")}</tbody></table></div>`;
 }
+function outgoingPlayerActions(p) {
+  const listing = state.outgoingMarket?.listings.find(l => l.playerId === p.id && l.ownerId === state.clubId && l.status === "active");
+  return btn("Renovar", "renew", p.id) + (listing ? `<span class="pill">${listing.kind === "sale" ? "À venda" : "Para empréstimo"}</span><button data-page="Lista de saídas">Ver propostas</button>` : btn("Lista de venda", "sell", p.id) + btn("Lista de empréstimo", "list-loan", p.id));
+}
+function openListingDialog(id, kind) {
+  const p = [...team().players, ...team().youth].find(p => p.id === id);
+  if (!p || p.loan) throw Error("Atleta indisponível.");
+  const current = state.outgoingMarket?.listings.find(l => l.playerId === id && l.status === "active" && l.ownerId === state.clubId);
+  const loan = kind === "loan", fee = current?.kind === kind ? current.fee : Math.ceil(p.price * (loan ? .1 : 1));
+  const form = $("#deal-form");
+  form.oninput = null;
+  form.onclick = null;
+  form.innerHTML = `<h2>${loan ? "Lista de empréstimo" : "Lista de venda"}</h2><h3>${esc(p.name)}</h3><p>O atleta continua no seu clube. Anuncie, avance os dias e compare as propostas em Transferências → Lista de saídas. Você decide se aceita ou recusa.</p><label>${loan ? "Taxa desejada pelo empréstimo completo" : "Preço pedido"} (R$)<input name="fee" type="text" inputmode="decimal" required value="${Number(fee).toLocaleString("pt-BR")}"></label>${loan ? `<div class="columns"><label>Prazo<select name="years">${options([[1,"1 temporada"],[2,"2 temporadas"]], current?.years || 1)}</select></label><label>Opção de compra<select name="withOption">${options([["no","Sem opção"],["yes","Com opção"]], current?.option ? "yes" : "no")}</select></label></div><label>Valor da opção de compra (R$)<input name="option" type="text" inputmode="decimal" value="${Number(current?.option || Math.ceil(p.price*1.1)).toLocaleString("pt-BR")}"></label><p>O destino assume 100% do salário (${money(p.salary)}/semana). Com opção, o clube poderá comprar pelo valor fixado. Sem compra, o jogador retorna no prazo.</p>` : '<p>O valor recebido só entra no caixa depois que você aceitar uma proposta válida. Nenhuma venda é automática.</p>'}<p class="muted">As primeiras propostas podem chegar após três dias, durante a janela. Novos interessados são avaliados a cada sete dias. Listar não garante propostas.</p><p id="deal-error" class="error" role="alert"></p><div class="row"><button type="button" data-action="close-dialog">Cancelar</button><button class="primary">Colocar na lista</button></div>`;
+  form.onsubmit = event => {
+    event.preventDefault();
+    try {
+      const f = new FormData(form);
+      E.listPlayer(state, id, kind, {fee: LegacyMoney.parse(f.get("fee")), years: loan ? Number(f.get("years")) : 0, option: loan && f.get("withOption") === "yes" ? LegacyMoney.parse(f.get("option")) : null});
+      $("#deal").close();
+      page = "Lista de saídas";
+      scheduleSave();
+      render();
+      notify("Jogador anunciado. Avance os dias para receber propostas.");
+    } catch (error) { $("#deal-error").textContent = error.message; }
+  };
+  $("#deal").showModal();
+}
+function outgoingView() {
+  const data = E.outgoingMarket.ensure(state), listings = data.listings.filter(l => l.ownerId === state.clubId && l.status === "active"),
+    offers = data.offers.filter(o => o.ownerId === state.clubId && o.status === "pending"),
+    loaned = state.teams.flatMap(t => t.players.filter(p => p.loan?.ownerId === state.clubId).map(p => ({p,t}))),
+    format = value => new Date(value + "T12:00:00Z").toLocaleDateString("pt-BR", {timeZone: "UTC"});
+  const cards = listings.map(l => {
+    const proposals = offers.filter(o => o.listingId === l.id);
+    return `<article class="card outgoing-listing"><div class="row"><div><span class="badge">${l.kind === "sale" ? "À VENDA" : "PARA EMPRÉSTIMO"}</span><h3>${esc(l.playerName)}</h3><p>Pedido: ${money(l.fee)}${l.kind === "loan" ? ` · ${l.years} temporada(s) · ${l.option ? "opção " + money(l.option) : "sem opção de compra"}` : ""}</p></div><div class="row">${btn("Editar anúncio", "edit-listing", l.id)}${btn("Retirar da lista", "unlist-player", l.id)}</div></div><div class="outgoing-offers">${proposals.map(o => `<section class="outgoing-offer"><h4>${teamLabel(o.buyerId, "small")}</h4><strong>${money(o.fee)}</strong><p>${o.kind === "sale" ? "Compra definitiva" : `${o.years} temporada(s) · salário integral no destino · ${o.option ? "opção " + money(o.option) : "sem opção"}`}</p><small>Responder até ${format(o.expiresOn)}</small><div class="row">${btn(o.kind === "sale" ? "Aceitar venda" : "Aceitar empréstimo", "accept-outgoing", o.id, "primary")}${btn("Recusar", "reject-outgoing", o.id)}</div></section>`).join("") || '<p class="muted">Aguardando interessados. Avance os dias; preço, nível do atleta e orçamento dos clubes influenciam as propostas.</p>'}</div></article>`;
+  }).join("");
+  const history = data.offers.filter(o => o.ownerId === state.clubId && o.status !== "pending").slice(0,12);
+  return `<section class="hero"><span class="badge">VOCÊ DECIDE AS SAÍDAS</span><h2>Lista de saídas</h2><p>Anuncie jogadores para venda ou empréstimo. Compare os clubes, valores e condições antes de aceitar.</p><div class="row"><span class="pill">${listings.length} anúncio(s)</span><span class="pill">${offers.length} proposta(s) para avaliar</span><button data-page="Elenco" data-squad-tab="players">Anunciar jogador do elenco</button></div></section>${windowBanner()}${cards || '<section class="card"><h3>Nenhum jogador anunciado</h3><p>Em Elenco → Jogadores, use Lista de venda ou Lista de empréstimo. O atleta permanece disponível até você fechar uma proposta.</p></section>'}<section class="card"><h3>Jogadores cedidos por empréstimo</h3>${loaned.map(({p,t}) => `<div class="row"><div><strong>${esc(p.name)}</strong><p>${esc(t.name)} · retorno ${p.loan.endSeason} · ${p.loan.option ? "opção " + money(p.loan.option) : "sem opção de compra"}</p></div><span class="pill">Salário pago pelo destino</span></div>`).join("") || '<p class="muted">Você ainda não cedeu jogadores.</p>'}</section>${history.length ? `<details class="card"><summary>Histórico de propostas</summary>${history.map(o => `<p>${esc(o.playerName)} · ${esc(name(o.buyerId))} · ${money(o.fee)} · ${esc({accepted:"Aceita", rejected:"Recusada", expired:"Expirada", cancelled:"Cancelada"}[o.status] || o.status)}</p>`).join("")}</details>` : ""}`;
+}
 function loanStatus(p) {
   return `<small class="sub">Emprestado por ${esc(name(p.loan.ownerId))} · retorno ${p.loan.endSeason}</small>${p.loan.option ? btn("Comprar · " + money(p.loan.option), "loan-option", p.id) : '<small>Sem opção de compra</small>'}`;
 }
@@ -718,7 +761,7 @@ function openLoanDialog(id) {
   $("#deal").showModal();
 }
 function playersTable(ps, context = "squad") {
-  return `<div class="table-wrap"><table><thead><tr><th>JOGADOR</th><th>POS.</th><th>IDADE</th><th>GERAL</th><th>VALOR</th><th title="Preparo físico: varia com minutos, intensidade e recuperação">CONDIÇÃO ⓘ</th><th>SALÁRIO EST./SEM.</th><th>CONTRATO</th><th>AÇÕES</th></tr></thead><tbody>${ps.map((p) => `<tr><td>${p.shirtNumber ? `<span class="shirt-number" title="Número do uniforme na carreira">${p.shirtNumber}</span>` : ""}<strong>${esc(p.name)}</strong>${context === "squad" ? disciplineStatus(p) : ""}${seasonStatLine(p)}<span class="sub">${esc(playerReference(p))}<span class="sub">${esc((p.nationalities?.length ? p.nationalities : [p.nationality]).map(countryLabel).filter(Boolean).join(" / ") || "Nacionalidade indisponível")}</span>${context === "market" ? " · " + esc(p.sellerName) : ""}</span></td><td>${esc(p.naturalPositions?.length ? p.naturalPositions.join(" / ") : p.pos)}${p.secondaryPositions?.length ? `<small class="sub">Também: ${esc(p.secondaryPositions.join(" / "))}</small>` : ""}${p.positionEstimated ? " · est." : ""}</td><td>${playerAge(p)}</td><td><span class="rating" title="${esc(p.ratingSource || "Estimativa do jogo")}">${p.ovr}</span>${p.developmentChange ? `<small class="sub">${p.developmentChange > 0 ? "+" : ""}${p.developmentChange} na última variação</small>` : ""}</td><td>${moneyValue(p.price)}</td><td>${p.injury ? `Lesão · ${p.injury} dias` : `<span class="condition-meter ${p.fitness < 75 ? "tired" : p.fitness < 90 ? "wear" : "ready"}"><strong>${p.fitness}%</strong><i style="width:${p.fitness}%"></i><small>${p.fitness >= 90 ? "Pronto" : p.fitness >= 75 ? "Desgastado" : "Cansado"}</small></span>`}</td><td>${moneyValue(p.salary, "por semana")}</td><td>${p.contract}${p.contractEstimated ? " · est." : ""}<small class="sub">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")}</small></td><td>${context === "squad" ? (p.loan ? loanStatus(p) : btn("Renovar", "renew", p.id) + btn("Vender", "sell", p.id)) + btn("Camisa " + p.shirtNumber, "edit-shirt", p.id) : context === "youth" ? btn("Promover · R$ 100 mil", "promote", p.id) : btn("Negociar", "buy", p.id) + btn("Empréstimo", "loan", p.id)}</td></tr>`).join("")}</tbody></table></div>${ps.length ? "" : '<p class="muted">Nenhum jogador encontrado.</p>'}`;
+  return `<div class="table-wrap"><table><thead><tr><th>JOGADOR</th><th>POS.</th><th>IDADE</th><th>GERAL</th><th>VALOR</th><th title="Preparo físico: varia com minutos, intensidade e recuperação">CONDIÇÃO ⓘ</th><th>SALÁRIO EST./SEM.</th><th>CONTRATO</th><th>AÇÕES</th></tr></thead><tbody>${ps.map((p) => `<tr><td>${p.shirtNumber ? `<span class="shirt-number" title="Número do uniforme na carreira">${p.shirtNumber}</span>` : ""}<strong>${esc(p.name)}</strong>${context === "squad" ? disciplineStatus(p) : ""}${seasonStatLine(p)}<span class="sub">${esc(playerReference(p))}<span class="sub">${esc((p.nationalities?.length ? p.nationalities : [p.nationality]).map(countryLabel).filter(Boolean).join(" / ") || "Nacionalidade indisponível")}</span>${context === "market" ? " · " + esc(p.sellerName) : ""}</span></td><td>${esc(p.naturalPositions?.length ? p.naturalPositions.join(" / ") : p.pos)}${p.secondaryPositions?.length ? `<small class="sub">Também: ${esc(p.secondaryPositions.join(" / "))}</small>` : ""}${p.positionEstimated ? " · est." : ""}</td><td>${playerAge(p)}</td><td><span class="rating" title="${esc(p.ratingSource || "Estimativa do jogo")}">${p.ovr}</span>${p.developmentChange ? `<small class="sub">${p.developmentChange > 0 ? "+" : ""}${p.developmentChange} na última variação</small>` : ""}</td><td>${moneyValue(p.price)}</td><td>${p.injury ? `Lesão · ${p.injury} dias` : `<span class="condition-meter ${p.fitness < 75 ? "tired" : p.fitness < 90 ? "wear" : "ready"}"><strong>${p.fitness}%</strong><i style="width:${p.fitness}%"></i><small>${p.fitness >= 90 ? "Pronto" : p.fitness >= 75 ? "Desgastado" : "Cansado"}</small></span>`}</td><td>${moneyValue(p.salary, "por semana")}</td><td>${p.contract}${p.contractEstimated ? " · est." : ""}<small class="sub">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")}</small></td><td>${context === "squad" ? (p.loan ? loanStatus(p) : outgoingPlayerActions(p)) + btn("Camisa " + p.shirtNumber, "edit-shirt", p.id) : context === "youth" ? btn("Promover · R$ 100 mil", "promote", p.id) + btn("Lista de empréstimo", "list-loan", p.id) : btn("Negociar", "buy", p.id) + btn("Empréstimo", "loan", p.id)}</td></tr>`).join("")}</tbody></table></div>${ps.length ? "" : '<p class="muted">Nenhum jogador encontrado.</p>'}`;
 }
 function matchup(f, goals) {
   return `<span class="matchup">${teamLabel(f.pair[0])}<strong>${goals ? goals.join(" × ") : "×"}</strong>${teamLabel(f.pair[1])}</span>`;
@@ -763,6 +806,7 @@ const views = {
         .join("") || '<p class="muted">Nenhuma negociação concluída.</p>'
     }</div>`;
   },
+  "Lista de saídas": () => outgoingView(),
   "Categorias de base": () =>
     `<div class="card"><h3>O futuro começa em casa</h3><p class="muted">A evolução depende de treino, idade e potencial. O declínio anual começa aos 31 anos (35 para goleiros). A base reúne atletas reais e jovens fictícios das safras da carreira, identificados na ficha. Três novos jovens chegam a cada temporada. Promover custa R$ 100 mil e exige espaço no orçamento salarial; atletas que completam 20 anos sobem ao profissional.</p>${playersTable(team().youth, "youth")}</div>`,
   Competições: () => {
@@ -1055,7 +1099,7 @@ function squadPlayersView() {
   };
   players.sort(sorting[rosterSort] || sorting.overall);
   const cards = () =>
-    `<div class="roster-grid">${players.map((p) => `<article class="roster-player"><div class="row"><button class="player-jersey" data-action="edit-shirt" data-id="${esc(p.id)}" aria-label="Mudar camisa de ${esc(p.name)}">${p.shirtNumber}</button><div><h3>${esc(p.name)}</h3><small>${esc([...(p.naturalPositions || []), ...(p.secondaryPositions || [])].join(" / ") || p.pos)} · ${playerAge(p)} anos</small></div><span class="rating" title="Potencial ${p.potential}${p.developmentChange ? "; última variação: " + (p.developmentChange > 0 ? "+" : "") + p.developmentChange : ""}">${p.ovr}${p.developmentChange ? `<small class="sub">${p.developmentChange > 0 ? "+" : ""}${p.developmentChange}</small>` : ""}</span></div><div class="roster-player-state"><span>${E.discipline.suspension(p, t.selectionCompetition) ? "Suspenso · " + E.discipline.suspension(p, t.selectionCompetition) + " jogo(s)" : p.injury ? "Lesionado" : lineup.has(p.id) ? "No onze titular" : "Opção de elenco"}</span><strong>${p.fitness}% energia</strong></div><div class="money-pair"><div><small>Valor</small>${moneyValue(p.price)}</div><div><small>Salário / semana</small>${moneyValue(p.salary)}</div></div><p class="muted">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")} · contrato ${p.contract}</p><div class="row">${p.loan ? loanStatus(p) : btn("Renovar", "renew", p.id) + btn("Vender", "sell", p.id)}${btn("Camisa " + p.shirtNumber, "edit-shirt", p.id)}</div></article>`).join("") || "<p>Nenhum jogador corresponde aos filtros.</p>"}</div>`;
+    `<div class="roster-grid">${players.map((p) => `<article class="roster-player"><div class="row"><button class="player-jersey" data-action="edit-shirt" data-id="${esc(p.id)}" aria-label="Mudar camisa de ${esc(p.name)}">${p.shirtNumber}</button><div><h3>${esc(p.name)}</h3><small>${esc([...(p.naturalPositions || []), ...(p.secondaryPositions || [])].join(" / ") || p.pos)} · ${playerAge(p)} anos</small></div><span class="rating" title="${esc(p.ratingSource || "Estimativa do jogo")} · Potencial ${p.potential}${p.developmentChange ? "; última variação: " + (p.developmentChange > 0 ? "+" : "") + p.developmentChange : ""}">${p.ovr}${p.developmentChange ? `<small class="sub">${p.developmentChange > 0 ? "+" : ""}${p.developmentChange}</small>` : ""}</span></div><div class="roster-player-state"><span>${E.discipline.suspension(p, t.selectionCompetition) ? "Suspenso · " + E.discipline.suspension(p, t.selectionCompetition) + " jogo(s)" : p.injury ? "Lesionado" : lineup.has(p.id) ? "No onze titular" : "Opção de elenco"}</span><strong>${p.fitness}% energia</strong></div>${p.ratingUrl ? `<p class="muted">Avaliação: ${esc(p.ratingSource)} · potencial ${p.potential}</p>` : ""}<div class="money-pair"><div><small>Valor</small>${moneyValue(p.price)}</div><div><small>Salário / semana</small>${moneyValue(p.salary)}</div></div><p class="muted">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")} · contrato ${p.contract}</p><div class="row">${p.loan ? loanStatus(p) : outgoingPlayerActions(p)}${btn("Camisa " + p.shirtNumber, "edit-shirt", p.id)}</div></article>`).join("") || "<p>Nenhum jogador corresponde aos filtros.</p>"}</div>`;
   return `<div class="hero roster-hero"><span class="badge">GESTÃO DO ELENCO</span><h2 class="identity-title">${badge(t, "large")}<span>${esc(t.name)}</span></h2><p>${t.players.length} profissionais · ${t.players.filter((p) => E.discipline.available(p, t.selectionCompetition)).length} disponíveis · ${t.players.filter((p) => p.injury).length} no departamento médico</p><div class="row">${btn("Numeração do elenco", "shirt-squad", t.players[0]?.id || "")}<button data-page="Treinamento">Preparação física →</button></div></div><section class="card"><div class="row"><h3>Jogadores e contratos</h3><div class="segmented">${btn("Tabela", "roster-view", "table", rosterView === "table" ? "active" : "")}${btn("Cartões", "roster-view", "cards", rosterView === "cards" ? "active" : "")}</div></div><form id="roster-search" class="roster-filters"><label>Buscar jogador<input id="roster-query" value="${esc(rosterQuery)}" placeholder="Nome do atleta"></label><label>Posição<select id="roster-position">${options([["all", "Todas"], ...["GOL", "LAT", "ZAG", "VOL", "MEI", "ATA"].map((x) => [x, x])], rosterPosition)}</select></label><label>Situação<select id="roster-status">${options(
     [
       ["all", "Todos"],
@@ -1778,13 +1822,15 @@ const negotiationLabels = {
 };
 function negotiationOverview() {
   const active = (state.negotiations || []).filter(E.negotiationActive);
-  if (!active.length) return "";
+  const outgoing = state.outgoingMarket?.offers.filter(o => o.ownerId === state.clubId && o.status === "pending").length || 0;
+  const outgoingSummary = outgoing ? `<section class="card"><h3>${outgoing} proposta(s) por seus jogadores</h3><p>Compare os clubes e decida cada saída.</p><button data-page="Lista de saídas">Avaliar propostas</button></section>` : "";
+  if (!active.length) return outgoingSummary;
   const responses = active.filter((n) =>
     ["club-counter", "contract-ready", "player-counter", "blocked"].includes(
       n.stage,
     ),
   ).length;
-  return `<div class="card"><div class="row"><div><h3>Negociações em andamento · ${active.length}</h3><p>${responses ? responses + " aguardando sua decisão." : "Os clubes e jogadores estão analisando suas propostas."}</p></div><button data-page="Transferências">Acompanhar negociações</button></div></div>`;
+  return `${outgoingSummary}<div class="card"><div class="row"><div><h3>Negociações em andamento · ${active.length}</h3><p>${responses ? responses + " aguardando sua decisão." : "Os clubes e jogadores estão analisando suas propostas."}</p></div><button data-page="Transferências">Acompanhar negociações</button></div></div>`;
 }
 function negotiationsView() {
   const list = state.negotiations || [],
@@ -1992,56 +2038,7 @@ function openShirtDialog(id) {
 function openDeal(kind, id) {
   if (kind === "renew") return openNegotiation("renew", id);
   if (kind === "buy") return openNegotiation("new", id);
-  if (state.live && !state.live.done)
-    throw Error("Conclua a partida antes de negociar.");
-  let p, seller;
-  for (const t of state.teams) {
-    p = t.players.find((p) => p.id === id);
-    if (p) {
-      seller = t;
-      break;
-    }
-  }
-  if (!p) p = state.freeAgents.find((p) => p.id === id);
-  if (!p) throw Error("Jogador indisponível.");
-  $("#deal-form").oninput = null;
-  $("#deal-form").onclick = null;
-  let html;
-  if (kind === "sell") {
-    const offer = E.saleOffer(state, id);
-    if (!offer) throw Error("Nenhum clube tem orçamento para este jogador.");
-    html = `<h2>Proposta por ${esc(p.name)}</h2><p>${esc(name(offer.buyerId))} oferece <strong>${money(offer.fee)}</strong>.</p><p class="muted">O clube precisa manter ao menos 16 atletas. Vendas dependem da janela aberta.</p><input type="hidden" name="buyer" value="${offer.buyerId}"><input type="hidden" name="fee" value="${offer.fee}">`;
-  } else {
-    const salary =
-      kind === "renew" || seller ? Math.ceil(p.salary * 1.1) : p.salary;
-    html = `<h2>${kind === "buy" ? "Contratar" : "Renovar"} ${esc(p.name)}</h2><p>${esc(seller?.name || "Sem clube")} · ${p.pos} · Geral ${p.ovr}</p>${kind === "buy" ? `<label>Valor da transferência (R$)<input name="fee" type="number" min="0" step="1" required value="${seller ? E.minFee(state, p) : 0}"></label>` : ""}<label>Salário semanal (R$)<input name="salary" type="number" min="1500" max="30000000" step="1" required value="${salary}"></label><label>Duração em temporadas<select name="years">${[1, 2, 3, 4, 5].map((n) => `<option ${n === 2 ? "selected" : ""}>${n}</option>`).join("")}</select></label><p class="muted">Luvas: quatro salários semanais, além do valor da transferência.</p>`;
-  }
-  $("#deal-form").innerHTML =
-    html +
-    `<p id="deal-error" class="error" role="alert"></p><div class="row"><button type="button" data-action="close-dialog">Cancelar</button><button class="primary">${kind === "sell" ? "Aceitar venda" : "Enviar proposta"}</button></div>`;
-  decorateMoneyInputs($("#deal"));
-  $("#deal").showModal();
-  $("#deal-form").onsubmit = (e) => {
-    e.preventDefault();
-    const f = new FormData(e.currentTarget);
-    try {
-      if (kind === "renew")
-        E.renew(
-          state,
-          id,
-          Number(f.get("years")),
-          LegacyMoney.parse(f.get("salary")),
-        );
-      if (kind === "sell")
-        E.sell(state, id, f.get("buyer"), LegacyMoney.parse(f.get("fee")));
-      $("#deal").close();
-      scheduleSave();
-      render();
-      notify("Negociação concluída.");
-    } catch (e) {
-      $("#deal-error").textContent = e.message;
-    }
-  };
+  if (kind === "sell") return openListingDialog(id, "sale");
 }
 document.addEventListener("keydown", (event) => {
   const tab = event.target.closest('[role="tab"][data-section]');
@@ -2513,6 +2510,26 @@ document.addEventListener("click", (event) => {
         break;
       case "ledger-next":
         ledgerPage++;
+        break;
+      case "list-loan":
+        openListingDialog(id, "loan");
+        break;
+      case "edit-listing": {
+        const l = state.outgoingMarket.listings.find(l => l.id === id);
+        if (l) openListingDialog(l.playerId, l.kind);
+        break;
+      }
+      case "unlist-player":
+        E.unlistPlayer(state, id);
+        notify("Anúncio retirado. Propostas pendentes foram canceladas.");
+        break;
+      case "reject-outgoing":
+        E.rejectOutgoingOffer(state, id);
+        notify("Proposta recusada. O jogador continua anunciado.");
+        break;
+      case "accept-outgoing":
+        E.acceptOutgoingOffer(state, id);
+        notify("Proposta aceita. Contrato e financeiro atualizados.");
         break;
       case "loan":
         openLoanDialog(id);

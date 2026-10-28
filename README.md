@@ -418,3 +418,16 @@ O botão **Empréstimo** está no mercado e nos relatórios. O prazo é de uma o
 Os saves v3 e suas chaves locais permanecem compatíveis. Novos dados de empréstimos e safras são incluídos na exportação/importação. As novas safras começam na próxima temporada dos saves existentes.
 
 Validação específica: `node tests/career-development.test.cjs` e `npm run test:development-browser`.
+
+
+## Lista de saídas e correção de Xavi Espart (v0.20)
+
+Em **Elenco → Jogadores**, **Lista de venda** e **Lista de empréstimo** abrem um anúncio. Você define o preço pedido ou a taxa total do empréstimo, o prazo de uma ou duas temporadas e a opção de compra facultativa. Anunciar não transfere o atleta nem movimenta o caixa.
+
+Acompanhe em **Transferências → Lista de saídas**. Durante a janela, os primeiros interessados são avaliados depois de três dias e novas rodadas acontecem a cada sete. Até três clubes por rodada podem oferecer condições, conforme suas necessidades e verbas. Compare, recuse ou aceite cada proposta; ofertas expiram após dez dias. É possível editar ou retirar o anúncio. Aceitar revalida os recursos e cancela ofertas concorrentes.
+
+Ao ceder um jogador, o destino assume o salário integral. Sem compra, o retorno ocorre no início da temporada indicada. Quando há opção, o destino pode comprá-lo no encerramento se ele tiver pelo menos 900 minutos, média de 6,8, preço compatível e recursos disponíveis. O clube de origem recebe o valor contratado. Nenhuma saída definitiva acontece apenas por colocar o jogador na lista.
+
+Xavi Espart (`tm-1018912`) passa da estimativa antiga de 58/67 para **71 de overall e 85 de potencial**, referência FIFA Index/FC27 consultada em 28/10/2026. A atualização individual preserva os ganhos ou perdas em relação ao overall-base do save, não altera o clube ou o contrato e não reaplica o aumento a cada recarga. Fonte e limites em `data/SOURCES.md`.
+
+Validação: `node tests/outgoing-market.test.cjs` e `npm run test:outgoing-browser`, além da suíte geral. Os saves v3 anteriores continuam compatíveis.

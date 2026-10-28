@@ -488,6 +488,42 @@
         number(h.improved, 0, 600);
         string(h.label);
       });
+    if (s.outgoingMarket !== undefined) {
+      const data = s.outgoingMarket, listingIds = new Set(), offerIds = new Set();
+      number(data.sequence, 0, 1e9);
+      const date = value => {
+        string(value, 10);
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || !Number.isFinite(Date.parse(value + "T00:00:00Z"))) fail();
+      };
+      const terms = o => {
+        if (!["sale", "loan"].includes(o.kind) || !known.has(o.ownerId)) fail();
+        string(o.playerId);
+        string(o.playerName);
+        number(o.fee, o.kind === "sale" ? 1 : 0, 1e13);
+        if (!Number.isSafeInteger(o.fee)) fail();
+        if (o.kind === "sale" ? o.years !== 0 || o.option !== null : ![1, 2].includes(o.years)) fail();
+        if (o.option !== null) { number(o.option, 1, 1e13); if (!Number.isSafeInteger(o.option)) fail(); }
+        date(o.createdOn);
+      };
+      array(data.listings, 150).forEach(l => {
+        terms(l);
+        string(l.id);
+        if (listingIds.has(l.id) || !["active", "replaced", "removed", "unavailable", "completed"].includes(l.status)) fail();
+        listingIds.add(l.id);
+        date(l.nextOn);
+      });
+      if (data.listings.filter(l => l.status === "active").length > 30) fail();
+      array(data.offers, 500).forEach(o => {
+        terms(o);
+        string(o.id);
+        string(o.listingId);
+        number(o.salary, 0, 30000000);
+        date(o.expiresOn);
+        if (offerIds.has(o.id) || !known.has(o.buyerId) || o.buyerId === o.ownerId || !["pending", "accepted", "rejected", "expired", "cancelled"].includes(o.status)) fail();
+        if (o.status === "pending" && !listingIds.has(o.listingId)) fail();
+        offerIds.add(o.id);
+      });
+    }
     if (s.scouting !== undefined) {
       const c = s.scouting;
       number(c.sequence, 0);

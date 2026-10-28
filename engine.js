@@ -35,6 +35,7 @@
     typeof module !== "undefined"
       ? require("./scouting.js")
       : root.LegacyScouting;
+  const OUT = typeof module !== "undefined" ? require("./outgoing-market.js") : root.LegacyOutgoingMarket;
   const D =
     typeof module !== "undefined"
       ? require("./schedule.js")
@@ -642,6 +643,7 @@
             ratingBase: ref.ovr,
             ratingRevision: ref.ratingRevision,
             ratingSource: ref.ratingSource,
+            ratingUrl: ref.ratingUrl,
             ratingEstimated: ref.ratingEstimated,
             referenceOverall: ref.referenceOverall,
             stamina: ref.stamina,
@@ -2443,6 +2445,7 @@
     processFacilities(s);
     announcePlayerAwards(s, PF.closeMonth(s));
     processNegotiations(s);
+    OUT.process(s, windowOpen(s), (title, info) => news(s, title, info));
     const invitation = N.review(s);
     if (invitation)
       news(s, `Convite para treinar ${invitation.name}.`, {
@@ -3364,16 +3367,17 @@
       body: `Origem: ${seller?.name || "sem clube"}. Transferência de R$ ${fee.toLocaleString("pt-BR")}, contrato até ${p.contract} e salário semanal de R$ ${salary.toLocaleString("pt-BR")}.`,
     });
   }
-  function sell(s, id, buyerId, fee) {
+  function sell(s, id, buyerId, fee, agreement = null) {
     if (!windowOpen(s)) fail("A janela de transferências está fechada.");
     const seller = team(s),
-      p = seller.players.find((p) => p.id === id),
+      p = [...seller.players, ...seller.youth].find((p) => p.id === id),
       buyer = team(s, buyerId);
     if (!p || !buyer || buyer === seller) fail("Proposta indisponível.");
     if (p.loan) fail("Não é possível vender um atleta emprestado.");
-    if (seller.players.length <= 16)
+    if (seller.players.includes(p) && seller.players.length <= 16)
       fail("Mantenha pelo menos 16 jogadores no elenco.");
-    if (!Number.isFinite(fee) || fee <= 0 || fee > p.price)
+    const validAgreement = agreement && s.outgoingMarket?.offers.includes(agreement) && agreement.status === "pending" && agreement.playerId === id && agreement.ownerId === s.clubId && agreement.buyerId === buyerId && agreement.fee === fee;
+    if (!Number.isSafeInteger(fee) || fee <= 0 || (fee > p.price && !validAgreement))
       fail("Valor de venda inválido.");
     F.canHire(buyer, p, fee, p.salary, s);
     F.post(buyer, s, -fee, "transfer", `Compra · ${p.name}`);
@@ -3381,7 +3385,8 @@
     buyer.finance.transferBudget -= fee;
     F.post(seller, s, fee, "transfer", `Venda · ${p.name}`);
     seller.finance.transferBudget += Math.round(fee * 0.8);
-    seller.players.splice(seller.players.indexOf(p), 1);
+    const source = seller.youth.includes(p) ? seller.youth : seller.players;
+    source.splice(source.indexOf(p), 1);
     seller.lineup = seller.lineup.map((x) => (x === id ? "" : x));
     delete p.shirtNumber;
     buyer.players.push(p);
@@ -3595,6 +3600,19 @@
     for (const borrower of s.teams) for (const p of [...borrower.players]) {
       if (!p.loan || p.loan.endSeason > s.season) continue;
       const loan = p.loan, owner = team(s, loan.ownerId);
+      const stats = s.performance?.current?.players?.[p.id];
+      if (loan.aiPurchaseAllowed && borrower.id !== s.clubId && loan.option &&
+          stats?.clubId === borrower.id && stats.minutes >= 900 && PF.average(stats) >= 6.8 &&
+          loan.option <= p.price * 1.2 && borrower.money >= loan.option && borrower.finance.transferBudget >= loan.option) {
+        F.post(borrower, s, -loan.option, "transfer", `Opção de compra · ${p.name}`);
+        F.post(owner, s, loan.option, "transfer", `Opção de compra recebida · ${p.name}`);
+        borrower.finance.transferBudget -= loan.option;
+        owner.finance.transferBudget += Math.round(loan.option * .8);
+        p.contract = Math.max(p.contract, s.season + 2);
+        delete p.loan;
+        news(s, `${borrower.name} exerceu a opção de compra de ${p.name}.`, {category: "market", clubIds: [owner.id, borrower.id]});
+        continue;
+      }
       borrower.players.splice(borrower.players.indexOf(p), 1);
       borrower.lineup = borrower.lineup.map(x => x === p.id ? "" : x);
       delete p.loan;
@@ -3911,6 +3929,12 @@
     cancelNegotiation,
     retryNegotiation,
     enableTestMode,
+    outgoingMarket: OUT,
+    listPlayer: OUT.list,
+    unlistPlayer: OUT.remove,
+    rejectOutgoingOffer: OUT.decline,
+    processOutgoingMarket: (s) => OUT.process(s, windowOpen(s), (title, info) => news(s, title, info)),
+    acceptOutgoingOffer: (s, id) => OUT.accept(s, id, {windowOpen: windowOpen(s), sell, announce: (title, info) => news(s, title, info), numberSquad: ensureSquadNumbers}),
     loanPlayer,
     exerciseLoanOption,
     youthIntake,

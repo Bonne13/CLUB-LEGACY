@@ -112,7 +112,14 @@
       Math.max(45, Math.round(40 + 10 * Math.log10(value / 1000))),
     );
     const id = /^\d+$/.test(sourceId) ? "tm-" + sourceId : sourceId;
-    const reference = DATA.playerRatings?.players?.[id];
+    // Published game rating replaces the obsolete market-value estimate for this identity.
+    // FIFA Index FC27, consulted 2026-10-28; not a live real-world performance feed.
+    const reference = id === "tm-1018912" ? {
+      overall: 71, potential: 85, reference: "2026-10-28",
+      revision: "xavi-espart-fc27-2026-10-28-v1",
+      label: "FC27 · FIFA Index · 28/10/2026",
+      url: "https://www.fifaindex.com/players/81863-xavi-espart/fc27",
+    } : DATA.playerRatings?.players?.[id];
     const benchmarks = {
       "tm-68290": 84,
       "tm-248410": 84,
@@ -208,11 +215,12 @@
       stamina,
       ratingBase: ovr,
       legacyRatingBase: legacyOverall,
-      ratingRevision: DATA.playerRatings?.revision || "balanced-2026-v1",
+      ratingRevision: reference?.revision || DATA.playerRatings?.revision || "balanced-2026-v1",
       ratingSource: reference
-        ? "FC26 · " + reference.reference
+        ? reference.label || "FC26 · " + reference.reference
         : "Estimativa do jogo",
       ratingEstimated: !reference,
+      ratingUrl: reference?.url || null,
       referenceOverall: reference?.overall || null,
       fitness: 100,
       fatigue: 0,

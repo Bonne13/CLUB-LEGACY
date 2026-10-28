@@ -6317,3 +6317,9 @@ form input, form select { max-width: 100%; box-sizing: border-box; }
   .stadium-profile { grid-template-columns: minmax(0, 1fr); }
   .roster-player .row { flex-wrap: wrap; }
 }
+
+.outgoing-offers { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 1rem; margin-top: 1rem; }
+.outgoing-offer { min-width: 0; border: 1px solid var(--border); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: .5rem; }
+.outgoing-offer h4 { margin: 0; overflow-wrap: anywhere; }
+.outgoing-offer > .row { margin-top: auto; padding-top: .75rem; }
+.outgoing-listing > .row { align-items: start; }
