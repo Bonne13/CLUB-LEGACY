@@ -431,3 +431,18 @@ Ao ceder um jogador, o destino assume o salário integral. Sem compra, o retorno
 Xavi Espart (`tm-1018912`) passa da estimativa antiga de 58/67 para **71 de overall e 85 de potencial**, referência FIFA Index/FC27 consultada em 28/10/2026. A atualização individual preserva os ganhos ou perdas em relação ao overall-base do save, não altera o clube ou o contrato e não reaplica o aumento a cada recarga. Fonte e limites em `data/SOURCES.md`.
 
 Validação: `node tests/outgoing-market.test.cjs` e `npm run test:outgoing-browser`, além da suíte geral. Os saves v3 anteriores continuam compatíveis.
+
+
+## Partidas dinâmicas (v0.21)
+
+O motor compartilhado dos jogos acompanhados e dos outros clubes considera desgaste minuto a minuto. O contexto passa a incluir pressão recente, mando e postura: quem perde pode buscar o resultado no fim; quem vence pode reduzir o ritmo; uma expulsão exige reorganização. A pressão recente cresce a partir de chances reais e decai quando o time deixa de ameaçar. Não acrescenta gols ou finalizações ao placar.
+
+O adversário utiliza reservas aos 60, 72 e 82 minutos quando tem opções compatíveis. A IA respeita limite de jogadores, oportunidades de substituição, indisponibilidade e proibição de reentrada. Nas partidas acompanhadas, as substituições da sua equipe continuam manuais; o onze permanente é preservado. Nas partidas dos outros clubes, ambas as equipes podem usar o banco.
+
+Em **Dia de jogo**, a leitura mostra a postura de cada equipe e a pressão recente. É possível fixar **Equilibrar**, **Pressionar**, **Buscar resultado**, **Proteger** ou **Controlar posse** durante a partida. As escolhas não alteram o plano permanente. Pressionar aumenta a iniciativa e também a exposição defensiva; controlar favorece a posse; proteger reduz o ritmo. O desenvolvimento visual dos lances acompanha a postura.
+
+As estatísticas incluem **gols esperados (xG)** e **grandes chances**, calculados a partir das probabilidades usadas pelo próprio motor. Não são dados oficiais do futebol real. Os escanteios também podem ser finalizados pelos zagueiros. Relatos distinguem finalizações difíceis, chances construídas e grandes chances. O resumo das partidas passa a guardar finalizações, xG, posse e total de trocas.
+
+Saves anteriores continuam compatíveis. Os novos campos são adicionados sem reiniciar partidas. Em uma partida antiga retomada, xG e pressão recente começam a ser acompanhados a partir da atualização.
+
+Validação específica: `node tests/match-dynamics.test.cjs`; a suíte de regressão continua cobrindo autoria de lances, escalação, estatísticas, disciplina e salvamento.

@@ -6323,3 +6323,7 @@ form input, form select { max-width: 100%; box-sizing: border-box; }
 .outgoing-offer h4 { margin: 0; overflow-wrap: anywhere; }
 .outgoing-offer > .row { margin-top: auto; padding-top: .75rem; }
 .outgoing-listing > .row { align-items: start; }
+
+.match-dynamic-panel { padding: 1rem; border: 1px solid var(--border); border-radius: 12px; margin: 1rem 0; }
+.match-dynamic-panel p { font-size: .85rem; margin: .5rem 0; }
+.match-dynamic-panel .row { gap: .5rem; flex-wrap: wrap; }

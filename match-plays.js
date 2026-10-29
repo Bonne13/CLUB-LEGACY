@@ -89,6 +89,10 @@
         "overlap",
         "clearance",
       ];
+    const phase = m.dynamics?.phases?.[side];
+    if (phase === "chase" || phase === "press") pool = [...pool, "through", "overlap", "counter"];
+    if (phase === "protect" || phase === "resist") pool = [...pool, "recycle", "clearance", "counter"];
+    if (phase === "settle") pool = [...pool, "possession", "switch", "recycle"];
     let pattern = pool[seed % pool.length];
     const shot = type !== "build-up";
     if (detail === "pênalti") pattern = "penalty";

@@ -1445,7 +1445,7 @@ function matchView() {
         !used.has(p.id) &&
         (!plan.bench || plan.bench.includes(p.id)),
     ) || [];
-  return `<section class="match-centre"><header class="match-heading"><span class="badge">${esc(f.name)}</span><div id="match-minute">${m ? m.minute + "’" : "PRÉ-JOGO"} · ${half ? "INTERVALO" : m?.done ? "ENCERRADO" : m?.secondHalfStarted || m?.minute > 45 ? "SEGUNDO TEMPO" : "PRIMEIRO TEMPO"}</div><div class="score">${scoreboard(f, m?.goals || [0, 0])}</div><div class="match-progress"><i style="width:${((m?.minute || 0) / 90) * 100}%"></i></div></header><p class="match-venue">${esc(E.facilities.ensure(team(f.pair[0]), state).venue.name)} · ${E.facilities.ensure(team(f.pair[0]), state).gameCapacity.toLocaleString("pt-BR")} lugares</p><div class="match-controls">${controls}<label>Visualização<select id="mode">${options(
+  return `<section class="match-centre"><header class="match-heading"><span class="badge">${esc(f.name)}</span><div id="match-minute">${m ? m.minute + "’" : "PRÉ-JOGO"} · ${half ? "INTERVALO" : m?.done ? "ENCERRADO" : m?.secondHalfStarted || m?.minute > 45 ? "SEGUNDO TEMPO" : "PRIMEIRO TEMPO"}</div><div class="score">${scoreboard(f, m?.goals || [0, 0])}</div><div class="match-progress"><i style="width:${((m?.minute || 0) / 90) * 100}%"></i></div></header><p class="match-venue">${esc(E.facilities.ensure(team(f.pair[0]), state).venue.name)} · ${E.facilities.ensure(team(f.pair[0]), state).gameCapacity.toLocaleString("pt-BR")} lugares</p>${playing ? `<section class="match-dynamic-panel"><span class="badge">LEITURA DO JOGO</span><div id="match-phases"></div><p>Pressionar aumenta a iniciativa e abre espaços. Proteger reduz o ritmo. A leitura é automática; os botões fixam a postura só nesta partida. xG soma a qualidade das chances criadas.</p><div class="row">${Object.entries({balanced:"Equilibrar",press:"Pressionar",chase:"Buscar resultado",protect:"Proteger",settle:"Controlar posse"}).map(([key,label])=>btn(label,"match-approach",key)).join("")}</div></section>` : ""}<div class="match-controls">${controls}<label>Visualização<select id="mode">${options(
     [
       ["2d", "Campo 2D"],
       ["3d", "Campo 3D"],
@@ -1512,6 +1512,7 @@ function draw() {
     });
   const possession = m.possession || [0, 0],
     sum = Math.max(1, possession[0] + possession[1]);
+  if ($("#match-phases")) $("#match-phases").innerHTML = (m.plans||[]).map((p,i)=>`<p><strong>${esc(p.name)}</strong> · ${esc(E.dynamics.labels[m.dynamics?.phases?.[i] || "balanced"])} · pressão recente ${(m.dynamics?.momentum?.[i]||0)>30 ? "forte" : (m.dynamics?.momentum?.[i]||0)>12 ? "crescente" : "baixa"}</p>`).join("");
   const matchLines = E.performance.lines(m);
   const statFor = (side, key) =>
     matchLines
@@ -1519,7 +1520,7 @@ function draw() {
       .reduce((n, p) => n + (p[key] || 0), 0);
   if ($("#stats"))
     $("#stats").innerHTML =
-      `<div><small>Finalizações</small><strong>${m.shots.join(" × ")}</strong></div><div><small>Chutes no alvo</small><strong>${statFor(0, "onTarget")} × ${statFor(1, "onTarget")}</strong></div><div><small>Defesas</small><strong>${statFor(0, "saves")} × ${statFor(1, "saves")}</strong></div><div><small>Posse de bola</small><strong>${Math.round((possession[0] / sum) * 100)}% × ${Math.round((possession[1] / sum) * 100)}%</strong></div><div><small>Faltas</small><strong>${(m.discipline?.fouls || [0, 0]).join(" × ")}</strong></div><div><small>Amarelos</small><strong>${statFor(0, "yellowCards")} × ${statFor(1, "yellowCards")}</strong></div><div><small>Expulsões</small><strong>${statFor(0, "redCards")} × ${statFor(1, "redCards")}</strong></div>${m.penalties ? `<div><small>Pênaltis</small><strong>${m.penalties.join(" × ")}</strong></div>` : ""}`;
+      `<div><small>Gols esperados (xG)</small><strong>${(m.dynamics?.xg || [0,0]).map(n => n.toFixed(2).replace(".",",")).join(" × ")}</strong></div><div><small>Grandes chances</small><strong>${(m.dynamics?.bigChances || [0,0]).join(" × ")}</strong></div><div><small>Finalizações</small><strong>${m.shots.join(" × ")}</strong></div><div><small>Chutes no alvo</small><strong>${statFor(0, "onTarget")} × ${statFor(1, "onTarget")}</strong></div><div><small>Defesas</small><strong>${statFor(0, "saves")} × ${statFor(1, "saves")}</strong></div><div><small>Posse de bola</small><strong>${Math.round((possession[0] / sum) * 100)}% × ${Math.round((possession[1] / sum) * 100)}%</strong></div><div><small>Faltas</small><strong>${(m.discipline?.fouls || [0, 0]).join(" × ")}</strong></div><div><small>Amarelos</small><strong>${statFor(0, "yellowCards")} × ${statFor(1, "yellowCards")}</strong></div><div><small>Expulsões</small><strong>${statFor(0, "redCards")} × ${statFor(1, "redCards")}</strong></div>${m.penalties ? `<div><small>Pênaltis</small><strong>${m.penalties.join(" × ")}</strong></div>` : ""}`;
   if ($("#log")) {
     const events = m.events.filter(
       (e) =>
@@ -2433,7 +2434,7 @@ document.addEventListener("click", (event) => {
     if (
       state.live &&
       !state.live.done &&
-      !["pause", "instant", "second-half", "replay-goal"].includes(a)
+      !["pause", "instant", "second-half", "replay-goal", "match-approach"].includes(a)
     )
       throw Error("Conclua a partida antes de mudar a gestão do clube.");
     switch (a) {
@@ -2510,6 +2511,10 @@ document.addEventListener("click", (event) => {
         break;
       case "ledger-next":
         ledgerPage++;
+        break;
+      case "match-approach":
+        E.setMatchApproach(state,id);
+        notify("Postura ajustada para esta partida.");
         break;
       case "list-loan":
         openListingDialog(id, "loan");

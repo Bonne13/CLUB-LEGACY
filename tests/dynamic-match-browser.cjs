@@ -1,0 +1,12 @@
+const {chromium}=require('playwright'),assert=require('node:assert/strict');
+(async()=>{const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox']});
+try{const p=await browser.newPage({viewport:{width:1280,height:900}}),errors=[];p.on('pageerror',e=>errors.push(e.message));
+await p.goto('http://127.0.0.1:3000');await p.locator('#start-league').selectOption('es');await p.locator('#start-club').selectOption('es-1');await p.locator('#start-coach-name').fill('Lucas Silva');await p.locator('#start-calendar').selectOption('classic');await p.locator('[data-action=begin]').click();
+await p.evaluate(()=>{matchMode='text';E.makeMatch(state,'text');page='Dia de jogo';paused=true;render();});
+const baseline=await p.evaluate(()=>JSON.stringify(team().tactics));await p.locator('[data-action=match-approach][data-id=press]').click();assert.equal(await p.evaluate(()=>state.live.dynamics.approaches[state.live.pair.indexOf(state.clubId)]),'press');assert.equal(await p.evaluate(()=>JSON.stringify(team().tactics)),baseline);
+await p.evaluate(()=>{const m=state.live,other=1-m.pair.indexOf(state.clubId);m.plans[other].starters.forEach(p=>p.fitness=50);while(m.minute<82)E.minute(state,m,()=>.99);m.secondHalfStarted=true;paused=true;render();});
+assert.match(await p.locator('#stats').innerText(),/Gols esperados/);assert.match(await p.locator('#match-phases').innerText(),/Pressionar/);assert(await p.evaluate(()=>state.live.substitutions.length>0));
+for(const width of [320,390,768,1280]){await p.setViewportSize({width,height:900});assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`overflow ${width}`);}
+await p.getByRole('button',{name:'Salvar carreira',exact:true}).click();await p.waitForTimeout(1000);const data=await p.evaluate(()=>JSON.stringify(state.live.dynamics));await p.reload();assert.equal(await p.evaluate(()=>state.live.minute),82);assert.equal(await p.evaluate(()=>JSON.stringify(state.live.dynamics)),data);
+await p.evaluate(()=>{page='Dia de jogo';paused=true;render();});await p.locator('[data-action=instant]').click();await p.waitForFunction(()=>state.live.done);assert.equal(await p.evaluate(()=>state.live.minute),90);assert.deepEqual(errors,[]);console.log('Browser OK: posturas em jogo, IA, xG, responsividade, save/retomada e conclusão.');
+}finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});

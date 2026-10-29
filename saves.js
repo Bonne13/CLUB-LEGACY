@@ -633,6 +633,20 @@
         m.pair.some((id) => !known.has(id) && !nationalIDs.has(id))
       )
         fail();
+      if (m.dynamics !== undefined) {
+        const d=m.dynamics;
+        if (!d || d.version !== 1) fail();
+        for (const [key,max] of [["momentum",65],["xg",90],["bigChances",90]]) {
+          if (array(d[key],2).length !== 2) fail();
+          d[key].forEach(n=>number(n,0,max));
+        }
+        if (array(d.phases,2).length !== 2 || d.phases.some(p=>!Object.hasOwn(E.dynamics.labels,p))) fail();
+        if (array(d.approaches,2).length !== 2 || d.approaches.some(p=>p!==null&&!["balanced","press","protect","chase","settle"].includes(p))) fail();
+        array(d.history,20).forEach(h=>{
+          number(h.minute,0,90);
+          if (![0,1].includes(h.side)||!Object.hasOwn(E.dynamics.labels,h.phase)) fail();
+        });
+      }
       number(m.minute, 0, 90);
       if (!Number.isInteger(m.minute)) fail();
       array(m.goals, 2).forEach((g) => number(g, 0, 99));

@@ -60,6 +60,7 @@
     typeof module !== "undefined"
       ? require("./match-plays.js")
       : root.LegacyMatchPlays;
+  const DYNAMICS = typeof module !== "undefined" ? require("./match-dynamics.js") : root.LegacyMatchDynamics;
   const MOTION =
     typeof module !== "undefined"
       ? require("./match-motion.js")
@@ -1698,12 +1699,12 @@
     const m = s.live;
     if (!m || m.done || m.minute >= 90 || !currentMatch(s).active)
       fail("Substituição indisponível.");
-    const ownId = m.kind === "national" ? s.national.job : s.clubId,
-      side = m.pair.indexOf(ownId),
-      plan = m.plans[side],
-      t = team(s, ownId);
-    if (side < 0 || !plan || !t)
-      fail("A equipe gerida não participa desta partida.");
+    const ownId = m.kind === "national" ? s.national.job : s.clubId;
+    return substituteMatch(s, m, m.pair.indexOf(ownId), outId, inId);
+  }
+  function substituteMatch(s, m, side, outId, inId) {
+    const plan = m.plans[side], t = team(s, m.pair[side]);
+    if (side < 0 || !plan || !t) fail("Equipe indisponível.");
     const changes = (m.substitutions || []).filter((x) => x.side === side),
       index = plan?.starters.findIndex((p) => p.id === outId),
       incoming = t.players.find(
@@ -1822,15 +1823,41 @@
       ) / 11
     );
   }
+  function manageAI(s, m) {
+    if (![60,72,82].includes(m.minute)) return;
+    const managedId = m.kind === "national" ? s.national?.job : s.clubId;
+    for (let side=0;side<2;side++) {
+      if (!m.compact && m.pair[side] === managedId) continue;
+      const plan=m.plans[side],club=team(s,m.pair[side]);
+      const used=new Set((m.substitutions||[]).filter(x=>x.side===side).flatMap(x=>[x.outId,x.inId]));
+      const starters=new Set(plan.starters.map(p=>p.id));
+      const reserve=club.players.filter(p=>!starters.has(p.id)&&!used.has(p.id)&&(plan.bench||[]).includes(p.id)&&DS.available(p,m.competition));
+      const options=plan.starters.map((p,i)=>({p,i,fitness:matchFitness(p,m,plan.fatigue)})).filter(x=>x.p.pos!=="GOL"&&!x.p.sentOff&&!used.has(x.p.id)).sort((a,b)=>a.fitness-b.fitness);
+      for(const {p,i,fitness} of options){
+        const incoming=reserve.filter(q=>T.fit(q,plan.slots[i])>=.85).sort((a,b)=>b.ovr*T.fit(b,plan.slots[i])-a.ovr*T.fit(a,plan.slots[i]))[0];
+        if(!incoming||fitness>91&&incoming.ovr<p.ovr)continue;
+        try{substituteMatch(s,m,side,p.id,incoming.id);}catch(error){/* Competition limits still govern AI changes. */}
+        break;
+      }
+    }
+  }
+  function setMatchApproach(s, key) {
+    const m=s.live;
+    if(!m||!currentMatch(s).active)fail("A partida não está em andamento.");
+    const side=m.pair.indexOf(m.kind==="national"?s.national.job:s.clubId);
+    if(side<0)fail("Equipe indisponível.");
+    DYNAMICS.approach(m,side,key);
+  }
   function minute(s, m, rng = Math.random) {
     if (m.done || m.minute >= 90) return;
     if (!m.plans) m.plans = matchPlans(s, m);
     DS.begin(s, m);
     m.minute++;
+    DYNAMICS.tick(m);
+    manageAI(s,m);
     m.minutesPlayed ??= {};
     m.possession ??= [0, 0];
-    if (!m.compact)
-      for (const plan of m.plans) {
+    for (const plan of m.plans) {
         for (const p of DS.active(plan))
           m.minutesPlayed[p.id] = (m.minutesPlayed[p.id] || 0) + 1;
         plan.baseStrength ??= plan.strength;
@@ -1842,9 +1869,10 @@
           ) / 11;
         plan.strength = plan.baseStrength * (0.85 + (0.15 * condition) / 100);
       }
+    const homeContext=DYNAMICS.context(m,0), awayContext=DYNAMICS.context(m,1);
     m.possessionSide =
-      (Math.floor(m.minute / 4) * 37) % 100 <
-      50 + (m.plans[0].strength - m.plans[1].strength) * 0.3
+      (m.minute * 37 + Math.floor(Math.sin(m.minute*.7)*17) + 100) % 100 <
+      Math.max(25,Math.min(75,52 + (m.plans[0].strength - m.plans[1].strength) * 0.3 + homeContext.control-awayContext.control))
         ? 0
         : 1;
     if (!m.compact && m.lastPlay) {
@@ -1872,7 +1900,7 @@
           ? -0.025
           : 0;
     const shotRate =
-      0.24 +
+      0.24 + (homeContext.tempo+awayContext.tempo)/2 +
       (pace(m.plans[0]) + pace(m.plans[1])) / 2 +
       (ambition(m.plans[0]) + ambition(m.plans[1])) / 2;
     if (rng() < shotRate) {
@@ -1882,7 +1910,7 @@
           0.25,
           Math.min(
             0.75,
-            0.52 + (m.plans[0].strength - m.plans[1].strength) / 240,
+            0.52 + (m.plans[0].strength - m.plans[1].strength) / 240 + (homeContext.control-awayContext.control)/400 + (m.dynamics.momentum[0]-m.dynamics.momentum[1])/1400,
           ),
         )
           ? 0
@@ -1891,8 +1919,9 @@
         opponent = m.plans[1 - side],
         kind = rng(),
         delta = own.strength - opponent.strength;
+      const dynamic = DYNAMICS.context(m,side), opposition = DYNAMICS.context(m,1-side);
       let chance =
-          0.14 + delta / 200 + ambition(own) + own.attack - opponent.defense,
+          0.14 + delta / 200 + ambition(own) + own.attack - opponent.defense + dynamic.quality + opposition.exposure,
         type = "jogada",
         taker = null;
       if (
@@ -1938,7 +1967,7 @@
       }
       chance = Math.max(0.025, Math.min(0.9, chance));
       const attackers = DS.active(own).filter((p) =>
-          ["ATA", "MEI"].includes(p.pos),
+          (type === "escanteio" ? ["ATA", "ZAG"] : ["ATA", "MEI"]).includes(p.pos),
         ),
         pool = attackers.length ? attackers : DS.active(own);
       const scorer =
@@ -1955,9 +1984,13 @@
       if (type === "jogada")
         chance = Math.min(
           0.9,
-          chance + (scorer?.skills.finishingBonus || 0) * 0.003,
+          chance + (scorer?.skills.finishingBonus || 0) * 0.003 + ((scorer?.ovr || own.strength)-own.strength)/1200,
         );
-      if (rng() < chance) {
+      chance = Math.max(.025,Math.min(.9,chance));
+      const goal = rng() < chance;
+      DYNAMICS.shot(m,side,chance,goal);
+      m.lastChanceQuality = chance >= .3 ? "Grande chance" : chance <= .09 ? "Finalização difícil" : "Chance construída";
+      if (goal) {
         m.goals[side]++;
         PF.shot(m, side, scorer, type, { goal: true, taker });
         if (!m.compact) recordPlay(m, "goal", side, scorer, detail);
@@ -1969,7 +2002,7 @@
         PF.shot(m, side, scorer, type, { saved, taker });
         if (!m.compact) recordPlay(m, "shot", side, scorer, detail);
         m.events.unshift(
-          `${m.minute}' — ${own.name}: ${type === "jogada" ? scorer?.name || "o ataque" : taker?.name || "o cobrador"} tenta ${detail}; ${saved ? "o goleiro defende" : "a bola sai"}.`,
+          `${m.minute}' — ${own.name}: ${type === "jogada" ? scorer?.name || "o ataque" : taker?.name || "o cobrador"} tenta ${detail} (${m.lastChanceQuality.toLowerCase()}); ${saved ? "o goleiro defende" : "a bola sai"}.`,
         );
       }
     }
@@ -2256,6 +2289,7 @@
         winner: null,
         penalties: null,
         playerOfMatch,
+        summary: { shots: [...played.shots], xg: [...(played.dynamics?.xg || [0,0])], possession: [...(played.possession || [0,0])], substitutions: (played.substitutions || []).length },
       };
       if (f.kind === "national") {
         const plans = played.plans || matchPlans(s, f);
@@ -3989,6 +4023,8 @@
     matchFrame: MOTION.frame,
     honours: HONOURS,
     matchFitness,
+    dynamics: DYNAMICS,
+    setMatchApproach,
     fatigueLoss,
     startSecondHalf,
     substitute,
