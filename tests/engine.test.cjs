@@ -216,7 +216,7 @@ test("temporada completa: ligas, grupos, playoffs, campeões e propostas de trei
       l.table.reduce((a, t) => a + t.gf, 0),
       l.table.reduce((a, t) => a + t.ga, 0),
     );
-    assert.equal(l.ranking[0], E.rank(l.table)[0].id);
+    assert.equal(l.ranking[0], E.leagueRank(s, l.id)[0].id);
   }
   for (const c of s.cups) {
     assert(c.champion);

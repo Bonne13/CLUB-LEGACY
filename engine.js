@@ -60,6 +60,7 @@
     typeof module !== "undefined"
       ? require("./match-plays.js")
       : root.LegacyMatchPlays;
+  const DEV = typeof module !== "undefined" ? require("./player-development.js") : root.LegacyPlayerDevelopment;
   const DYNAMICS = typeof module !== "undefined" ? require("./match-dynamics.js") : root.LegacyMatchDynamics;
   const MOTION =
     typeof module !== "undefined"
@@ -2184,6 +2185,7 @@
       const previousOverall = p.ovr;
       if (
         (s.today + 1) % 7 === 0 &&
+        !p.injury &&
         mode !== "Recuperação" &&
         physical.plan !== "rest" &&
         rng() <
@@ -2195,7 +2197,7 @@
                 : 1) *
             (1 + (t.facility - 1) * 0.2)
       )
-        p.ovr = Math.min(p.potential, p.ovr + 1);
+        DEV.grow(s,p,false);
       if (p.ovr !== previousOverall) p.developmentChange = p.ovr - previousOverall;
     }
     if (t.id === s.clubId) {
@@ -2228,8 +2230,9 @@
           session.key !== "recovery" &&
           rng() < 0.3 + FACILITIES.level(t, "academy") * 0.03
         )
-          p.ovr = Math.min(p.potential, p.ovr + 1);
+          DEV.grow(s,p,true);
       });
+    if ((s.today+1)%7===0) DEV.performance(s,t);
   }
   function ensureAI(s, t) {
     while (t.players.length < 16 && t.youth.length) {
@@ -4023,6 +4026,7 @@
     matchFrame: MOTION.frame,
     honours: HONOURS,
     matchFitness,
+    development: DEV,
     dynamics: DYNAMICS,
     setMatchApproach,
     fatigueLoss,

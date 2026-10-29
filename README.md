@@ -446,3 +446,16 @@ As estatísticas incluem **gols esperados (xG)** e **grandes chances**, calculad
 Saves anteriores continuam compatíveis. Os novos campos são adicionados sem reiniciar partidas. Em uma partida antiga retomada, xG e pressão recente começam a ser acompanhados a partir da atualização.
 
 Validação específica: `node tests/match-dynamics.test.cjs`; a suíte de regressão continua cobrindo autoria de lances, escalação, estatísticas, disciplina e salvamento.
+
+
+## Revisão geral (v0.22)
+
+A Visão geral ganhou uma **Central do clube** com atalhos para contratos no último ano, baixa disponibilidade do elenco, propostas de saída, jovens próximos do nível profissional, missões de olheiros e excesso de folha salarial. O Financeiro mostra uma projeção de até 30 dias desta temporada a partir dos pagamentos programados, sem supor futuras vendas, bilheteria ou prêmios. A projeção não movimenta o caixa.
+
+O overall não tem teto de evolução por temporada. Treino e bom desempenho oficial podem gerar vários avanços, respeitando potencial, idade e lesões. Jovens com pelo menos cinco partidas avaliadas, média a partir de 7,2 e minutos suficientes recebem avanços por desempenho; atuações a partir de média 8 aceleram essa evolução. O progresso por partidas é acompanhado para evitar reaplicar os mesmos ganhos. A valorização acompanha os pontos adquiridos. A ficha mostra o potencial e o ganho acumulado no ano; o histórico detalhado fica limitado aos atletas do seu clube para manter os saves leves.
+
+O salvamento mantém alterações pendentes quando o navegador não consegue gravar, mostra **Não salvo** e interrompe a repetição automática de tentativas. **Salvar** tenta gravar novamente. Se o worker de compressão falhar, o jogo passa a usar a rotina local. O formato CL3 e as chaves dos saves anteriores foram preservados.
+
+Durante a partida, o botão **Automático** devolve a postura à leitura do jogo. Alterar a postura não reduz a pressão recente sem que o relógio avance. Na lista de saídas, pedidos muito acima do valor do jogador deixam de gerar propostas incompatíveis com a avaliação do clube; os anúncios permanecem editáveis. Relatórios de olheiros guardam todos os filtros da missão e orientam a revisão dos critérios quando não há resultados. A navegação por teclado recebeu destaque de foco nos controles.
+
+Validação adicional: `node tests/general-review.test.cjs`, projeção confrontada com 30 dias de pagamentos, evolução sem teto anual, bloqueio de progresso durante lesão, idempotência dos ganhos, recuperação de falhas de gravação e posturas de partida.

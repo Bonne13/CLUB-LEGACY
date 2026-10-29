@@ -6327,3 +6327,9 @@ form input, form select { max-width: 100%; box-sizing: border-box; }
 .match-dynamic-panel { padding: 1rem; border: 1px solid var(--border); border-radius: 12px; margin: 1rem 0; }
 .match-dynamic-panel p { font-size: .85rem; margin: .5rem 0; }
 .match-dynamic-panel .row { gap: .5rem; flex-wrap: wrap; }
+
+.priority-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,240px),1fr)); gap:1rem; margin-top:1rem; }
+.priority-grid article { display:flex; flex-direction:column; align-items:start; gap:.5rem; padding:1rem; border:1px solid var(--border); border-radius:12px; min-width:0; }
+.priority-grid article p { margin:0; font-size:.9rem; }
+.priority-grid button { margin-top:auto; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent, #85adff); outline-offset:3px; }

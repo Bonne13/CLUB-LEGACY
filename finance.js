@@ -111,6 +111,21 @@
       transfer: t.finance.transferBudget,
     };
   }
+  function forecast(t, s, days = 30) {
+    if (!Number.isInteger(days) || days<0 || days>30) fail("Prazo de projeção inválido.");
+    const f=t.finance, wage=payroll(t);let wages=0,sponsors=0,broadcast=0,operations=0;
+    for(let offset=0;offset<days;offset++) {
+      const day=(s.today ?? 0)+offset+1;
+      if(day%7===0)wages+=wage;
+      if(day%30===0){
+        sponsors+=f.sponsors.filter(c=>c.expires>=s.season).reduce((n,c)=>n+round(c.annual/12),0);
+        broadcast+=round(f.annualRevenue*.36/12);
+        operations+=round(f.annualRevenue*.22/12);
+      }
+    }
+    const income=sponsors+broadcast,expenses=wages+operations;
+    return {days,wages,sponsors,broadcast,operations,income,expenses,net:income-expenses,balance:t.money+income-expenses};
+  }
   function daily(t, s) {
     const f = init(t, s, true),
       day = (s.today ?? 0) + 1;
@@ -346,6 +361,7 @@
     init,
     post,
     summaries,
+    forecast,
     daily,
     gate,
     winBonus,

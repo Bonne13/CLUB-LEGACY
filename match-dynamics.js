@@ -17,10 +17,10 @@
     if(plan.instructions.pressing==="Alta"&&m.minute<60)return "press";
     return "balanced";
   }
-  function tick(m){
+  function tick(m, advance=true){
     const d=ensure(m);
     for(let side=0;side<2;side++){
-      d.momentum[side]*=.94;
+      if(advance)d.momentum[side]*=.94;
       const next=phase(m,side);
       if(next!==d.phases[side]){
         d.phases[side]=next;
@@ -44,10 +44,10 @@
     d.momentum[1-side]*=goal?.6:.95;
   }
   function approach(m,side,key){
-    if(!["balanced","press","protect","chase","settle"].includes(key))throw Error("Postura inválida.");
+    if(![null,"balanced","press","protect","chase","settle"].includes(key))throw Error("Postura inválida.");
     if(!m||m.done||m.minute>=90)throw Error("A partida não está em andamento.");
     ensure(m).approaches[side]=key;
-    tick(m);
+    tick(m,false);
   }
   const api={ensure,tick,context,shot,approach,labels};root.LegacyMatchDynamics=api;
   if(typeof module!=="undefined")module.exports=api;

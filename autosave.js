@@ -19,7 +19,8 @@
       worker = null,
       busy = false,
       dirty = false,
-      closed = false;
+      closed = false,
+      blocked = false;
     const background =
       typeof Worker !== "undefined" && typeof Blob !== "undefined";
     function status(value) {
@@ -28,18 +29,20 @@
     function commit(message) {
       busy = false;
       if (message.generation === generation && !closed) {
-        if (message.error) onError(Error(message.error));
+        if (message.error) { blocked=true; status("Não salvo"); onError(Error(message.error)); }
         else {
           try {
             write(message.encoded);
             dirty = false;
             status("Salvo");
           } catch (error) {
+            blocked=true;
+            status("Não salvo");
             onError(error);
           }
         }
       }
-      if (dirty && !closed) queue();
+      if (dirty && !closed && !blocked) queue();
     }
     if (background) {
       try {
@@ -53,7 +56,8 @@
           worker.terminate();
           worker = null;
           busy = false;
-          onError(Error(e.message || "Falha no salvamento em segundo plano."));
+          // Retry using the synchronous codec if the worker failed.
+          if (dirty && !closed && !blocked) queue();
         };
       } catch {
         worker = null;
@@ -63,7 +67,7 @@
       clearTimeout(timer);
       timer = setTimeout(() => {
         timer = null;
-        if (closed || busy || !dirty) return;
+        if (closed || blocked || busy || !dirty) return;
         const state = getState();
         if (!state?.clubId) return;
         const current = generation;
@@ -79,6 +83,8 @@
             });
           } catch (error) {
             busy = false;
+            blocked = true;
+            status("Não salvo");
             onError(error);
           }
         }
@@ -87,6 +93,7 @@
     return {
       request() {
         closed = false;
+        blocked = false;
         dirty = true;
         generation++;
         status("Alterações pendentes");
@@ -105,6 +112,7 @@
         status("Salvo");
       },
       flush() {
+        blocked = false;
         generation++;
         clearTimeout(timer);
         timer = null;
@@ -116,6 +124,8 @@
           status("Salvo");
           return true;
         } catch (error) {
+          blocked = true;
+          status("Não salvo");
           onError(error);
           return false;
         }

@@ -59,6 +59,8 @@
       l.nextOn = date(s, 7);
       if (data.offers.filter(o => o.listingId === l.id && o.status === "pending").length >= 6) continue;
       if (l.kind === "loan" && p.contract < s.season + l.years) continue;
+      const reasonable = l.kind === "sale" ? p.price*1.35 : p.price*.25*l.years;
+      if (l.fee > reasonable) continue;
       const seed = Date.parse(today) / 86400000 + data.sequence;
       const candidates = s.teams.filter(t => t.id !== owner.id && t.players.length >= 11 && t.players.length < 30 &&
         !data.offers.some(o => o.listingId === l.id && o.buyerId === t.id && o.status === "pending"))
