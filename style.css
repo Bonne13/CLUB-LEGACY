@@ -6333,3 +6333,75 @@ form input, form select { max-width: 100%; box-sizing: border-box; }
 .priority-grid article p { margin:0; font-size:.9rem; }
 .priority-grid button { margin-top:auto; }
 button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent, #85adff); outline-offset:3px; }
+
+/* Interface polish: consistent spacing, readable names, touch and keyboard access. */
+:root { --ui-radius: 14px; }
+#content { overflow-wrap: break-word; }
+#content .hero { padding: clamp(20px, 2.5vw, 30px); border-radius: var(--ui-radius); }
+#content .hero h2 { font-size: clamp(27px, 3vw, 38px); line-height: 1.2; }
+#content .hero p { max-width: 76ch; }
+#content .identity-title { gap: 14px; }
+#content .identity-title > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+.card { border-radius: var(--ui-radius); }
+#content .card > h3 { line-height: 1.4; }
+#content .card > p:last-child { margin-bottom: 0; }
+.metric-card { display: flex; flex-direction: column; }
+.metric-card > .muted { font-size: 12px; line-height: 1.55; }
+.metric-card .metric { font-variant-numeric: tabular-nums; line-height: 1.25; }
+.money-value > strong { font-variant-numeric: tabular-nums; }
+#content .sub { font-size: 11px; line-height: 1.6; letter-spacing: .1px; }
+#content .segmented { gap: 4px; }
+#content .segmented button { line-height: 1.35; }
+#content .table-wrap { border-radius: 10px; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+#content .table-wrap:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+#content table th { line-height: 1.5; }
+#content table td { line-height: 1.5; vertical-align: middle; }
+#content table td:last-child > button { margin: 3px 4px 3px 0; }
+.roster-player { gap: 6px; }
+.roster-player .row:first-child { flex-wrap: nowrap; margin-top: 0; }
+.roster-player .player-jersey { flex: 0 0 42px; min-height: 48px; }
+.roster-player h3 { line-height: 1.4; }
+.roster-player-state { flex-wrap: wrap; align-items: center; }
+.roster-player > .row:last-child { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.roster-player > .row:last-child button { min-width: 0; min-height: 40px; font-size: 11px; line-height: 1.4; }
+.roster-player > .row:last-child > small, .roster-player > .row:last-child > .pill { grid-column: 1 / -1; }
+.scout-player .scout-actions button { min-height: 42px; }
+.time-panel > div:first-child { min-width: 0; flex: 1 1 260px; }
+.time-panel p .matchup { display: inline-flex; justify-content: flex-start; gap: 8px; margin-left: 8px; width: fit-content; }
+.time-panel .matchup > .team-label { flex: 0 1 auto; justify-content: flex-start; gap: 6px; }
+.time-panel .team-label > span:last-child { overflow-wrap: normal; word-break: normal; }
+.time-panel p { line-height: 1.5; }
+dialog { padding: clamp(20px, 3vw, 30px); border-radius: 16px; overscroll-behavior: contain; }
+dialog h2 { line-height: 1.3; }
+dialog .row { flex-wrap: wrap; }
+#notification { display: flex; align-items: start; gap: 12px; max-height: min(40dvh, 280px); overflow-y: auto; z-index: 100; padding: 14px 12px 14px 18px; }
+#notification > span { min-width: 0; flex: 1; line-height: 1.6; overflow-wrap: anywhere; }
+#notification > button { flex: 0 0 36px; width: 36px; height: 36px; padding: 0; font-size: 24px; line-height: 1; background: transparent; }
+@media (max-width: 700px) {
+  #game > header { gap: 14px; padding-bottom: 16px; margin-bottom: 16px; }
+  #page-description { line-height: 1.6; }
+  .header-actions button { min-height: 42px; }
+  #save-status { font-size: 11px; letter-spacing: 0; }
+  #content .hero { padding: 20px; margin-bottom: 16px; }
+  #content .hero h2 { font-size: 28px; }
+  #content .hero > .row { gap: 8px; flex-wrap: wrap; }
+  #content .hero > .row > button { min-height: 42px; }
+  #content .card { padding: 18px; }
+  #content .card > .row { flex-wrap: wrap; gap: 10px; }
+  .time-panel { padding: 16px; gap: 12px; margin-bottom: 16px; }
+  .time-panel > div:first-child { flex-basis: 100%; }
+  .time-panel p .matchup { display: flex; margin: 8px 0 0; }
+  .time-panel form { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; width: 100%; }
+  .time-panel form label { margin: 0; }
+  .time-panel form button { grid-column: 1 / -1; width: 100%; min-height: 44px; }
+  #content .workspace-tabs { margin-bottom: 16px; }
+  #content .workspace-tabs button { min-height: 44px; }
+  .preseason-banner { padding: 18px; gap: 12px; }
+  .preseason-banner h3 { line-height: 1.5; }
+  .roster-player > .row:last-child button, .priority-grid button, .outgoing-offer button { min-height: 44px; }
+  #notification { bottom: calc(84px + env(safe-area-inset-bottom)); right: 12px; left: 12px; max-width: none; }
+  dialog { width: calc(100% - 24px); max-height: 88dvh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}

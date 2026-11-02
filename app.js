@@ -346,8 +346,16 @@ function renderNavigation() {
 }
 function notify(message, error = false) {
   const n = $("#notification");
-  n.textContent = message;
+  const text = document.createElement("span");
+  text.textContent = message;
+  const close = document.createElement("button");
+  close.type = "button";
+  close.dataset.action = "dismiss-notification";
+  close.setAttribute("aria-label", "Fechar aviso");
+  close.textContent = "×";
+  n.replaceChildren(text, close);
   n.className = error ? "notice error" : "notice";
+  n.setAttribute("role", error ? "alert" : "status");
   n.hidden = false;
 }
 const autosaver = LegacyAutosave.create({
@@ -469,6 +477,18 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+function polishInterface() {
+  for (const wrap of document.querySelectorAll("#content .table-wrap")) {
+    wrap.tabIndex = 0;
+    wrap.setAttribute("role", "region");
+    const heading = wrap.closest(".card")?.querySelector("h3");
+    wrap.setAttribute("aria-label", (heading?.textContent || "Tabela") + " · deslize para ver todas as colunas");
+  }
+  for (const button of document.querySelectorAll("#content .segmented button[data-action]:not([role=tab])"))
+    button.setAttribute("aria-pressed", String(button.classList.contains("active")));
+  for (const input of document.querySelectorAll('input[type="number"]:not([inputmode])'))
+    input.inputMode = input.step === "any" || input.step.includes(".") ? "decimal" : "numeric";
+}
 function render() {
   const hasCareer = Boolean(state.clubId);
   if (hasCareer) E.refreshAvailability(state);
@@ -518,6 +538,7 @@ function render() {
       workspaceScroll.get(group.id) || 0;
   alignWorkspaceTabs();
   decorateMoneyInputs();
+  polishInterface();
   $("#context").textContent =
     `${appearanceTeam().name} · ${E.seasonLabel(state)} · ${E.date(state)}${state.mode === "test" ? " · MODO TESTE" : ""}`;
   if (page === "Financeiro") updateBudgetPreview();
@@ -780,7 +801,7 @@ function openLoanDialog(id) {
   $("#deal").showModal();
 }
 function playersTable(ps, context = "squad") {
-  return `<div class="table-wrap"><table><thead><tr><th>JOGADOR</th><th>POS.</th><th>IDADE</th><th>GERAL</th><th>VALOR</th><th title="Preparo físico: varia com minutos, intensidade e recuperação">CONDIÇÃO ⓘ</th><th>SALÁRIO EST./SEM.</th><th>CONTRATO</th><th>AÇÕES</th></tr></thead><tbody>${ps.map((p) => `<tr><td>${p.shirtNumber ? `<span class="shirt-number" title="Número do uniforme na carreira">${p.shirtNumber}</span>` : ""}<strong>${esc(p.name)}</strong>${context === "squad" ? disciplineStatus(p) : ""}${seasonStatLine(p)}<span class="sub">${esc(playerReference(p))}<span class="sub">${esc((p.nationalities?.length ? p.nationalities : [p.nationality]).map(countryLabel).filter(Boolean).join(" / ") || "Nacionalidade indisponível")}</span>${context === "market" ? " · " + esc(p.sellerName) : ""}</span></td><td>${esc(p.naturalPositions?.length ? p.naturalPositions.join(" / ") : p.pos)}${p.secondaryPositions?.length ? `<small class="sub">Também: ${esc(p.secondaryPositions.join(" / "))}</small>` : ""}${p.positionEstimated ? " · est." : ""}</td><td>${playerAge(p)}</td><td><span class="rating" title="${esc(p.ratingSource || "Estimativa do jogo")}">${p.ovr}</span><small class="sub">Potencial ${p.potential}${p.growthSeason === state.season ? " · +" + p.growthPoints + " na temporada" : ""}</small>${p.developmentChange ? `<small class="sub">${p.developmentChange > 0 ? "+" : ""}${p.developmentChange} na última variação</small>` : ""}</td><td>${moneyValue(p.price)}</td><td>${p.injury ? `Lesão · ${p.injury} dias` : `<span class="condition-meter ${p.fitness < 75 ? "tired" : p.fitness < 90 ? "wear" : "ready"}"><strong>${p.fitness}%</strong><i style="width:${p.fitness}%"></i><small>${p.fitness >= 90 ? "Pronto" : p.fitness >= 75 ? "Desgastado" : "Cansado"}</small></span>`}</td><td>${moneyValue(p.salary, "por semana")}</td><td>${p.contract}${p.contractEstimated ? " · est." : ""}<small class="sub">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")}</small></td><td>${context === "squad" ? (p.loan ? loanStatus(p) : outgoingPlayerActions(p)) + btn("Camisa " + p.shirtNumber, "edit-shirt", p.id) : context === "youth" ? btn("Promover · R$ 100 mil", "promote", p.id) + btn("Lista de empréstimo", "list-loan", p.id) : btn("Negociar", "buy", p.id) + btn("Empréstimo", "loan", p.id)}</td></tr>`).join("")}</tbody></table></div>${ps.length ? "" : '<p class="muted">Nenhum jogador encontrado.</p>'}`;
+  return `<div class="table-wrap"><table><thead><tr><th>JOGADOR</th><th>POS.</th><th>IDADE</th><th>GERAL</th><th>VALOR</th><th title="Preparo físico: varia com minutos, intensidade e recuperação">CONDIÇÃO ⓘ</th><th>SALÁRIO EST./SEM.</th><th>CONTRATO</th><th>AÇÕES</th></tr></thead><tbody>${ps.map((p) => `<tr><td>${p.shirtNumber ? `<span class="shirt-number" title="Número do uniforme na carreira">${p.shirtNumber}</span>` : ""}<strong>${esc(p.name)}</strong>${context === "squad" ? disciplineStatus(p) : ""}${seasonStatLine(p)}<span class="sub">${esc(playerReference(p))}<span class="sub">${esc((p.nationalities?.length ? p.nationalities : [p.nationality]).map(countryLabel).filter(Boolean).join(" / ") || "Nacionalidade indisponível")}</span>${context === "market" ? " · " + esc(p.sellerName) : ""}</span></td><td>${esc(p.naturalPositions?.length ? p.naturalPositions.join(" / ") : p.pos)}${p.secondaryPositions?.length ? `<small class="sub">Também: ${esc(p.secondaryPositions.join(" / "))}</small>` : ""}${p.positionEstimated ? " · est." : ""}</td><td>${playerAge(p)}</td><td><span class="rating" title="${esc(p.ratingSource || "Estimativa do jogo")}">${p.ovr}</span><small class="sub">Potencial ${p.potential}${p.growthSeason === state.season ? " · +" + p.growthPoints + " na temporada" : ""}</small>${p.developmentChange ? `<small class="sub">${p.developmentChange > 0 ? "+" : ""}${p.developmentChange} na última variação</small>` : ""}</td><td>${moneyValue(p.price)}</td><td>${p.injury ? `Lesão · ${p.injury} dias` : `<span class="condition-meter ${p.fitness < 75 ? "tired" : p.fitness < 90 ? "wear" : "ready"}"><strong>${p.fitness}%</strong><i style="width:${p.fitness}%"></i><small>${p.fitness >= 90 ? "Pronto" : p.fitness >= 75 ? "Desgastado" : "Cansado"}</small></span>`}</td><td>${moneyValue(p.salary, "por semana")}</td><td>${p.contract}${p.contractEstimated ? " · est." : ""}<small class="sub">${esc(E.SQUAD_ROLES[p.squadRole] || "Papel a negociar")}</small></td><td>${context === "squad" ? (p.loan ? loanStatus(p) : outgoingPlayerActions(p)) + btn("Camisa " + p.shirtNumber, "edit-shirt", p.id) : context === "youth" ? btn("Promover · R$ 100 mil", "promote", p.id) + btn("Lista de empréstimo", "list-loan", p.id) : btn("Negociar", "buy", p.id) + btn("Empréstimo", "loan", p.id)}</td></tr>`).join("")}</tbody></table></div>${ps.length ? "" : '<p class="muted">Nenhum jogador encontrado. Revise os filtros ou tente outro nome.</p>'}`;
 }
 function matchup(f, goals) {
   return `<span class="matchup">${teamLabel(f.pair[0])}<strong>${goals ? goals.join(" × ") : "×"}</strong>${teamLabel(f.pair[1])}</span>`;
@@ -2155,6 +2176,10 @@ document.addEventListener("click", (event) => {
   if (!b) return;
   const a = b.dataset.action,
     id = b.dataset.id;
+  if (a === "dismiss-notification") {
+    $("#notification").hidden = true;
+    return;
+  }
   if (a === "read-news") {
     openNews(id);
     return;

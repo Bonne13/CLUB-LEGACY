@@ -459,3 +459,12 @@ O salvamento mantém alterações pendentes quando o navegador não consegue gra
 Durante a partida, o botão **Automático** devolve a postura à leitura do jogo. Alterar a postura não reduz a pressão recente sem que o relógio avance. Na lista de saídas, pedidos muito acima do valor do jogador deixam de gerar propostas incompatíveis com a avaliação do clube; os anúncios permanecem editáveis. Relatórios de olheiros guardam todos os filtros da missão e orientam a revisão dos critérios quando não há resultados. A navegação por teclado recebeu destaque de foco nos controles.
 
 Validação adicional: `node tests/general-review.test.cjs`, projeção confrontada com 30 dias de pagamentos, evolução sem teto anual, bloqueio de progresso durante lesão, idempotência dos ganhos, recuperação de falhas de gravação e posturas de partida.
+
+
+## Polimento de interface (v0.22.1)
+
+Cabeçalhos e controles de avanço ocupam menos espaço no celular; o próximo confronto preserva a leitura dos nomes dos clubes. Cartões de jogadores, ações, valores e descrições têm espaçamento e alinhamento mais consistentes. Os avisos podem ser fechados e ficam acima da navegação inferior.
+
+Tabelas recebem foco por teclado e uma descrição da rolagem horizontal; os seletores de visualização informam seu estado às tecnologias assistivas. Campos numéricos usam o teclado adequado no celular. Temas, cores do clube, regras e formato dos saves foram preservados.
+
+Validação de interface: `npm run test:polish-browser`, com páginas de gestão, temas claro/escuro, larguras de 320 a 1365 px, navegação por teclado, avisos, diálogos e recarga de save; os fluxos de partida e de saídas também são exercitados.
