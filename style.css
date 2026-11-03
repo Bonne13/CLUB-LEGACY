@@ -6405,3 +6405,81 @@ dialog .row { flex-wrap: wrap; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; }
 }
+
+/* Complete-screen alignment pass: desktop, tablet and phone. */
+:root { --layout-gap: 20px; --control-height: 44px; }
+#content .workspace-panel { min-width: 0; }
+#content :is(.columns,.grid,.budget-summary,.estate-summary,.facilities-grid,.scout-grid,.roster-grid,.negotiation-grid,.calendar-workspace,.match-workspace,.offer-layout,.tactical-workspace) > * { min-width: 0; }
+#content :is(.card,.hero) :is(h3,h4,p) { overflow-wrap: anywhere; }
+#content .card > .row { flex-wrap: wrap; align-items: center; gap: 12px; }
+#content .card > .row > h3 { flex: 1 1 200px; margin: 0; }
+#content .filters { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; }
+#content .filters > label { flex: 1 1 180px; min-width: 0; margin: 0; }
+#content .filters > button { align-self: flex-end; min-height: var(--control-height); }
+#content :is(.roster-filters,.press-filters,.history-filters,.market-filters,.squad-search) { align-items: end; }
+#content :is(.roster-filters,.press-filters,.history-filters,.squad-search) > label { min-width: 0; margin: 0; line-height: 1.5; }
+#content :is(.roster-filters,.press-filters,.history-filters,.market-filters,.squad-search) :is(input,select,button) { min-height: var(--control-height); }
+#content .market-filters fieldset { margin: 0; }
+#content .market-range label { margin-bottom: 0; }
+#content .row.tactical-toolbar { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; align-items: end; margin: 0 0 20px; }
+#content .tactical-toolbar > label { min-width: 0; margin: 0; line-height: 1.5; }
+#content .tactical-toolbar select { width: 100%; min-height: var(--control-height); }
+#content .tactical-toolbar > button, #content .tactical-toolbar > .muted { grid-column: 1 / -1; }
+#content .tactical-toolbar > button { min-height: var(--control-height); }
+#content .tactical-toolbar > .muted { font-size: 12px; line-height: 1.5; }
+#content .tactic-instructions label, #content .set-piece-grid label { margin: 0; }
+#content .candidate { align-items: start; gap: 12px; }
+#content .candidate > div:first-child { flex: 1 1 auto; }
+#content .candidate button { min-height: 40px; line-height: 1.4; }
+#content .offer-estimate, #content .offer-metrics { grid-template-columns: repeat(auto-fit,minmax(min(100%,145px),1fr)); align-items: start; }
+#content .offer-metrics .money-value > strong { overflow-wrap: anywhere; }
+#content .scout-player .offer-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); }
+#content .scout-player .offer-metrics > div:last-child:nth-child(odd) { grid-column: 1 / -1; }
+#content .sponsor-contracts { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,220px),1fr)); gap: 14px; }
+#content .sponsor-contracts > div { min-width: 0; }
+#content .workspace-tabs { scroll-padding-inline: 8px; }
+#content .table-wrap table:not(.training-cards) :is(th,td) { padding-block: 12px; }
+#content .table-wrap thead th { position: sticky; top: 0; z-index: 1; background: var(--surface); }
+#content :is(.budget-summary,.estate-summary,.offer-metrics,.award-card-stats) strong { font-variant-numeric: tabular-nums; }
+#content :is(.history-pagination,.training-toolbar,.tactical-toolbar,.calendar-toolbar) button { line-height: 1.4; }
+dialog .dialog-heading { align-items: flex-start; gap: 12px; }
+dialog :is(.dialog-footer,footer.row) { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+dialog :is(.dialog-footer,footer.row) button { min-height: var(--control-height); }
+dialog :is(input,select) { min-height: var(--control-height); }
+@media (min-width: 1280px) {
+  #content .tactical-toolbar { grid-template-columns: minmax(160px,1fr) minmax(160px,1fr) auto; }
+  #content .tactical-toolbar > button { grid-column: auto; }
+}
+@media (min-width: 901px) and (max-width: 1180px) {
+  #content :is(.tactical-workspace,.calendar-workspace,.scouting-workspace,.match-workspace,.offer-layout) { grid-template-columns: minmax(0,1fr); }
+  #content :is(.roster-filters,.press-filters) { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 700px) {
+  :root { --layout-gap: 16px; }
+  #content :is(.columns,.grid) { gap: var(--layout-gap); }
+  #content .filters > label { flex-basis: 100%; }
+  #content .filters > button { flex: 1 1 120px; }
+  #content :is(.roster-filters,.press-filters,.history-filters,.squad-search) { gap: 12px; }
+  #content :is(.roster-filters,.press-filters,.history-filters,.squad-search) > button { grid-column: 1 / -1; width: 100%; }
+  #content :is(.tactical-toolbar,.training-toolbar,.calendar-toolbar) { gap: 12px; }
+  #content .candidate { flex-wrap: wrap; }
+  #content .candidate > div:last-child { flex-direction: row; flex-wrap: wrap; width: 100%; }
+  #content .candidate button { flex: 1 1 110px; min-height: var(--control-height); }
+  #content .match-controls { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: end; }
+  #content .match-controls > label { margin: 0; min-width: 0; }
+  #content .match-controls > button { min-height: var(--control-height); }
+  #content .national-invite { padding: 18px; }
+  #content .national-invite .row { flex-wrap: wrap; gap: 10px; }
+  #content .national-invite button { flex: 1 1 110px; min-height: var(--control-height); }
+  #content :is(input,select), dialog :is(input,select) { font-size: 16px; }
+  #content .training-cards .sub { font-size: 11px; }
+  #content :is(.card,.hero) > .row > .segmented { max-width: 100%; }
+  dialog :is(.dialog-footer,footer.row) > button { flex: 1 1 120px; }
+}
+@media (max-width: 380px) {
+  #content .roster-filters { grid-template-columns: minmax(0,1fr); }
+  #content .training-week { grid-template-columns: minmax(0,1fr); }
+}
+@media (max-width: 480px) {
+  #content .row.tactical-toolbar { grid-template-columns: minmax(0,1fr); }
+}

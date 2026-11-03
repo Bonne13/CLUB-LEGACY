@@ -468,3 +468,10 @@ Cabeçalhos e controles de avanço ocupam menos espaço no celular; o próximo c
 Tabelas recebem foco por teclado e uma descrição da rolagem horizontal; os seletores de visualização informam seu estado às tecnologias assistivas. Campos numéricos usam o teclado adequado no celular. Temas, cores do clube, regras e formato dos saves foram preservados.
 
 Validação de interface: `npm run test:polish-browser`, com páginas de gestão, temas claro/escuro, larguras de 320 a 1365 px, navegação por teclado, avisos, diálogos e recarga de save; os fluxos de partida e de saídas também são exercitados.
+
+
+## Alinhamento de todas as telas (v0.22.2)
+
+A revisão abrange as 20 abas de gestão, a entrada e a central da partida. Filtros e botões compartilham altura mínima; o painel de equipe e formação usa colunas próprias e empilha os seletores em telefones estreitos. Painéis táticos, calendário, olheiros e negociações se reorganizam também em telas intermediárias de computador. Cartões, métricas, patrocínios, listas de candidatos, cabeçalhos e rodapés de diálogos têm alinhamento e espaçamento padronizados. Campos móveis usam fonte legível sem ampliar automaticamente a página no iOS. As cores, as regras e os saves permanecem preservados.
+
+`npm run test:all-screens-browser` verifica as 20 abas nos dois temas e em 320, 390, 768, 1024, 1440 e 1920 px, incluindo limites internos dos controles e largura útil dos seletores táticos. Entrada e partida recebem a mesma matriz. Os diálogos de venda, empréstimo, renovação e camisa são exercitados em quatro larguras. O teste usa a distribuição de arquivo único, bloqueia recursos externos e confirma que a navegação não altera elenco, overall, contratos ou caixa.

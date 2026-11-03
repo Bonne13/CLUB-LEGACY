@@ -1,6 +1,6 @@
 {
   "name": "dinastia-fc",
-  "version": "0.22.1",
+  "version": "0.22.2",
   "private": true,
   "scripts": {
     "start": "python3 -m http.server 3000",
@@ -29,6 +29,7 @@
     "import:shirts": "python3 scripts/import-shirt-numbers.py",
     "test:simulation-browser": "node tests/simulation-browser.cjs",
     "build:club-context": "node scripts/build-club-context.cjs && python3 scripts/build-league-rules.py",
+    "test:all-screens-browser": "node tests/all-screens-browser.cjs --standalone && node tests/entry-match-layout-browser.cjs",
     "test:polish-browser": "node tests/polish-browser.cjs",
     "test:review-browser": "node tests/review-browser.cjs",
     "test:dynamic-browser": "node tests/dynamic-match-browser.cjs",
